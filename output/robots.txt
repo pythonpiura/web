@@ -1,0 +1,4 @@
+Sitemap: https://pythonpiura.org/sitemapindex.xml
+
+User-Agent: *
+Host: pythonpiura.org
