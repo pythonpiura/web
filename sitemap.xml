@@ -6,19 +6,19 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
-  <loc>https://pythonpiura.org/</loc>
+  <loc>http://pythonpiura.org/</loc>
   <lastmod>2016-07-24T17:20:00Z</lastmod>
  </url>
  <url>
-  <loc>https://pythonpiura.org/archive.html</loc>
+  <loc>http://pythonpiura.org/archive.html</loc>
+  <lastmod>2016-07-24T17:29:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/blog/</loc>
   <lastmod>2016-07-24T17:20:00Z</lastmod>
  </url>
  <url>
-  <loc>https://pythonpiura.org/blog/</loc>
-  <lastmod>2016-07-24T17:20:00Z</lastmod>
- </url>
- <url>
-  <loc>https://pythonpiura.org/categories/</loc>
+  <loc>http://pythonpiura.org/categories/</loc>
   <lastmod>2016-07-24T17:20:00Z</lastmod>
  </url>
 </urlset>
