@@ -131,10 +131,10 @@ TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
-        ("/archive.html", "Archive"),
-        ("/categories/", "Tags"),
-        ("/rss.xml", "RSS feed"),
-    ),
+        ('/blog', 'Blog'),
+        ('/eventos.html', 'Eventos'),
+        ('/material-python.html', 'Material'),        
+        )
 }
 
 # Name of the theme to use.
