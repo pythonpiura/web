@@ -1,0 +1,163 @@
+<html><body><p style="text-align:justify;">En esta oportunidad vamos a hacer un ejemplo mas complejo, ya que el captcha así lo amerita, nuestra página objetivo es la siguiente:<br>
+<a href="https://cel.reniec.gob.pe/valreg/valreg.do">https://cel.reniec.gob.pe/valreg/valreg.do</a><br>
+<a href="/2016/05/reniec.jpg"><img class="aligncenter size-full wp-image-274" src="/2016/05/reniec.jpg" alt="reniec" width="579" height="396"></a><br>
+En esta página podemos ingresar el número de DNI y obtener el nombre completo del ciudadano. Como se ve en la imagen aquí nos enfrentamos a un captcha mas completo y a un teclado dinámico compuesto de botones, para romper este captcha tenemos que modificar la imagen para obtener el texto correcto, eliminando las lineas que atraviesan las letras y que tienen una tonalidad distinta de azul, el proceso no será 100% seguro pero funciona en la mayoría de los casos:</p>
+<p>[sourcecode language="python"]<br>
+# -*- coding: utf-8 -*-<br>
+from selenium import webdriver<br>
+from selenium.webdriver.common.by import By<br>
+from selenium.webdriver.support.wait import WebDriverWait<br>
+from selenium.webdriver.support import expected_conditions as EC</p>
+<p>try:<br>
+    import Image<br>
+except ImportError:<br>
+    from PIL import Image<br>
+import pytesseract</p>
+<p>def ir_reniec_web(dni):<br>
+    fp = webdriver.FirefoxProfile()<br>
+    driver = webdriver.Firefox(fp)<br>
+    #Definimos nuestra página objetivo<br>
+    driver.get("https://cel.reniec.gob.pe/valreg/valreg.do")<br>
+    try:<br>
+        #Esperamos hasta que se cargue la imagen con el captcha<br>
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "imagcodigo")))<br>
+    except:<br>
+        print "Element is not present"<br>
+    #Hacemos la captura de pantalla correspondiente<br>
+    driver.save_screenshot("screenshot.png")<br>
+    img=Image.open(‘screenshot.png’)<br>
+    #Obtenemos el ancho y el largo de la imagen<br>
+    ancho = img.size[0]<br>
+    alto = img.size[1]<br>
+    #Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen<br>
+    img_recortada = img.crop((int(ancho/4.26),int(alto/3.64),int(ancho/2.8),int(alto/3)))<br>
+    #Guardamos el recorte<br>
+    img_recortada.save("recorte.png")<br>
+    #Recorremos cada uno de los dígitos del DNI<br>
+    for num in dni:<br>
+        #Buscamos el boton que tenga como nombre tecla_0<br>
+        boton_0 = driver.find_element_by_name("tecla_0")<br>
+        #Obtenemos el valor del botón con nombre tecla_0<br>
+        valor_0 = boton_0.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_1<br>
+        boton_1 = driver.find_element_by_name("tecla_1")<br>
+        #Obtenemos el valor del botón con nombre tecla_1<br>
+        valor_1 = boton_1.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_2<br>
+        boton_2 = driver.find_element_by_name("tecla_2")<br>
+        #Obtenemos el valor del botón con nombre tecla_2<br>
+        valor_2 = boton_2.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_3<br>
+        boton_3 = driver.find_element_by_name("tecla_3")<br>
+        #Obtenemos el valor del botón con nombre tecla_3<br>
+        valor_3 = boton_3.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_4<br>
+        boton_4 = driver.find_element_by_name("tecla_4")<br>
+        #Obtenemos el valor del botón con nombre tecla_4<br>
+        valor_4 = boton_4.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_5<br>
+        boton_5 = driver.find_element_by_name("tecla_5")<br>
+        #Obtenemos el valor del botón con nombre tecla_5<br>
+        valor_5 = boton_5.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_6<br>
+        boton_6 = driver.find_element_by_name("tecla_6")<br>
+        #Obtenemos el valor del botón con nombre tecla_6<br>
+        valor_6 = boton_6.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_7<br>
+        boton_7 = driver.find_element_by_name("tecla_7")<br>
+        #Obtenemos el valor del botón con nombre tecla_7<br>
+        valor_7 = boton_7.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_8<br>
+        boton_8 = driver.find_element_by_name("tecla_8")<br>
+        #Obtenemos el valor del botón con nombre tecla_8<br>
+        valor_8 = boton_8.get_attribute(‘value’)<br>
+        #Buscamos el boton que tenga como nombre tecla_9<br>
+        boton_9 = driver.find_element_by_name("tecla_9")<br>
+        #Obtenemos el valor del botón con nombre tecla_9<br>
+        valor_9 = boton_9.get_attribute(‘value’)<br>
+        ”’Consultamos si el dígito del DNI es igual al valor del botón,<br>
+        si es el caso entonces se da click en ese botón”’<br>
+        if num==valor_0:<br>
+            boton_0.click()<br>
+        elif num==valor_1:<br>
+            boton_1 = driver.find_element_by_name("tecla_1")<br>
+            boton_1.click()<br>
+        elif num==valor_2:<br>
+            boton_2 = driver.find_element_by_name("tecla_2")<br>
+            boton_2.click()<br>
+        elif num==valor_3:<br>
+            boton_3 = driver.find_element_by_name("tecla_3")<br>
+            boton_3.click()<br>
+        elif num==valor_4:<br>
+            boton_4 = driver.find_element_by_name("tecla_4")<br>
+            boton_4.click()<br>
+        elif num==valor_5:<br>
+            boton_5 = driver.find_element_by_name("tecla_5")<br>
+            boton_5.click()<br>
+        elif num==valor_6:<br>
+            boton_6 = driver.find_element_by_name("tecla_6")<br>
+            boton_6.click()<br>
+        elif num==valor_7:<br>
+            boton_7 = driver.find_element_by_name("tecla_7")<br>
+            boton_7.click()<br>
+        elif num==valor_8:<br>
+            boton_8 = driver.find_element_by_name("tecla_8")<br>
+            boton_8.click()<br>
+        elif num==valor_9:<br>
+            boton_9 = driver.find_element_by_name("tecla_9")<br>
+            boton_9.click()<br>
+    #Se llama al método romper_captcha para obtener el texto correspondiente<br>
+    captcha = romper_captcha("recorte.png")<br>
+    try:<br>
+        #Obtenemos la caja de texto donde se escribe el texto del captcha<br>
+        codigo = driver.find_element_by_name("imagen")<br>
+        #Si el captcha está vacio o no se ha logrado romper se cierra el navegador y se termina la aplicación<br>
+        if captcha==”:<br>
+            driver.close()<br>
+            return<br>
+        #Escribimos el texto<br>
+        codigo.send_keys(captcha)<br>
+    except:<br>
+        pass<br>
+    try:<br>
+        #Obtenemos el botón de consulta<br>
+        boton_consultar=driver.find_element_by_name("bot_consultar")<br>
+        #Damos click al botón de consulta<br>
+        boton_consultar.click()<br>
+    except:<br>
+        print "Element is not present"<br>
+    #Obtengo el resultado que aparece en el elemento llamado style2<br>
+    resultado = driver.find_element_by_class_name("style2")<br>
+    #Partimos el resultado para obtener el nombre<br>
+    nombre = resultado.text.split(‘\n’)<br>
+    driver.close()<br>
+    return nombre[0]</p>
+<p>def romper_captcha(nombre_imagen):<br>
+    #Abro la imagen<br>
+    img = Image.open(nombre_imagen)<br>
+    #Obtengo un arreglo de píxeles de la imagen<br>
+    pixdata = img.load()<br>
+    ”’Modifico los píxeles de la imagen de acuerdo al análisis de los colores de las letras<br>
+    y las lineas que cruzan el texto, pintando de negro los píxeles del texto y de blanco las lineas”’<br>
+    for y in xrange(img.size[1]):<br>
+        for x in xrange(img.size[0]):<br>
+            if pixdata[x, y][2] &lt; 146: pixdata[x, y] = (255, 255, 255) for y in xrange(img.size[1]): for x in xrange(img.size[0]): if pixdata[x, y][1] &gt; 64:<br>
+                pixdata[x, y] = (255, 255, 255)<br>
+            else:<br>
+                pixdata[x, y] = (0,0,0)<br>
+    #Guardo la imagen modificada<br>
+    img.save("modificado.jpg")<br>
+    #Abro la imagen modificado<br>
+    image = Image.open("modificado.jpg")<br>
+    #Obtenemos el texto de la imagen<br>
+    frase = pytesseract.image_to_string(image)<br>
+    #Retornamos el texto eliminado los espacios en blanco entre las palabras y convirtiendolas en mayúsculas<br>
+    return frase.replace(‘ ‘,”).upper()</p>
+<p>def main():<br>
+    dni = ’123456789′<br>
+    print ir_reniec_web(dni)</p>
+<p>main()<br>
+[/sourcecode]</p>
+<p>Espero que les sea útil.<br>
+Saludos.</p>
+</body></html>

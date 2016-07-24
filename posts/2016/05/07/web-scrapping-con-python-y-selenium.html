@@ -1,0 +1,64 @@
+<html><body><p style="text-align:justify;">El día de hoy tuvimos el agrado de ser invitados por el <a href="https://cideuel.wordpress.com/">Círculo UEL</a> a dar una charla en el marco del FLISOL 2016 en la Universidad Los Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Python y Selenium, hicimos algunos ejemplos muy interesantes y nos encantó la acogida del público y el interés suscitado, vamos a compartir los artículos que usamos:</p>
+<p style="text-align:justify;"><a href="https://pythonpiura.wordpress.com/2014/09/18/selenium-con-python/">Selenium con Python</a></p>
+<p style="text-align:justify;"><a href="https://pythonpiura.wordpress.com/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">Romper Captchas con Pytesseract y Selenium</a></p>
+<p style="text-align:justify;">Las diapositivas:</p>
+<p style="text-align:justify;"><a href="/2016/05/charlapythonflisol2016.pdf">Descargar</a></p>
+<p>El script que fue la estrella de la mañana:</p>
+<p>[sourcecode language="python"]<br>
+# -*- coding: utf-8 -*-<br>
+from selenium import webdriver<br>
+from selenium.webdriver.common.by import By<br>
+from selenium.webdriver.support.wait import WebDriverWait<br>
+from selenium.webdriver.support import expected_conditions as EC<br>
+import os</p>
+<p>try:<br>
+    import Image<br>
+except ImportError:<br>
+    from PIL import Image<br>
+import pytesseract</p>
+<p>def decodifica_campo(campo):<br>
+	return u"%s" % campo</p>
+<p>def ir_sunat_web(ruta):<br>
+	fp = webdriver.FirefoxProfile()<br>
+	fp.set_preference("browser.download.manager.showWhenStarting",False)<br>
+	fp.set_preference("browser.download.manager.closeWhenDone", True);<br>
+	fp.set_preference("browser.download.manager.showAlertOnComplete", False);<br>
+	fp.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/zip");<br>
+	driver = webdriver.Firefox(fp)<br>
+	driver.get("http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias")<br>
+	try:<br>
+		WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "imagen")))<br>
+	except:<br>
+		print "No carga imagen"<br>
+	driver.save_screenshot("screenshot.png")<br>
+	img=Image.open(‘screenshot.png’)<br>
+	img_recortada = img.crop((700,309,800,361))<br>
+	img_recortada.save("recorte.png")<br>
+        try:<br>
+            captcha = pytesseract.image_to_string(img_recortada)<br>
+            codigo = driver.find_element_by_name("codigoA")<br>
+            codigo.send_keys(captcha)<br>
+        except:<br>
+            pass<br>
+	archivo = driver.find_element_by_name("archivo")<br>
+	archivo.send_keys(ruta)<br>
+	form = driver.find_element_by_name("frmConsMulRucArchivo")<br>
+	botones=form.find_elements_by_class_name("form-button")<br>
+	botones[1].click()<br>
+	try:<br>
+		WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "form-table")))<br>
+		enlace=driver.find_element(By.TAG_NAME,"a")<br>
+		enlace.click()<br>
+	except:<br>
+		print "Element is not present"<br>
+	driver.close()</p>
+<p>def main():<br>
+	ruta = "/home/usuario/carpeta"<br>
+	ruta_archivo=os.path.join(ruta,"rucs.zip")<br>
+	ir_sunat_web(ruta_archivo)</p>
+<p>main()<br>
+[/sourcecode]</p>
+<p>Así como también un vídeo de su funcionamiento.</p>
+<p>http://www.youtube.com/watch?v=mUaVFYTlibM</p>
+<p>Saludos y muchas gracias.</p>
+</body></html>

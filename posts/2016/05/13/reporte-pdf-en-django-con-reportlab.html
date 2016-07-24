@@ -1,0 +1,135 @@
+<html><body><p style="text-align:justify;">Vamos a retomar nuestro proyecto tutorial, al que hemos tenido bastante olvidado estos últimos días y haremos un reporte en pdf utilizando la librería <a href="http://www.reportlab.com/">reportlab</a>, para ello la instalamos:</p>
+<p>[sourcecode language="bash"]<br>
+pip install reportlab<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Lo primero que haremos es poner el logo de django en la parte superior de nuestro reporte, por lo que debemos tener la imagen guardada en una ubicación fácil de obtener, por eso crearemos una carpeta llamada “media” en nuestro proyecto y dentro de esta, otra carpeta llamada imagenes, es aquí donde pondremos nuestro archivo logo_django.png:</p>
+<p><a href="/2016/05/ubicacion_logo.jpg"><img class="aligncenter size-full wp-image-280" src="/2016/05/ubicacion_logo.jpg" alt="ubicacion_logo" width="197" height="138"></a></p>
+<p>Modificamos el archivo settings.py para poder establecer la ruta de la carpeta media:</p>
+<p>[sourcecode language="python"]<br>
+MEDIA_ROOT = os.path.join(BASE_DIR, ‘media’)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Creamos la clase ReportePersonasPDF en el archivo views.py, el código está explicado en los comentarios:</p>
+<p>[sourcecode language="python"]<br>
+#Importamos settings para poder tener a la mano la ruta de la carpeta media<br>
+from django.conf import settings<br>
+from io import BytesIO<br>
+from reportlab.pdfgen import canvas<br>
+from django.views.generic import View</p>
+<p>class ReportePersonasPDF(View):  </p>
+<p>    def cabecera(self,pdf):<br>
+        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes<br>
+        archivo_imagen = settings.MEDIA_ROOT+’/imagenes/logo_django.png’<br>
+        #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes<br>
+        pdf.drawImage(archivo_imagen, 40, 750, 120, 90,preserveAspectRatio=True)                </p>
+<p>    def get(self, request, *args, **kwargs):<br>
+        #Indicamos el tipo de contenido a devolver, en este caso un pdf<br>
+        response = HttpResponse(content_type=’application/pdf’)<br>
+        #La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal<br>
+        buffer = BytesIO()<br>
+        #Canvas nos permite hacer el reporte con coordenadas X y Y<br>
+        pdf = canvas.Canvas(buffer)<br>
+        #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.<br>
+        self.cabecera(pdf)<br>
+        #Con show page hacemos un corte de página para pasar a la siguiente<br>
+        pdf.showPage()<br>
+        pdf.save()<br>
+        pdf = buffer.getvalue()<br>
+        buffer.close()<br>
+        response.write(pdf)<br>
+        return response<br>
+[/sourcecode]</p>
+<p>Para poder acceder a esta clase debemos hacer la creación de la url correspondiente en el archivo urls.py:</p>
+<p>[sourcecode language="python"]<br>
+url(r’^reporte_personas_pdf/$’,login_required(ReportePersonasPDF.as_view()), name="reporte_personas_pdf"),<br>
+[/sourcecode]</p>
+<p>Ahora vamos a utilizar la url desde el archivo personas.html:</p>
+<p>[sourcecode language="html"]<br>
+&lt;div class=’form-group’&gt;<br>
+	&lt;div class="row"&gt;<br>
+		&lt;div class="col-lg-9"&gt;	</p>
+<p>		&lt;/div&gt;<br>
+		&lt;div class="col-lg-1"&gt;<br>
+			&lt;a href="{% url ‘personas:reporte_personas_excel’ %}" class="btn btn-info btn-block"&gt;<br>
+				&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
+			&lt;/a&gt;<br>
+		&lt;/div&gt;<br>
+		{% if perms.personas.add_persona %}<br>
+		&lt;div class="col-lg-1"&gt;<br>
+			&lt;a href="{% url ‘personas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
+				&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
+			&lt;/a&gt;<br>
+		&lt;/div&gt;<br>
+		{% endif %}<br>
+		&lt;div class="col-lg-1"&gt;<br>
+			&lt;a href="{% url ‘personas:reporte_personas_pdf’ %}" class="btn btn-info btn-block"&gt;<br>
+				&lt;span class="glyphicon glyphicon-file"&gt;&lt;/span&gt;<br>
+			&lt;/a&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+[/sourcecode]</p>
+<p>Nos tiene que aparecer un ícono de un archivo:</p>
+<p><a href="/2016/05/personas_pdf.jpg"><img class="aligncenter size-large wp-image-281" src="https://pythonpiura.files.wordpress.com/2016/05/personas_pdf.jpg?w=604" alt="personas_pdf" width="604" height="119"></a></p>
+<p>El primer resultado será este:</p>
+<p><a href="/2016/05/reporte_pdf1.jpg"><img class="aligncenter size-large wp-image-282" src="https://pythonpiura.files.wordpress.com/2016/05/reporte_pdf1.jpg?w=604" alt="reporte_pdf1" width="604" height="220"></a></p>
+<p style="text-align:justify;">Vamos a ponerle un encabezado a nuestro reporte que diga “Python Piura” y debajo “Reporte de Personas”, para ello colocamos el siguiente código debajo de la última linea del método “cabecera”:</p>
+<p>[sourcecode language="python"]<br>
+        #Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica<br>
+        pdf.setFont("Helvetica", 16)<br>
+        #Dibujamos una cadena en la ubicación X,Y especificada<br>
+        pdf.drawString(230, 790, u"PYTHON PIURA")<br>
+        pdf.setFont("Helvetica", 14)<br>
+        pdf.drawString(200, 770, u"REPORTE DE PERSONAS")<br>
+[/sourcecode]</p>
+<p><a href="/2016/05/reporte_pdf2.jpg"><img class="aligncenter size-large wp-image-283" src="https://pythonpiura.files.wordpress.com/2016/05/reporte_pdf2.jpg?w=604" alt="reporte_pdf2" width="604" height="155"></a></p>
+<p style="text-align:justify;">Visualizaremos la tabla de personas, por lo que creamos el método tabla en la clase ReportePersonasPDF:</p>
+<p>[sourcecode language="python"]<br>
+def tabla(self,pdf,y):<br>
+        #Creamos una tupla de encabezados para neustra tabla<br>
+        encabezados = (‘DNI’, ‘Nombre’, ‘Apellido Paterno’, ‘Apellido Materno’)<br>
+        #Creamos una lista de tuplas que van a contener a las personas<br>
+        detalles = [(persona.dni, persona.nombre, persona.apellido_paterno, persona.apellido_materno) for persona in Persona.objects.all()]<br>
+        #Establecemos el tamaño de cada una de las columnas de la tabla<br>
+        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm])<br>
+        #Aplicamos estilos a las celdas de la tabla<br>
+        detalle_orden.setStyle(TableStyle(<br>
+            [<br>
+                #La primera fila(encabezados) va a estar centrada<br>
+                ('ALIGN',(0,0),(3,0),'CENTER'),<br>
+                #Los bordes de todas las celdas serán de color negro y con un grosor de 1<br>
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),<br>
+                #El tamaño de las letras de cada una de las celdas será de 10<br>
+                ('FONTSIZE', (0, 0), (-1, -1), 10),<br>
+            ]<br>
+        ))<br>
+        #Establecemos el tamaño de la hoja que ocupará la tabla<br>
+        detalle_orden.wrapOn(pdf, 800, 600)<br>
+        #Definimos la coordenada donde se dibujará la tabla<br>
+        detalle_orden.drawOn(pdf, 60,y)<br>
+[/sourcecode]</p>
+<p>Veamos como queda nuestro método get ahora con la nueva llamada al método tabla:</p>
+<p>[sourcecode language="python"]<br>
+def get(self, request, *args, **kwargs):<br>
+        #Indicamos el tipo de contenido a devolver, en este caso un pdf<br>
+        response = HttpResponse(content_type=’application/pdf’)<br>
+        #La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal<br>
+        buffer = BytesIO()<br>
+        #Canvas nos permite hacer el reporte con coordenadas X y Y<br>
+        pdf = canvas.Canvas(buffer)<br>
+        #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.<br>
+        self.cabecera(pdf)<br>
+        y = 600<br>
+        self.tabla(pdf, y)<br>
+        #Con show page hacemos un corte de página para pasar a la siguiente<br>
+        pdf.showPage()<br>
+        pdf.save()<br>
+        pdf = buffer.getvalue()<br>
+        buffer.close()<br>
+        response.write(pdf)<br>
+        return response<br>
+[/sourcecode]</p>
+<p>Y este será el resultado final:</p>
+<p><a href="/2016/05/reporte_pdf3.jpg"><img class="aligncenter size-large wp-image-285" src="https://pythonpiura.files.wordpress.com/2016/05/reporte_pdf3.jpg?w=604" alt="reporte_pdf3" width="604" height="379"></a></p>
+<p>Eso es todo por hoy.<br>
+Saludos.</p>
+</body></html>

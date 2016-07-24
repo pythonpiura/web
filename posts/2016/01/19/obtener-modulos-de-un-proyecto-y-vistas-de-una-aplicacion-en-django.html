@@ -1,0 +1,76 @@
+<html><body><p>Debido a un requerimiento en un proyecto necesitabamos tener una página donde administrar todas las aplicaciones que hemos creado en nuestro proyecto Django y poder revisar que vistas(views) tiene cada uno de estas aplicaciones, para ello creamos una aplicación llamada permisos y una vista llamada AplicacionesProyecto de la siguiente manera:</p>
+<p>[sourcecode language="python"]<br>
+class AplicacionesProyecto(View):</p>
+<p>def get(self, request, *args, **kwargs):<br>
+    aplicaciones = [ app for app in miproyecto.settings.INSTALLED_APPS if not "django" in app ]<br>
+    context={‘aplicaciones’:aplicaciones}<br>
+    return render(request, ‘reporte_aplicaciones.html’,context)<br>
+[/sourcecode]</p>
+<p>Nuestro template se llama reporte_aplicaciones.html y tiene la siguiente estructura:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base_permisos.html" %}<br>
+{% block titulo_opcion %}<br>
+    Reporte de Aplicaciones<br>
+{% endblock titulo_opcion %}<br>
+{% block cuerpo_opcion %}<br>
+&lt;table class="table table-striped"&gt;<br>
+	&lt;tbhead&gt;<br>
+		&lt;tr&gt;<br>
+		&lt;th&gt;Nombre&lt;/th&gt;<br>
+		&lt;th&gt;Vistas&lt;/th&gt;<br>
+		&lt;/tr&gt;<br>
+	&lt;/tbhead&gt;<br>
+	&lt;tbody&gt;<br>
+		{% for app in aplicaciones %}<br>
+		&lt;tr&gt;<br>
+			&lt;td&gt;{{ app }}&lt;/td&gt;<br>
+			&lt;td&gt;<br>
+				&lt;a class="btn btn-small" href="{% url ‘permisos:reporte_vistas’ app %}"&gt;<br>
+					&lt;span class="glyphicon glyphicon-folder-open"&gt;&lt;/span&gt;<br>
+				&lt;/a&gt;<br>
+			&lt;/td&gt;<br>
+		&lt;/tr&gt;<br>
+		{% endfor %}<br>
+	&lt;/tbody&gt;<br>
+&lt;/table&gt;<br>
+{% endblock cuerpo_opcion %}<br>
+[/sourcecode]</p>
+<p>La idea es obtener un listado de tal manera que al dar click en el enlace de cada uno de los módulos podamos ver las vistas(Views) que tiene cada una de las aplicaciones:</p>
+<p>[sourcecode language="python"]<br>
+class ReporteVistas(View):</p>
+<p>	def get(self, request, *args, **kwargs):<br>
+		aplicacion = self.kwargs['aplicacion']<br>
+		lista_clases = []<br>
+		for nombre_modulo,instancia_modulo in inspect.getmembers(sys.modules[aplicacion]):<br>
+			if nombre_modulo==’views’:<br>
+				codigo_fuente = inspect.getsource(instancia_modulo)<br>
+				codigo_fuente = codigo_fuente.replace(" ", "")<br>
+				for miembro in dir(instancia_modulo):<br>
+					obj = getattr(instancia_modulo, miembro)<br>
+					if inspect.isclass(obj):<br>
+						cadena_clase = ‘class’ + miembro<br>
+						if codigo_fuente.find(cadena_clase)&gt;=0:<br>
+							lista_clases.append(miembro)<br>
+		context={‘vistas’:lista_clases}<br>
+		return render(request, ‘reporte_vistas_aplicacion.html’,context)<br>
+[/sourcecode]</p>
+<p>Nuestro template es reporte_vistas_aplicacion.html y tiene el siguiente contenido:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base_permisos.html" %}<br>
+{% block titulo_opcion %}<br>
+	Reporte de Vistas<br>
+{% endblock titulo_opcion %}<br>
+{% block cuerpo_opcion %}<br>
+	{% for vista in vistas %}<br>
+		{{ vista }}<br>
+	{% endfor %}<br>
+{% endblock cuerpo_opcion %}<br>
+[/sourcecode]</p>
+<p>Los urls respectivos son de la siguiente manera, archivo urls.py:</p>
+<p>[sourcecode language="python"]<br>
+url(r’^aplicaciones_proyecto’, login_required(AplicacionesProyecto.as_view()), name="aplicaciones_proyecto"),<br>
+url(r’^reporte_vistas/(?P&lt;aplicacion&gt;.+)/$’, login_required(ReporteVistas.as_view()), name="reporte_vistas"),<br>
+[/sourcecode]</p>
+<p>Así de esta manera tenemos un procedimiento un tanto rudimentario pero útil con el que obtenemos, las aplicaciones de nuestro proyecto y las vistas de cada una de ellas.<br>
+Hasta la próxima.</p>
+</body></html>

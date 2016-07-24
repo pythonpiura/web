@@ -1,0 +1,98 @@
+<html><body><p style="text-align:justify;">Para instalar un servidor de producción Django en Centos 7 usaremos Apache y mod_wsgi, mod_wsgi es un módulo de Apache, que permite servir aplicaciones hechas en Python, que tengan soporte para la interfaz WSGI.<br>
+Los requisitos para esto son tener un servidor Centos 7 correctamente instalado y configurado y los permisos de root para poder hacer las instalaciones correspondientes. Para comenzar el proceso, vamos a descargar e instalar todos los elementos que necesitamos de los repositorios de la distribución. Esto incluirá el servidor web Apache, el módulo mod_wsgi utilizado para interactuar con nuestra aplicación Django, y pip. Para obtener pip, tendremos que habilitar el repositorio EPEL(paquetes para Linux Empresarial):</p>
+<p>[sourcecode language="bash"]<br>
+yum install epel-release<br>
+[/sourcecode]</p>
+<p>Con EPEL habilitado nosotros podemos instalar los componentes tipeando:</p>
+<p>[sourcecode language="bash"]<br>
+yum install python-pip httpd mod_wsgi<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora que ya tenemos instalados los paquetes necesarios, debemos crear un entorno virtual para ellos instalaremos virtualenv usando pip:</p>
+<p>[sourcecode language="bash"]<br>
+pip install virtualenv<br>
+[/sourcecode]</p>
+<p>Ahora procedemos a crear nuestro entorno virtual:</p>
+<p>[sourcecode language="bash"]<br>
+virtualenv vproduccion<br>
+[/sourcecode]</p>
+<p>Y lo activamos:</p>
+<p>[sourcecode language="bash"]<br>
+source vproduccion/bin/activate<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Cuando activamos el entorno virtual nuestro prompt debe cambiar y aparecer entre paréntesis el nombre del entorno virtual activado.<br>
+Una vez que esto ha sucedido debemos instalar Django:</p>
+<p>[sourcecode language="bash"]<br>
+pip install django<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Cuando ya tengamos listo esto, subimos o creamos nuestro proyecto Django utilizando los comandos clásicos que ya hemos utilizado antes, ahora nos toca configurar Apache.<br>
+Una vez que comprobamos que el proyecto Django está funcionando, podemos configurar Apache como un front-end. Las conexiones de cliente que recibe serán traducidos al formato WSGI que la aplicación Django espera utilizando el módulo mod_wsgi. Esto debería haber sido activado automáticamente después de la instalación anterior. Para configurar lo anterior, tendremos que crear un nuevo archivo de configuración en el directorio /etc/httpd/conf.d. Vamos a llamar a este archivo django.conf:</p>
+<p>[sourcecode language="bash"]<br>
+nano /etc/httpd/conf.d/django.conf<br>
+[/sourcecode]</p>
+<p>Y dentro de él escribiremos lo siguiente:</p>
+<p>[sourcecode language="bash"]<br>
+#En mi caso la ruta es /home/jamaya y mi proyecto se llama siad<br>
+#Configuración para mostrar correctamente losa archivos estáticos<br>
+Alias /static /home/jamaya/siad/static<br>
+&lt;Directory /home/jamaya/siad/static&gt;<br>
+        Require all granted<br>
+&lt;/Directory&gt;<br>
+#Configuración para acceder correctamente al wsgi.py<br>
+&lt;Directory /home/jamaya/siad/siad/&gt;<br>
+&lt;Files wsgi.py&gt;<br>
+        Require all granted<br>
+&lt;/Files&gt;<br>
+&lt;/Directory&gt;</p>
+<p>WSGIDaemonProcess siad python-path=/home/jamaya/siad:/home/jamaya/vproduccion/lib/python2.7/site-packages<br>
+WSGIProcessGroup siad<br>
+WSGIScriptAlias /siad /home/jamaya/siad/siad/wsgi.py<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">A continuación, tenemos que arreglar los permisos para que el servicio de Apache puede acceder a nuestros archivos. Por defecto CentOS bloquea el directorio personal de cada usuario de manera muy restrictiva. Para evitar esto, añadiremos el usuario apache al grupo de nuestro propio usuario. Esto nos permitirá abrir los permisos sólo lo suficiente para que pueda llegar a los archivos correspondientes.<br>
+Añadimos el usuario apache a nuestro grupo, reemplazamos la palabra jamaya con nuestro usuario:</p>
+<p>[sourcecode language="bash"]<br>
+usermod -a -G jamaya apache<br>
+[/sourcecode]</p>
+<p>Damos permisos al grupo en la carpeta personal, esto permitirá al proceso apache acceder a los archivos.</p>
+<p>[sourcecode language="bash"]<br>
+chmod 710 /home/jamaya<br>
+[/sourcecode]</p>
+<p>Ya podemos iniciar el servicio de apache:</p>
+<p>[sourcecode language="bash"]<br>
+systemctl start httpd<br>
+[/sourcecode]</p>
+<p>Vamos a probar si la carga del proyecto funciona, vamos a otra computadora de la red y colocamos la direccion ip de nuestro servidor y la aplicación:</p>
+<p>[sourcecode language="bash"]<br>
+http://172.20.30.129/siad<br>
+[/sourcecode]</p>
+<p>Si hubiese algún problema lo mas rápido y sencillo es deshabilitar SELINUX, esto lo hacemos editando el archivo:</p>
+<p>[sourcecode language="bash"]<br>
+/etc/selinux/config<br>
+[/sourcecode]</p>
+<p>Y cambiando la siguiente linea:</p>
+<p>[sourcecode language="bash"]<br>
+SELINUX=disabled<br>
+[/sourcecode]</p>
+<p>Si todo funciona correctamente habilitamos el servicio apache para que se inicie automaticamente:</p>
+<p>[sourcecode language="bash"]<br>
+systemctl enable httpd<br>
+[/sourcecode]</p>
+<p>Recuerden tener siempre su archivo requerimientos.txt o requirements.txt para instalar todas las dependendencias que hacen que nuestro proyecto funcione con éxito. Este archivo se obtiene en nuestro entorno de desarrollo escribiendo el siguiente comando:</p>
+<p>[sourcecode language="bash"]<br>
+pip freeze &gt; requirements.txt<br>
+[/sourcecode]</p>
+<p>Y para instalarlas en nuestro entorno de producción usamos el mismo comando con algunas variantes:</p>
+<p>[sourcecode language="bash"]<br>
+pip install -r requirements.txt<br>
+[/sourcecode]</p>
+<p>En el caso nuestro teniamos un par de dependencias un poco complicadas de instalar en Centos: Pillow y psycopg2, por lo que tuvimos algunos errores, para solucionarlos debemos instalar algunas librerias, en centos en el caso de psycopg2 tenemos:</p>
+<p>[sourcecode language="bash"]<br>
+yum install gcc<br>
+yum install postgresql-devel python-devel<br>
+[/sourcecode]</p>
+<p>Y en el caso de Pillow:</p>
+<p>[sourcecode language="bash"]<br>
+yum install libjpeg-devel zlib-devel<br>
+[/sourcecode]</p>
+<p>Y listo eso es todo, ya tenemos nuestro servidor de producción.</p>
+<p>Saludos.</p>
+</body></html>

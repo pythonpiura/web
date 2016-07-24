@@ -1,0 +1,135 @@
+<html><body><p style="text-align:justify;">Hasta este momento hemos podido tener acceso sin ningún tipo de restricciones a nuestro proyecto tutorial, pero todos sabemos que en el mundo real, eso no funciona así, por lo tanto es necesario que creemos un login para que los usuarios puedan iniciar sesión, para ello vamos a rediseñar nuestro proyecto tutorial y vamos a agregar nuevas cosas, para hacer este pequeño post me he basado en estos artículos:</p>
+<p style="text-align:justify;"><a href="http://www.secnot.com/django-custom-login-cbv.html">Formulario Login usando Class Based Views </a></p>
+<p style="text-align:justify;"><a href="http://librosweb.es/libro/django_1_0/capitulo_12/utilizando_usuarios.html">El Libro de Django</a></p>
+<p style="text-align:justify;">
+Listo ahora si empecemos con todo:<br>
+Primero crearemos una aplicación llamada seguridad, donde vamos a manejar todo lo referente a los usuarios:</p>
+<p style="text-align:justify;"><a href="/2016/04/seguridad.jpg"><img class="alignnone size-full wp-image-195" src="/2016/04/seguridad.jpg" alt="seguridad" width="160" height="205"></a></p>
+<p>Ahora vamos a decirle a nuestro settings.py que vamos a utilizar la aplicación seguridad:</p>
+<p>[sourcecode language="python"]<br>
+INSTALLED_APPS = (<br>
+    ‘django.contrib.admin’,<br>
+    ‘django.contrib.auth’,<br>
+    ‘django.contrib.contenttypes’,<br>
+    ‘django.contrib.sessions’,<br>
+    ‘django.contrib.messages’,<br>
+    ‘django.contrib.staticfiles’,<br>
+    ‘seguridad’,<br>
+    ‘personas’,<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y redefinimos nuestro archivo urls.py principal de tal manera que al ingresar ya no apunte a la aplicación personas sino a seguridad:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import include, url<br>
+from django.contrib import admin</p>
+<p>urlpatterns = [<br>
+    url(r'^admin/', include(admin.site.urls)),<br>
+    url(r'^', include('seguridad.urls',namespace='seguridad')),<br>
+    url(r'^personas/', include('personas.urls',namespace='personas')),<br>
+]<br>
+[/sourcecode]</p>
+<p>Dentro de nuestra aplicación seguridad vamos a crear una vista llamada Login:</p>
+<p>[sourcecode language="python"]<br>
+#Importamos la vista genérica FormView<br>
+from django.views.generic.edit import FormView<br>
+from django.http.response import HttpResponseRedirect<br>
+from django.core.urlresolvers import reverse_lazy<br>
+#Importamos el formulario de autenticación de django<br>
+from django.contrib.auth.forms import AuthenticationForm<br>
+from django.contrib.auth import login</p>
+<p># Create your views here.<br>
+class Login(FormView):<br>
+    #Establecemos la plantilla a utilizar<br>
+    template_name = ‘login.html’<br>
+    #Le indicamos que el formulario a utilizar es el formulario de autenticación de Django<br>
+    form_class = AuthenticationForm<br>
+    #Le decimos que cuando se haya completado exitosamente la operación nos redireccione a la url bienvenida de la aplicación personas<br>
+    success_url =  reverse_lazy("personas:bienvenida")</p>
+<p>    def dispatch(self, request, *args, **kwargs):<br>
+        #Si el usuario está autenticado entonces nos direcciona a la url establecida en success_url<br>
+        if request.user.is_authenticated():<br>
+            return HttpResponseRedirect(self.get_success_url())<br>
+        #Sino lo está entonces nos muestra la plantilla del login simplemente<br>
+        else:<br>
+            return super(Login, self).dispatch(request, *args, **kwargs)</p>
+<p>    def form_valid(self, form):<br>
+        login(self.request, form.get_user())<br>
+        return super(Login, self).form_valid(form)</p>
+<p>[/sourcecode]</p>
+<p style="text-align:justify;">Expliquemos algunas cosas:<br>
+reverse_lazy, como su nombre lo indica, es una implementación perezosa de la URL de resolución inversa(reverse). A diferencia de la función inversa tradicional, reverse_lazy no se ejecutará hasta que se necesite el valor. Es útil para prevenir excepciones ‘Reverse Not Found’ cuando se trabaja con direcciones URL que no pueden ser conocidos inmediatamente.<br>
+dispatch, en el archivo urls.py el punto de entrada as_view() crea una instancia de la clase y llama al método dispatch(), (el despachador o resolvedor de URL) que busca la petición para determinar si es un GET, POST, etc, y releva la petición a un método que coincida con uno definido, o levante una excepción HttpResponseNotAllowed si no encuentra coincidencias.<br>
+form_valid, este método es llamado cuando el formulario valida los datos.<br>
+login, la llamada a login() acepta un objeto de la clase HttpRequest y un objeto User y almacena el identificador del usuario en la sesión, usando el entorno de sesiones de Django. En el caso nuestro, al usar el formulario de autenticación de django, invocando a form.get_user() obtenemos el objeto User.</p>
+<p style="text-align:justify;">Ahora vamos a crear la plantilla login.html y la guardaremos dentro de la carpeta templates(que debemos crear) en nuestra aplicación seguridad:</p>
+<p>[sourcecode language="html"]<br>
+{% load staticfiles %}<br>
+&lt;!DOCTYPE html&gt;<br>
+&lt;html&gt;<br>
+	&lt;head&gt;<br>
+	    &lt;meta charset="utf-8"/&gt;&lt;/meta&gt;<br>
+	    &lt;title&gt;CIPROPY&lt;/title&gt;<br>
+	    &lt;meta content="width=device-width, initial-scale=1.0" name="viewport"&gt;&lt;/meta&gt;<br>
+	    &lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;&lt;/link&gt;<br>
+	&lt;/head&gt;<br>
+	&lt;body&gt;<br>
+		&lt;div class="container"&gt;<br>
+			&lt;br&gt;<br>
+			&lt;div class="row"&gt;<br>
+				&lt;div class="col-md-4 col-md-offset-4"&gt;<br>
+					&lt;div class="login-panel panel panel-default"&gt;<br>
+					    &lt;div class="panel-heading"&gt;<br>
+					        &lt;h3 class="panel-title"&gt;CIPROPY&lt;/h3&gt;<br>
+					    &lt;/div&gt;<br>
+					    &lt;div class="panel-body"&gt;<br>
+							&lt;form role="form" method="post" id=’form_login’&gt;<br>
+								{% csrf_token %}<br>
+							    &lt;div class="form-group"&gt;<br>
+							    	&lt;label&gt;Usuario:&lt;/label&gt;<br>
+							        {{ form.username }}<br>
+							    &lt;/div&gt;<br>
+							    &lt;div class="form-group"&gt;<br>
+							    	&lt;label&gt;Contraseña:&lt;/label&gt;<br>
+							        {{ form.password }}<br>
+							    &lt;/div&gt;<br>
+							    &lt;button class="btn btn-lg btn-success btn-block" type="submit" name="login"/&gt;Login&lt;/button&gt;<br>
+						    &lt;/form&gt;<br>
+						&lt;/div&gt;<br>
+			        &lt;/div&gt;<br>
+			    &lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/body&gt;<br>
+&lt;/html&gt;<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Nótese que esta plantilla no extiende de ninguna otra, ya que su comportamiento es especial, otra cosa peculiar aquí es el uso de las etiquetas {{ form.username }} y {{ form.password }} que al renderizarse se comportan como dos cajas de texto una normal y la otra tipo password, esto es posible gracias a que estamos usando el Formulario AuthenticationForm de Django y lo hemos definido previamente en nuestra vista Login, este formulario tiene los campos username y password y los podemos utilizar en la plantilla anteponiendo el objeto form, este comportamiento especial es definido por la clase FormView.</p>
+<p style="text-align:justify;">Ahora si debemos crear un archivo urls.py en nuestra aplicación seguridad de la siguiente manera:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from seguridad.views import Login</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’, Login.as_view(), name="login"),<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y listo con eso ya tenemos que al momento de correr nuestro servidor de prueba nos va a mostrar lo siguiente:</p>
+<p><a href="/2016/04/login.jpg"><img class="wp-image-197 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/login1.jpg?w=300" alt="login" width="491" height="139"></a></p>
+<p style="text-align:justify;">Con esto ya tenemos el proyecto listo pero no tenemos ningún usuario, debemos crear el superusuario para probar, mas adelante en próximos tutoriales crearemos mas usuarios para hacer las pruebas correspondientes, nos movemos hasta la carpeta donde está ubicado el proyecto y desde una terminal escribimos lo siguiente:</p>
+<p>[sourcecode language="bash"]<br>
+python manage.py createsuperuser<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Nos pedira algunos datos, que debemos completar o presionar enter para dejar el dato mostrado por defecto entre paréntesis:</p>
+<p>[sourcecode language="bash"]<br>
+Username (leave blank to use ‘mamaya’):<br>
+Email address:<br>
+Password:<br>
+Password (again):<br>
+Superuser created successfully.<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">En mi caso he dejado por defecto el usuario mamaya, no le he puesto ninguna dirección de correo y he completado la password, esta no aparece al momento de ser digitada ya que es un mecanismo de protección de django, si todo se ha hecho correctamente nos aparecerá el mensaje “Superuser created successfully.”</p>
+<p>Ahora si ya podemos usar el usuario mamaya para loguearnos<br>
+<a href="/2016/04/login.jpg"><img class="wp-image-197 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/login.jpg?w=300" alt="login" width="622" height="172"></a></p>
+<p style="text-align:justify;">Si hemos escrito correctamente la password nos redireccionará hasta nuestra vista principal de la aplicación personas y sino nos volverá a mostrar la ventana de login:</p>
+<p><a href="/2016/04/presonas.jpg"><img class="wp-image-199 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/presonas.jpg?w=300" alt="presonas" width="675" height="198"></a></p>
+<p style="text-align:justify;">Listo eso es todo, ya estaremos mejorando el funcionamiento de nuestro login en próximos posts.</p>
+<p>Saludos.</p>
+</body></html>
