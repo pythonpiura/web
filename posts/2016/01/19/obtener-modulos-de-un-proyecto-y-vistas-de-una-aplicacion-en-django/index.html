@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../../../../2014/09/18/selenium-con-python/" title="Selenium con Python" type="text/html">
+<link rel="next" href="../../25/django-y-microsoft-sql-server/" title="Django y Microsoft SQL Server" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django">
+<meta property="og:url" content="http://pythonpiura.org/posts/2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/">
+<meta property="og:description" content="Debido a un requerimiento en un proyecto necesitabamos tener una página donde administrar todas las aplicaciones que hemos creado en nuestro proyecto Django y poder revisar que vistas(views) tiene cad">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-01-19T22:53:56-05:00">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="Python">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-01-19T22:53:56-05:00" itemprop="datePublished" title="2016-01-19 22:53">2016-01-19 22:53</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>Debido a un requerimiento en un proyecto necesitabamos tener una página donde administrar todas las aplicaciones que hemos creado en nuestro proyecto Django y poder revisar que vistas(views) tiene cada uno de estas aplicaciones, para ello creamos una aplicación llamada permisos y una vista llamada AplicacionesProyecto de la siguiente manera:</p>
+<p>[sourcecode language="python"]<br>
+class AplicacionesProyecto(View):</p>
+<p>def get(self, request, *args, **kwargs):<br>
+    aplicaciones = [ app for app in miproyecto.settings.INSTALLED_APPS if not "django" in app ]<br>
+    context={‘aplicaciones’:aplicaciones}<br>
+    return render(request, ‘reporte_aplicaciones.html’,context)<br>
+[/sourcecode]</p>
+<p>Nuestro template se llama reporte_aplicaciones.html y tiene la siguiente estructura:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base_permisos.html" %}<br>
+{% block titulo_opcion %}<br>
+    Reporte de Aplicaciones<br>
+{% endblock titulo_opcion %}<br>
+{% block cuerpo_opcion %}<br>
+&lt;table class="table table-striped"&gt;<br>
+	&lt;tbhead&gt;<br>
+		&lt;tr&gt;<br>
+		&lt;th&gt;Nombre&lt;/th&gt;<br>
+		&lt;th&gt;Vistas&lt;/th&gt;<br>
+		&lt;/tr&gt;<br>
+	&lt;/tbhead&gt;<br>
+	&lt;tbody&gt;<br>
+		{% for app in aplicaciones %}<br>
+		&lt;tr&gt;<br>
+			&lt;td&gt;{{ app }}&lt;/td&gt;<br>
+			&lt;td&gt;<br>
+				&lt;a class="btn btn-small" href="{% url ‘permisos:reporte_vistas’ app %}"&gt;<br>
+					&lt;span class="glyphicon glyphicon-folder-open"&gt;&lt;/span&gt;<br>
+				&lt;/a&gt;<br>
+			&lt;/td&gt;<br>
+		&lt;/tr&gt;<br>
+		{% endfor %}<br>
+	&lt;/tbody&gt;<br>
+&lt;/table&gt;<br>
+{% endblock cuerpo_opcion %}<br>
+[/sourcecode]</p>
+<p>La idea es obtener un listado de tal manera que al dar click en el enlace de cada uno de los módulos podamos ver las vistas(Views) que tiene cada una de las aplicaciones:</p>
+<p>[sourcecode language="python"]<br>
+class ReporteVistas(View):</p>
+<p>	def get(self, request, *args, **kwargs):<br>
+		aplicacion = self.kwargs['aplicacion']<br>
+		lista_clases = []<br>
+		for nombre_modulo,instancia_modulo in inspect.getmembers(sys.modules[aplicacion]):<br>
+			if nombre_modulo==’views’:<br>
+				codigo_fuente = inspect.getsource(instancia_modulo)<br>
+				codigo_fuente = codigo_fuente.replace(" ", "")<br>
+				for miembro in dir(instancia_modulo):<br>
+					obj = getattr(instancia_modulo, miembro)<br>
+					if inspect.isclass(obj):<br>
+						cadena_clase = ‘class’ + miembro<br>
+						if codigo_fuente.find(cadena_clase)&gt;=0:<br>
+							lista_clases.append(miembro)<br>
+		context={‘vistas’:lista_clases}<br>
+		return render(request, ‘reporte_vistas_aplicacion.html’,context)<br>
+[/sourcecode]</p>
+<p>Nuestro template es reporte_vistas_aplicacion.html y tiene el siguiente contenido:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base_permisos.html" %}<br>
+{% block titulo_opcion %}<br>
+	Reporte de Vistas<br>
+{% endblock titulo_opcion %}<br>
+{% block cuerpo_opcion %}<br>
+	{% for vista in vistas %}<br>
+		{{ vista }}<br>
+	{% endfor %}<br>
+{% endblock cuerpo_opcion %}<br>
+[/sourcecode]</p>
+<p>Los urls respectivos son de la siguiente manera, archivo urls.py:</p>
+<p>[sourcecode language="python"]<br>
+url(r’^aplicaciones_proyecto’, login_required(AplicacionesProyecto.as_view()), name="aplicaciones_proyecto"),<br>
+url(r’^reporte_vistas/(?P&lt;aplicacion&gt;.+)/$’, login_required(ReporteVistas.as_view()), name="reporte_vistas"),<br>
+[/sourcecode]</p>
+<p>Así de esta manera tenemos un procedimiento un tanto rudimentario pero útil con el que obtenemos, las aplicaciones de nuestro proyecto y las vistas de cada una de ellas.<br>
+Hasta la próxima.</p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/django/" rel="tag">Django</a></li>
+            <li><a class="tag p-category" href="../../../../../categories/python/" rel="tag">Python</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../../../2014/09/18/selenium-con-python/" rel="prev" title="Selenium con Python">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../25/django-y-microsoft-sql-server/" rel="next" title="Django y Microsoft SQL Server">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

@@ -1,0 +1,61 @@
+<html><body><p style="text-align:justify;">Despues de un receso hemos regresado y esta vez para hablar de IPython y Jupyter, como todos sabemos cuando estamos aprendiendo Python utilizamos el interprete directamente desde una terminal y vamos probando nuestros programas, al principio todo nos va muy bien pero luego notamos que nos vamos quedando cortos, es alli donde aparece <a href="https://ipython.org/">IPython</a> que tal como nos dice su pagina web nos provee una arquitectura rica para computación interactiva con:</p>
+<ul>
+<li style="text-align:justify;">Una shell interactiva poderosa.</li>
+<li style="text-align:justify;">Un nucleo para Jupyter.</li>
+<li style="text-align:justify;">Soporte para visualización de datos interactivos y uso de herramientas GUI.</li>
+<li style="text-align:justify;">Interprete embebido flexible para cargar en nuestros propios proyectos.</li>
+<li style="text-align:justify;">Fácil de usar, herramientas de alta performance para computación paralela.</li>
+</ul>
+<p style="text-align:justify;">Vamos a instalarlo para ir conociendolo mejor, para ello vamos a <a href="http://rukbottoland.com/blog/tutorial-de-python-virtualenv/">crear un entorno virtual</a>, al que llamaremos ipython:</p>
+<p>[sourcecode language="bash"]<br>
+virtualenv ipython<br>
+[/sourcecode]</p>
+<p>Lo activamos:</p>
+<p>[sourcecode language="bash"]<br>
+source ipython/bin/activate<br>
+[/sourcecode]</p>
+<p>Ahora procedemos a instalar ipython:</p>
+<p>[sourcecode language="bash"]<br>
+pip install ipython<br>
+[/sourcecode]</p>
+<p>Para probar que todo ha salido bien ponemos lo siguiente en la terminal:</p>
+<p>[sourcecode language="bash"]<br>
+ipython<br>
+[/sourcecode]</p>
+<p>Y nos aparecerá algo como esto, que nos indica que todo esta funcionando correctamente:</p>
+<p><a href="/2016/06/seleccic3b3n_369.png"><img class="aligncenter size-large wp-image-295" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_369.png?w=604" alt="Selección_369" width="604" height="156"></a></p>
+<p>Escribimos exit para salir del interprete y regresar a nuestra terminal:</p>
+<p>[sourcecode language="bash"]<br>
+exit<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora conozcamos a <a href="http://jupyter.org/">Jupyter</a>, tal como nos dice su pagina web, es una aplicación web que permite crear y compartir documentos que contienen código vivo, ecuaciones, visualizaciones y texto explicativo. Se puede usar para simulación numérica, simulación estadística, machine learning y mucho mas.<br>
+Vamos a instalarlo para ir conociéndolo:</p>
+<p>[sourcecode language="bash"]<br>
+pip install jupyter<br>
+[/sourcecode]</p>
+<p>Para correrlo debemos escribir lo siguiente:</p>
+<p>[sourcecode language="bash"]<br>
+ipython notebook<br>
+[/sourcecode]</p>
+<p>Y automáticamente nos abrirá en una pestaña del navegador lo siguiente:</p>
+<p><a href="/2016/06/seleccic3b3n_370.png"><img class="aligncenter size-large wp-image-296" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_370.png?w=604" alt="Selección_370" width="604" height="230"></a></p>
+<p style="text-align:justify;">Aqui podemos crear un nuevo notebook, dando click al boton new en la parte superior derecha y seleccionando Python 2:</p>
+<p><a href="/2016/06/seleccic3b3n_371.png"><img class="aligncenter size-full wp-image-297" src="/2016/06/seleccic3b3n_371.png" alt="Selección_371" width="329" height="312"></a></p>
+<p>Nos aparece una especie de consola web donde podemos ir escribiendo nuestros programas:</p>
+<p><a href="/2016/06/seleccic3b3n_373.png"><img class="aligncenter size-large wp-image-298" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_373.png?w=604" alt="Selección_373" width="604" height="135"></a></p>
+<p>Y ejecutando su contenido, como si trabajáramos en nuestra vieja terminal:</p>
+<p><a href="/2016/06/seleccic3b3n_372.png"><img class="aligncenter size-large wp-image-299" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_372.png?w=604" alt="Selección_372" width="604" height="272"></a></p>
+<p style="text-align:justify;">Maravilloso verdad, un interprete web, donde vamos escribiendo nuestros programas y viendo su funcionamiento, agregando texto, imagenes, generando graficos, podemos guardar cada noteboook, exportarlo a pdf, intercambiarlo, etc, como veran es una herramienta valiosisima para utilizar en la enseñanza, en el analisis de datos, en los trabajos de investigacion, etc.</p>
+<p style="text-align:justify;">En la red podemos encontrar una gran de cantidad de notebooks listos para descargar, hay tutoriales, tesis, trabajos de investigacion, etc. A nosotros nos intereso el siguiente curso, que es introductorio al leguaje Python:<br>
+<a href="http://ricardoduarte.github.io/python-for-developers/">Python For Developers</a></p>
+<p style="text-align:justify;">Vamos a descargar el archivo <a href="https://github.com/ricardoduarte/python-for-developers/zipball/master">zip</a> conteniendo todos los notebooks y lo guardamos en la ruta desde donde ejecutamos el comando “ipython notebook”, lo descomprimimos y tendremos lo siguiente:</p>
+<p><a href="/2016/06/seleccic3b3n_375.png"><img class="aligncenter size-large wp-image-300" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_375.png?w=604" alt="Selección_375" width="604" height="163"></a></p>
+<p>Como verán ahora ya nos aparece la carpeta donde esta el curso, ingresamos a ella:<br>
+<a href="/2016/06/seleccic3b3n_376.png"><img class="aligncenter size-full wp-image-301" src="/2016/06/seleccic3b3n_376.png" alt="Selección_376" width="451" height="523"></a></p>
+<p>Ahora ingresamos a uno de los capítulos:</p>
+<p style="text-align:justify;"><a href="/2016/06/seleccic3b3n_378.png"><img class="aligncenter size-large wp-image-302" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_378.png?w=604" alt="Selección_378" width="604" height="205"></a><br>
+Seleccionamos el archivo con la extensión “ipynb” y veremos un hermoso curso de introduccion a Python donde podemos ir interactuando con los programas de ejemplo:</p>
+<p style="text-align:justify;"><a href="/2016/06/seleccic3b3n_377.png"><img class="aligncenter size-large wp-image-303" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_377.png?w=604" alt="Selección_377" width="604" height="346"></a></p>
+<p>Genial no, ahora aprender Python y hacer demostraciones de código va a ser mas divertido :-)</p>
+<p>Eso es todo por hoy, saludos.</p>
+</body></html>

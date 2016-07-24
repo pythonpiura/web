@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Scrapping con Python y Selenium | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../../02/personalizando-permisos/" title="Personalizando Permisos" type="text/html">
+<link rel="next" href="../../09/fotos-charla-web-scrapping-con-python-y-selenium/" title="Fotos Charla Web Scrapping con Python y Selenium" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Web Scrapping con Python y Selenium">
+<meta property="og:url" content="http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/">
+<meta property="og:description" content="El día de hoy tuvimos el agrado de ser invitados por el Círculo UEL a dar una charla en el marco del FLISOL 2016 en la Universidad Los Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Py">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-05-07T20:58:06-05:00">
+<meta property="article:tag" content="pillow">
+<meta property="article:tag" content="pytesseract">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Selenium">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Web Scrapping con Python y Selenium</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-05-07T20:58:06-05:00" itemprop="datePublished" title="2016-05-07 20:58">2016-05-07 20:58</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p style="text-align:justify;">El día de hoy tuvimos el agrado de ser invitados por el <a href="https://cideuel.wordpress.com/">Círculo UEL</a> a dar una charla en el marco del FLISOL 2016 en la Universidad Los Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Python y Selenium, hicimos algunos ejemplos muy interesantes y nos encantó la acogida del público y el interés suscitado, vamos a compartir los artículos que usamos:</p>
+<p style="text-align:justify;"><a href="https://pythonpiura.wordpress.com/2014/09/18/selenium-con-python/">Selenium con Python</a></p>
+<p style="text-align:justify;"><a href="https://pythonpiura.wordpress.com/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">Romper Captchas con Pytesseract y Selenium</a></p>
+<p style="text-align:justify;">Las diapositivas:</p>
+<p style="text-align:justify;"><a href="../../../../../2016/05/charlapythonflisol2016.pdf">Descargar</a></p>
+<p>El script que fue la estrella de la mañana:</p>
+<p>[sourcecode language="python"]<br>
+# -*- coding: utf-8 -*-<br>
+from selenium import webdriver<br>
+from selenium.webdriver.common.by import By<br>
+from selenium.webdriver.support.wait import WebDriverWait<br>
+from selenium.webdriver.support import expected_conditions as EC<br>
+import os</p>
+<p>try:<br>
+    import Image<br>
+except ImportError:<br>
+    from PIL import Image<br>
+import pytesseract</p>
+<p>def decodifica_campo(campo):<br>
+	return u"%s" % campo</p>
+<p>def ir_sunat_web(ruta):<br>
+	fp = webdriver.FirefoxProfile()<br>
+	fp.set_preference("browser.download.manager.showWhenStarting",False)<br>
+	fp.set_preference("browser.download.manager.closeWhenDone", True);<br>
+	fp.set_preference("browser.download.manager.showAlertOnComplete", False);<br>
+	fp.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/zip");<br>
+	driver = webdriver.Firefox(fp)<br>
+	driver.get("http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias")<br>
+	try:<br>
+		WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "imagen")))<br>
+	except:<br>
+		print "No carga imagen"<br>
+	driver.save_screenshot("screenshot.png")<br>
+	img=Image.open(‘screenshot.png’)<br>
+	img_recortada = img.crop((700,309,800,361))<br>
+	img_recortada.save("recorte.png")<br>
+        try:<br>
+            captcha = pytesseract.image_to_string(img_recortada)<br>
+            codigo = driver.find_element_by_name("codigoA")<br>
+            codigo.send_keys(captcha)<br>
+        except:<br>
+            pass<br>
+	archivo = driver.find_element_by_name("archivo")<br>
+	archivo.send_keys(ruta)<br>
+	form = driver.find_element_by_name("frmConsMulRucArchivo")<br>
+	botones=form.find_elements_by_class_name("form-button")<br>
+	botones[1].click()<br>
+	try:<br>
+		WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "form-table")))<br>
+		enlace=driver.find_element(By.TAG_NAME,"a")<br>
+		enlace.click()<br>
+	except:<br>
+		print "Element is not present"<br>
+	driver.close()</p>
+<p>def main():<br>
+	ruta = "/home/usuario/carpeta"<br>
+	ruta_archivo=os.path.join(ruta,"rucs.zip")<br>
+	ir_sunat_web(ruta_archivo)</p>
+<p>main()<br>
+[/sourcecode]</p>
+<p>Así como también un vídeo de su funcionamiento.</p>
+<p>http://www.youtube.com/watch?v=mUaVFYTlibM</p>
+<p>Saludos y muchas gracias.</p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/pillow/" rel="tag">pillow</a></li>
+            <li><a class="tag p-category" href="../../../../../categories/pytesseract/" rel="tag">pytesseract</a></li>
+            <li><a class="tag p-category" href="../../../../../categories/python/" rel="tag">Python</a></li>
+            <li><a class="tag p-category" href="../../../../../categories/selenium/" rel="tag">Selenium</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../02/personalizando-permisos/" rel="prev" title="Personalizando Permisos">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../09/fotos-charla-web-scrapping-con-python-y-selenium/" rel="next" title="Fotos Charla Web Scrapping con Python y Selenium">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2016/01/25/web-scraping-con-selenium/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Web Scraping con Selenium | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2016/01/25/web-scraping-con-selenium/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../django-y-microsoft-sql-server/" title="Django y Microsoft SQL Server" type="text/html">
+<link rel="next" href="../../26/romper-captchas-con-pytesseract-y-selenium/" title="Romper Captchas con Pytesseract y Selenium" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Web Scraping con Selenium">
+<meta property="og:url" content="http://pythonpiura.org/posts/2016/01/25/web-scraping-con-selenium/">
+<meta property="og:description" content="En entradas anteriores comentabamos sobre el uso de Selenium para hacer test, en esta oportunidad lo utilizaremos para extraer datos de una web en particular, ahora manos a la obra.
+Para hacer la extr">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-01-25T22:51:19-05:00">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Selenium">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Web Scraping con Selenium</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-01-25T22:51:19-05:00" itemprop="datePublished" title="2016-01-25 22:51">2016-01-25 22:51</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p>En entradas anteriores comentabamos sobre el uso de Selenium para hacer test, en esta oportunidad lo utilizaremos para extraer datos de una web en particular, ahora manos a la obra.<br>
+Para hacer la extracción de datos primero necesitamos conocer bien la página web objetivo, en este caso es una página de consulta de datos de teléfonos de personas y empresas llamada “Páginas Blancas” su URL es la siguiente:<br>
+http://www.paginasblancas.pe/</p>
+<p>Y también debemos conocer el modo de funcionamiento de la página en cuestión, en este caso se debe ingresar la cadena a buscar en una caja de texto y presionar un botón que dice “Buscar” para enviar la consulta, si hay datos coincidentes con el texto ingresado, la página nos mostrará una lista de resultados que contienen la razón social o nombre, la dirección y el teléfono:</p>
+<p>Búsqueda</p>
+<p><a href="../../../../../2016/01/busqueda.png" rel="attachment wp-att-89"><img class="alignnone size-medium wp-image-89" src="https://pythonpiura.files.wordpress.com/2016/01/busqueda.png?w=300" alt="busqueda" width="300" height="102"></a></p>
+<p>Resultados</p>
+<p><a href="../../../../../2016/01/resultados.png" rel="attachment wp-att-90"><img class="alignnone size-medium wp-image-90" src="https://pythonpiura.files.wordpress.com/2016/01/resultados.png?w=300" alt="resultados" width="300" height="246"></a></p>
+<p>Nos ayudaremos con las herramientas que tiene Firefox para poder identificar los elementos HTML de la página objetivo:<br><a href="../../../../../2016/01/herramientas.png" rel="attachment wp-att-86"><img class="alignnone size-medium wp-image-86" src="https://pythonpiura.files.wordpress.com/2016/01/herramientas.png?w=300" alt="Herramientas" width="300" height="88"></a></p>
+<p>Empezamos identificando la caja de texto donde se envían los datos a consultar:</p>
+<p><a href="../../../../../2016/01/caja.png" rel="attachment wp-att-87"><img class="alignnone size-medium wp-image-87" src="https://pythonpiura.files.wordpress.com/2016/01/caja.png?w=300" alt="caja" width="300" height="36"></a></p>
+<p>Y el botón que ejecuta la consulta:</p>
+<p><a href="../../../../../2016/01/boton.png" rel="attachment wp-att-88"><img class="alignnone size-medium wp-image-88" src="https://pythonpiura.files.wordpress.com/2016/01/boton.png?w=300" alt="boton" width="300" height="23"></a></p>
+<p>Ahora que ya tenemos identificados estos elementos procedemos a escribir nuestro script en python:</p>
+<p>[sourcecode language="python"]</p>
+<p># -*- coding: utf-8 -*-<br>
+from selenium import webdriver<br>
+from selenium.webdriver.common.by import By<br>
+from selenium.webdriver.support.wait import WebDriverWait<br>
+from selenium.webdriver.support import expected_conditions as EC<br>
+import os</p>
+<p>def ir_paginas_blancas_web(cadena):<br>
+    driver = webdriver.Firefox()<br>
+    #Página a la que queremos acceder<br>
+    driver.get("http://www.paginasblancas.pe")<br>
+    lista_datos = []<br>
+    try:<br>
+        #Verificamos si el elemento con ID="nName" ya está cargado, este elemento es la caja de texto donde se hacen las busquedas<br>
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "nName")))<br>
+        #Obtenemos la caja de texto de busquedas<br>
+        input_nombre = driver.find_element_by_id("nName")<br>
+        #Enviamos la cadena que estamos buscando<br>
+        input_nombre.send_keys(cadena)<br>
+        #Obtenemos el botón que ejecuta la búsqueda<br>
+        boton = driver.find_element_by_id("btnSrchName")<br>
+        #Damos click al botón<br>
+        boton.click()<br>
+    except:<br>
+        #Mostramos este mensaje en caso de que se presente algún problema<br>
+        print "El elemento no está presente"<br>
+    try:<br>
+        #Si se encuentran resultados la página los muestra en elementos de nombre "m-results-business"<br>
+        #Para ello esperamos que estos elementos se carguen para proceder a consultarlos<br>
+        WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "m-results-business")))<br>
+    except:<br>
+        print ‘Elementos no encontrados’<br>
+    #Obtenemos en una lista los elementos encontrados<br>
+    resultados = driver.find_elements_by_class_name("m-results-business")<br>
+    for resultado in resultados:<br>
+        #En cada uno de los elementos encontrados buscamos un elemento interno que tiene por nombre info<br>
+        datos = resultado.find_element_by_class_name("info")<br>
+        #Dentro del elemento interno encontrado buscamos aquellos elementos que son enlaces(etiqueta &lt;a&gt;)<br>
+        nombre = datos.find_element_by_tag_name(‘a’)<br>
+        #Comprobamos si la cadena que buscamos coincide con la razón social o el nombre mostrado por la página<br>
+        if nombre.text.upper().find(cadena)&lt;&gt;-1 or cadena.find(nombre.text.upper())&lt;&gt;-1:<br>
+            #Obtenemos la parte de la dirección<br>
+            span = datos.find_elements_by_tag_name(‘span’)<br>
+            direccion = span[2].text<br>
+            partes_ubigeo = span[3].text.split(‘-’)<br>
+            distrito = partes_ubigeo[0].strip()<br>
+            try:<br>
+                departamento = partes_ubigeo[1].strip()<br>
+            except:<br>
+                departamento = ‘-’<br>
+        #Obtenemos los Datos telefonicos para ello debemos simular el click en el botón que dice "Ver Teléfono"<br>
+        boton_telefono = resultado.find_element_by_class_name("m-button–results-business–icon")<br>
+        boton_telefono.click()<br>
+        #Obtenemos los teléfonos que se muestran como enlaces<br>
+        enlaces = resultado.find_elements_by_tag_name(‘a’)<br>
+        telefono = enlaces[1].text.replace(‘ ‘, ”)<br>
+        #Finalmente metemos en una lista de listas los datos obtenidos<br>
+        lista_datos.append([direccion,distrito,departamento,telefono])</p>
+<p>    driver.close()<br>
+    return lista_datos</p>
+<p>def main():<br>
+    print ir_paginas_blancas_web(‘UNIVERSIDAD DE LIMA’)</p>
+<p>main()</p>
+<p>[/sourcecode]</p>
+<p> </p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/python/" rel="tag">Python</a></li>
+            <li><a class="tag p-category" href="../../../../../categories/selenium/" rel="tag">Selenium</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../django-y-microsoft-sql-server/" rel="prev" title="Django y Microsoft SQL Server">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../26/romper-captchas-con-pytesseract-y-selenium/" rel="next" title="Romper Captchas con Pytesseract y Selenium">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

@@ -1,0 +1,48 @@
+<html><body><p style="text-align:justify;">Hasta ahora hemos trabajado con los permisos básicos que nos proporciona Django de manera automática, pero que pasa si nosotros quisieramos restringir cosas mas al detalle, por ejemplo que un usuario determinado no vea el detalle de la persona, o la tabla que lista a todas las personas, o que no pueda exportar a una hoja de cálculo.<br>
+Empecemos por lo mas sencillo, creemos un permiso para restringir el acceso al detalle de la persona, para ello personalizaremos los permisos en el modelo, de la siguiente manera:</p>
+<p>models.py</p>
+<p>[sourcecode language="python"]<br>
+from django.db import models</p>
+<p># Create your models here.<br>
+class Persona(models.Model):<br>
+    dni= models.CharField(primary_key=True,max_length=8)<br>
+    nombre = models.CharField(max_length=100)<br>
+    apellido_paterno = models.CharField(max_length=100)<br>
+    apellido_materno = models.CharField(max_length=100) </p>
+<p>    class Meta:<br>
+        permissions = ((‘ver_detalle_persona’, ‘Puede ver detalle Persona’),)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Veamos que hay de nuevo en nuestro modelo y lo primero que salta a la vista es el uso de una <a href="https://datafull.co/p/que-es-una-metaclase-en-python">metaclase</a> aquí definiremos el atributo permissions que es una tupla donde se definiran los múltiples permisos personalizados que podemos crear en este caso tenemos el par (‘ver_detalle_persona’, ‘Puede ver detalle Persona’) donde ‘ver_detalle_persona’ es el nombre del permiso y ‘Puede ver detalle Persona’ es una especie de descripción de lo que significa ese permiso, ahora ya lo tenemos listo, pero no podemos aplicarlo directamente sino que primero tenemos que hacer la migración correspondiente a la base de datos, ya que ha ocurrido una modificación del modelo:</p>
+<p>[sourcecode language="bash"]<br>
+python manage.py makemigrations personas<br>
+python manage.py migrate<br>
+[/sourcecode]</p>
+<p>Ya con esto podemos usar el permiso, para ello modificaremos el archivo personas.html:</p>
+<p>[sourcecode language="html"]<br>
+{% if perms.personas.ver_detalle_persona %}<br>
+&lt;a class="btn btn-small" href="{% url ‘personas:detalle_persona’ persona.pk %}"&gt;<br>
+	&lt;span class="glyphicon glyphicon-folder-open"&gt;&lt;/span&gt;<br>
+&lt;/a&gt;<br>
+{% endif %}<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora nos logueamos con cualquiera de los usuarios nuevos que creamos en la sesión pasada, en este caso lo haremos con usuario1:</p>
+<p><a href="/2016/05/sin_permiso_ver_persona.jpg"><img class="aligncenter size-large wp-image-247" src="https://pythonpiura.files.wordpress.com/2016/05/sin_permiso_ver_persona.jpg?w=604" alt="sin_permiso_ver_persona" width="604" height="208"></a></p>
+<p style="text-align:justify;">Y vemos que no aparece el ícono del libro por lo tanto aparentemente no podemos acceder al detalle de la persona, pero igual que la vez pasada si es posible acceder a través de la url:</p>
+<p>http://localhost:8000/personas/detalle_persona/44626821/</p>
+<p>Nos falta hacer lo mismo de antes en nuestra vista DetallePersona:</p>
+<p>views.py</p>
+<p>[sourcecode language="python"]<br>
+class DetallePersona(DetailView):<br>
+    model = Persona<br>
+    template_name = ‘detalle_persona.html’</p>
+<p>    @method_decorator(permission_required(‘personas.ver_detalle_persona’,reverse_lazy(‘personas:personas’)))<br>
+    def dispatch(self, *args, **kwargs):<br>
+        return super(DetallePersona, self).dispatch(*args, **kwargs)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Listo ya con esto el usuario no puede ingresar al detalle de la persona y es inmediatamente redireccionado a la tabla de personas, ahora otorguemosle permisos al usuario1 a través de la interfaz de administración:</p>
+<p><a href="/2016/05/permiso_ver_detalle_persona.jpg"><img class="aligncenter size-large wp-image-248" src="https://pythonpiura.files.wordpress.com/2016/05/permiso_ver_detalle_persona.jpg?w=604" alt="permiso_ver_detalle_persona" width="604" height="156"></a></p>
+<p style="text-align:justify;">Damos click en la flecha y guardamos la modificación, ahora ingresemos a la aplicación personas con el usuario1 y nos debe salir una pantalla como la siguiente:<br>
+<a href="/2016/05/con_permiso_ver_persona.jpg"><img class="aligncenter size-large wp-image-249" src="https://pythonpiura.files.wordpress.com/2016/05/con_permiso_ver_persona.jpg?w=604" alt="con_permiso_ver_persona" width="604" height="205"></a></p>
+<p style="text-align:justify;">Eso es todo por hoy, en un proximo post terminaremos de personalizar el resto de permisos y hacerle algunas modificaciones estéticas a nuestro proyecto.<br>
+Saludos.</p>
+</body></html>

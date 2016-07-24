@@ -1,0 +1,24 @@
+<html><body><p style="text-align:justify;">Si por algún oscuro motivo necesitas conectar Django con Microsoft SQL Server, la solución la tiene el proyecto django-pyodbc-azure la información completa sobre el proyecto la encontrarán en su web oficial:<br>
+https://github.com/michiya/django-pyodbc-azure<br>
+La última versión del proyecto soporta Django 1.9.1 y Microsoft SQL Server 2005,2008/2008R2,2012,2014.<br>
+Para empezar a trabajar debemos instalar de la siguiente forma:<br>
+pip install django-pyodbc-azure</p>
+<p style="text-align:justify;">Y luego configurar el archivo settings de nuestro proyecto, en la parte relacionada a la conexión a las bases de datos:</p>
+<p>[sourcecode language="python"]<br>
+DATABASES = {<br>
+    ‘default’: {<br>
+        ‘ENGINE’: ‘sql_server.pyodbc’,<br>
+        ‘NAME’: ‘NOMBRE_BD’,<br>
+        ‘USER’: ‘usuario’,<br>
+        ‘PASSWORD’: ‘password’,<br>
+        ‘HOST’: ‘IP_SERVIDOR_SQL_SERVER’,<br>
+        ‘PORT’: ”,<br>
+        ‘OPTIONS’: {<br>
+            ‘driver’: ‘SQL Server Native Client 10.0′,<br>
+            }<br>
+    },<br>
+}<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y listo eso es todo, si desean conocer un poco mas este excelente proyecto remitanse a su página web.<br>
+Saludos.</p>
+</body></html>

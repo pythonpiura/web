@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2014/09/18/selenium-con-python/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selenium con Python | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2014/09/18/selenium-con-python/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../../14/python-y-la-vision-artificial/" title="Python y la Visión Artificial." type="text/html">
+<link rel="next" href="../../../../2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/" title="Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Selenium con Python">
+<meta property="og:url" content="http://pythonpiura.org/posts/2014/09/18/selenium-con-python/">
+<meta property="og:description" content="Buenas noches estimados amigos en esta oportunidad vamos a trabajar con Selenium, esta excelente herramienta que nos permite testear nuestras aplicaciones web actuando como si lo hiciera un usuario fi">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2014-09-18T01:15:18-05:00">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Selenium">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Selenium con Python</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2014-09-18T01:15:18-05:00" itemprop="datePublished" title="2014-09-18 01:15">2014-09-18 01:15</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p style="text-align:justify;">Buenas noches estimados amigos en esta oportunidad vamos a trabajar con Selenium, esta excelente herramienta que nos permite testear nuestras aplicaciones web actuando como si lo hiciera un usuario final que interactúa con nuestra aplicación, la primera vez que la probé me sorprendí gratamente porque no sabía de la existencia de una herramienta tan interesante, bueno manos a la obra, para instalar selenium con Python debemos usar nuestra querida herramienta pip de la siguiente manera:</p>
+<p>[sourcecode language="bash"]<br>
+    sudo pip install selenium<br>
+[/sourcecode]<br>
+Si tuviésemos configurado un entorno virtual simplemente trabajaríamos así:</p>
+<p>[sourcecode language="python"]<br>
+    pip install selenium<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Con esto ya tendremos instalada esta excelente aplicación, si por algún motivo tuviesen algún error o ya tuviesen instalado selenium y quieren actualizarlo deben poner lo siguiente en su terminal:</p>
+<p>[sourcecode language="python"]<br>
+    pip install selenium –upgrade<br>
+[/sourcecode]<br>
+Para probar su funcionamiento debemos tipear este ejemplo bastante simple:</p>
+<p>[sourcecode language="python"]<br>
+    #Importamos el módulo webdriver que nos permite interactuar con nuestro navegador<br>
+    from selenium import webdriver<br>
+    #Importamos la clase Keys que provee las teclas RETURN, F1, ALT, etc de nuestro teclado<br>
+    from selenium.webdriver.common.keys import Keys<br>
+    #Creamos una instancia de Firefox webdriver para poder usar el navegador firefox en esta prueba<br>
+    driver = webdriver.Firefox()<br>
+    #El método get permite navegar hacia un enlace determinado en este caso la página de Python.org<br>
+    #WebDriver esperará hasta que la página esté cargada<br>
+    driver.get("http://www.python.org")<br>
+    #En esta línea confirmaremos si el título tiene la palabra Python<br>
+    assert "Python" in driver.title<br>
+    #WebDriver ofrece varias maneras de encontrar los elementos de una página web<br>
+    #En este ejemplo queremos encontrar el elemento que tenga como atributo name la letra "q"(es la barra de busqueda de la página)<br>
+    elem = driver.find_element_by_name("q")<br>
+    #Como ya localizamos el elemento y sabemos que es una caja de texto, vamos a escribir en ella la palabra "selenium"<br>
+    elem.send_keys("selenium")<br>
+    #Y finalmente enviaremos la busqueda pulsando la tecla RETURN<br>
+    elem.send_keys(Keys.RETURN)<br>
+    #Cerramos el navegador<br>
+    driver.close()<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Verán que cuando ejecuten el script demorará un poquito pero nos mostrará una ventana de Firefox, posteriormente cargará la página de Python.org y en la caja de busqueda escribirá la palabra “selenium” para finalmente cerrar el navegador que había abierto culminando la ejecución del script.</p>
+<p style="text-align:justify;">Esperemos que este pequeño post sea de gran utilidad para ustedes queridos lectores y si tuviesen algún problema al ejecutar el script por favor nos avisan.</p>
+<p>Saludos.</p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/python/" rel="tag">Python</a></li>
+            <li><a class="tag p-category" href="../../../../../categories/selenium/" rel="tag">Selenium</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../14/python-y-la-vision-artificial/" rel="prev" title="Python y la Visión Artificial.">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../../../2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/" rel="next" title="Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

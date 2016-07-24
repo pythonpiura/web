@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2016/04/20/templateview/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Uso de TemplateView | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2016/04/20/templateview/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../../19/generar-reportes-en-excel-desde-django/" title="Generar Reportes en Excel desde Django" type="text/html">
+<link rel="next" href="../../21/uso-de-detailview/" title="Uso de DetailView" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Uso de TemplateView">
+<meta property="og:url" content="http://pythonpiura.org/posts/2016/04/20/templateview/">
+<meta property="og:description" content="Vamos a trabajar con TemplateView para hacer una vista basada en clases, algo que ya hemos utilizado antes y que es bastante fácil de programar, para ello seguiremos con nuestro proyecto tutorial, pri">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-04-20T21:20:23-05:00">
+<meta property="article:tag" content="Django">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Uso de TemplateView</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-04-20T21:20:23-05:00" itemprop="datePublished" title="2016-04-20 21:20">2016-04-20 21:20</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p style="text-align:justify;">Vamos a trabajar con TemplateView para hacer una vista basada en clases, algo que ya hemos utilizado antes y que es bastante fácil de programar, para ello seguiremos con nuestro proyecto tutorial, primero le vamos a hacer unas pequeñas modificaciones para que se adapte a lo que necesitamos.<br>
+Editamos el archivo base.html para agregar un pequeño menú en la parte superior de la pantalla:</p>
+<p>[sourcecode language="html"]<br>
+{% load staticfiles %}<br>
+&lt;!DOCTYPE html&gt;<br>
+&lt;html&gt;<br>
+	&lt;head&gt;<br>
+		&lt;meta charset="utf-8"&gt;<br>
+	    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;<br>
+	    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;<br>
+	    &lt;meta name="description" content=""&gt;<br>
+	    &lt;meta name="author" content=""&gt;<br>
+		&lt;title&gt;Ejemplo Círculo de Programadores de Python Piura&lt;/title&gt;<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&gt;<br>
+		&lt;script src="{% static "js/jquery.js" %}"&gt;&lt;/script&gt;<br>
+	    &lt;script src="{% static "js/bootstrap.min.js" %}"&gt;&lt;/script&gt;<br>
+	    &lt;script src="{% static "js/jquery.dataTables.min.js" %}"&gt;&lt;/script&gt;<br>
+	&lt;/head&gt;<br>
+	&lt;body&gt;<br>
+		&lt;div id="wrapper"&gt;<br>
+			&lt;nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"&gt;<br>
+				&lt;div class="navbar-header"&gt;<br>
+			        &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&gt;<br>
+			            &lt;span class="sr-only"&gt;Desplegar navegación&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			        &lt;/button&gt;<br>
+			        &lt;a class="navbar-brand" href="#"&gt;<br>
+						&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt; Inicio<br>
+					&lt;/a&gt;<br>
+					&lt;a class="navbar-brand" href="#"&gt;<br>
+						&lt;span class="glyphicon glyphicon-user"&gt;&lt;/span&gt; Personas<br>
+					&lt;/a&gt;<br>
+			    &lt;/div&gt;<br>
+				{% block menu %}<br>
+		        {% endblock menu %}<br>
+		    &lt;/nav&gt;<br>
+			&lt;div id="page-wrapper"&gt;<br>
+				&lt;div class="container-fluid"&gt;<br>
+					{% block cuerpo %}<br>
+					{% endblock cuerpo %}<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/body&gt;<br>
+	{% block js %}<br>
+	{% endblock js %}<br>
+&lt;/html&gt;<br>
+[/sourcecode]</p>
+<p>Tendremos algo como esto:</p>
+<p><a href="../../../../../2016/04/menu.jpg"><img class="wp-image-165 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/menu.jpg?w=300" alt="menu" width="600" height="48"></a></p>
+<p style="text-align:justify;">Creamos un archivo llamado bienvenida.html para poner un aviso de bienvenida y de esta manera no ingresar directamente a nuestra tabla de personas, para ello debemos crear una vista usando TemplateView y agregar el url correspondiente:</p>
+<p>bienvenida.html</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}<br>
+&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Círculo de Programadores de Python Piura&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-info"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Bienvenido<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;div class=’form-group’&gt;<br>
+					&lt;div class="row"&gt;<br>
+						&lt;h3 class="text-center"&gt;Bienvenido.&lt;/h3&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Creamos una clase llamada Bienvenida, que hereda de TemplateView y le decimos que la plantilla a utilizar se llamará bienvenida.html.</p>
+<p>views.py</p>
+<p>[sourcecode language="python"]<br>
+from django.views.generic.base import TemplateView</p>
+<p>class Bienvenida(TemplateView):<br>
+    template_name = "bienvenida.html"<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">En el archivo urls.py cambiamos la url raiz para que apunte a la clase Bienvenida y creamos una url llamada personas para mostrar la tabla personas.</p>
+<p>urls.py</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona, ReportePersonasExcel,\<br>
+    Bienvenida</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’,Bienvenida.as_view(), name="bienvenida"),<br>
+    url(r’^personas/$’,Personas.as_view(), name="personas"),<br>
+    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
+    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),</p>
+<p>)<br>
+[/sourcecode]</p>
+<p>Con lo que tendriamos algo como esto:</p>
+<p><a href="../../../../../2016/04/nueva.jpg"><img class="alignnone wp-image-164" src="https://pythonpiura.files.wordpress.com/2016/04/nueva.jpg?w=300" alt="nueva" width="458" height="136"></a></p>
+<p style="text-align:justify;">¿Y ahora como vemos nuestra tabla personas? Muy fácil haciendo que el enlace llamado “Personas” apunte a la url personas y de paso también hacemos que el enlace “Inicio” apunte a la url de bienvenida, para ello modificamos el archivo base.html:</p>
+<p>[sourcecode language="html"]<br>
+&lt;a class="navbar-brand" href="{% url ‘personas:bienvenida’ %}"&gt;<br>
+	&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt; Inicio<br>
+&lt;/a&gt;<br>
+&lt;a class="navbar-brand" href="{% url ‘personas:personas’ %}"&gt;<br>
+	&lt;span class="glyphicon glyphicon-user"&gt;&lt;/span&gt; Personas<br>
+&lt;/a&gt;<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Con esto hemos podido ver el uso sencillo de TemplateView mas adelante vamos a utilizar otras vistas basadas en clases, hasta la próxima.<br>
+Saludos.</p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/django/" rel="tag">Django</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../19/generar-reportes-en-excel-desde-django/" rel="prev" title="Generar Reportes en Excel desde Django">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../21/uso-de-detailview/" rel="next" title="Uso de DetailView">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/blog/index-2.html">
+<meta name="description" content="Comunidad Python Piura">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python Piura (old posts, page 2) | Python Piura</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/blog/index-2.html">
+<link rel="prev" href="." type="text/html">
+<link rel="next" href="index-1.html" type="text/html">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../blog">Blog</a>
+                </li>
+<li>
+<a href="../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right"></ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+
+    
+<div class="postindex">
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/" class="u-url">Logout y Protección de Vistas en Django</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/" rel="bookmark"><time class="published dt-published" datetime="2016-04-27T22:21:09-05:00" title="2016-04-27 22:21">2016-04-27 22:21</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">En el post anterior habiamos creado un login con Django ahora nos toca hacer lo mismo pero para salir de la sesión que habiamos iniciado, para ello vamos a modificar nuestro archivo urls.py para crear la url llamada salir que invoca al método logout definido en django:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from seguridad.views import Login<br>
+from django.contrib.auth.views import logout</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’, Login.as_view(), name="login"),<br>
+    url(r’^salir$’, logout, name="salir", kwargs={‘next_page’: ‘/’}),<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Como podemos observar llamamos a la vista logout de django.contrib.auth.views, que nos permite terminar la sesión que hemos iniciado pasandole el argumento next_page que nos redirecciona a la url raiz de nuestro proyecto, osea al login.</p>
+<p style="text-align:justify;">Ahora vamos a utilizar la url creada, hacemos una modificación a nuestro archivo base.html para agregar un enlace de salida:</p>
+<p>[sourcecode language="html"]<br>
+{% load staticfiles %}<br>
+&lt;!DOCTYPE html&gt;<br>
+&lt;html&gt;<br>
+	&lt;head&gt;<br>
+		&lt;meta charset="utf-8"&gt;<br>
+	    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;<br>
+	    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;<br>
+	    &lt;meta name="description" content=""&gt;<br>
+	    &lt;meta name="author" content=""&gt;<br>
+		&lt;title&gt;Ejemplo Círculo de Programadores de Python Piura&lt;/title&gt;<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&gt;<br>
+		&lt;script src="{% static "js/jquery.js" %}"&gt;&lt;/script&gt;<br>
+	    &lt;script src="{% static "js/bootstrap.min.js" %}"&gt;&lt;/script&gt;<br>
+	    &lt;script src="{% static "js/jquery.dataTables.min.js" %}"&gt;&lt;/script&gt;<br>
+	&lt;/head&gt;<br>
+	&lt;body&gt;<br>
+		&lt;div id="wrapper"&gt;<br>
+			&lt;nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"&gt;<br>
+				&lt;div class="navbar-header"&gt;<br>
+			        &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&gt;<br>
+			            &lt;span class="sr-only"&gt;Desplegar navegación&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			        &lt;/button&gt;<br>
+			        &lt;a class="navbar-brand" href="{% url ‘personas:bienvenida’ %}"&gt;<br>
+						&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt; Inicio<br>
+					&lt;/a&gt;<br>
+					&lt;a class="navbar-brand" href="{% url ‘personas:personas’ %}"&gt;<br>
+						&lt;span class="glyphicon glyphicon-user"&gt;&lt;/span&gt; Personas<br>
+					&lt;/a&gt;<br>
+			    &lt;/div&gt;<br>
+			    &lt;div class="navbar-right"&gt;<br>
+					&lt;a class="navbar-brand" href="{% url ‘seguridad:salir’ %}"&gt;<br>
+						&lt;span class="glyphicon glyphicon-log-out"&gt;&lt;/span&gt; Salir<br>
+					&lt;/a&gt;<br>
+				&lt;/div&gt;<br>
+				{% block menu %}<br>
+		        {% endblock menu %}<br>
+		    &lt;/nav&gt;<br>
+			&lt;div id="page-wrapper"&gt;<br>
+				&lt;div class="container-fluid"&gt;<br>
+					{% block cuerpo %}<br>
+					{% endblock cuerpo %}<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/body&gt;<br>
+	{% block js %}<br>
+	{% endblock js %}<br>
+&lt;/html&gt;<br>
+[/sourcecode]</p>
+<p>Con lo que tenemos lo siguiente:</p>
+<p><a href="../2016/04/salir.jpg"><img class="size-medium wp-image-204 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/salir.jpg?w=300" alt="salir" width="300" height="77"></a></p>
+<p style="text-align:justify;">Ahora ya podemos dar click en salir y terminar la sesión que estamos utilizando, pero si observamos bien esto nos nos sirve de nada para proteger nuestra aplicación de accesos no deseados, es decir que un usuario sin estar logueado puede ingresar facilmente a cualquiera de nuestras urls, con solo ponerla en el navegador, por ejemplo, pongamos en la barra de direcciones:</p>
+<p><a href="http://localhost:8000/personas/">http://localhost:8000/personas/</a></p>
+<p style="text-align:justify;">Y observemos que podemos entrar sin ningún problema a pesar de no estar logueados.</p>
+<p style="text-align:justify;">¿Cómo arreglamos esto? Sencillo, viene a nuestra ayuda un <a href="http://www.juanjoconti.com.ar/2008/07/11/decoradores-en-python-i/">decorador</a> muy útil llamado login_required, este va a proteger nuestra vista de aquellos usuarios que pretenden ingresar sin tener una sesión iniciada, para utilizarlo simplemente debemos modificar nuestro archivo urls.py de la aplicación con las vistas que queremos proteger:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona, ReportePersonasExcel,\<br>
+    Bienvenida, DetallePersona, ModificarPersona<br>
+from django.contrib.auth.decorators import login_required</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’,login_required(Bienvenida.as_view()), name="bienvenida"),<br>
+    url(r’^personas/$’,login_required(Personas.as_view()), name="personas"),<br>
+    url(r’^crear_persona/$’,login_required(CrearPersona.as_view()), name="crear_persona"),<br>
+    url(r’^reporte_personas_excel/$’,login_required(ReportePersonasExcel.as_view()), name="reporte_personas_excel"),<br>
+    url(r’^detalle_persona/(?P&lt;pk&gt;\d+)/$’, login_required(DetallePersona.as_view()), name="detalle_persona"),<br>
+    url(r’^modificar_persona/(?P&lt;pk&gt;\d+)/$’,login_required(ModificarPersona.as_view()), name="modificar_persona"),<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Si probamos ahora poniendo nuevamente la dirección anterior en nuestra barra de direcciones sin habernos logueado, nos aparecerá la siguiente pantalla:</p>
+<p><a href="../2016/04/error.jpg"><img class="size-medium wp-image-205 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/error.jpg?w=300" alt="error" width="300" height="75"></a></p>
+<p style="text-align:justify;">¿Muy feo, no? Lamentablemente no podemos presentar esto al usuario sino que quisieramos que cada vez que alguien intente acceder de esta forma, nos redireccione a la pantalla de login, esto lo hacemos con una linea agregada al archivo settings.py:</p>
+<p>[sourcecode language="python"]<br>
+LOGIN_URL = ‘/’<br>
+[/sourcecode]</p>
+<p>Ahora probemos nuevamente:</p>
+<p><a href="../2016/04/correcto.jpg"><img class="aligncenter size-medium wp-image-206" src="https://pythonpiura.files.wordpress.com/2016/04/correcto.jpg?w=300" alt="correcto" width="300" height="77"></a></p>
+<p style="text-align:justify;">Con esto ya tenemos protegidas nuestras vistas y garantizamos que no tendremos accesos no deseados.<br>
+Saludos.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/26/login-en-django/" class="u-url">Login en Django</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/26/login-en-django/" rel="bookmark"><time class="published dt-published" datetime="2016-04-26T22:08:42-05:00" title="2016-04-26 22:08">2016-04-26 22:08</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">Hasta este momento hemos podido tener acceso sin ningún tipo de restricciones a nuestro proyecto tutorial, pero todos sabemos que en el mundo real, eso no funciona así, por lo tanto es necesario que creemos un login para que los usuarios puedan iniciar sesión, para ello vamos a rediseñar nuestro proyecto tutorial y vamos a agregar nuevas cosas, para hacer este pequeño post me he basado en estos artículos:</p>
+<p style="text-align:justify;"><a href="http://www.secnot.com/django-custom-login-cbv.html">Formulario Login usando Class Based Views </a></p>
+<p style="text-align:justify;"><a href="http://librosweb.es/libro/django_1_0/capitulo_12/utilizando_usuarios.html">El Libro de Django</a></p>
+<p style="text-align:justify;">
+Listo ahora si empecemos con todo:<br>
+Primero crearemos una aplicación llamada seguridad, donde vamos a manejar todo lo referente a los usuarios:</p>
+<p style="text-align:justify;"><a href="../2016/04/seguridad.jpg"><img class="alignnone size-full wp-image-195" src="../2016/04/seguridad.jpg" alt="seguridad" width="160" height="205"></a></p>
+<p>Ahora vamos a decirle a nuestro settings.py que vamos a utilizar la aplicación seguridad:</p>
+<p>[sourcecode language="python"]<br>
+INSTALLED_APPS = (<br>
+    ‘django.contrib.admin’,<br>
+    ‘django.contrib.auth’,<br>
+    ‘django.contrib.contenttypes’,<br>
+    ‘django.contrib.sessions’,<br>
+    ‘django.contrib.messages’,<br>
+    ‘django.contrib.staticfiles’,<br>
+    ‘seguridad’,<br>
+    ‘personas’,<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y redefinimos nuestro archivo urls.py principal de tal manera que al ingresar ya no apunte a la aplicación personas sino a seguridad:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import include, url<br>
+from django.contrib import admin</p>
+<p>urlpatterns = [<br>
+    url(r'^admin/', include(admin.site.urls)),<br>
+    url(r'^', include('seguridad.urls',namespace='seguridad')),<br>
+    url(r'^personas/', include('personas.urls',namespace='personas')),<br>
+]<br>
+[/sourcecode]</p>
+<p>Dentro de nuestra aplicación seguridad vamos a crear una vista llamada Login:</p>
+<p>[sourcecode language="python"]<br>
+#Importamos la vista genérica FormView<br>
+from django.views.generic.edit import FormView<br>
+from django.http.response import HttpResponseRedirect<br>
+from django.core.urlresolvers import reverse_lazy<br>
+#Importamos el formulario de autenticación de django<br>
+from django.contrib.auth.forms import AuthenticationForm<br>
+from django.contrib.auth import login</p>
+<p># Create your views here.<br>
+class Login(FormView):<br>
+    #Establecemos la plantilla a utilizar<br>
+    template_name = ‘login.html’<br>
+    #Le indicamos que el formulario a utilizar es el formulario de autenticación de Django<br>
+    form_class = AuthenticationForm<br>
+    #Le decimos que cuando se haya completado exitosamente la operación nos redireccione a la url bienvenida de la aplicación personas<br>
+    success_url =  reverse_lazy("personas:bienvenida")</p>
+<p>    def dispatch(self, request, *args, **kwargs):<br>
+        #Si el usuario está autenticado entonces nos direcciona a la url establecida en success_url<br>
+        if request.user.is_authenticated():<br>
+            return HttpResponseRedirect(self.get_success_url())<br>
+        #Sino lo está entonces nos muestra la plantilla del login simplemente<br>
+        else:<br>
+            return super(Login, self).dispatch(request, *args, **kwargs)</p>
+<p>    def form_valid(self, form):<br>
+        login(self.request, form.get_user())<br>
+        return super(Login, self).form_valid(form)</p>
+<p>[/sourcecode]</p>
+<p style="text-align:justify;">Expliquemos algunas cosas:<br>
+reverse_lazy, como su nombre lo indica, es una implementación perezosa de la URL de resolución inversa(reverse). A diferencia de la función inversa tradicional, reverse_lazy no se ejecutará hasta que se necesite el valor. Es útil para prevenir excepciones ‘Reverse Not Found’ cuando se trabaja con direcciones URL que no pueden ser conocidos inmediatamente.<br>
+dispatch, en el archivo urls.py el punto de entrada as_view() crea una instancia de la clase y llama al método dispatch(), (el despachador o resolvedor de URL) que busca la petición para determinar si es un GET, POST, etc, y releva la petición a un método que coincida con uno definido, o levante una excepción HttpResponseNotAllowed si no encuentra coincidencias.<br>
+form_valid, este método es llamado cuando el formulario valida los datos.<br>
+login, la llamada a login() acepta un objeto de la clase HttpRequest y un objeto User y almacena el identificador del usuario en la sesión, usando el entorno de sesiones de Django. En el caso nuestro, al usar el formulario de autenticación de django, invocando a form.get_user() obtenemos el objeto User.</p>
+<p style="text-align:justify;">Ahora vamos a crear la plantilla login.html y la guardaremos dentro de la carpeta templates(que debemos crear) en nuestra aplicación seguridad:</p>
+<p>[sourcecode language="html"]<br>
+{% load staticfiles %}<br>
+&lt;!DOCTYPE html&gt;<br>
+&lt;html&gt;<br>
+	&lt;head&gt;<br>
+	    &lt;meta charset="utf-8"/&gt;&lt;/meta&gt;<br>
+	    &lt;title&gt;CIPROPY&lt;/title&gt;<br>
+	    &lt;meta content="width=device-width, initial-scale=1.0" name="viewport"&gt;&lt;/meta&gt;<br>
+	    &lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;&lt;/link&gt;<br>
+	&lt;/head&gt;<br>
+	&lt;body&gt;<br>
+		&lt;div class="container"&gt;<br>
+			&lt;br&gt;<br>
+			&lt;div class="row"&gt;<br>
+				&lt;div class="col-md-4 col-md-offset-4"&gt;<br>
+					&lt;div class="login-panel panel panel-default"&gt;<br>
+					    &lt;div class="panel-heading"&gt;<br>
+					        &lt;h3 class="panel-title"&gt;CIPROPY&lt;/h3&gt;<br>
+					    &lt;/div&gt;<br>
+					    &lt;div class="panel-body"&gt;<br>
+							&lt;form role="form" method="post" id=’form_login’&gt;<br>
+								{% csrf_token %}<br>
+							    &lt;div class="form-group"&gt;<br>
+							    	&lt;label&gt;Usuario:&lt;/label&gt;<br>
+							        {{ form.username }}<br>
+							    &lt;/div&gt;<br>
+							    &lt;div class="form-group"&gt;<br>
+							    	&lt;label&gt;Contraseña:&lt;/label&gt;<br>
+							        {{ form.password }}<br>
+							    &lt;/div&gt;<br>
+							    &lt;button class="btn btn-lg btn-success btn-block" type="submit" name="login"/&gt;Login&lt;/button&gt;<br>
+						    &lt;/form&gt;<br>
+						&lt;/div&gt;<br>
+			        &lt;/div&gt;<br>
+			    &lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/body&gt;<br>
+&lt;/html&gt;<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Nótese que esta plantilla no extiende de ninguna otra, ya que su comportamiento es especial, otra cosa peculiar aquí es el uso de las etiquetas {{ form.username }} y {{ form.password }} que al renderizarse se comportan como dos cajas de texto una normal y la otra tipo password, esto es posible gracias a que estamos usando el Formulario AuthenticationForm de Django y lo hemos definido previamente en nuestra vista Login, este formulario tiene los campos username y password y los podemos utilizar en la plantilla anteponiendo el objeto form, este comportamiento especial es definido por la clase FormView.</p>
+<p style="text-align:justify;">Ahora si debemos crear un archivo urls.py en nuestra aplicación seguridad de la siguiente manera:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from seguridad.views import Login</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’, Login.as_view(), name="login"),<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y listo con eso ya tenemos que al momento de correr nuestro servidor de prueba nos va a mostrar lo siguiente:</p>
+<p><a href="../2016/04/login.jpg"><img class="wp-image-197 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/login1.jpg?w=300" alt="login" width="491" height="139"></a></p>
+<p style="text-align:justify;">Con esto ya tenemos el proyecto listo pero no tenemos ningún usuario, debemos crear el superusuario para probar, mas adelante en próximos tutoriales crearemos mas usuarios para hacer las pruebas correspondientes, nos movemos hasta la carpeta donde está ubicado el proyecto y desde una terminal escribimos lo siguiente:</p>
+<p>[sourcecode language="bash"]<br>
+python manage.py createsuperuser<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Nos pedira algunos datos, que debemos completar o presionar enter para dejar el dato mostrado por defecto entre paréntesis:</p>
+<p>[sourcecode language="bash"]<br>
+Username (leave blank to use ‘mamaya’):<br>
+Email address:<br>
+Password:<br>
+Password (again):<br>
+Superuser created successfully.<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">En mi caso he dejado por defecto el usuario mamaya, no le he puesto ninguna dirección de correo y he completado la password, esta no aparece al momento de ser digitada ya que es un mecanismo de protección de django, si todo se ha hecho correctamente nos aparecerá el mensaje “Superuser created successfully.”</p>
+<p>Ahora si ya podemos usar el usuario mamaya para loguearnos<br><a href="../2016/04/login.jpg"><img class="wp-image-197 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/login.jpg?w=300" alt="login" width="622" height="172"></a></p>
+<p style="text-align:justify;">Si hemos escrito correctamente la password nos redireccionará hasta nuestra vista principal de la aplicación personas y sino nos volverá a mostrar la ventana de login:</p>
+<p><a href="../2016/04/presonas.jpg"><img class="wp-image-199 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/presonas.jpg?w=300" alt="presonas" width="675" height="198"></a></p>
+<p style="text-align:justify;">Listo eso es todo, ya estaremos mejorando el funcionamiento de nuestro login en próximos posts.</p>
+<p>Saludos.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/21/uso-de-updateview/" class="u-url">Uso de UpdateView</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/21/uso-de-updateview/" rel="bookmark"><time class="published dt-published" datetime="2016-04-21T22:26:16-05:00" title="2016-04-21 22:26">2016-04-21 22:26</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">En este post vamos a terminar lo que dejamos inconcluso anteriormente, el uso de la clase UpdateView, como ya tenemos listo nuestro archivo personas.html, simplemente vamos a crear la clase y la url necesarias.</p>
+<p style="text-align:justify;">views.py</p>
+<p>[sourcecode language="python"]<br>
+class ModificarPersona(UpdateView):<br>
+    #Especificamos que el modelo a utilizar va a ser Persona<br>
+    model = Persona<br>
+    #Establecemos que la plantilla se llamará modificar persona<br>
+    template_name = ‘modificar_persona.html’<br>
+    #Determinamos los campos con los que se va a trabajar, esto es obligatorio sino nos saldrá un error<br>
+    fields = ['dni','nombre','apellido_paterno','apellido_materno']<br>
+    #Con esta linea establecemos que se hará despues que la operación de modificación se complete correctamente<br>
+    success_url = reverse_lazy(‘personas:personas’)<br>
+[/sourcecode]</p>
+<p>Ahora creamos nuestra plantilla modificar_persona.html:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}</p>
+<p>&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Modificar Persona&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-default"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Por favor ingrese todos los campos necesarios.<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;form role="form" method="post"&gt;<br>
+					{% csrf_token %}<br>
+					&lt;div class="form-group"&gt;<br>
+						{{ form.as_p }}<br>
+					&lt;/div&gt;<br>
+					&lt;div class=’form-group’&gt;<br>
+						&lt;input type="submit" class="btn btn-primary" name="submit" value="Modificar Persona"&gt;<br>
+						&lt;button type="reset" class="btn btn-primary" onclick="location.href=’{% url ‘personas:personas’ %}’"&gt;<br>
+						    Cancelar<br>
+						&lt;/button&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/form&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div id="popup"&gt;&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+[/sourcecode]</p>
+<p>Ahora le toca el turno a urls.py:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona, ReportePersonasExcel,\<br>
+    Bienvenida, DetallePersona, ModificarPersona</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’,Bienvenida.as_view(), name="bienvenida"),<br>
+    url(r’^personas/$’,Personas.as_view(), name="personas"),<br>
+    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
+    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),<br>
+    url(r’^detalle_persona/(?P&lt;pk&gt;\d+)/$’, DetallePersona.as_view(), name="detalle_persona"),<br>
+    url(r’^modificar_persona/(?P&lt;pk&gt;\d+)/$’,ModificarPersona.as_view(), name="modificar_persona"),<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Nótese que la última url añadida es la de modificar persona, y funciona de manera parecida al detalle.</p>
+<p style="text-align:justify;">Ahora si hacemos que el enlace con el ícono del lapiz apunte a la url de modificar_persona:</p>
+<p>personas.html<br>
+[sourcecode language="html"]<br>
+&lt;a class="btn btn-small" href="{% url ‘personas:modificar_persona’ persona.pk %}"&gt;<br>
+	&lt;span class="glyphicon glyphicon-pencil"&gt;&lt;/span&gt;<br>
+&lt;/a&gt;<br>
+[/sourcecode]<br>
+Con lo que tenemos lo siguiente:</p>
+<p><a href="../2016/04/modificar_persona.jpg"><img class="alignnone size-medium wp-image-183" src="https://pythonpiura.files.wordpress.com/2016/04/modificar_persona.jpg?w=300" alt="modificar_persona" width="500" height="250"></a></p>
+<p>Saludos es todo por hoy.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/21/uso-de-detailview/" class="u-url">Uso de DetailView</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/21/uso-de-detailview/" rel="bookmark"><time class="published dt-published" datetime="2016-04-21T20:48:56-05:00" title="2016-04-21 20:48">2016-04-21 20:48</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">Luego de haber visto el uso de TemplateView, CreateView y ListView, estos dos últimos los vimos de pasada casi sin mencionarlos, ahora vamos a agregar un par de nuevas funcionalidades a nuestro proyecto tutorial, para ello empezaremos modificando el archivo personas.html para agregarle un par de enlaces que nos van a permitir editar y ver el detalle de una persona en cuestión, en este post solamente cubriremos la funcionalidad de ver el detalle, posteriormente en otro post nos encargaremos de la funcionalidad de editar a la persona:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}<br>
+&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-info"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Personas<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;div class=’form-group’&gt;<br>
+					&lt;div class="row"&gt;<br>
+						&lt;div class="col-lg-10"&gt;	</p>
+<p>						&lt;/div&gt;<br>
+						&lt;div class="col-lg-1"&gt;<br>
+							&lt;a id="crear_detalle" href="{% url ‘personas:reporte_personas_excel’ %}" class="btn btn-info btn-block"&gt;<br>
+								&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
+							&lt;/a&gt;<br>
+						&lt;/div&gt;<br>
+						&lt;div class="col-lg-1"&gt;<br>
+							&lt;a id="crear_detalle" href="{% url ‘personas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
+								&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
+							&lt;/a&gt;<br>
+						&lt;/div&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+				&lt;div class="row"&gt;<br>
+					&lt;div class="col-lg-12"&gt;<br>
+						&lt;table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%"&gt;<br>
+							&lt;thead&gt;<br>
+								&lt;tr&gt;<br>
+									&lt;th class="text-center"&gt;DNI&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;NOMBRE&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO PATERNO&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO MATERNO&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;ACCIONES&lt;/th&gt;<br>
+								&lt;/tr&gt;<br>
+							&lt;/thead&gt;<br>
+							&lt;tbody&gt;<br>
+							{% for persona in personas %}<br>
+								&lt;tr&gt;<br>
+									&lt;td&gt;{{ persona.dni }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.nombre }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_paterno }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_materno }}&lt;/td&gt;<br>
+									&lt;td class="text-center"&gt;<br>
+										&lt;a class="btn btn-small" href="#"&gt;<br>
+							                &lt;span class="glyphicon glyphicon-folder-open"&gt;&lt;/span&gt;<br>
+							            &lt;/a&gt;<br>
+							            &lt;a class="btn btn-small" href="#"&gt;<br>
+							                &lt;span class="glyphicon glyphicon-pencil"&gt;&lt;/span&gt;<br>
+							            &lt;/a&gt;<br>
+							        &lt;/td&gt;<br>
+								&lt;/tr&gt;<br>
+							{% endfor %}<br>
+							&lt;/tbody&gt;<br>
+						&lt;/table&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+{% block js %}<br>
+&lt;script&gt;<br>
+$(document).ready(function()<br>
+{<br>
+    var table = $(‘#tabla’).DataTable( {<br>
+        "language": {<br>
+        	url: "/static/localizacion/es_ES.json"<br>
+        }<br>
+    } );</p>
+<p>    $(‘#tabla tbody’).on( ‘click’, ‘tr’, function()<br>
+    {<br>
+    	if ($(this).hasClass(‘selected’) )<br>
+        {<br>
+        	$(this).removeClass(‘selected’);</p>
+<p>        }<br>
+        else<br>
+        {<br>
+	        table.$(‘tr.selected’).removeClass(‘selected’);<br>
+	        $(this).addClass(‘selected’);<br>
+        }<br>
+    });   </p>
+<p>});<br>
+&lt;/script&gt;<br>
+{% endblock js %}<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Nótese que en la cabecera de la tabla hemos puesto el encabezado acciones y que dentro del cuerpo de la tabla se ha agregado una columna que contiene dos enlaces: uno con el ícono de un libro y otro con el ícono de un lapiz, ambos son, para ver el detalle de la persona y el otro para editarlo.</p>
+<p><a href="../2016/04/tabla_nueva.jpg"><img class="aligncenter wp-image-174" src="https://pythonpiura.files.wordpress.com/2016/04/tabla_nueva.jpg?w=300" alt="tabla_nueva" width="568" height="191"></a></p>
+<p style="text-align:justify;">Ahora vamos a implementar la funcionalidad de ver el detalle de la persona, para ello usamos la clase DetailView, esta clase nos simplifica la vida ya que nos permite mostrar el detalle de un modelo en particular, debiendo definir el modelo al que haremos referencia y la plantilla donde se renderizará el contenido:</p>
+<p>[sourcecode language="python"]<br>
+from django.views.generic.detail import DetailView<br>
+class DetallePersona(DetailView):<br>
+    model = Persona<br>
+    template_name = ‘detalle_persona.html’<br>
+[/sourcecode]</p>
+<p>Ahora debemos crear la plantilla detalle_persona.html:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}<br>
+&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Personas&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-info"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Detalle de Persona<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;div class=’form-group’&gt;<br>
+					&lt;div class="row"&gt;<br>
+						&lt;div class="col-md-12"&gt;<br>
+							&lt;label&gt;DNI:&lt;/label&gt;<br>
+							&lt;p&gt;{{ object.dni }}&lt;/p&gt;<br>
+							&lt;label&gt;NOMBRE:&lt;/label&gt;<br>
+							&lt;p&gt;{{ object.nombre }}&lt;/p&gt;<br>
+							&lt;label&gt;APELLIDO PATERNO:&lt;/label&gt;<br>
+							&lt;p&gt;{{ object.apellido_paterno }}&lt;/p&gt;<br>
+							&lt;label&gt;APELLIDO MATERNO: &lt;/label&gt;<br>
+							&lt;p&gt;{{ object.apellido_materno }}&lt;/p&gt;<br>
+						&lt;/div&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+[/sourcecode]</p>
+<p>Modificamos el archivo urls.py para crear el url detalle_persona:</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona, ReportePersonasExcel,\<br>
+    Bienvenida, DetallePersona</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’,Bienvenida.as_view(), name="bienvenida"),<br>
+    url(r’^personas/$’,Personas.as_view(), name="personas"),<br>
+    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
+    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),<br>
+    url(r’^detalle_persona/(?P&lt;pk&gt;\d+)/$’, DetallePersona.as_view(), name="detalle_persona"),<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora hacemos que el enlace con el ícono del libro abierto apunte a nuestra url detalle_persona, debemos tener en cuenta que el enlace debe estar de acuerdo a la definición de la expresión regular en la url, en este caso se le pasa como argumento la primary key que debe ser un conjunto de dígitos:</p>
+<p>[sourcecode language="html"]<br>
+&lt;a class="btn btn-small" href="{% url ‘personas:detalle_persona’ persona.pk %}"&gt;<br>
+	&lt;span class="glyphicon glyphicon-folder-open"&gt;&lt;/span&gt;<br>
+&lt;/a&gt;<br>
+[/sourcecode]</p>
+<p>Ahora cuando hagamos click en el ícono del lápiz nos mostrará lo siguiente:</p>
+<p><a href="../2016/04/detalle_persona.jpg"><img class="alignnone size-medium wp-image-175" src="https://pythonpiura.files.wordpress.com/2016/04/detalle_persona.jpg?w=300" alt="detalle_persona" width="400" height="125"></a></p>
+<p>Eso es todo.</p>
+<p>Saludos.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/20/templateview/" class="u-url">Uso de TemplateView</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/20/templateview/" rel="bookmark"><time class="published dt-published" datetime="2016-04-20T21:20:23-05:00" title="2016-04-20 21:20">2016-04-20 21:20</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">Vamos a trabajar con TemplateView para hacer una vista basada en clases, algo que ya hemos utilizado antes y que es bastante fácil de programar, para ello seguiremos con nuestro proyecto tutorial, primero le vamos a hacer unas pequeñas modificaciones para que se adapte a lo que necesitamos.<br>
+Editamos el archivo base.html para agregar un pequeño menú en la parte superior de la pantalla:</p>
+<p>[sourcecode language="html"]<br>
+{% load staticfiles %}<br>
+&lt;!DOCTYPE html&gt;<br>
+&lt;html&gt;<br>
+	&lt;head&gt;<br>
+		&lt;meta charset="utf-8"&gt;<br>
+	    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;<br>
+	    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;<br>
+	    &lt;meta name="description" content=""&gt;<br>
+	    &lt;meta name="author" content=""&gt;<br>
+		&lt;title&gt;Ejemplo Círculo de Programadores de Python Piura&lt;/title&gt;<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&gt;<br>
+		&lt;script src="{% static "js/jquery.js" %}"&gt;&lt;/script&gt;<br>
+	    &lt;script src="{% static "js/bootstrap.min.js" %}"&gt;&lt;/script&gt;<br>
+	    &lt;script src="{% static "js/jquery.dataTables.min.js" %}"&gt;&lt;/script&gt;<br>
+	&lt;/head&gt;<br>
+	&lt;body&gt;<br>
+		&lt;div id="wrapper"&gt;<br>
+			&lt;nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"&gt;<br>
+				&lt;div class="navbar-header"&gt;<br>
+			        &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&gt;<br>
+			            &lt;span class="sr-only"&gt;Desplegar navegación&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
+			        &lt;/button&gt;<br>
+			        &lt;a class="navbar-brand" href="#"&gt;<br>
+						&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt; Inicio<br>
+					&lt;/a&gt;<br>
+					&lt;a class="navbar-brand" href="#"&gt;<br>
+						&lt;span class="glyphicon glyphicon-user"&gt;&lt;/span&gt; Personas<br>
+					&lt;/a&gt;<br>
+			    &lt;/div&gt;<br>
+				{% block menu %}<br>
+		        {% endblock menu %}<br>
+		    &lt;/nav&gt;<br>
+			&lt;div id="page-wrapper"&gt;<br>
+				&lt;div class="container-fluid"&gt;<br>
+					{% block cuerpo %}<br>
+					{% endblock cuerpo %}<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/body&gt;<br>
+	{% block js %}<br>
+	{% endblock js %}<br>
+&lt;/html&gt;<br>
+[/sourcecode]</p>
+<p>Tendremos algo como esto:</p>
+<p><a href="../2016/04/menu.jpg"><img class="wp-image-165 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/menu.jpg?w=300" alt="menu" width="600" height="48"></a></p>
+<p style="text-align:justify;">Creamos un archivo llamado bienvenida.html para poner un aviso de bienvenida y de esta manera no ingresar directamente a nuestra tabla de personas, para ello debemos crear una vista usando TemplateView y agregar el url correspondiente:</p>
+<p>bienvenida.html</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}<br>
+&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Círculo de Programadores de Python Piura&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-info"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Bienvenido<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;div class=’form-group’&gt;<br>
+					&lt;div class="row"&gt;<br>
+						&lt;h3 class="text-center"&gt;Bienvenido.&lt;/h3&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Creamos una clase llamada Bienvenida, que hereda de TemplateView y le decimos que la plantilla a utilizar se llamará bienvenida.html.</p>
+<p>views.py</p>
+<p>[sourcecode language="python"]<br>
+from django.views.generic.base import TemplateView</p>
+<p>class Bienvenida(TemplateView):<br>
+    template_name = "bienvenida.html"<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">En el archivo urls.py cambiamos la url raiz para que apunte a la clase Bienvenida y creamos una url llamada personas para mostrar la tabla personas.</p>
+<p>urls.py</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona, ReportePersonasExcel,\<br>
+    Bienvenida</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’,Bienvenida.as_view(), name="bienvenida"),<br>
+    url(r’^personas/$’,Personas.as_view(), name="personas"),<br>
+    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
+    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),</p>
+<p>)<br>
+[/sourcecode]</p>
+<p>Con lo que tendriamos algo como esto:</p>
+<p><a href="../2016/04/nueva.jpg"><img class="alignnone wp-image-164" src="https://pythonpiura.files.wordpress.com/2016/04/nueva.jpg?w=300" alt="nueva" width="458" height="136"></a></p>
+<p style="text-align:justify;">¿Y ahora como vemos nuestra tabla personas? Muy fácil haciendo que el enlace llamado “Personas” apunte a la url personas y de paso también hacemos que el enlace “Inicio” apunte a la url de bienvenida, para ello modificamos el archivo base.html:</p>
+<p>[sourcecode language="html"]<br>
+&lt;a class="navbar-brand" href="{% url ‘personas:bienvenida’ %}"&gt;<br>
+	&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt; Inicio<br>
+&lt;/a&gt;<br>
+&lt;a class="navbar-brand" href="{% url ‘personas:personas’ %}"&gt;<br>
+	&lt;span class="glyphicon glyphicon-user"&gt;&lt;/span&gt; Personas<br>
+&lt;/a&gt;<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Con esto hemos podido ver el uso sencillo de TemplateView mas adelante vamos a utilizar otras vistas basadas en clases, hasta la próxima.<br>
+Saludos.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/19/generar-reportes-en-excel-desde-django/" class="u-url">Generar Reportes en Excel desde Django</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/19/generar-reportes-en-excel-desde-django/" rel="bookmark"><time class="published dt-published" datetime="2016-04-19T21:24:58-05:00" title="2016-04-19 21:24">2016-04-19 21:24</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">En ocasiones necesitamos tener nuestros reportes en alguna hoja de cálculo, o peor aún un cliente nos pide un reporte específico en excel ¿Cómo hacemos para generar reportes desde Django en excel?<br>
+En nuestra ayuda viene una librería muy interesante que se llama <a href="https://openpyxl.readthedocs.org/en/default/">openpyxl</a>, esta libreria nos permite generar contenido en los diferentes formatos de hojas de cálculo de Microsoft Office y soporta desde versiones antiguas hasta la versión Office 2010, para instalarla lo hacemos con nuestro viejo conocido pip:</p>
+<p>[sourcecode language="bash"]<br>
+pip install openpyxl<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora vamos a trabajar usando el proyecto <a href="https://pythonpiura.wordpress.com/2016/04/18/datatables-jquery-bootstrap-y-django/">tutorial </a>que creamos en el post pasado, aquí agregamos un botón adicional que nos va a permitir exportar el contenido de nuestra tabla de personas a excel, por lo tanto editamos el archivo personas.html y agregamos un botón adicional al que ya teniamos:</p>
+<p>personas.html</p>
+<p>[sourcecode language="html"]</p>
+<p>&lt;div class="col-lg-1"&gt;<br>
+	&lt;a id="crear_detalle" href="#" class="btn btn-info btn-block"&gt;<br>
+		&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
+	&lt;/a&gt;<br>
+&lt;/div&gt;</p>
+<p>[/sourcecode]</p>
+<p style="text-align:justify;">Nótese que aún no ponemos el enlace en href para no tener ningún problema, mas adelante modificaremos esto, ahora nuestra aplicación debe verse así:</p>
+<p><a href="../2016/04/tablas2.jpg"><img class="alignnone wp-image-154" src="https://pythonpiura.files.wordpress.com/2016/04/tablas2.jpg?w=300" alt="tablas2" width="478" height="156"></a></p>
+<p style="text-align:justify;">En el archivo views.py de la aplicación personas, vamos a crear una clase que nos permita exportar todas las personas que tenemos guardadas, a un archivo en excel.</p>
+<p>views.py</p>
+<p>[sourcecode language="python"]<br>
+#Vista genérica para mostrar resultados<br>
+from django.views.generic.base import TemplateView<br>
+#Workbook nos permite crear libros en excel<br>
+from openpyxl import Workbook<br>
+#Nos devuelve un objeto resultado, en este caso un archivo de excel<br>
+from django.http.response import HttpResponse</p>
+<p>#Nuestra clase hereda de la vista genérica TemplateView<br>
+class ReportePersonasExcel(TemplateView):</p>
+<p>    #Usamos el método get para generar el archivo excel<br>
+    def get(self, request, *args, **kwargs):<br>
+        #Obtenemos todas las personas de nuestra base de datos<br>
+        personas = Persona.objects.all()<br>
+		#Creamos el libro de trabajo<br>
+        wb = Workbook()<br>
+		#Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro<br>
+        ws = wb.active<br>
+		#En la celda B1 ponemos el texto ‘REPORTE DE PERSONAS’<br>
+        ws['B1'] = ‘REPORTE DE PERSONAS’<br>
+		#Juntamos las celdas desde la B1 hasta la E1, formando una sola celda<br>
+        ws.merge_cells(‘B1:E1′)<br>
+		#Creamos los encabezados desde la celda B3 hasta la E3<br>
+        ws['B3'] = ‘DNI’<br>
+        ws['C3'] = ‘NOMBRE’<br>
+        ws['D3'] = ‘APELLIDO PATERNO’<br>
+        ws['E3'] = ‘APELLIDO MATERNO’<br>
+        cont=4<br>
+        #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas<br>
+        for persona in personas:<br>
+            ws.cell(row=cont,column=2).value = persona.dni<br>
+            ws.cell(row=cont,column=3).value = persona.nombre<br>
+            ws.cell(row=cont,column=4).value = persona.apellido_paterno<br>
+            ws.cell(row=cont,column=5).value = persona.apellido_materno<br>
+            cont = cont + 1<br>
+		#Establecemos el nombre del archivo<br>
+        nombre_archivo ="ReportePersonasExcel.xlsx"<br>
+		#Definimos que el tipo de respuesta a devolver es un archivo de microsoft excel<br>
+        response = HttpResponse(content_type="application/ms-excel")<br>
+		contenido = "attachment; filename={0}".format(nombre_archivo)<br>
+        response["Content-Disposition"] = contenido<br>
+        wb.save(response)<br>
+        return response<br>
+[/sourcecode]</p>
+<p>Modificamos el archivo urls.py:</p>
+<p>urls.py</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona, ReportePersonasExcel</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’,Personas.as_view(), name="personas"),<br>
+    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
+    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),</p>
+<p>)<br>
+[/sourcecode]</p>
+<p>Finalmente nuestro archivo personas.html va a quedar de la siguiente manera:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}<br>
+&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-info"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Personas<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;div class=’form-group’&gt;<br>
+					&lt;div class="row"&gt;<br>
+						&lt;div class="col-lg-10"&gt;	</p>
+<p>						&lt;/div&gt;<br>
+						&lt;div class="col-lg-1"&gt;<br>
+							&lt;a id="crear_detalle" href="{% url ‘personas:reporte_personas_excel’ %}" class="btn btn-info btn-block"&gt;<br>
+								&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
+							&lt;/a&gt;<br>
+						&lt;/div&gt;<br>
+						&lt;div class="col-lg-1"&gt;<br>
+							&lt;a id="crear_detalle" href="{% url ‘personas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
+								&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
+							&lt;/a&gt;<br>
+						&lt;/div&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+				&lt;div class="row"&gt;<br>
+					&lt;div class="col-lg-12"&gt;<br>
+						&lt;table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%"&gt;<br>
+							&lt;thead&gt;<br>
+								&lt;tr&gt;<br>
+									&lt;th class="text-center"&gt;DNI&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;NOMBRE&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO PATERNO&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO MATERNO&lt;/th&gt;<br>
+								&lt;/tr&gt;<br>
+							&lt;/thead&gt;<br>
+							&lt;tbody&gt;<br>
+							{% for persona in personas %}<br>
+								&lt;tr&gt;<br>
+									&lt;td&gt;{{ persona.dni }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.nombre }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_paterno }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_materno }}&lt;/td&gt;<br>
+								&lt;/tr&gt;<br>
+							{% endfor %}<br>
+							&lt;/tbody&gt;<br>
+						&lt;/table&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+{% block js %}<br>
+&lt;script&gt;<br>
+$(document).ready(function()<br>
+{<br>
+    var table = $(‘#tabla’).DataTable( {<br>
+        "language": {<br>
+        	url: "/static/localizacion/es_ES.json"<br>
+        }<br>
+    } );</p>
+<p>    $(‘#tabla tbody’).on( ‘click’, ‘tr’, function()<br>
+    {<br>
+    	if ($(this).hasClass(‘selected’) )<br>
+        {<br>
+        	$(this).removeClass(‘selected’);</p>
+<p>        }<br>
+        else<br>
+        {<br>
+	        table.$(‘tr.selected’).removeClass(‘selected’);<br>
+	        $(this).addClass(‘selected’);<br>
+        }<br>
+    });   </p>
+<p>});<br>
+&lt;/script&gt;<br>
+{% endblock js %}<br>
+[/sourcecode]</p>
+<p>Y nuestro resultado al dar click al botón de exportar en excel será el siguiente:</p>
+<p><a href="../2016/04/exportar.jpg"><img class="alignnone wp-image-155" src="https://pythonpiura.files.wordpress.com/2016/04/exportar.jpg?w=300" alt="exportar" width="394" height="155"></a></p>
+<p> </p>
+<p>Y el archivo se mostrará así:</p>
+<p><a href="../2016/04/reporte_excel.jpg"><img class="alignnone size-medium wp-image-156" src="https://pythonpiura.files.wordpress.com/2016/04/reporte_excel.jpg?w=300" alt="reporte_excel" width="300" height="84"></a></p>
+<p style="text-align:justify;">Hay muchísimas formas de sacarle el jugo a esta libreria, definir formatos, bordes, colores, etc. Esta ha sido una pequeña introducción, hasta la próxima.</p>
+<p>Saludos.</p>
+<p> </p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/18/datatables-jquery-bootstrap-y-django/" class="u-url">DataTables JQuery, Bootstrap y Django</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/18/datatables-jquery-bootstrap-y-django/" rel="bookmark"><time class="published dt-published" datetime="2016-04-18T22:35:28-05:00" title="2016-04-18 22:35">2016-04-18 22:35</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">Muchas veces al querer mostrar un listado o un conjunto de objetos, necesitamos hacer uso de tablas, esto lo podemos trabajar de manera sencilla usando una simple tabla html, pero que pasa cuando queremos tener mayores prestaciones, como búsquedas, ordenamiento paginación, etc. En este caso tenemos que recurrir a elementos mas avanzados, en internet podemos encontrar muchísimas aplicaciones con tablas que nos facilitan la vida, pero en esta oportunidad vamos a trabajar con una herramienta que nos ha parecido muy interesante y que nos ha resultado muy fácil de configurar y además trabaja con JQuery, la aplicación se llama <a href="https://datatables.net/">DataTables </a>y como su página dice es un plugin para JQuery, para empezar a trabajar debemos descargarla desde el siguiente <a href="https://datatables.net/download/download">enlace.</a></p>
+<p style="text-align:justify;">Para poder mostrar un sitio web mas o menos presentable vamos a echar mano de Bootstrap, como ya es bien conocido en el mundo del desarrollo web <a href="http://getbootstrap.com/">Bootstrap </a>es un framework que nos facilita el diseño de nuestras aplicaciones, contiene plantillas de diseño con tipografía, formularios, botones, cuadros, menús de navegación y otros elementos de diseño basado en HTML y CSS, así como, extensiones de JavaScript, la última versión la podemos descargar de <a href="https://github.com/twbs/bootstrap/releases/download/v3.3.6/bootstrap-3.3.6-dist.zip">aquí</a>.</p>
+<p style="text-align:justify;">Ahora si, vamos a empezar creando nuestro proyecto en django, nosotros utilizamos como IDE Eclipse con pydev, si quieren una guía para configurarlo dense una vuelta por <a href="http://www.pythondiario.com/2013/06/eclipse-y-pydev-configuracion-del-ide.html">aquí</a>. Nuestro proyecto se llamará tutorial, dentro del proyecto vamos a crear la aplicación personas, de tal manera que tengamos la siguiente estructura:</p>
+<p><a href="../2016/04/estructura.jpg" rel="attachment wp-att-143"><img class="alignnone size-full wp-image-143" src="../2016/04/estructura.jpg" alt="Estructura" width="260" height="257"></a></p>
+<p style="text-align:justify;">Ahora vamos a crear una carpeta llamada static en la raiz del proyecto y dentro de ella vamos a crear las carpetas css, js, fonts, images y localizacion.</p>
+<p><a href="../2016/04/estructura21.jpg" rel="attachment wp-att-145"><img class="alignnone size-full wp-image-145" src="../2016/04/estructura21.jpg" alt="Estructura2" width="264" height="187"></a></p>
+<p style="text-align:justify;">Nos toca configurar el archivo settings para que nuestros archivos estáticos se muestren correctamente, agregamos la siguiente linea al final del archivo.</p>
+<p>settings.py<br>
+[sourcecode language="python"]<br>
+STATICFILES_DIRS = (<br>
+os.path.join(BASE_DIR, ‘static’),<br>
+)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y ahora como ya tenemos descargados tanto DataTables como Bootstrap los descomprimimos, en DataTables buscamos la carpeta media, aquí encontraremos las carpetas css, images y js, vamos a trabajar de la manera mas sencilla que podamos por lo que no vamos a necesitar todo el contenido de las carpetas antes mencionadas, así que de la carpeta css seleccionamos el archivo jquery.dataTables.min.css y lo copiamos a la carpeta css de nuestro proyecto, de la carpeta js seleccionamos los archivos jquery.js y jquery.dataTables.min.js y los copiamos a la carpeta js de nuestro proyecto,el contenido de la carpeta images si lo copiamos integro dentro de nuestra carpeta images. Lo mismo hacemos con Bootstrap copiamos los archivos bootstrap.min.css y bootstrap.min.css.map a nuestra carpeta css, copiamos todo el contenido de la carpeta fonts a nuestra carpeta fonts y finalmente copiamos el archivo bootstrap.min.js a nuestra carpeta js.<br>
+Adicionalmente a esto debemos copiar el contenido del siguiente <a href="https://www.datatables.net/plug-ins/i18n/Spanish">enlace</a> y crear un archivo en la carpeta localización que en este caso le hemos llamado es_ES.json, esto sirve para traducir DataTables al español.</p>
+<p style="text-align:justify;">Finalmente tendremos lo siguiente dentro de nuestra carpeta static:</p>
+<p><a href="../2016/04/estructurastatic.jpg" rel="attachment wp-att-146"><img class="alignnone size-medium wp-image-146" src="https://pythonpiura.files.wordpress.com/2016/04/estructurastatic.jpg?w=163" alt="EstructuraStatic" width="163" height="300"></a></p>
+<p>Ahora vamos a crear una carpeta llamada templates que va a contener nuestras plantillas html dentro de la aplicación personas. Dentro de esta carpeta creamos un archivo llamado base.html que va a ser la plantilla madre de la que heredarán las demás, este archivo tendrá el siguiente contenido:<br>
+[sourcecode language="html"]<br>
+{% load staticfiles %}<br>
+&lt;!DOCTYPE html&gt;<br>
+&lt;html&gt;<br>
+	&lt;head&gt;<br>
+		Ejemplo Círculo de Programadores de Python Piura<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;<br>
+		&lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&gt;<br>
+		&lt;script src="{% static "js/jquery.js" %}"&gt;&lt;/script&gt;<br>
+		&lt;script src="{% static "js/bootstrap.min.js" %}"&gt;&lt;/script&gt;<br>
+		&lt;script src="{% static "js/jquery.dataTables.min.js" %}"&gt;&lt;/script&gt;<br>
+	&lt;/head&gt;<br>
+	&lt;body&gt;<br>
+	&lt;div id="page-wrapper"&gt;<br>
+		&lt;div class="container-fluid"&gt;<br>
+		{% block cuerpo %}<br>
+		{% endblock cuerpo %}<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/body&gt;<br>
+{% block js %}<br>
+{% endblock js %}<br>
+&lt;/html&gt;<br>
+[/sourcecode]<br>
+Vamos a modificar el archivo urls.py del proyecto de tal manera que al correrlo este apunte directamente a nuestra aplicación personas:</p>
+<p>urls.py<br>
+[sourcecode language="python"]<br>
+from django.conf.urls import include, url<br>
+ from django.contrib import admin</p>
+<p>urlpatterns = [<br>
+ url(r'^admin/', include(admin.site.urls)),<br>
+ url(r'^', include('personas.urls',namespace='personas')),<br>
+ ]<br>
+[/sourcecode]<br>
+Ahora crearemos nuestro modelo y unas vistas bastante simples, en el archivo models.py de la aplicación personas, creamos el modelo Persona:</p>
+<p>models.py<br>
+[sourcecode language="python"]<br>
+from django.db import models</p>
+<p># Create your models here.<br>
+ class Persona(models.Model):<br>
+    dni= models.CharField(primary_key=True,max_length=8)<br>
+    nombre = models.CharField(max_length=100)<br>
+    apellido_paterno = models.CharField(max_length=100)<br>
+    apellido_materno = models.CharField(max_length=100)<br>
+[/sourcecode]</p>
+<p>Creamos dos vistas con sus respectivas urls:<br>
+views.py<br>
+[sourcecode language="python"]</p>
+<p>from personas.models import Persona<br>
+from django.core.urlresolvers import reverse_lazy<br>
+from django.views.generic.edit import CreateView<br>
+from django.views.generic.list import ListView</p>
+<p># Create your views here.<br>
+class CrearPersona(CreateView):<br>
+    model = Persona<br>
+    fields =['dni','nombre','apellido_paterno','apellido_materno']<br>
+    template_name = ‘crear_persona.html’<br>
+    success_url = reverse_lazy(‘personas:personas’)</p>
+<p>class Personas(ListView):<br>
+    model = Persona<br>
+    template_name = ‘personas.html’<br>
+    context_object_name = ‘personas’ </p>
+<p>[/sourcecode]<br>
+urls.py<br>
+[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
+    url(r’^',Personas.as_view(), name="personas"),<br>
+)<br>
+[/sourcecode]<br>
+Ahora debemos crear la plantilla:</p>
+<p>personas.html<br>
+[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}<br>
+&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-info"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Personas<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;div class=’form-group’&gt;<br>
+					&lt;div class="row"&gt;<br>
+						&lt;div class="col-lg-3"&gt;	</p>
+<p>						&lt;/div&gt;<br>
+						&lt;div class="col-lg-8"&gt;</p>
+<p>						&lt;/div&gt;<br>
+						&lt;div class="col-lg-1"&gt;<br>
+							&lt;a id="crear_detalle" href="{% url ‘tablas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
+								&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
+							&lt;/a&gt;<br>
+						&lt;/div&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+				&lt;div class="row"&gt;<br>
+					&lt;div class="col-lg-12"&gt;<br>
+						&lt;table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%"&gt;<br>
+							&lt;thead&gt;<br>
+								&lt;tr&gt;<br>
+									&lt;th class="text-center"&gt;DNI&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;NOMBRE&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO PATERNO&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO MATERNO&lt;/th&gt;<br>
+								&lt;/tr&gt;<br>
+							&lt;/thead&gt;<br>
+							&lt;tbody&gt;<br>
+							{% for persona in personas %}<br>
+								&lt;tr&gt;<br>
+									&lt;td&gt;{{ persona.dni }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.nombre }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_paterno }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_materno }}&lt;/td&gt;<br>
+								&lt;/tr&gt;<br>
+							{% endfor %}<br>
+							&lt;/tbody&gt;<br>
+						&lt;/table&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+{% block js %}<br>
+&lt;script&gt;<br>
+$(document).ready(function()<br>
+{<br>
+    var table = $(‘#tabla’).DataTable( {<br>
+        "language": {<br>
+        	url: "/static/localizacion/es_ES.json"<br>
+        }<br>
+    } );</p>
+<p>    $(‘#tabla tbody’).on( ‘click’, ‘tr’, function()<br>
+    {<br>
+    	if ($(this).hasClass(‘selected’) )<br>
+        {<br>
+        	$(this).removeClass(‘selected’);</p>
+<p>        }<br>
+        else<br>
+        {<br>
+	        table.$(‘tr.selected’).removeClass(‘selected’);<br>
+	        $(this).addClass(‘selected’);<br>
+        }<br>
+    });   </p>
+<p>});<br>
+&lt;/script&gt;<br>
+{% endblock js %}<br>
+[/sourcecode]<br>
+Como hemos visto lineas arriba es en esta plantilla donde se hace uso de DataTables, primero se crea la tabla teniendo en cuenta que se la ha puesto el id “tabla” y además se hace la traducción al español invocando al archivo es_ES.json:<br>
+[sourcecode language="js"]<br>
+    var table = $(‘#tabla’).DataTable( {<br>
+        "language": {<br>
+        	url: "/static/localizacion/es_ES.json"<br>
+        }<br>
+    } );<br>
+[/sourcecode]<br>
+Lo siguiente es un efecto que se le da al seleccionar una de las filas de la tabla.</p>
+<p>Y finalmente creamos el archivo:<br>
+crear_persona.html<br>
+[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}</p>
+<p>&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-default"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Crear Persona<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;form role="form" action="#" method="post"&gt;<br>
+					{% csrf_token %}<br>
+					&lt;div class="form-group"&gt;<br>
+						{{ form.as_p }}<br>
+					&lt;/div&gt;<br>
+					&lt;div class=’form-group’&gt;<br>
+						&lt;input type="submit" class="btn btn-primary" name="submit" value="Crear Persona"&gt;<br>
+						&lt;button type="reset" class="btn btn-primary" onclick="location.href=’{% url ‘personas:personas’ %}’"&gt;<br>
+						    Cancelar<br>
+						&lt;/button&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/form&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div id="popup"&gt;&lt;/div&gt;<br>
+{% endblock cuerpo %}</p>
+<p>{% block js %}</p>
+<p>{% endblock js %}<br>
+[/sourcecode]</p>
+<p>Hacemos las migraciones correspondientes de nuestros modelos y finalmente corremos el servidor de prueba, si todo ha salido bien tendremos una aplicación como la siguiente:</p>
+<p><a href="../2016/04/aplicacion.jpg" rel="attachment wp-att-147"><img class="alignnone size-medium wp-image-147" src="https://pythonpiura.files.wordpress.com/2016/04/aplicacion.jpg?w=300" alt="aplicacion" width="300" height="120"></a></p>
+
+    </div>
+    </article>
+</div>
+
+        <nav class="postindexpager"><ul class="pager">
+<li class="previous">
+                <a href="." rel="prev">Newer posts</a>
+            </li>
+            <li class="next">
+                <a href="index-1.html" rel="next">Older posts</a>
+            </li>
+        </ul></nav>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

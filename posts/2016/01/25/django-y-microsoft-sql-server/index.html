@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2016/01/25/django-y-microsoft-sql-server/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Django y Microsoft SQL Server | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2016/01/25/django-y-microsoft-sql-server/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../../19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/" title="Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django" type="text/html">
+<link rel="next" href="../web-scraping-con-selenium/" title="Web Scraping con Selenium" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Django y Microsoft SQL Server">
+<meta property="og:url" content="http://pythonpiura.org/posts/2016/01/25/django-y-microsoft-sql-server/">
+<meta property="og:description" content="Si por algún oscuro motivo necesitas conectar Django con Microsoft SQL Server, la solución la tiene el proyecto django-pyodbc-azure la información completa sobre el proyecto la encontrarán en su web o">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-01-25T15:38:02-05:00">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="Python">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Django y Microsoft SQL Server</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-01-25T15:38:02-05:00" itemprop="datePublished" title="2016-01-25 15:38">2016-01-25 15:38</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p style="text-align:justify;">Si por algún oscuro motivo necesitas conectar Django con Microsoft SQL Server, la solución la tiene el proyecto django-pyodbc-azure la información completa sobre el proyecto la encontrarán en su web oficial:<br>
+https://github.com/michiya/django-pyodbc-azure<br>
+La última versión del proyecto soporta Django 1.9.1 y Microsoft SQL Server 2005,2008/2008R2,2012,2014.<br>
+Para empezar a trabajar debemos instalar de la siguiente forma:<br>
+pip install django-pyodbc-azure</p>
+<p style="text-align:justify;">Y luego configurar el archivo settings de nuestro proyecto, en la parte relacionada a la conexión a las bases de datos:</p>
+<p>[sourcecode language="python"]<br>
+DATABASES = {<br>
+    ‘default’: {<br>
+        ‘ENGINE’: ‘sql_server.pyodbc’,<br>
+        ‘NAME’: ‘NOMBRE_BD’,<br>
+        ‘USER’: ‘usuario’,<br>
+        ‘PASSWORD’: ‘password’,<br>
+        ‘HOST’: ‘IP_SERVIDOR_SQL_SERVER’,<br>
+        ‘PORT’: ”,<br>
+        ‘OPTIONS’: {<br>
+            ‘driver’: ‘SQL Server Native Client 10.0′,<br>
+            }<br>
+    },<br>
+}<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y listo eso es todo, si desean conocer un poco mas este excelente proyecto remitanse a su página web.<br>
+Saludos.</p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/django/" rel="tag">Django</a></li>
+            <li><a class="tag p-category" href="../../../../../categories/python/" rel="tag">Python</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/" rel="prev" title="Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../web-scraping-con-selenium/" rel="next" title="Web Scraping con Selenium">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

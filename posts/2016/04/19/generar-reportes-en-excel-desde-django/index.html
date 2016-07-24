@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generar Reportes en Excel desde Django | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../../18/datatables-jquery-bootstrap-y-django/" title="DataTables JQuery, Bootstrap y Django" type="text/html">
+<link rel="next" href="../../20/templateview/" title="Uso de TemplateView" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Generar Reportes en Excel desde Django">
+<meta property="og:url" content="http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/">
+<meta property="og:description" content="En ocasiones necesitamos tener nuestros reportes en alguna hoja de cálculo, o peor aún un cliente nos pide un reporte específico en excel ¿Cómo hacemos para generar reportes desde Django en excel?
+En ">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-04-19T21:24:58-05:00">
+<meta property="article:tag" content="Django">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Generar Reportes en Excel desde Django</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-04-19T21:24:58-05:00" itemprop="datePublished" title="2016-04-19 21:24">2016-04-19 21:24</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p style="text-align:justify;">En ocasiones necesitamos tener nuestros reportes en alguna hoja de cálculo, o peor aún un cliente nos pide un reporte específico en excel ¿Cómo hacemos para generar reportes desde Django en excel?<br>
+En nuestra ayuda viene una librería muy interesante que se llama <a href="https://openpyxl.readthedocs.org/en/default/">openpyxl</a>, esta libreria nos permite generar contenido en los diferentes formatos de hojas de cálculo de Microsoft Office y soporta desde versiones antiguas hasta la versión Office 2010, para instalarla lo hacemos con nuestro viejo conocido pip:</p>
+<p>[sourcecode language="bash"]<br>
+pip install openpyxl<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora vamos a trabajar usando el proyecto <a href="https://pythonpiura.wordpress.com/2016/04/18/datatables-jquery-bootstrap-y-django/">tutorial </a>que creamos en el post pasado, aquí agregamos un botón adicional que nos va a permitir exportar el contenido de nuestra tabla de personas a excel, por lo tanto editamos el archivo personas.html y agregamos un botón adicional al que ya teniamos:</p>
+<p>personas.html</p>
+<p>[sourcecode language="html"]</p>
+<p>&lt;div class="col-lg-1"&gt;<br>
+	&lt;a id="crear_detalle" href="#" class="btn btn-info btn-block"&gt;<br>
+		&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
+	&lt;/a&gt;<br>
+&lt;/div&gt;</p>
+<p>[/sourcecode]</p>
+<p style="text-align:justify;">Nótese que aún no ponemos el enlace en href para no tener ningún problema, mas adelante modificaremos esto, ahora nuestra aplicación debe verse así:</p>
+<p><a href="../../../../../2016/04/tablas2.jpg"><img class="alignnone wp-image-154" src="https://pythonpiura.files.wordpress.com/2016/04/tablas2.jpg?w=300" alt="tablas2" width="478" height="156"></a></p>
+<p style="text-align:justify;">En el archivo views.py de la aplicación personas, vamos a crear una clase que nos permita exportar todas las personas que tenemos guardadas, a un archivo en excel.</p>
+<p>views.py</p>
+<p>[sourcecode language="python"]<br>
+#Vista genérica para mostrar resultados<br>
+from django.views.generic.base import TemplateView<br>
+#Workbook nos permite crear libros en excel<br>
+from openpyxl import Workbook<br>
+#Nos devuelve un objeto resultado, en este caso un archivo de excel<br>
+from django.http.response import HttpResponse</p>
+<p>#Nuestra clase hereda de la vista genérica TemplateView<br>
+class ReportePersonasExcel(TemplateView):</p>
+<p>    #Usamos el método get para generar el archivo excel<br>
+    def get(self, request, *args, **kwargs):<br>
+        #Obtenemos todas las personas de nuestra base de datos<br>
+        personas = Persona.objects.all()<br>
+		#Creamos el libro de trabajo<br>
+        wb = Workbook()<br>
+		#Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro<br>
+        ws = wb.active<br>
+		#En la celda B1 ponemos el texto ‘REPORTE DE PERSONAS’<br>
+        ws['B1'] = ‘REPORTE DE PERSONAS’<br>
+		#Juntamos las celdas desde la B1 hasta la E1, formando una sola celda<br>
+        ws.merge_cells(‘B1:E1′)<br>
+		#Creamos los encabezados desde la celda B3 hasta la E3<br>
+        ws['B3'] = ‘DNI’<br>
+        ws['C3'] = ‘NOMBRE’<br>
+        ws['D3'] = ‘APELLIDO PATERNO’<br>
+        ws['E3'] = ‘APELLIDO MATERNO’<br>
+        cont=4<br>
+        #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas<br>
+        for persona in personas:<br>
+            ws.cell(row=cont,column=2).value = persona.dni<br>
+            ws.cell(row=cont,column=3).value = persona.nombre<br>
+            ws.cell(row=cont,column=4).value = persona.apellido_paterno<br>
+            ws.cell(row=cont,column=5).value = persona.apellido_materno<br>
+            cont = cont + 1<br>
+		#Establecemos el nombre del archivo<br>
+        nombre_archivo ="ReportePersonasExcel.xlsx"<br>
+		#Definimos que el tipo de respuesta a devolver es un archivo de microsoft excel<br>
+        response = HttpResponse(content_type="application/ms-excel")<br>
+		contenido = "attachment; filename={0}".format(nombre_archivo)<br>
+        response["Content-Disposition"] = contenido<br>
+        wb.save(response)<br>
+        return response<br>
+[/sourcecode]</p>
+<p>Modificamos el archivo urls.py:</p>
+<p>urls.py</p>
+<p>[sourcecode language="python"]<br>
+from django.conf.urls import patterns, url<br>
+from personas.views import Personas, CrearPersona, ReportePersonasExcel</p>
+<p>urlpatterns = patterns(”,<br>
+    url(r’^$’,Personas.as_view(), name="personas"),<br>
+    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
+    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),</p>
+<p>)<br>
+[/sourcecode]</p>
+<p>Finalmente nuestro archivo personas.html va a quedar de la siguiente manera:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base.html" %}<br>
+{% block cuerpo %}<br>
+&lt;div class="row"&gt;<br>
+    &lt;div class="col-lg-12"&gt;<br>
+        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
+    &lt;/div&gt;<br>
+&lt;/div&gt;<br>
+&lt;div class="row"&gt;<br>
+	&lt;div class="col-lg-12"&gt;<br>
+		&lt;div class="panel panel-info"&gt;<br>
+			&lt;div class="panel-heading"&gt;<br>
+			    Personas<br>
+			&lt;/div&gt;<br>
+			&lt;div class="panel-body"&gt;<br>
+				&lt;div class=’form-group’&gt;<br>
+					&lt;div class="row"&gt;<br>
+						&lt;div class="col-lg-10"&gt;	</p>
+<p>						&lt;/div&gt;<br>
+						&lt;div class="col-lg-1"&gt;<br>
+							&lt;a id="crear_detalle" href="{% url ‘personas:reporte_personas_excel’ %}" class="btn btn-info btn-block"&gt;<br>
+								&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
+							&lt;/a&gt;<br>
+						&lt;/div&gt;<br>
+						&lt;div class="col-lg-1"&gt;<br>
+							&lt;a id="crear_detalle" href="{% url ‘personas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
+								&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
+							&lt;/a&gt;<br>
+						&lt;/div&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+				&lt;div class="row"&gt;<br>
+					&lt;div class="col-lg-12"&gt;<br>
+						&lt;table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%"&gt;<br>
+							&lt;thead&gt;<br>
+								&lt;tr&gt;<br>
+									&lt;th class="text-center"&gt;DNI&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;NOMBRE&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO PATERNO&lt;/th&gt;<br>
+									&lt;th class="text-center"&gt;APELLIDO MATERNO&lt;/th&gt;<br>
+								&lt;/tr&gt;<br>
+							&lt;/thead&gt;<br>
+							&lt;tbody&gt;<br>
+							{% for persona in personas %}<br>
+								&lt;tr&gt;<br>
+									&lt;td&gt;{{ persona.dni }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.nombre }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_paterno }}&lt;/td&gt;<br>
+									&lt;td&gt;{{ persona.apellido_materno }}&lt;/td&gt;<br>
+								&lt;/tr&gt;<br>
+							{% endfor %}<br>
+							&lt;/tbody&gt;<br>
+						&lt;/table&gt;<br>
+					&lt;/div&gt;<br>
+				&lt;/div&gt;<br>
+			&lt;/div&gt;<br>
+		&lt;/div&gt;<br>
+	&lt;/div&gt;<br>
+&lt;/div&gt;<br>
+{% endblock cuerpo %}<br>
+{% block js %}<br>
+&lt;script&gt;<br>
+$(document).ready(function()<br>
+{<br>
+    var table = $(‘#tabla’).DataTable( {<br>
+        "language": {<br>
+        	url: "/static/localizacion/es_ES.json"<br>
+        }<br>
+    } );</p>
+<p>    $(‘#tabla tbody’).on( ‘click’, ‘tr’, function()<br>
+    {<br>
+    	if ($(this).hasClass(‘selected’) )<br>
+        {<br>
+        	$(this).removeClass(‘selected’);</p>
+<p>        }<br>
+        else<br>
+        {<br>
+	        table.$(‘tr.selected’).removeClass(‘selected’);<br>
+	        $(this).addClass(‘selected’);<br>
+        }<br>
+    });   </p>
+<p>});<br>
+&lt;/script&gt;<br>
+{% endblock js %}<br>
+[/sourcecode]</p>
+<p>Y nuestro resultado al dar click al botón de exportar en excel será el siguiente:</p>
+<p><a href="../../../../../2016/04/exportar.jpg"><img class="alignnone wp-image-155" src="https://pythonpiura.files.wordpress.com/2016/04/exportar.jpg?w=300" alt="exportar" width="394" height="155"></a></p>
+<p> </p>
+<p>Y el archivo se mostrará así:</p>
+<p><a href="../../../../../2016/04/reporte_excel.jpg"><img class="alignnone size-medium wp-image-156" src="https://pythonpiura.files.wordpress.com/2016/04/reporte_excel.jpg?w=300" alt="reporte_excel" width="300" height="84"></a></p>
+<p style="text-align:justify;">Hay muchísimas formas de sacarle el jugo a esta libreria, definir formatos, bordes, colores, etc. Esta ha sido una pequeña introducción, hasta la próxima.</p>
+<p>Saludos.</p>
+<p> </p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/django/" rel="tag">Django</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../18/datatables-jquery-bootstrap-y-django/" rel="prev" title="DataTables JQuery, Bootstrap y Django">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../../20/templateview/" rel="next" title="Uso de TemplateView">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

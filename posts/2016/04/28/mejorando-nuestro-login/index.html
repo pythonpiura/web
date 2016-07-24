@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mejorando Nuestro Login | Python Piura</title>
+<link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/">
+<!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Miguel Amaya">
+<link rel="prev" href="../../27/logout-y-proteccion-de-vistas-en-django/" title="Logout y Protección de Vistas en Django" type="text/html">
+<link rel="next" href="../permisos-basicos-en-django/" title="Aplicar Permisos por Usuario en Django" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Mejorando Nuestro Login">
+<meta property="og:url" content="http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/">
+<meta property="og:description" content="Este es un post pequeñito donde vamos a demostrar como mejorar nuestro login que se ve un poco feo, para ello debemos crear un módulo de Python llamado forms.py en nuestra aplicación seguridad:
+
+Ahora">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2016-04-28T20:50:59-05:00">
+<meta property="article:tag" content="Círculo">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../../../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../../../../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../../../../../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.src.html" id="sourcelink">Source</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Mejorando Nuestro Login</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-04-28T20:50:59-05:00" itemprop="datePublished" title="2016-04-28 20:50">2016-04-28 20:50</time></a></p>
+            
+        <p class="sourceline"><a href="index.src.html" id="sourcelink">Source</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <p style="text-align:justify;">Este es un post pequeñito donde vamos a demostrar como mejorar nuestro login que se ve un poco feo, para ello debemos crear un módulo de Python llamado forms.py en nuestra aplicación seguridad:<br><a href="../../../../../2016/04/forms.jpg"><img class="aligncenter size-full wp-image-211" src="../../../../../2016/04/forms.jpg" alt="forms" width="237" height="201"></a><br>
+Ahora vamos a crear una clase llamada FormularioLogin que va a heredar de AuthenticationForm, la herencia en Python se determina poniendo la clase de la que se va a heredar entre parentesis en la definición de la clase hija:</p>
+<p>forms.py</p>
+<p>[sourcecode language="python"]<br>
+from django.contrib.auth.forms import AuthenticationForm</p>
+<p>class FormularioLogin(AuthenticationForm):<br>
+    def __init__(self, *args, **kwargs):<br>
+        super(FormularioLogin, self).__init__(*args, **kwargs)<br>
+        self.fields['username'].widget.attrs['class'] = ‘form-control’<br>
+        self.fields['username'].widget.attrs['placeholder'] = ‘Usuario’<br>
+        self.fields['password'].widget.attrs['class'] = ‘form-control’<br>
+        self.fields['password'].widget.attrs['placeholder'] = ‘Contraseña’<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">¿Que cosa hemos hecho aquí?, sencillo hemos sobreescrito el comportamiento de los campos del formulario AuthenticationForm, expliquemos esto: primero se necesita acceder a cada uno de los campos del formulario, estos son ‘username’ y ‘password’, y se accede a ellos a través de la lista “fields”, luego accederemos a los widgets de cada uno de estos campos, el widget es el elemento o etiqueta html que se dibuja en el navegador, en este caso los dos son “input”, al ser elementos html tienen atributos y cada atributo tiene un valor, en este caso vamos a modificar los atributos “class” y “placeholder”, el atributo class establece la clase CSS que se aplica a los estilos del elemento y el atributo placeholder provee una ayuda a los usuarios para indicar que cosa se debe escribir en las cajas de texto. Hemos aplicado la clase <a href="http://librosweb.es/libro/bootstrap_3/capitulo_5/campos_de_formulario.html">form-control</a> de bootstrap, que sirve para mostrar los elementos de un formulario mejor presentados, a ambos elementos y hemos definido la ayuda que aparecerá en cada caja de texto.</p>
+<p style="text-align:justify;">Recordemos que en nuestra vista Login el atributo form_class es AuthenticationForm, ahora esto va a cambiar:</p>
+<p>views.py</p>
+<p>[sourcecode language="python"]<br>
+from seguridad.forms import FormularioLogin</p>
+<p># Create your views here.<br>
+class Login(FormView):<br>
+    template_name = ‘login.html’<br>
+    form_class = FormularioLogin<br>
+    success_url =  reverse_lazy("personas:bienvenida")</p>
+<p>    def dispatch(self, request, *args, **kwargs):<br>
+        if request.user.is_authenticated():<br>
+            return HttpResponseRedirect(self.get_success_url())<br>
+        else:<br>
+            return super(Login, self).dispatch(request, *args, **kwargs)</p>
+<p>    def form_valid(self, form):<br>
+        login(self.request, form.get_user())<br>
+        return super(Login, self).form_valid(form)<br>
+[/sourcecode]</p>
+<p>Finalmente tendremos la siguiente presentación:</p>
+<p><a href="../../../../../2016/04/login_bonito.jpg"><img class="aligncenter wp-image-212" src="https://pythonpiura.files.wordpress.com/2016/04/login_bonito.jpg?w=300" alt="login_bonito" width="519" height="175"></a></p>
+<p>¿Mejor, verdad?, eso es todo por hoy.</p>
+<p>Saludos.</p>
+
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../../../../categories/circulo/" rel="tag">Círculo</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../../27/logout-y-proteccion-de-vistas-en-django/" rel="prev" title="Logout y Protección de Vistas en Django">Previous post</a>
+            </li>
+            <li class="next">
+                <a href="../permisos-basicos-en-django/" rel="next" title="Aplicar Permisos por Usuario en Django">Next post</a>
+            </li>
+        </ul></nav></aside></article>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../../../../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>

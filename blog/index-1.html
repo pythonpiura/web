@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="en">
+<head>
+<meta charset="utf-8">
+<base href="http://pythonpiura.org/blog/index-1.html">
+<meta name="description" content="Comunidad Python Piura">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python Piura (old posts, page 1) | Python Piura</title>
+<link href="../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta content="#5670d4" name="theme-color">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/blog/index-1.html">
+<link rel="prev" href="index-2.html" type="text/html">
+<!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../blog">Blog</a>
+                </li>
+<li>
+<a href="../eventos.html">Eventos</a>
+                </li>
+<li>
+<a href="../material-python.html">Material</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right"></ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+
+    
+<div class="postindex">
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/17/deployando-proyectos-django-en-heroku/" class="u-url">Deployando Proyectos Django en Heroku</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/17/deployando-proyectos-django-en-heroku/" rel="bookmark"><time class="published dt-published" datetime="2016-04-17T16:44:49-05:00" title="2016-04-17 16:44">2016-04-17 16:44</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;"><a href="https://www.heroku.com/">Heroku</a> es una plataforma que brinda servicios en la nube y soporta varios lenguajes de programación, funciona muy bien con Python y Django y en esta ocasión haremos un pequeño tutorial basado en el tutorial oficial, que se puede encontrar en la página del proyecto.<br>
+Para empezar  a trabajar debemos tener una cuenta en Heroku, hay planes de varios tipos, nosotros escogeremos el plan Free. Antes de empezar nos vamos a cerciorar de tener instaladas algunas cosas básicas, que ya hemos visto antes pero que siempre es bueno recordar:</p>
+<ul style="text-align:justify;">
+<li>Pip.</li>
+<li>Virtualenv</li>
+<li>Git.</li>
+<li>Y en nuestro caso la base de datos PostgreSQL.</li>
+</ul>
+<p style="text-align:justify;">El primer paso es instalar Heroku Toolbelt, esta aplicación provee acceso a la interfaz de linea de comandos(CLI) de Heroku, que es usada para administrar y escalar nuestras aplicaciones y sus añadidos, para tenerlo instalado debemos poner el siguiente comando en nuestra terminal:</p>
+<p>[sourcecode language="bash"]<br>
+wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">El script nos pedira permisos de superusuario para continuar, se los damos y esperamos que la instalación se efectue.</p>
+<p style="text-align:justify;">Una vez que hemos terminado de instalar debemos loguearnos utilizando el usuario y password que hemos registrado en la página de Heroku de la siguiente manera:</p>
+<p>[sourcecode language="bash"]<br>
+heroku login<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Si es la primera vez que lanzamos la aplicación se demorará un poquito instalando y configurando todo lo necesario, despues nos pedirá usuario y password, si ingresamos las credenciales correctamente nos saldrá un mensaje como este:</p>
+<p>[sourcecode language="bash"]<br>
+Logged in as miguel.amaya99@gmail.com<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Una vez que hemos hecho esto el manual oficial de Heroku nos indica que debemos clonar una aplicación de prueba para deployar, nosotros ya tenemos una aplicación desarrollada por lo que debemos hacer algunos cambios a esta para poder subirla sin ningún problema.</p>
+<p style="text-align:justify;">Primero debemos agregar dos archivos en la raiz del proyecto:</p>
+<p style="text-align:justify;">El archivo procfile que debe tener el siguiente contenido:</p>
+<p>[sourcecode language="python"]<br>
+web: gunicorn volpox.wsgi –log-file -<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">En la parte donde dice “volpox.wsgi” se debe reemplazar por el nombre de su proyecto.</p>
+<p style="text-align:justify;">El archivo requirements.txt debe tener todos las aplicaciones que nuestro proyecto necesita para funcionar correctamente, esto se puede averiguar facilmente ejecutando el comando pip freeze y guardando su contenido en el archivo, en nuestro caso el contenido del archivo es el siguiente:</p>
+<p>[sourcecode language="python"]<br>
+dj-database-url==0.4.0<br>
+Django==1.9.2<br>
+gunicorn==19.4.5<br>
+psycopg2==2.6.1<br>
+whitenoise==2.0.6<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Debemos tener en cuenta que este es el contenido básico para garantizar el correcto funcionamiento de nuestra aplicación en Heroku, hemos adicionado el paquete psycopg2 para poder trabajar con postgresql, si su proyecto usa algún paquete de software adicional, póngalo en este archivo.</p>
+<p style="text-align:justify;">Ahora debemos modificar el archivo settings.py agregando las siguientes lineas:</p>
+<p>[sourcecode language="python"]<br>
+#Al inicio</p>
+<p>import dj_database_url</p>
+<p>PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">En la parte donde está:</p>
+<p>[sourcecode language="python"]<br>
+ALLOWED_HOSTS = []<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Lo cambiamos por:</p>
+<p>[sourcecode language="python"]<br>
+ALLOWED_HOSTS = ['*']<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">En la parte final agregamos esto:</p>
+<p>[sourcecode language="python"]<br>
+db_from_env = dj_database_url.config(conn_max_age=500)<br>
+DATABASES['default'].update(db_from_env)</p>
+<p># Honor the ‘X-Forwarded-Proto’ header for request.is_secure()<br>
+SECURE_PROXY_SSL_HEADER = (‘HTTP_X_FORWARDED_PROTO’, ‘https’)<br>
+# Static files (CSS, JavaScript, Images)<br>
+# https://docs.djangoproject.com/en/1.8/howto/static-files/</p>
+<p>STATIC_ROOT = os.path.join(PROJECT_ROOT, ‘staticfiles’)</p>
+<p>STATIC_URL = ‘/static/’</p>
+<p># Extra places for collectstatic to find static files.<br>
+STATICFILES_DIRS = (<br>
+os.path.join(BASE_DIR, ‘static’),<br>
+)<br>
+STATICFILES_STORAGE = ‘whitenoise.django.GzipManifestStaticFilesStorage’<br>
+[/sourcecode]</p>
+<p>Ahora debemos cambiar el contenido del archivo wsgi.py</p>
+<p>[sourcecode language="python"]<br>
+import os<br>
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "volpox.settings")</p>
+<p>from django.core.wsgi import get_wsgi_application<br>
+from whitenoise.django import DjangoWhiteNoise</p>
+<p>application = get_wsgi_application()<br>
+application = DjangoWhiteNoise(application)<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">También debemos crear un archivo .gitignore, que es usado por git para no trabajar con las extensiones de archivos mencionados aquí en nuestro caso serán las siguientes:</p>
+<p>[sourcecode language="python"]<br>
+venv<br>
+*.pyc<br>
+staticfiles<br>
+.env<br>
+db.sqlite3<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora debemos crear un repositorio git con el siguiente comando:</p>
+<p>[sourcecode language="bash"]<br>
+git init<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Añadimos los archivos:</p>
+<p>[sourcecode language="bash"]<br>
+git add *<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y hacemos nuestro primer commit:</p>
+<p>[sourcecode language="bash"]<br>
+git commit -m "Deployando proyecto"<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Creamos nuestro proyecto en Heroku:</p>
+<p>[sourcecode language="bash"]<br>
+heroku create volpox<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora si procedamos a subir nuestro proyecto a Heroku:</p>
+<p>[sourcecode language="bash"]<br>
+git push heroku master<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Si tuviesemos algún error, revisar los archivos de la carpeta static, generalmente la mayoría de errores se presentan por rutas no encontradas o cosas así.</p>
+<p style="text-align:justify;">Si todo ha salido correctamente vamos a proceder a asegurarnos de que al menos una instancia de la aplicación se está ejecutando:</p>
+<p>[sourcecode language="bash"]<br>
+heroku ps:scale web=1<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora abrimos el proyecto con el navegador por defecto:</p>
+<p>[sourcecode language="bash"]<br>
+heroku open<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Listo, ya tenemos nuestra aplicación funcionando correctamente, ahora falta configurar la base de datos, para ello vamos a utilizar el siguiente comando:</p>
+<p>[sourcecode language="bash"]<br>
+heroku addons<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Con esto añadimos una base de datos PostgreSQL en el plan Free de nuestra cuenta.<br>
+Los siguiente comandos:</p>
+<p>[sourcecode language="bash"]<br>
+heroku config<br>
+heroku pg<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Nos permiten ver la configuración de nuestra base de datos.</p>
+<p style="text-align:justify;">Procedemos a crear nuestras tablas en la base de datos creada, usando el comando migrate de la siguiente manera:</p>
+<p>[sourcecode language="bash"]<br>
+heroku run python manage.py migrate<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Si es necesario procedemos a crear nuestro superusuario:</p>
+<p>[sourcecode language="bash"]<br>
+heroku run python manage.py createsuperuser<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Listo ya tenemos nuestra aplicación desplegada. Hasta la próxima.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/16/curso-basico-de-python/" class="u-url">Curso Básico de Python</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/16/curso-basico-de-python/" rel="bookmark"><time class="published dt-published" datetime="2016-04-16T14:52:19-05:00" title="2016-04-16 14:52">2016-04-16 14:52</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>[polldaddy poll=9387861]</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/" class="u-url">Servir Aplicaciones Django con Apache y mod_wsgi en Centos 7</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/" rel="bookmark"><time class="published dt-published" datetime="2016-04-14T22:34:33-05:00" title="2016-04-14 22:34">2016-04-14 22:34</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">Para instalar un servidor de producción Django en Centos 7 usaremos Apache y mod_wsgi, mod_wsgi es un módulo de Apache, que permite servir aplicaciones hechas en Python, que tengan soporte para la interfaz WSGI.<br>
+Los requisitos para esto son tener un servidor Centos 7 correctamente instalado y configurado y los permisos de root para poder hacer las instalaciones correspondientes. Para comenzar el proceso, vamos a descargar e instalar todos los elementos que necesitamos de los repositorios de la distribución. Esto incluirá el servidor web Apache, el módulo mod_wsgi utilizado para interactuar con nuestra aplicación Django, y pip. Para obtener pip, tendremos que habilitar el repositorio EPEL(paquetes para Linux Empresarial):</p>
+<p>[sourcecode language="bash"]<br>
+yum install epel-release<br>
+[/sourcecode]</p>
+<p>Con EPEL habilitado nosotros podemos instalar los componentes tipeando:</p>
+<p>[sourcecode language="bash"]<br>
+yum install python-pip httpd mod_wsgi<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Ahora que ya tenemos instalados los paquetes necesarios, debemos crear un entorno virtual para ellos instalaremos virtualenv usando pip:</p>
+<p>[sourcecode language="bash"]<br>
+pip install virtualenv<br>
+[/sourcecode]</p>
+<p>Ahora procedemos a crear nuestro entorno virtual:</p>
+<p>[sourcecode language="bash"]<br>
+virtualenv vproduccion<br>
+[/sourcecode]</p>
+<p>Y lo activamos:</p>
+<p>[sourcecode language="bash"]<br>
+source vproduccion/bin/activate<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Cuando activamos el entorno virtual nuestro prompt debe cambiar y aparecer entre paréntesis el nombre del entorno virtual activado.<br>
+Una vez que esto ha sucedido debemos instalar Django:</p>
+<p>[sourcecode language="bash"]<br>
+pip install django<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Cuando ya tengamos listo esto, subimos o creamos nuestro proyecto Django utilizando los comandos clásicos que ya hemos utilizado antes, ahora nos toca configurar Apache.<br>
+Una vez que comprobamos que el proyecto Django está funcionando, podemos configurar Apache como un front-end. Las conexiones de cliente que recibe serán traducidos al formato WSGI que la aplicación Django espera utilizando el módulo mod_wsgi. Esto debería haber sido activado automáticamente después de la instalación anterior. Para configurar lo anterior, tendremos que crear un nuevo archivo de configuración en el directorio /etc/httpd/conf.d. Vamos a llamar a este archivo django.conf:</p>
+<p>[sourcecode language="bash"]<br>
+nano /etc/httpd/conf.d/django.conf<br>
+[/sourcecode]</p>
+<p>Y dentro de él escribiremos lo siguiente:</p>
+<p>[sourcecode language="bash"]<br>
+#En mi caso la ruta es /home/jamaya y mi proyecto se llama siad<br>
+#Configuración para mostrar correctamente losa archivos estáticos<br>
+Alias /static /home/jamaya/siad/static<br>
+&lt;Directory /home/jamaya/siad/static&gt;<br>
+        Require all granted<br>
+&lt;/Directory&gt;<br>
+#Configuración para acceder correctamente al wsgi.py<br>
+&lt;Directory /home/jamaya/siad/siad/&gt;<br>
+&lt;Files wsgi.py&gt;<br>
+        Require all granted<br>
+&lt;/Files&gt;<br>
+&lt;/Directory&gt;</p>
+<p>WSGIDaemonProcess siad python-path=/home/jamaya/siad:/home/jamaya/vproduccion/lib/python2.7/site-packages<br>
+WSGIProcessGroup siad<br>
+WSGIScriptAlias /siad /home/jamaya/siad/siad/wsgi.py<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">A continuación, tenemos que arreglar los permisos para que el servicio de Apache puede acceder a nuestros archivos. Por defecto CentOS bloquea el directorio personal de cada usuario de manera muy restrictiva. Para evitar esto, añadiremos el usuario apache al grupo de nuestro propio usuario. Esto nos permitirá abrir los permisos sólo lo suficiente para que pueda llegar a los archivos correspondientes.<br>
+Añadimos el usuario apache a nuestro grupo, reemplazamos la palabra jamaya con nuestro usuario:</p>
+<p>[sourcecode language="bash"]<br>
+usermod -a -G jamaya apache<br>
+[/sourcecode]</p>
+<p>Damos permisos al grupo en la carpeta personal, esto permitirá al proceso apache acceder a los archivos.</p>
+<p>[sourcecode language="bash"]<br>
+chmod 710 /home/jamaya<br>
+[/sourcecode]</p>
+<p>Ya podemos iniciar el servicio de apache:</p>
+<p>[sourcecode language="bash"]<br>
+systemctl start httpd<br>
+[/sourcecode]</p>
+<p>Vamos a probar si la carga del proyecto funciona, vamos a otra computadora de la red y colocamos la direccion ip de nuestro servidor y la aplicación:</p>
+<p>[sourcecode language="bash"]<br>
+http://172.20.30.129/siad<br>
+[/sourcecode]</p>
+<p>Si hubiese algún problema lo mas rápido y sencillo es deshabilitar SELINUX, esto lo hacemos editando el archivo:</p>
+<p>[sourcecode language="bash"]<br>
+/etc/selinux/config<br>
+[/sourcecode]</p>
+<p>Y cambiando la siguiente linea:</p>
+<p>[sourcecode language="bash"]<br>
+SELINUX=disabled<br>
+[/sourcecode]</p>
+<p>Si todo funciona correctamente habilitamos el servicio apache para que se inicie automaticamente:</p>
+<p>[sourcecode language="bash"]<br>
+systemctl enable httpd<br>
+[/sourcecode]</p>
+<p>Recuerden tener siempre su archivo requerimientos.txt o requirements.txt para instalar todas las dependendencias que hacen que nuestro proyecto funcione con éxito. Este archivo se obtiene en nuestro entorno de desarrollo escribiendo el siguiente comando:</p>
+<p>[sourcecode language="bash"]<br>
+pip freeze &gt; requirements.txt<br>
+[/sourcecode]</p>
+<p>Y para instalarlas en nuestro entorno de producción usamos el mismo comando con algunas variantes:</p>
+<p>[sourcecode language="bash"]<br>
+pip install -r requirements.txt<br>
+[/sourcecode]</p>
+<p>En el caso nuestro teniamos un par de dependencias un poco complicadas de instalar en Centos: Pillow y psycopg2, por lo que tuvimos algunos errores, para solucionarlos debemos instalar algunas librerias, en centos en el caso de psycopg2 tenemos:</p>
+<p>[sourcecode language="bash"]<br>
+yum install gcc<br>
+yum install postgresql-devel python-devel<br>
+[/sourcecode]</p>
+<p>Y en el caso de Pillow:</p>
+<p>[sourcecode language="bash"]<br>
+yum install libjpeg-devel zlib-devel<br>
+[/sourcecode]</p>
+<p>Y listo eso es todo, ya tenemos nuestro servidor de producción.</p>
+<p>Saludos.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/" class="u-url">Romper Captchas con Pytesseract y Selenium</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/" rel="bookmark"><time class="published dt-published" datetime="2016-01-26T14:17:00-05:00" title="2016-01-26 14:17">2016-01-26 14:17</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>En muchas de las páginas que consultamos tenemos una imagen que contiene un pequeño texto que generalmente es de 4 o de 6 letras, esta imagen es conocida como captcha y sirve para evitar la consulta masiva de datos y el uso de boots para hacer consultas, el problema radica en que podemos convertir esta imagen en texto y buscar la forma de ingresar estos datos de manera automática sin intervención humana. Para hacer la conversión de la imagen en texto tenemos la librería pytesseract que hace uso del programa tesseract-ocr y para el ingreso automático de datos y el acceso a la página objetivo contamos con la ayuda de nuestro viejo conocido selenium, cabe destacar que este procedimiento funciona siempre y cuando la imagen del captcha no sea tan complejo y contenga solamente texto.<br>
+Hemos creado un script de manera general sin tener una página objetivo en específico, pero para aplicarlo se debe conocer bien la página a testear tal como hemos explicado en posts anteriores, analizando sus elementos y la ubicación del captcha.<br>
+Antes de empezar debemos tener instalado el programa tesseract-ocr ya que no podremos hacer nada sin este, lo podemos descargar de la siguiente <a href="http://en.osdn.jp/projects/sfnet_tesseract-ocr-alt/downloads/tesseract-ocr-setup-3.02.02.exe/">ubicación</a>.</p>
+<p>Posteriormente procedemos a instalar las librerias pytesseract y pillow(para el manejo y tratamiento de imágenes)</p>
+<blockquote><p>pip install pillow<br>
+pip install pytesseract</p></blockquote>
+<p>Y finalmente hacemos nuestro script el cual está debidamente documentado para que lo puedan adaptar y modificar a su gusto.</p>
+<p>[sourcecode language="python"]<br>
+# -*- coding: utf-8 -*-<br>
+from selenium import webdriver<br>
+from selenium.webdriver.common.by import By<br>
+from selenium.webdriver.support.wait import WebDriverWait<br>
+from selenium.webdriver.support import expected_conditions as EC</p>
+<p>try:<br>
+    import Image<br>
+except ImportError:<br>
+    from PIL import Image<br>
+import pytesseract</p>
+<p>def ir_pagina_web(cadena,direccion_web):<br>
+    driver = webdriver.Firefox()<br>
+    #Vamos a la dirección web de la página objetivo<br>
+    driver.get(direccion_web)<br>
+    try:<br>
+        #Esperamos que se cargue correctamente la caja de texto de búsqueda<br>
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "txtBusqueda")))<br>
+    except:<br>
+        print "El elemento no está presente"<br>
+    #Obtenemos la caja de texto de búsqueda<br>
+    placa = driver.find_element_by_id("txtBusqueda")<br>
+    #Enviamos la cadena a buscar en la caja de texto<br>
+    placa.send_keys(cadena)<br>
+    #Hacemos una captura de pantalla de la página objetivo<br>
+    driver.save_screenshot("screenshot.jpg")<br>
+    #Abrimos la captura hecha<br>
+    img=Image.open(‘screenshot.jpg’)<br>
+    #Recortamos la captura de acuerdo a la ubicación del captcha.<br>
+    #El primer argumento es la posición "x" inicial, el segundo la posición "y" inicial.<br>
+    #El tercer argumento es la posición "x" final y el cuarto la posición "y" final.<br>
+    img_recortada = img.crop((380,300,550,340))<br>
+    #Guardamos el área seleccionada con el nombre de "recorte.jpg"<br>
+    img_recortada.save("recorte.jpg")<br>
+    try:<br>
+        #Convertimos la imagen a cadena de texto usando la libreria pytesseract<br>
+        captcha = pytesseract.image_to_string(img_recortada)<br>
+        #Obtenemos la caja de texto donde se ingresa el contenido del captcha<br>
+        codigo = driver.find_element_by_id("txtCaptcha")<br>
+        #Enviamos el captcha obtenido<br>
+        codigo.send_keys(captcha)<br>
+    except:<br>
+        print "Error al convertir imagen en texto"<br>
+    #Obtenemos el botón buscar<br>
+    boton=driver.find_element_by_id("btn_buscar")<br>
+    #Hacemos click en el botón<br>
+    boton.click()<br>
+    driver.close()</p>
+<p>def main():<br>
+    ir_pagina_web("cadena","direccion_web")</p>
+<p>main()<br>
+[/sourcecode]</p>
+<p>Por cierto hemos realizado esta prueba en Windows, nos queda la tarea pendiente de hacerlo en GNU/Linux.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/01/25/web-scraping-con-selenium/" class="u-url">Web Scraping con Selenium</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/01/25/web-scraping-con-selenium/" rel="bookmark"><time class="published dt-published" datetime="2016-01-25T22:51:19-05:00" title="2016-01-25 22:51">2016-01-25 22:51</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>En entradas anteriores comentabamos sobre el uso de Selenium para hacer test, en esta oportunidad lo utilizaremos para extraer datos de una web en particular, ahora manos a la obra.<br>
+Para hacer la extracción de datos primero necesitamos conocer bien la página web objetivo, en este caso es una página de consulta de datos de teléfonos de personas y empresas llamada “Páginas Blancas” su URL es la siguiente:<br>
+http://www.paginasblancas.pe/</p>
+<p>Y también debemos conocer el modo de funcionamiento de la página en cuestión, en este caso se debe ingresar la cadena a buscar en una caja de texto y presionar un botón que dice “Buscar” para enviar la consulta, si hay datos coincidentes con el texto ingresado, la página nos mostrará una lista de resultados que contienen la razón social o nombre, la dirección y el teléfono:</p>
+<p>Búsqueda</p>
+<p><a href="../2016/01/busqueda.png" rel="attachment wp-att-89"><img class="alignnone size-medium wp-image-89" src="https://pythonpiura.files.wordpress.com/2016/01/busqueda.png?w=300" alt="busqueda" width="300" height="102"></a></p>
+<p>Resultados</p>
+<p><a href="../2016/01/resultados.png" rel="attachment wp-att-90"><img class="alignnone size-medium wp-image-90" src="https://pythonpiura.files.wordpress.com/2016/01/resultados.png?w=300" alt="resultados" width="300" height="246"></a></p>
+<p>Nos ayudaremos con las herramientas que tiene Firefox para poder identificar los elementos HTML de la página objetivo:<br><a href="../2016/01/herramientas.png" rel="attachment wp-att-86"><img class="alignnone size-medium wp-image-86" src="https://pythonpiura.files.wordpress.com/2016/01/herramientas.png?w=300" alt="Herramientas" width="300" height="88"></a></p>
+<p>Empezamos identificando la caja de texto donde se envían los datos a consultar:</p>
+<p><a href="../2016/01/caja.png" rel="attachment wp-att-87"><img class="alignnone size-medium wp-image-87" src="https://pythonpiura.files.wordpress.com/2016/01/caja.png?w=300" alt="caja" width="300" height="36"></a></p>
+<p>Y el botón que ejecuta la consulta:</p>
+<p><a href="../2016/01/boton.png" rel="attachment wp-att-88"><img class="alignnone size-medium wp-image-88" src="https://pythonpiura.files.wordpress.com/2016/01/boton.png?w=300" alt="boton" width="300" height="23"></a></p>
+<p>Ahora que ya tenemos identificados estos elementos procedemos a escribir nuestro script en python:</p>
+<p>[sourcecode language="python"]</p>
+<p># -*- coding: utf-8 -*-<br>
+from selenium import webdriver<br>
+from selenium.webdriver.common.by import By<br>
+from selenium.webdriver.support.wait import WebDriverWait<br>
+from selenium.webdriver.support import expected_conditions as EC<br>
+import os</p>
+<p>def ir_paginas_blancas_web(cadena):<br>
+    driver = webdriver.Firefox()<br>
+    #Página a la que queremos acceder<br>
+    driver.get("http://www.paginasblancas.pe")<br>
+    lista_datos = []<br>
+    try:<br>
+        #Verificamos si el elemento con ID="nName" ya está cargado, este elemento es la caja de texto donde se hacen las busquedas<br>
+        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "nName")))<br>
+        #Obtenemos la caja de texto de busquedas<br>
+        input_nombre = driver.find_element_by_id("nName")<br>
+        #Enviamos la cadena que estamos buscando<br>
+        input_nombre.send_keys(cadena)<br>
+        #Obtenemos el botón que ejecuta la búsqueda<br>
+        boton = driver.find_element_by_id("btnSrchName")<br>
+        #Damos click al botón<br>
+        boton.click()<br>
+    except:<br>
+        #Mostramos este mensaje en caso de que se presente algún problema<br>
+        print "El elemento no está presente"<br>
+    try:<br>
+        #Si se encuentran resultados la página los muestra en elementos de nombre "m-results-business"<br>
+        #Para ello esperamos que estos elementos se carguen para proceder a consultarlos<br>
+        WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "m-results-business")))<br>
+    except:<br>
+        print ‘Elementos no encontrados’<br>
+    #Obtenemos en una lista los elementos encontrados<br>
+    resultados = driver.find_elements_by_class_name("m-results-business")<br>
+    for resultado in resultados:<br>
+        #En cada uno de los elementos encontrados buscamos un elemento interno que tiene por nombre info<br>
+        datos = resultado.find_element_by_class_name("info")<br>
+        #Dentro del elemento interno encontrado buscamos aquellos elementos que son enlaces(etiqueta &lt;a&gt;)<br>
+        nombre = datos.find_element_by_tag_name(‘a’)<br>
+        #Comprobamos si la cadena que buscamos coincide con la razón social o el nombre mostrado por la página<br>
+        if nombre.text.upper().find(cadena)&lt;&gt;-1 or cadena.find(nombre.text.upper())&lt;&gt;-1:<br>
+            #Obtenemos la parte de la dirección<br>
+            span = datos.find_elements_by_tag_name(‘span’)<br>
+            direccion = span[2].text<br>
+            partes_ubigeo = span[3].text.split(‘-’)<br>
+            distrito = partes_ubigeo[0].strip()<br>
+            try:<br>
+                departamento = partes_ubigeo[1].strip()<br>
+            except:<br>
+                departamento = ‘-’<br>
+        #Obtenemos los Datos telefonicos para ello debemos simular el click en el botón que dice "Ver Teléfono"<br>
+        boton_telefono = resultado.find_element_by_class_name("m-button–results-business–icon")<br>
+        boton_telefono.click()<br>
+        #Obtenemos los teléfonos que se muestran como enlaces<br>
+        enlaces = resultado.find_elements_by_tag_name(‘a’)<br>
+        telefono = enlaces[1].text.replace(‘ ‘, ”)<br>
+        #Finalmente metemos en una lista de listas los datos obtenidos<br>
+        lista_datos.append([direccion,distrito,departamento,telefono])</p>
+<p>    driver.close()<br>
+    return lista_datos</p>
+<p>def main():<br>
+    print ir_paginas_blancas_web(‘UNIVERSIDAD DE LIMA’)</p>
+<p>main()</p>
+<p>[/sourcecode]</p>
+<p> </p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/01/25/django-y-microsoft-sql-server/" class="u-url">Django y Microsoft SQL Server</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/01/25/django-y-microsoft-sql-server/" rel="bookmark"><time class="published dt-published" datetime="2016-01-25T15:38:02-05:00" title="2016-01-25 15:38">2016-01-25 15:38</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">Si por algún oscuro motivo necesitas conectar Django con Microsoft SQL Server, la solución la tiene el proyecto django-pyodbc-azure la información completa sobre el proyecto la encontrarán en su web oficial:<br>
+https://github.com/michiya/django-pyodbc-azure<br>
+La última versión del proyecto soporta Django 1.9.1 y Microsoft SQL Server 2005,2008/2008R2,2012,2014.<br>
+Para empezar a trabajar debemos instalar de la siguiente forma:<br>
+pip install django-pyodbc-azure</p>
+<p style="text-align:justify;">Y luego configurar el archivo settings de nuestro proyecto, en la parte relacionada a la conexión a las bases de datos:</p>
+<p>[sourcecode language="python"]<br>
+DATABASES = {<br>
+    ‘default’: {<br>
+        ‘ENGINE’: ‘sql_server.pyodbc’,<br>
+        ‘NAME’: ‘NOMBRE_BD’,<br>
+        ‘USER’: ‘usuario’,<br>
+        ‘PASSWORD’: ‘password’,<br>
+        ‘HOST’: ‘IP_SERVIDOR_SQL_SERVER’,<br>
+        ‘PORT’: ”,<br>
+        ‘OPTIONS’: {<br>
+            ‘driver’: ‘SQL Server Native Client 10.0′,<br>
+            }<br>
+    },<br>
+}<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Y listo eso es todo, si desean conocer un poco mas este excelente proyecto remitanse a su página web.<br>
+Saludos.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/" class="u-url">Obtener Módulos de un Proyecto y Vistas de una Aplicación en Django</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/" rel="bookmark"><time class="published dt-published" datetime="2016-01-19T22:53:56-05:00" title="2016-01-19 22:53">2016-01-19 22:53</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>Debido a un requerimiento en un proyecto necesitabamos tener una página donde administrar todas las aplicaciones que hemos creado en nuestro proyecto Django y poder revisar que vistas(views) tiene cada uno de estas aplicaciones, para ello creamos una aplicación llamada permisos y una vista llamada AplicacionesProyecto de la siguiente manera:</p>
+<p>[sourcecode language="python"]<br>
+class AplicacionesProyecto(View):</p>
+<p>def get(self, request, *args, **kwargs):<br>
+    aplicaciones = [ app for app in miproyecto.settings.INSTALLED_APPS if not "django" in app ]<br>
+    context={‘aplicaciones’:aplicaciones}<br>
+    return render(request, ‘reporte_aplicaciones.html’,context)<br>
+[/sourcecode]</p>
+<p>Nuestro template se llama reporte_aplicaciones.html y tiene la siguiente estructura:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base_permisos.html" %}<br>
+{% block titulo_opcion %}<br>
+    Reporte de Aplicaciones<br>
+{% endblock titulo_opcion %}<br>
+{% block cuerpo_opcion %}<br>
+&lt;table class="table table-striped"&gt;<br>
+	&lt;tbhead&gt;<br>
+		&lt;tr&gt;<br>
+		&lt;th&gt;Nombre&lt;/th&gt;<br>
+		&lt;th&gt;Vistas&lt;/th&gt;<br>
+		&lt;/tr&gt;<br>
+	&lt;/tbhead&gt;<br>
+	&lt;tbody&gt;<br>
+		{% for app in aplicaciones %}<br>
+		&lt;tr&gt;<br>
+			&lt;td&gt;{{ app }}&lt;/td&gt;<br>
+			&lt;td&gt;<br>
+				&lt;a class="btn btn-small" href="{% url ‘permisos:reporte_vistas’ app %}"&gt;<br>
+					&lt;span class="glyphicon glyphicon-folder-open"&gt;&lt;/span&gt;<br>
+				&lt;/a&gt;<br>
+			&lt;/td&gt;<br>
+		&lt;/tr&gt;<br>
+		{% endfor %}<br>
+	&lt;/tbody&gt;<br>
+&lt;/table&gt;<br>
+{% endblock cuerpo_opcion %}<br>
+[/sourcecode]</p>
+<p>La idea es obtener un listado de tal manera que al dar click en el enlace de cada uno de los módulos podamos ver las vistas(Views) que tiene cada una de las aplicaciones:</p>
+<p>[sourcecode language="python"]<br>
+class ReporteVistas(View):</p>
+<p>	def get(self, request, *args, **kwargs):<br>
+		aplicacion = self.kwargs['aplicacion']<br>
+		lista_clases = []<br>
+		for nombre_modulo,instancia_modulo in inspect.getmembers(sys.modules[aplicacion]):<br>
+			if nombre_modulo==’views’:<br>
+				codigo_fuente = inspect.getsource(instancia_modulo)<br>
+				codigo_fuente = codigo_fuente.replace(" ", "")<br>
+				for miembro in dir(instancia_modulo):<br>
+					obj = getattr(instancia_modulo, miembro)<br>
+					if inspect.isclass(obj):<br>
+						cadena_clase = ‘class’ + miembro<br>
+						if codigo_fuente.find(cadena_clase)&gt;=0:<br>
+							lista_clases.append(miembro)<br>
+		context={‘vistas’:lista_clases}<br>
+		return render(request, ‘reporte_vistas_aplicacion.html’,context)<br>
+[/sourcecode]</p>
+<p>Nuestro template es reporte_vistas_aplicacion.html y tiene el siguiente contenido:</p>
+<p>[sourcecode language="html"]<br>
+{% extends "base_permisos.html" %}<br>
+{% block titulo_opcion %}<br>
+	Reporte de Vistas<br>
+{% endblock titulo_opcion %}<br>
+{% block cuerpo_opcion %}<br>
+	{% for vista in vistas %}<br>
+		{{ vista }}<br>
+	{% endfor %}<br>
+{% endblock cuerpo_opcion %}<br>
+[/sourcecode]</p>
+<p>Los urls respectivos son de la siguiente manera, archivo urls.py:</p>
+<p>[sourcecode language="python"]<br>
+url(r’^aplicaciones_proyecto’, login_required(AplicacionesProyecto.as_view()), name="aplicaciones_proyecto"),<br>
+url(r’^reporte_vistas/(?P&lt;aplicacion&gt;.+)/$’, login_required(ReporteVistas.as_view()), name="reporte_vistas"),<br>
+[/sourcecode]</p>
+<p>Así de esta manera tenemos un procedimiento un tanto rudimentario pero útil con el que obtenemos, las aplicaciones de nuestro proyecto y las vistas de cada una de ellas.<br>
+Hasta la próxima.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2014/09/18/selenium-con-python/" class="u-url">Selenium con Python</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2014/09/18/selenium-con-python/" rel="bookmark"><time class="published dt-published" datetime="2014-09-18T01:15:18-05:00" title="2014-09-18 01:15">2014-09-18 01:15</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p style="text-align:justify;">Buenas noches estimados amigos en esta oportunidad vamos a trabajar con Selenium, esta excelente herramienta que nos permite testear nuestras aplicaciones web actuando como si lo hiciera un usuario final que interactúa con nuestra aplicación, la primera vez que la probé me sorprendí gratamente porque no sabía de la existencia de una herramienta tan interesante, bueno manos a la obra, para instalar selenium con Python debemos usar nuestra querida herramienta pip de la siguiente manera:</p>
+<p>[sourcecode language="bash"]<br>
+    sudo pip install selenium<br>
+[/sourcecode]<br>
+Si tuviésemos configurado un entorno virtual simplemente trabajaríamos así:</p>
+<p>[sourcecode language="python"]<br>
+    pip install selenium<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Con esto ya tendremos instalada esta excelente aplicación, si por algún motivo tuviesen algún error o ya tuviesen instalado selenium y quieren actualizarlo deben poner lo siguiente en su terminal:</p>
+<p>[sourcecode language="python"]<br>
+    pip install selenium –upgrade<br>
+[/sourcecode]<br>
+Para probar su funcionamiento debemos tipear este ejemplo bastante simple:</p>
+<p>[sourcecode language="python"]<br>
+    #Importamos el módulo webdriver que nos permite interactuar con nuestro navegador<br>
+    from selenium import webdriver<br>
+    #Importamos la clase Keys que provee las teclas RETURN, F1, ALT, etc de nuestro teclado<br>
+    from selenium.webdriver.common.keys import Keys<br>
+    #Creamos una instancia de Firefox webdriver para poder usar el navegador firefox en esta prueba<br>
+    driver = webdriver.Firefox()<br>
+    #El método get permite navegar hacia un enlace determinado en este caso la página de Python.org<br>
+    #WebDriver esperará hasta que la página esté cargada<br>
+    driver.get("http://www.python.org")<br>
+    #En esta línea confirmaremos si el título tiene la palabra Python<br>
+    assert "Python" in driver.title<br>
+    #WebDriver ofrece varias maneras de encontrar los elementos de una página web<br>
+    #En este ejemplo queremos encontrar el elemento que tenga como atributo name la letra "q"(es la barra de busqueda de la página)<br>
+    elem = driver.find_element_by_name("q")<br>
+    #Como ya localizamos el elemento y sabemos que es una caja de texto, vamos a escribir en ella la palabra "selenium"<br>
+    elem.send_keys("selenium")<br>
+    #Y finalmente enviaremos la busqueda pulsando la tecla RETURN<br>
+    elem.send_keys(Keys.RETURN)<br>
+    #Cerramos el navegador<br>
+    driver.close()<br>
+[/sourcecode]</p>
+<p style="text-align:justify;">Verán que cuando ejecuten el script demorará un poquito pero nos mostrará una ventana de Firefox, posteriormente cargará la página de Python.org y en la caja de busqueda escribirá la palabra “selenium” para finalmente cerrar el navegador que había abierto culminando la ejecución del script.</p>
+<p style="text-align:justify;">Esperemos que este pequeño post sea de gran utilidad para ustedes queridos lectores y si tuviesen algún problema al ejecutar el script por favor nos avisan.</p>
+<p>Saludos.</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2014/09/14/python-y-la-vision-artificial/" class="u-url">Python y la Visión Artificial.</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2014/09/14/python-y-la-vision-artificial/" rel="bookmark"><time class="published dt-published" datetime="2014-09-14T18:30:22-05:00" title="2014-09-14 18:30">2014-09-14 18:30</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>Primer aporte de un integrante de nuestra comunidad. Pronto más sobre la documentación de éste framework #OpenCV.</p>
+<p>https://www.youtube.com/watch?v=e76GpOqm7IM&amp;list=UUuLRypAG4kX9igBcGSQ0xEQ</p>
+
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2014/05/23/primeros-pasos-con-django/" class="u-url">Primeros Pasos con Django</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Miguel Amaya
+            </span></p>
+            <p class="dateline"><a href="../posts/2014/05/23/primeros-pasos-con-django/" rel="bookmark"><time class="published dt-published" datetime="2014-05-23T00:43:50-05:00" title="2014-05-23 00:43">2014-05-23 00:43</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <p>Buenas noches en esta oportunidad les damos a conocer nuestro primer manual de Django con el que empezaremos a aprender este excepcional framework, esperamos que les guste y que pueda serles de utilidad.</p>
+<p><a title="Primeros Pasos con Django" href="http://elclickizquierdo.files.wordpress.com/2014/05/manual_django_circulo_python.pdf">Descargar archivo</a></p>
+
+    </div>
+    </article>
+</div>
+
+        <nav class="postindexpager"><ul class="pager">
+<li class="previous">
+                <a href="index-2.html" rel="prev">Newer posts</a>
+            </li>
+        </ul></nav>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2016         <a href="mailto:ythonpiura@openmailbox.org">Miguel Amaya</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../assets/js/all-nocdn.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("en");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates -->
+</body>
+</html>
