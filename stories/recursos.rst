@@ -6,5 +6,3 @@
 .. link: 
 .. description: 
 .. type: text
-
-Write your page here.
