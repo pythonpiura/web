@@ -431,167 +431,184 @@ Saludos.</p>
             <p class="dateline"><a href="../posts/2016/05/11/consulta-dni-reniec/" rel="bookmark"><time class="published dt-published" datetime="2016-05-11T21:37:08-05:00" title="2016-05-11 21:37">2016-05-11 21:37</time></a></p>
         </div>
     </header><div class="e-content entry-content">
-    <p style="text-align:justify;">En esta oportunidad vamos a hacer un ejemplo mas complejo, ya que el captcha así lo amerita, nuestra página objetivo es la siguiente:<br><a href="https://cel.reniec.gob.pe/valreg/valreg.do">https://cel.reniec.gob.pe/valreg/valreg.do</a><br><a href="../2016/05/reniec.jpg"><img class="aligncenter size-full wp-image-274" src="../2016/05/reniec.jpg" alt="reniec" width="579" height="396"></a><br>
-En esta página podemos ingresar el número de DNI y obtener el nombre completo del ciudadano. Como se ve en la imagen aquí nos enfrentamos a un captcha mas completo y a un teclado dinámico compuesto de botones, para romper este captcha tenemos que modificar la imagen para obtener el texto correcto, eliminando las lineas que atraviesan las letras y que tienen una tonalidad distinta de azul, el proceso no será 100% seguro pero funciona en la mayoría de los casos:</p>
-<p>[sourcecode language="python"]<br>
-# -*- coding: utf-8 -*-<br>
-from selenium import webdriver<br>
-from selenium.webdriver.common.by import By<br>
-from selenium.webdriver.support.wait import WebDriverWait<br>
-from selenium.webdriver.support import expected_conditions as EC</p>
-<p>try:<br>
-    import Image<br>
-except ImportError:<br>
-    from PIL import Image<br>
-import pytesseract</p>
-<p>def ir_reniec_web(dni):<br>
-    fp = webdriver.FirefoxProfile()<br>
-    driver = webdriver.Firefox(fp)<br>
-    #Definimos nuestra página objetivo<br>
-    driver.get("https://cel.reniec.gob.pe/valreg/valreg.do")<br>
-    try:<br>
-        #Esperamos hasta que se cargue la imagen con el captcha<br>
-        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "imagcodigo")))<br>
-    except:<br>
-        print "Element is not present"<br>
-    #Hacemos la captura de pantalla correspondiente<br>
-    driver.save_screenshot("screenshot.png")<br>
-    img=Image.open(‘screenshot.png’)<br>
-    #Obtenemos el ancho y el largo de la imagen<br>
-    ancho = img.size[0]<br>
-    alto = img.size[1]<br>
-    #Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen<br>
-    img_recortada = img.crop((int(ancho/4.26),int(alto/3.64),int(ancho/2.8),int(alto/3)))<br>
-    #Guardamos el recorte<br>
-    img_recortada.save("recorte.png")<br>
-    #Recorremos cada uno de los dígitos del DNI<br>
-    for num in dni:<br>
-        #Buscamos el boton que tenga como nombre tecla_0<br>
-        boton_0 = driver.find_element_by_name("tecla_0")<br>
-        #Obtenemos el valor del botón con nombre tecla_0<br>
-        valor_0 = boton_0.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_1<br>
-        boton_1 = driver.find_element_by_name("tecla_1")<br>
-        #Obtenemos el valor del botón con nombre tecla_1<br>
-        valor_1 = boton_1.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_2<br>
-        boton_2 = driver.find_element_by_name("tecla_2")<br>
-        #Obtenemos el valor del botón con nombre tecla_2<br>
-        valor_2 = boton_2.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_3<br>
-        boton_3 = driver.find_element_by_name("tecla_3")<br>
-        #Obtenemos el valor del botón con nombre tecla_3<br>
-        valor_3 = boton_3.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_4<br>
-        boton_4 = driver.find_element_by_name("tecla_4")<br>
-        #Obtenemos el valor del botón con nombre tecla_4<br>
-        valor_4 = boton_4.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_5<br>
-        boton_5 = driver.find_element_by_name("tecla_5")<br>
-        #Obtenemos el valor del botón con nombre tecla_5<br>
-        valor_5 = boton_5.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_6<br>
-        boton_6 = driver.find_element_by_name("tecla_6")<br>
-        #Obtenemos el valor del botón con nombre tecla_6<br>
-        valor_6 = boton_6.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_7<br>
-        boton_7 = driver.find_element_by_name("tecla_7")<br>
-        #Obtenemos el valor del botón con nombre tecla_7<br>
-        valor_7 = boton_7.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_8<br>
-        boton_8 = driver.find_element_by_name("tecla_8")<br>
-        #Obtenemos el valor del botón con nombre tecla_8<br>
-        valor_8 = boton_8.get_attribute(‘value’)<br>
-        #Buscamos el boton que tenga como nombre tecla_9<br>
-        boton_9 = driver.find_element_by_name("tecla_9")<br>
-        #Obtenemos el valor del botón con nombre tecla_9<br>
-        valor_9 = boton_9.get_attribute(‘value’)<br>
-        ”’Consultamos si el dígito del DNI es igual al valor del botón,<br>
-        si es el caso entonces se da click en ese botón”’<br>
-        if num==valor_0:<br>
-            boton_0.click()<br>
-        elif num==valor_1:<br>
-            boton_1 = driver.find_element_by_name("tecla_1")<br>
-            boton_1.click()<br>
-        elif num==valor_2:<br>
-            boton_2 = driver.find_element_by_name("tecla_2")<br>
-            boton_2.click()<br>
-        elif num==valor_3:<br>
-            boton_3 = driver.find_element_by_name("tecla_3")<br>
-            boton_3.click()<br>
-        elif num==valor_4:<br>
-            boton_4 = driver.find_element_by_name("tecla_4")<br>
-            boton_4.click()<br>
-        elif num==valor_5:<br>
-            boton_5 = driver.find_element_by_name("tecla_5")<br>
-            boton_5.click()<br>
-        elif num==valor_6:<br>
-            boton_6 = driver.find_element_by_name("tecla_6")<br>
-            boton_6.click()<br>
-        elif num==valor_7:<br>
-            boton_7 = driver.find_element_by_name("tecla_7")<br>
-            boton_7.click()<br>
-        elif num==valor_8:<br>
-            boton_8 = driver.find_element_by_name("tecla_8")<br>
-            boton_8.click()<br>
-        elif num==valor_9:<br>
-            boton_9 = driver.find_element_by_name("tecla_9")<br>
-            boton_9.click()<br>
-    #Se llama al método romper_captcha para obtener el texto correspondiente<br>
-    captcha = romper_captcha("recorte.png")<br>
-    try:<br>
-        #Obtenemos la caja de texto donde se escribe el texto del captcha<br>
-        codigo = driver.find_element_by_name("imagen")<br>
-        #Si el captcha está vacio o no se ha logrado romper se cierra el navegador y se termina la aplicación<br>
-        if captcha==”:<br>
-            driver.close()<br>
-            return<br>
-        #Escribimos el texto<br>
-        codigo.send_keys(captcha)<br>
-    except:<br>
-        pass<br>
-    try:<br>
-        #Obtenemos el botón de consulta<br>
-        boton_consultar=driver.find_element_by_name("bot_consultar")<br>
-        #Damos click al botón de consulta<br>
-        boton_consultar.click()<br>
-    except:<br>
-        print "Element is not present"<br>
-    #Obtengo el resultado que aparece en el elemento llamado style2<br>
-    resultado = driver.find_element_by_class_name("style2")<br>
-    #Partimos el resultado para obtener el nombre<br>
-    nombre = resultado.text.split(‘\n’)<br>
-    driver.close()<br>
-    return nombre[0]</p>
-<p>def romper_captcha(nombre_imagen):<br>
-    #Abro la imagen<br>
-    img = Image.open(nombre_imagen)<br>
-    #Obtengo un arreglo de píxeles de la imagen<br>
-    pixdata = img.load()<br>
-    ”’Modifico los píxeles de la imagen de acuerdo al análisis de los colores de las letras<br>
-    y las lineas que cruzan el texto, pintando de negro los píxeles del texto y de blanco las lineas”’<br>
-    for y in xrange(img.size[1]):<br>
-        for x in xrange(img.size[0]):<br>
-            if pixdata[x, y][2] &lt; 146: pixdata[x, y] = (255, 255, 255) for y in xrange(img.size[1]): for x in xrange(img.size[0]): if pixdata[x, y][1] &gt; 64:<br>
-                pixdata[x, y] = (255, 255, 255)<br>
-            else:<br>
-                pixdata[x, y] = (0,0,0)<br>
-    #Guardo la imagen modificada<br>
-    img.save("modificado.jpg")<br>
-    #Abro la imagen modificado<br>
-    image = Image.open("modificado.jpg")<br>
-    #Obtenemos el texto de la imagen<br>
-    frase = pytesseract.image_to_string(image)<br>
-    #Retornamos el texto eliminado los espacios en blanco entre las palabras y convirtiendolas en mayúsculas<br>
-    return frase.replace(‘ ‘,”).upper()</p>
-<p>def main():<br>
-    dni = ’123456789′<br>
-    print ir_reniec_web(dni)</p>
-<p>main()<br>
-[/sourcecode]</p>
-<p>Espero que les sea útil.<br>
+    <div>
+<p>En esta oportunidad vamos a hacer un ejemplo mas complejo, ya que el
+captcha así lo amerita, nuestra página objetivo es la siguiente:</p>
+<p><a class="reference external" href="https://cel.reniec.gob.pe/valreg/valreg.do">https://cel.reniec.gob.pe/valreg/valreg.do</a></p>
+<img alt="/images/blog/reniec.jpg" src="../images/blog/reniec.jpg"><p>En esta página podemos ingresar el número de DNI y obtener el nombre
+completo del ciudadano. Como se ve en la imagen aquí nos enfrentamos a
+un captcha mas completo y a un teclado dinámico compuesto de botones,
+para romper este captcha tenemos que modificar la imagen para obtener
+el texto correcto, eliminando las lineas que atraviesan las letras y
+que tienen una tonalidad distinta de azul, el proceso no será 100%
+seguro pero funciona en la mayoría de los casos:</p>
+<pre class="code python"><a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-6"></a>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-7"></a><span class="k">try</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-8"></a>        <span class="kn">import</span> <span class="nn">Image</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-9"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-10"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-11"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-12"></a>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-13"></a><span class="k">def</span> <span class="nf">ir_reniec_web</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-14"></a>        <span class="n">fp</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-15"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-16"></a>        <span class="c1">#Definimos nuestra página objetivo</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-17"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://cel.reniec.gob.pe/valreg/valreg.do"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-18"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-19"></a>                <span class="c1">#Esperamos hasta que se cargue la imagen con el captcha</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-20"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">"imagcodigo"</span><span class="p">)))</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-21"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-22"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-23"></a>        <span class="c1">#Hacemos la captura de pantalla correspondiente</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-24"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.png"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-25"></a>        <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.png'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-26"></a>        <span class="c1">#Obtenemos el ancho y el largo de la imagen</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-27"></a>        <span class="n">ancho</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-28"></a>        <span class="n">alto</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-29"></a>        <span class="c1">#Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-30"></a>        <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">ancho</span><span class="o">/</span><span class="mf">4.26</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">alto</span><span class="o">/</span><span class="mf">3.64</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">ancho</span><span class="o">/</span><span class="mf">2.8</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">alto</span><span class="o">/</span><span class="mi">3</span><span class="p">)))</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-31"></a>        <span class="c1">#Guardamos el recorte</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-32"></a>        <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-33"></a>        <span class="c1">#Recorremos cada uno de los dígitos del DNI</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-34"></a>        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">dni</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-35"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_0</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-36"></a>                <span class="n">boton_0</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_0"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-37"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_0</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-38"></a>                <span class="n">valor_0</span> <span class="o">=</span> <span class="n">boton_0</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-39"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_1</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-40"></a>                <span class="n">boton_1</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_1"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-41"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_1</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-42"></a>                <span class="n">valor_1</span> <span class="o">=</span> <span class="n">boton_1</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-43"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_2</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-44"></a>                <span class="n">boton_2</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_2"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-45"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_2</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-46"></a>                <span class="n">valor_2</span> <span class="o">=</span> <span class="n">boton_2</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-47"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_3</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-48"></a>                <span class="n">boton_3</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_3"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-49"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_3</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-50"></a>                <span class="n">valor_3</span> <span class="o">=</span> <span class="n">boton_3</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-51"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_4</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-52"></a>                <span class="n">boton_4</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_4"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-53"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_4</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-54"></a>                <span class="n">valor_4</span> <span class="o">=</span> <span class="n">boton_4</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-55"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_5</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-56"></a>                <span class="n">boton_5</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_5"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-57"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_5</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-58"></a>                <span class="n">valor_5</span> <span class="o">=</span> <span class="n">boton_5</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-59"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_6</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-60"></a>                <span class="n">boton_6</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_6"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-61"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_6</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-62"></a>                <span class="n">valor_6</span> <span class="o">=</span> <span class="n">boton_6</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-63"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_7</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-64"></a>                <span class="n">boton_7</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_7"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-65"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_7</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-66"></a>                <span class="n">valor_7</span> <span class="o">=</span> <span class="n">boton_7</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-67"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_8</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-68"></a>                <span class="n">boton_8</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_8"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-69"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_8</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-70"></a>                <span class="n">valor_8</span> <span class="o">=</span> <span class="n">boton_8</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-71"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_9</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-72"></a>                <span class="n">boton_9</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_9"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-73"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_9</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-74"></a>                <span class="n">valor_9</span> <span class="o">=</span> <span class="n">boton_9</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-75"></a>        <span class="c1">#Consultamos si el dígito del DNI es igual al valor del botón, si es el caso entonces se da click en ese botón</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-76"></a>        <span class="k">if</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_0</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-77"></a>                <span class="n">boton_0</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-78"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_1</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-79"></a>                <span class="n">boton_1</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_1"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-80"></a>                <span class="n">boton_1</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-81"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_2</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-82"></a>                <span class="n">boton_2</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_2"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-83"></a>                <span class="n">boton_2</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-84"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_3</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-85"></a>                <span class="n">boton_3</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_3"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-86"></a>                <span class="n">boton_3</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-87"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_4</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-88"></a>                <span class="n">boton_4</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_4"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-89"></a>                <span class="n">boton_4</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-90"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_5</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-91"></a>                <span class="n">boton_5</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_5"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-92"></a>                <span class="n">boton_5</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-93"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_6</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-94"></a>                <span class="n">boton_6</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_6"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-95"></a>                <span class="n">boton_6</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-96"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_7</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-97"></a>                <span class="n">boton_7</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_7"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-98"></a>                <span class="n">boton_7</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-99"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_8</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-100"></a>                <span class="n">boton_8</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_8"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-101"></a>                <span class="n">boton_8</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-102"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_9</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-103"></a>                <span class="n">boton_9</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_9"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-104"></a>                <span class="n">boton_9</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-105"></a>        <span class="c1">#Se llama al método romper_captcha para obtener el texto correspondiente</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-106"></a>        <span class="n">captcha</span> <span class="o">=</span> <span class="n">romper_captcha</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-107"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-108"></a>                <span class="c1">#Obtenemos la caja de texto donde se escribe el texto del captcha</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-109"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"imagen"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-110"></a>                <span class="c1">#Si el captcha está vacio o no se ha logrado romper se cierra el navegador y se termina la aplicación</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-111"></a>                <span class="k">if</span> <span class="n">captcha</span><span class="o">==</span><span class="s2">""</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-112"></a>                        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-113"></a>                        <span class="k">return</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-114"></a>                <span class="c1">#Escribimos el texto</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-115"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-116"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-117"></a>                <span class="k">pass</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-118"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-119"></a>                <span class="c1">#Obtenemos el botón de consulta</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-120"></a>                <span class="n">boton_consultar</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"bot_consultar"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-121"></a>                <span class="c1">#Damos click al botón de consulta</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-122"></a>                <span class="n">boton_consultar</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-123"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-124"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-125"></a>        <span class="c1">#Obtengo el resultado que aparece en el elemento llamado style2</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-126"></a>        <span class="n">resultado</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">"style2"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-127"></a>        <span class="c1">#Partimos el resultado para obtener el nombre</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-128"></a>        <span class="n">nombre</span> <span class="o">=</span> <span class="n">resultado</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-129"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-130"></a>        <span class="k">return</span> <span class="n">nombre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-131"></a>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-132"></a><span class="k">def</span> <span class="nf">romper_captcha</span><span class="p">(</span><span class="n">nombre_imagen</span><span class="p">):</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-133"></a>        <span class="c1">#Abro la imagen</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-134"></a>        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">nombre_imagen</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-135"></a>        <span class="c1">#Obtengo un arreglo de píxeles de la imagen</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-136"></a>        <span class="n">pixdata</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-137"></a>        <span class="sd">"""Modifico los píxeles de la imagen de acuerdo al análisis de los</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-138"></a><span class="sd">        colores de las letras y las lineas que cruzan el texto, pintando de negro los píxeles del</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-139"></a><span class="sd">        texto y de blanco las lineas"""</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-140"></a>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-141"></a>                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-142"></a>                        <span class="k">if</span> <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">146</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-143"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-144"></a>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-145"></a>                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-146"></a>                        <span class="k">if</span> <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>     <span class="o">&gt;</span> <span class="mi">64</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-147"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-148"></a>                        <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-149"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-150"></a>        <span class="c1">#Guardo la imagen modificada</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-151"></a>        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"modificado.jpg"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-152"></a>        <span class="c1">#Abro la imagen modificado</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-153"></a>        <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"modificado.jpg"</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-154"></a>        <span class="c1">#Obtenemos el texto de la imagen</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-155"></a>        <span class="n">frase</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-156"></a>        <span class="c1">#Retornamos el texto eliminado los espacios en blanco entre las palabras y convirtiendolas en mayúsculas</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-157"></a>        <span class="k">return</span> <span class="n">frase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-158"></a>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-159"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-160"></a>        <span class="n">dni</span> <span class="o">=</span> <span class="s1">'123456789'</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-161"></a>        <span class="k">print</span> <span class="n">ir_reniec_web</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-162"></a>
+<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-163"></a><span class="n">main</span><span class="p">()</span>
+</pre>
+<p>Espero que les sea útil.
 Saludos.</p>
-
+</div>
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/05/10/otro-ejemplo-de-web-scrapping-con-python/" class="u-url">Otro Ejemplo de Web Scrapping con Python</a></h1>
         <div class="metadata">
