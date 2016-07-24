@@ -5,12 +5,12 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1469380783.9474094
+_modified_time = 1469380883.6151812
 _enable_loop = True
 _template_filename = '/home/inkarri/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/index.tmpl'
 _template_uri = 'index.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['extra_head', 'content', 'content_header']
+_exports = ['content_header', 'extra_head', 'content']
 
 
 def _mako_get_namespace(context, name):
@@ -33,25 +33,25 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        posts = context.get('posts', UNDEFINED)
-        index_file = context.get('index_file', UNDEFINED)
         author_pages_generated = context.get('author_pages_generated', UNDEFINED)
-        parent = context.get('parent', UNDEFINED)
-        def content_header():
-            return render_content_header(context._locals(__M_locals))
-        _link = context.get('_link', UNDEFINED)
-        pagekind = context.get('pagekind', UNDEFINED)
-        comments = _mako_get_namespace(context, 'comments')
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
-        def extra_head():
-            return render_extra_head(context._locals(__M_locals))
-        permalink = context.get('permalink', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        index_teasers = context.get('index_teasers', UNDEFINED)
-        helper = _mako_get_namespace(context, 'helper')
-        date_format = context.get('date_format', UNDEFINED)
         front_index_header = context.get('front_index_header', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
+        _link = context.get('_link', UNDEFINED)
+        date_format = context.get('date_format', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
+        comments = _mako_get_namespace(context, 'comments')
+        index_file = context.get('index_file', UNDEFINED)
+        permalink = context.get('permalink', UNDEFINED)
+        index_teasers = context.get('index_teasers', UNDEFINED)
+        def content_header():
+            return render_content_header(context._locals(__M_locals))
+        pagekind = context.get('pagekind', UNDEFINED)
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
+        parent = context.get('parent', UNDEFINED)
+        def extra_head():
+            return render_extra_head(context._locals(__M_locals))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -71,15 +71,26 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
+def render_content_header(context,**pageargs):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        def content_header():
+            return render_content_header(context)
+        __M_writer = context.writer()
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 def render_extra_head(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
+        posts = context.get('posts', UNDEFINED)
+        parent = context.get('parent', UNDEFINED)
         index_file = context.get('index_file', UNDEFINED)
         def extra_head():
             return render_extra_head(context)
         permalink = context.get('permalink', UNDEFINED)
-        parent = context.get('parent', UNDEFINED)
-        posts = context.get('posts', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    ')
         __M_writer(str(parent.extra_head()))
@@ -96,20 +107,20 @@ def render_extra_head(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
-        def content():
-            return render_content(context)
-        posts = context.get('posts', UNDEFINED)
-        comments = _mako_get_namespace(context, 'comments')
-        index_teasers = context.get('index_teasers', UNDEFINED)
-        helper = _mako_get_namespace(context, 'helper')
-        author_pages_generated = context.get('author_pages_generated', UNDEFINED)
-        date_format = context.get('date_format', UNDEFINED)
         def content_header():
             return render_content_header(context)
-        _link = context.get('_link', UNDEFINED)
-        pagekind = context.get('pagekind', UNDEFINED)
+        author_pages_generated = context.get('author_pages_generated', UNDEFINED)
+        def content():
+            return render_content(context)
         front_index_header = context.get('front_index_header', UNDEFINED)
+        posts = context.get('posts', UNDEFINED)
+        pagekind = context.get('pagekind', UNDEFINED)
+        _link = context.get('_link', UNDEFINED)
+        date_format = context.get('date_format', UNDEFINED)
+        helper = _mako_get_namespace(context, 'helper')
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
+        comments = _mako_get_namespace(context, 'comments')
+        index_teasers = context.get('index_teasers', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content_header'):
@@ -175,19 +186,8 @@ def render_content(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_content_header(context,**pageargs):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        def content_header():
-            return render_content_header(context)
-        __M_writer = context.writer()
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "line_map": {"128": 20, "129": 22, "130": 22, "131": 22, "132": 22, "133": 25, "134": 26, "135": 26, "136": 26, "137": 26, "138": 26, "139": 27, "140": 28, "141": 28, "142": 28, "143": 30, "144": 31, "145": 31, "146": 31, "147": 31, "148": 31, "149": 31, "150": 31, "23": 2, "152": 32, "153": 33, "26": 3, "155": 33, "156": 35, "154": 33, "158": 38, "159": 39, "32": 0, "161": 40, "162": 41, "163": 42, "164": 42, "165": 44, "166": 47, "167": 48, "168": 48, "169": 49, "170": 49, "171": 50, "172": 50, "157": 37, "178": 14, "56": 2, "57": 3, "58": 4, "151": 31, "189": 178, "63": 11, "160": 39, "68": 51, "74": 6, "84": 6, "85": 7, "86": 7, "87": 8, "88": 9, "89": 9, "90": 9, "96": 13, "114": 13, "119": 14, "120": 15, "121": 16, "122": 16, "123": 16, "124": 18, "125": 19, "126": 20, "127": 20}, "uri": "index.tmpl", "filename": "/home/inkarri/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/index.tmpl"}
+{"filename": "/home/inkarri/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/index.tmpl", "source_encoding": "utf-8", "uri": "index.tmpl", "line_map": {"130": 14, "131": 15, "132": 16, "133": 16, "134": 16, "135": 18, "136": 19, "137": 20, "138": 20, "139": 20, "140": 22, "141": 22, "142": 22, "143": 22, "144": 25, "145": 26, "146": 26, "147": 26, "148": 26, "149": 26, "150": 27, "23": 2, "152": 28, "153": 28, "26": 3, "155": 31, "156": 31, "154": 30, "158": 31, "159": 31, "32": 0, "161": 31, "162": 31, "163": 32, "164": 33, "165": 33, "166": 33, "167": 35, "168": 37, "169": 38, "170": 39, "171": 39, "172": 40, "173": 41, "174": 42, "157": 31, "176": 44, "177": 47, "178": 48, "179": 48, "180": 49, "181": 49, "182": 50, "183": 50, "56": 2, "57": 3, "58": 4, "151": 28, "189": 183, "63": 11, "160": 31, "175": 42, "68": 51, "74": 14, "85": 6, "95": 6, "96": 7, "97": 7, "98": 8, "99": 9, "100": 9, "101": 9, "107": 13, "125": 13}}
 __M_END_METADATA
 """
