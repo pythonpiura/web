@@ -618,115 +618,122 @@ Saludos.</p>
             <p class="dateline"><a href="../posts/2016/05/10/otro-ejemplo-de-web-scrapping-con-python/" rel="bookmark"><time class="published dt-published" datetime="2016-05-10T23:35:39-05:00" title="2016-05-10 23:35">2016-05-10 23:35</time></a></p>
         </div>
     </header><div class="e-content entry-content">
-    <p style="text-align:justify;">En esta oportunidad vamos a compartir con ustedes un nuevo script para consultar rucs de manera masiva a partir del DNI en la página web de sunat, esto ha sido un poco mas complejo debido a que la página en cuestión usa frames, también hemos mejorado un poquito el problema de los tamaños haciendo el recorte a partir del tamaño de la captura de pantalla:</p>
-<p>[sourcecode language="python"]<br>
-# -*- coding: utf-8 -*-<br>
-from selenium import webdriver<br>
-from selenium.webdriver.common.by import By<br>
-from selenium.webdriver.support.wait import WebDriverWait<br>
-from selenium.webdriver.support import expected_conditions as EC<br>
-try:<br>
-    import Image<br>
-except ImportError:<br>
-    from PIL import Image<br>
-import pytesseract</p>
-<p>def ir_sunat_web(dni):<br>
-    driver = webdriver.Firefox()<br>
-    #Fijamos nuestra página objetivo<br>
-    driver.get("http://ww1.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias")<br>
-    try:<br>
-        #Debido a que la página tiene frames debemos hacer el cambio al frame con nombre "leftFrame"<br>
-        driver.switch_to_frame("leftFrame")<br>
-    except:<br>
-        return []<br>
-        driver.close()<br>
-    try:<br>
-        #Obtenemos los radio buttons que nos permiten seleccionar el tipo de búsqueda a hacer<br>
-        radios = driver.find_elements_by_name("tQuery")<br>
-        #Seleccionamos la búsqueda por DNI<br>
-        radios[1].click()<br>
-        #Obtenemos la caja de texto donde se ingresa el DNI<br>
-        documento = driver.find_element_by_name("search2")<br>
-        #Escribimos el DNI<br>
-        documento.send_keys(dni)<br>
-        #Esperamos hasta que el texto esté escrito en la caja de texto del DNI<br>
-        WebDriverWait(driver, 5).until(EC.text_to_be_present_in_element_value((By.NAME, "search2"),dni))<br>
-    except:<br>
-        driver.close()<br>
-        return []<br>
-    try:<br>
-        #Esperamos hasta que se cargue la imagen con el captcha<br>
-        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "imagen")))<br>
-        #Hacemos la captura de pantalla correspondiente<br>
-        driver.save_screenshot("screenshot.jpg")<br>
-        img=Image.open(‘screenshot.jpg’)<br>
-        #Obtenemos el ancho y el largo de la imagen<br>
-        ancho = img.size[0]<br>
-        alto = img.size[1]<br>
-        #Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen<br>
-        img_recortada = img.crop((ancho/1.4,alto/20,ancho/1.25,alto/6.9))<br>
-        #Guardamos el recorte<br>
-        img_recortada.save("recorte.jpg")<br>
-        #Obtenemos el texto del captcha<br>
-        captcha = pytesseract.image_to_string(img_recortada)<br>
-        #Obtenemos la caja de texto donde se escribe el texto del captcha<br>
-        codigo = driver.find_element_by_name("codigo")<br>
-        #Escribimos el texto<br>
-        codigo.send_keys(captcha)<br>
-    except:<br>
-        driver.close()<br>
-        return []<br>
-    try:<br>
-        #Obtenemos el botón de búsqueda<br>
-        boton = driver.find_element_by_class_name("form-button")<br>
-        #Damos click al botón de búsqueda<br>
-        boton.click()<br>
-        #Cambiamos al frame por defecto<br>
-        driver.switch_to_default_content()<br>
-        #Cambiamos al frame llamado "mainFrame" que contiene la tabla de resultados con un enlace conteniendo el ruc<br>
-        driver.switch_to_frame("mainFrame")<br>
-    except:<br>
-        driver.close()<br>
-        return []<br>
-    try:<br>
-        #Esperamos que se cargue la tabla de resultados<br>
-        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CLASS_NAME, "form-table")))<br>
-        #Obtenemos el enlace que contiene al RUC<br>
-        enlace=driver.find_element(By.TAG_NAME,"a")<br>
-        #Le damos click al enlace<br>
-        enlace.click()<br>
-        #Ahora si tenemos una tabla que contiene el detalle de los resultados del RUC consultado<br>
-        #Obtenemos todas las filas<br>
-        trs = driver.find_elements(By.TAG_NAME, "tr")<br>
-        #Obtenemos las celdas de la primera fila<br>
-        tds = trs[0].find_elements(By.TAG_NAME, "td")<br>
-        #A la segunda celda la partimos ya que tiene el ruc y la razón social separados por un guión<br>
-        primera_linea = tds[1].text.split(‘-’)<br>
-        ruc = primera_linea[0].strip()<br>
-        razon_social = primera_linea[1].strip()<br>
-        #Obtenemos la segunda linea que tiene el tipo de contribuyente<br>
-        tds = trs[1].find_elements(By.TAG_NAME, "td")<br>
-        tipo_contribuyente = tds[1].text.strip()<br>
-        #Obtenemos la dirección<br>
-        tds = trs[7].find_elements(By.TAG_NAME, "td")<br>
-        direccion = tds[1].text.strip()<br>
-    except:<br>
-        driver.close()<br>
-        return []<br>
-    driver.close()<br>
-    #Devolvemos una lista con los resultados.<br>
-    datos = [ruc,razon_social,tipo_contribuyente,direccion]<br>
-    return datos    </p>
-<p>def main():<br>
-    #Ingresar DNI<br>
-    dni = ’12345678′<br>
-    print ir_sunat_web(dni)</p>
-<p>main()<br>
-[/sourcecode]</p>
-<p>http://www.youtube.com/watch?v=ijICFYtAuDE</p>
-<p>Esperamos que les sea útil.<br>
+    <div>
+<p>En esta oportunidad vamos a compartir con ustedes un nuevo script para
+consultar rucs de manera masiva a partir del DNI en la página web de
+sunat, esto ha sido un poco mas complejo debido a que la página en
+cuestión usa frames, también hemos mejorado un poquito el problema de
+los tamaños haciendo el recorte a partir del tamaño de la captura de
+pantalla:</p>
+<pre class="code python"><a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-6"></a><span class="k">try</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-7"></a>        <span class="kn">import</span> <span class="nn">Image</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-8"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-9"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-10"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-11"></a>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-12"></a><span class="k">def</span> <span class="nf">ir_sunat_web</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-13"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-14"></a>        <span class="c1">#Fijamos nuestra página objetivo</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-15"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"http://ww1.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-16"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-17"></a>                <span class="c1">#Debido a que la página tiene frames debemos hacer el cambio al frame con nombre "leftFrame"</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-18"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="s2">"leftFrame"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-19"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-20"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-21"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-22"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-23"></a>                <span class="c1">#Obtenemos los radio buttons que nos permiten seleccionar el tipo de búsqueda a hacer</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-24"></a>                <span class="n">radios</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements_by_name</span><span class="p">(</span><span class="s2">"tQuery"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-25"></a>                <span class="c1">#Seleccionamos la búsqueda por DNI</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-26"></a>                <span class="n">radios</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-27"></a>                <span class="c1">#Obtenemos la caja de texto donde se ingresa el DNI</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-28"></a>                <span class="n">documento</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"search2"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-29"></a>                <span class="c1">#Escribimos el DNI</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-30"></a>                <span class="n">documento</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-31"></a>                <span class="c1">#Esperamos hasta que el texto esté escrito en la caja de texto del DNI</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-32"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">text_to_be_present_in_element_value</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span><span class="s2">"search2"</span><span class="p">),</span><span class="n">dni</span><span class="p">))</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-33"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-34"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-35"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-36"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-37"></a>                <span class="c1">#Esperamos hasta que se cargue la imagen con el captcha</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-38"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s2">"imagen"</span><span class="p">)))</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-39"></a>                <span class="c1">#Hacemos la captura de pantalla correspondiente</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-40"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.jpg"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-41"></a>                <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.jpg'</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-42"></a>                <span class="c1">#Obtenemos el ancho y el largo de la imagen</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-43"></a>                <span class="n">ancho</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-44"></a>                <span class="n">alto</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-45"></a>                <span class="c1">#Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-46"></a>                <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="n">ancho</span><span class="o">/</span><span class="mf">1.4</span><span class="p">,</span><span class="n">alto</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span><span class="n">ancho</span><span class="o">/</span><span class="mf">1.25</span><span class="p">,</span><span class="n">alto</span><span class="o">/</span><span class="mf">6.9</span><span class="p">))</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-47"></a>                <span class="c1">#Guardamos el recorte</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-48"></a>                <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.jpg"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-49"></a>                <span class="c1">#Obtenemos el texto del captcha</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-50"></a>                <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-51"></a>                <span class="c1">#Obtenemos la caja de texto donde se escribe el texto del captcha</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-52"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"codigo"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-53"></a>                <span class="c1">#Escribimos el texto</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-54"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-55"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-56"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-57"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-58"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-59"></a>                <span class="c1">#Obtenemos el botón de búsqueda</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-60"></a>                <span class="n">boton</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">"form-button"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-61"></a>                <span class="c1">#Damos click al botón de búsqueda</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-62"></a>                <span class="n">boton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-63"></a>                <span class="c1">#Cambiamos al frame por defecto</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-64"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_default_content</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-65"></a>                <span class="c1">#Cambiamos al frame llamado "mainFrame" que contiene la tabla de resultados con un enlace conteniendo el ruc</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-66"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="s2">"mainFrame"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-67"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-68"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-69"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-70"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-71"></a>                <span class="c1">#Esperamos que se cargue la tabla de resultados</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-72"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s2">"form-table"</span><span class="p">)))</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-73"></a>                <span class="c1">#Obtenemos el enlace que contiene al RUC</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-74"></a>                <span class="n">enlace</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span><span class="s2">"a"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-75"></a>                <span class="c1">#Le damos click al enlace</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-76"></a>                <span class="n">enlace</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-77"></a>                <span class="c1">#Ahora si tenemos una tabla que contiene el detalle de los resultados del RUC consultado</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-78"></a>                <span class="c1">#Obtenemos todas las filas</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-79"></a>                <span class="n">trs</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"tr"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-80"></a>                <span class="c1">#Obtenemos las celdas de la primera fila</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-81"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-82"></a>                <span class="c1">#A la segunda celda la partimos ya que tiene el ruc y la razón social separados por un guión</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-83"></a>                <span class="n">primera_linea</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-84"></a>                <span class="n">ruc</span> <span class="o">=</span> <span class="n">primera_linea</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-85"></a>                <span class="n">razon_social</span> <span class="o">=</span> <span class="n">primera_linea</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-86"></a>                <span class="c1">#Obtenemos la segunda linea que tiene el tipo de contribuyente</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-87"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-88"></a>                <span class="n">tipo_contribuyente</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-89"></a>                <span class="c1">#Obtenemos la dirección</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-90"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-91"></a>                <span class="n">direccion</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-92"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-93"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-94"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-95"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-96"></a>        <span class="c1">#Devolvemos una lista con los resultados.</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-97"></a>        <span class="n">datos</span> <span class="o">=</span> <span class="p">[</span><span class="n">ruc</span><span class="p">,</span><span class="n">razon_social</span><span class="p">,</span><span class="n">tipo_contribuyente</span><span class="p">,</span><span class="n">direccion</span><span class="p">]</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-98"></a>        <span class="k">return</span> <span class="n">datos</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-99"></a>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-100"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-101"></a>        <span class="c1">#Ingresar DNI</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-102"></a>        <span class="n">dni</span> <span class="o">=</span> <span class="s1">'12345678'</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-103"></a>        <span class="k">print</span> <span class="n">ir_sunat_web</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-104"></a>
+<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-105"></a><span class="n">main</span><span class="p">()</span>
+</pre>
+<iframe width="459" height="344" src="https://www.youtube.com/embed/ijICFYtAuDE?feature=oembed" frameborder="0" allowfullscreen></iframe><p>Esperamos que les sea útil.
 Saludos.</p>
-
+</div>
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/" class="u-url">Fotos Charla Web Scrapping con Python y Selenium</a></h1>
         <div class="metadata">
