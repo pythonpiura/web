@@ -7,6 +7,3 @@
 .. description: 
 .. type: text
 
-.. image:: images/cabecera_circulo.jpg
-   :align: center
-
