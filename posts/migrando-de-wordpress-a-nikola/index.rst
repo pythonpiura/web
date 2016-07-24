@@ -202,6 +202,6 @@ Y corremos el comando:
 
 En este paso github nos solicito nuestro usuario y password, lo ingresamos y continuamos. Tardo varios minutos en subir el contenido pero ya con eso tenemos nuestro blog en la siguiente direccion.
 
-https://pythonpiura.github.io/
+http://pythonpiura.org/
 
 Saludos.
