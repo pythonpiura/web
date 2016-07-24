@@ -5,12 +5,12 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1469380068.6878073
+_modified_time = 1469380408.4638855
 _enable_loop = True
 _template_filename = '/home/inkarri/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/base.tmpl'
 _template_uri = 'base.tmpl'
 _source_encoding = 'utf-8'
-_exports = ['sourcelink', 'extra_head', 'belowtitle', 'extra_js', 'content']
+_exports = ['content', 'extra_head', 'extra_js', 'belowtitle', 'sourcelink']
 
 
 def _mako_get_namespace(context, name):
@@ -20,51 +20,51 @@ def _mako_get_namespace(context, name):
         _mako_generate_namespaces(context)
         return context.namespaces[(__name__, name)]
 def _mako_generate_namespaces(context):
-    ns = runtime.TemplateNamespace('notes', context._clean_inheritance_tokens(), templateuri='annotation_helper.tmpl', callables=None,  calling_uri=_template_uri)
-    context.namespaces[(__name__, 'notes')] = ns
-
     ns = runtime.TemplateNamespace('base', context._clean_inheritance_tokens(), templateuri='base_helper.tmpl', callables=None,  calling_uri=_template_uri)
     context.namespaces[(__name__, 'base')] = ns
+
+    ns = runtime.TemplateNamespace('notes', context._clean_inheritance_tokens(), templateuri='annotation_helper.tmpl', callables=None,  calling_uri=_template_uri)
+    context.namespaces[(__name__, 'notes')] = ns
 
 def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         _import_ns = {}
-        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        def sourcelink():
-            return render_sourcelink(context._locals(__M_locals))
-        def extra_head():
-            return render_extra_head(context._locals(__M_locals))
+        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
+        js_date_format = _import_ns.get('js_date_format', context.get('js_date_format', UNDEFINED))
+        template_hooks = _import_ns.get('template_hooks', context.get('template_hooks', UNDEFINED))
+        len = _import_ns.get('len', context.get('len', UNDEFINED))
         def content():
             return render_content(context._locals(__M_locals))
+        _link = _import_ns.get('_link', context.get('_link', UNDEFINED))
+        annotations = _import_ns.get('annotations', context.get('annotations', UNDEFINED))
         content_footer = _import_ns.get('content_footer', context.get('content_footer', UNDEFINED))
-        translations = _import_ns.get('translations', context.get('translations', UNDEFINED))
-        show_sourcelink = _import_ns.get('show_sourcelink', context.get('show_sourcelink', UNDEFINED))
-        notes = _mako_get_namespace(context, 'notes')
+        abs_link = _import_ns.get('abs_link', context.get('abs_link', UNDEFINED))
         search_form = _import_ns.get('search_form', context.get('search_form', UNDEFINED))
-        show_blog_title = _import_ns.get('show_blog_title', context.get('show_blog_title', UNDEFINED))
-        js_date_format = _import_ns.get('js_date_format', context.get('js_date_format', UNDEFINED))
-        lang = _import_ns.get('lang', context.get('lang', UNDEFINED))
-        momentjs_locales = _import_ns.get('momentjs_locales', context.get('momentjs_locales', UNDEFINED))
-        len = _import_ns.get('len', context.get('len', UNDEFINED))
-        logo_url = _import_ns.get('logo_url', context.get('logo_url', UNDEFINED))
-        post = _import_ns.get('post', context.get('post', UNDEFINED))
-        date_fanciness = _import_ns.get('date_fanciness', context.get('date_fanciness', UNDEFINED))
-        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         def extra_js():
             return render_extra_js(context._locals(__M_locals))
-        blog_title = _import_ns.get('blog_title', context.get('blog_title', UNDEFINED))
+        notes = _mako_get_namespace(context, 'notes')
+        lang = _import_ns.get('lang', context.get('lang', UNDEFINED))
+        def extra_head():
+            return render_extra_head(context._locals(__M_locals))
+        def sourcelink():
+            return render_sourcelink(context._locals(__M_locals))
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
+        show_blog_title = _import_ns.get('show_blog_title', context.get('show_blog_title', UNDEFINED))
+        body_end = _import_ns.get('body_end', context.get('body_end', UNDEFINED))
+        show_sourcelink = _import_ns.get('show_sourcelink', context.get('show_sourcelink', UNDEFINED))
+        post = _import_ns.get('post', context.get('post', UNDEFINED))
         def belowtitle():
             return render_belowtitle(context._locals(__M_locals))
-        set_locale = _import_ns.get('set_locale', context.get('set_locale', UNDEFINED))
-        body_end = _import_ns.get('body_end', context.get('body_end', UNDEFINED))
-        template_hooks = _import_ns.get('template_hooks', context.get('template_hooks', UNDEFINED))
-        _link = _import_ns.get('_link', context.get('_link', UNDEFINED))
-        abs_link = _import_ns.get('abs_link', context.get('abs_link', UNDEFINED))
+        translations = _import_ns.get('translations', context.get('translations', UNDEFINED))
+        momentjs_locales = _import_ns.get('momentjs_locales', context.get('momentjs_locales', UNDEFINED))
+        logo_url = _import_ns.get('logo_url', context.get('logo_url', UNDEFINED))
+        date_fanciness = _import_ns.get('date_fanciness', context.get('date_fanciness', UNDEFINED))
+        blog_title = _import_ns.get('blog_title', context.get('blog_title', UNDEFINED))
         base = _mako_get_namespace(context, 'base')
-        annotations = _import_ns.get('annotations', context.get('annotations', UNDEFINED))
+        set_locale = _import_ns.get('set_locale', context.get('set_locale', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -160,14 +160,14 @@ def render_body(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_sourcelink(context,**pageargs):
+def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         _import_ns = {}
-        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        def sourcelink():
-            return render_sourcelink(context)
+        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
+        def content():
+            return render_content(context)
         __M_writer = context.writer()
         return ''
     finally:
@@ -178,8 +178,8 @@ def render_extra_head(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         _import_ns = {}
-        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
+        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
         def extra_head():
             return render_extra_head(context)
         __M_writer = context.writer()
@@ -189,16 +189,30 @@ def render_extra_head(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
+def render_extra_js(context,**pageargs):
+    __M_caller = context.caller_stack._push_frame()
+    try:
+        _import_ns = {}
+        _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
+        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
+        def extra_js():
+            return render_extra_js(context)
+        __M_writer = context.writer()
+        return ''
+    finally:
+        context.caller_stack._pop_frame()
+
+
 def render_belowtitle(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         _import_ns = {}
-        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        def belowtitle():
-            return render_belowtitle(context)
+        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
         base = _mako_get_namespace(context, 'base')
         len = _import_ns.get('len', context.get('len', UNDEFINED))
+        def belowtitle():
+            return render_belowtitle(context)
         translations = _import_ns.get('translations', context.get('translations', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
@@ -212,28 +226,14 @@ def render_belowtitle(context,**pageargs):
         context.caller_stack._pop_frame()
 
 
-def render_extra_js(context,**pageargs):
+def render_sourcelink(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         _import_ns = {}
-        _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
         _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        def extra_js():
-            return render_extra_js(context)
-        __M_writer = context.writer()
-        return ''
-    finally:
-        context.caller_stack._pop_frame()
-
-
-def render_content(context,**pageargs):
-    __M_caller = context.caller_stack._push_frame()
-    try:
-        _import_ns = {}
         _mako_get_namespace(context, 'notes')._populate(_import_ns, ['*'])
-        _mako_get_namespace(context, 'base')._populate(_import_ns, ['*'])
-        def content():
-            return render_content(context)
+        def sourcelink():
+            return render_sourcelink(context)
         __M_writer = context.writer()
         return ''
     finally:
@@ -242,6 +242,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"uri": "base.tmpl", "filename": "/home/inkarri/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/base.tmpl", "line_map": {"128": 66, "129": 71, "130": 71, "131": 72, "132": 72, "133": 77, "134": 77, "135": 81, "136": 81, "137": 82, "138": 82, "139": 82, "140": 82, "145": 85, "146": 86, "147": 87, "148": 87, "149": 87, "150": 88, "23": 3, "152": 89, "153": 89, "26": 2, "155": 91, "156": 92, "29": 0, "163": 51, "207": 47, "154": 91, "157": 92, "177": 6, "209": 49, "186": 6, "151": 89, "229": 66, "215": 85, "192": 45, "69": 2, "70": 3, "71": 4, "72": 4, "73": 5, "74": 5, "204": 45, "205": 46, "206": 47, "79": 8, "80": 9, "81": 9, "82": 12, "83": 12, "84": 25, "85": 25, "86": 26, "87": 27, "88": 27, "89": 27, "90": 27, "91": 27, "92": 29, "93": 30, "94": 31, "95": 31, "96": 31, "97": 33, "98": 37, "99": 37, "100": 38, "101": 38, "102": 40, "103": 41, "104": 41, "105": 41, "106": 43, "208": 47, "111": 49, "112": 50, "113": 51, "243": 229, "118": 51, "119": 53, "120": 53, "121": 53, "122": 65, "123": 65}, "source_encoding": "utf-8"}
+{"uri": "base.tmpl", "filename": "/home/inkarri/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/base.tmpl", "line_map": {"128": 66, "129": 71, "130": 71, "131": 72, "132": 72, "133": 77, "134": 77, "135": 81, "136": 81, "137": 82, "138": 82, "139": 82, "140": 82, "145": 85, "146": 86, "147": 87, "148": 87, "149": 87, "150": 88, "23": 2, "152": 89, "153": 89, "26": 3, "155": 91, "156": 92, "29": 0, "163": 66, "220": 47, "154": 91, "157": 92, "177": 6, "218": 45, "222": 47, "219": 46, "186": 6, "223": 49, "151": 89, "229": 51, "192": 85, "69": 2, "70": 3, "71": 4, "72": 4, "73": 5, "74": 5, "206": 45, "79": 8, "80": 9, "81": 9, "82": 12, "83": 12, "84": 25, "85": 25, "86": 26, "87": 27, "88": 27, "89": 27, "90": 27, "91": 27, "92": 29, "93": 30, "94": 31, "95": 31, "96": 31, "97": 33, "98": 37, "99": 37, "100": 38, "101": 38, "102": 40, "103": 41, "104": 41, "105": 41, "106": 43, "111": 49, "112": 50, "113": 51, "221": 47, "243": 229, "118": 51, "119": 53, "120": 53, "121": 53, "122": 65, "123": 65}, "source_encoding": "utf-8"}
 __M_END_METADATA
 """
