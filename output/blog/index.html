@@ -72,115 +72,115 @@
     <div>
 <p>Despues de haber trabajado durante mucho tiempo en Wordpress decidimos usar algo mas pythonesco y encontramos el proyecto Nikola, que se adapta muy bien a lo que nosotros necesitamos como comunidad, asi que decidimos migrar, para ello seguimos la documentacion oficial del proyecto y algunos tutoriales adicionales, en este post vamos a relatar nuestra experiencia, esperando que sea util a nuestros lectores.</p>
 <p>Primero creamos nuestro entorno virtual, en esta oportunidad usamos python3 para obtener un mejor rendimiento con Nikola,</p>
-<pre class="code bash"><a name="rest_code_0b0c052f84e049dba355212e0a204ef7-1"></a>python3 -m venv nikola
+<pre class="code bash"><a name="rest_code_02be095237e34ba89948f2fe150bf3ce-1"></a>python3 -m venv nikola
 </pre>
 <p>Activamos el entorno virtual:</p>
-<pre class="code bash"><a name="rest_code_b1cb78a4e81c47ef91375b58334f444a-1"></a><span class="nb">source</span> nikola/bin/activate
+<pre class="code bash"><a name="rest_code_90000a9a29b84565a1c5c1df2a61e3b3-1"></a><span class="nb">source</span> nikola/bin/activate
 </pre>
 <p>Antes de iniciar la instalacion de Nikola debimos instalar algunas dependencias para asegurarnos que todo funcione sin ningun problema:</p>
-<pre class="code bash"><a name="rest_code_57db68fc94e14355869482cada9f7fa5-1"></a>sudo apt-get install python3-dev
-<a name="rest_code_57db68fc94e14355869482cada9f7fa5-2"></a>sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
-<a name="rest_code_57db68fc94e14355869482cada9f7fa5-3"></a>sudo apt-get build-dep python3-lxml python3-pil
+<pre class="code bash"><a name="rest_code_66d887fc59b744bfa6e46708ea8aed8a-1"></a>sudo apt-get install python3-dev
+<a name="rest_code_66d887fc59b744bfa6e46708ea8aed8a-2"></a>sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+<a name="rest_code_66d887fc59b744bfa6e46708ea8aed8a-3"></a>sudo apt-get build-dep python3-lxml python3-pil
 </pre>
 <p>Luego de ello debimos hacer una actualizacion de pip por un problema raro que se nos estaba presentando en la instalacion:</p>
-<pre class="code bash"><a name="rest_code_5a34f3f5635c45e9a8542c4d88678ded-1"></a>pip install --upgrade pip
+<pre class="code bash"><a name="rest_code_ca2c674d0af7445094052c64c5aeed34-1"></a>pip install --upgrade pip
 </pre>
 <p>Luego procedimos a instalar Nikola y lo hicimos, de acuerdo a la sugerencia de su propia pagina, de la siguiente manera:</p>
-<pre class="code bash"><a name="rest_code_cb4835c8f294440196db135d5086c71d-1"></a>pip install --upgrade <span class="s2">"Nikola[extras]"</span>
+<pre class="code bash"><a name="rest_code_e9aa03654cb2460da393b71be628fc83-1"></a>pip install --upgrade <span class="s2">"Nikola[extras]"</span>
 </pre>
 <p>Nos demoramos un poquito, pero finalmente ya teniamos a Nikola instalado en nuestra maquina, como a nosotros no nos interesaba iniciar un sitio desde cero, sino migrar el que ya tenemos en wordpress, hicimos un backup del contenido del blog en wordpress, que es descargado en formato xml, el nuestro se llama pythonpiura.wordpress.2016-06-28.xml y las indicaciones para hacerlo son bastante sencillas y estan explicadas en la documentacion del propio wordpress.
 Para hacer la migracion de Wordpress a Nikola leimos rapidamente el manual y encontramos que teniamos 3 opciones, probamos las tres para ver cual nos resultaba mejor, pero antes debimos ingresar en la ruta donde tenemos nuestro archivo xml con el backup, debemos mencionar que las tres opciones nos crean una carpeta new_site.</p>
 <p>1-La opcion por defecto:</p>
-<pre class="code bash"><a name="rest_code_229c39baeafe4b069e2cbc5c7e92ca05-1"></a>nikola import_wordpress pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_aa3d6a81992246c28b39dff7dcebb37f-1"></a>nikola import_wordpress pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Esta opcion descarga todo el contenido del blog de wordpress e intenta hacer una conversion de cada uno de los posts y paginas al formato .md, no nos funciono correctamente ya que muchos posts se migraron a medias.</p>
 <p>2-Convertir los posts a html:</p>
-<pre class="code bash"><a name="rest_code_a7525f031f1a45fd8545ee445eab460d-1"></a>nikola import_wordpress --transform-to-html pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_112f135e81d648849a931ecdab438078-1"></a>nikola import_wordpress --transform-to-html pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Para ello primero debemos instalar el plugin de conversion a wordpress</p>
-<pre class="code bash"><a name="rest_code_8044c036fbbd4b64abf4cd0be5b1a3d6-1"></a>nikola plugin -i wordpress_compiler
+<pre class="code bash"><a name="rest_code_458e1b3696504beaa7ae97f3d1f79b92-1"></a>nikola plugin -i wordpress_compiler
 </pre>
 <p>Esta opcion descarga el contenido y convierte los posts y paginas a html, esta fue la opcion que mejor nos funciono, salvo por el problema con los ejemplos de codigo que tenemos y que llevan la etiqueta:</p>
-<pre class="code html"><a name="rest_code_6a0efff870164395adb02976281dcaf1-1"></a>[sourcecode language="language"]
+<pre class="code html"><a name="rest_code_a9adeedfb6cb4f80aec6ff723c8e13ea-1"></a>[sourcecode language="language"]
 </pre>
 <p>Hasta donde hemos visto no es posible llevar a cabo la conversion de esto a un formato adecuado asi que simplemente los deja con el texto normal sin darle ningun formato, por lo que este todavia es un tema pendiente de resolver.</p>
 <p>3-Dejar el contenido como formato de wordpress, los archivos de los posts y las paginas tienen las extension .wp</p>
-<pre class="code bash"><a name="rest_code_962ea7f845174fec8ee903d56bd3bf24-1"></a>nikola import_wordpress --use-wordpress-compiler pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_7edf790244924d7281c2509de36ffa1b-1"></a>nikola import_wordpress --use-wordpress-compiler pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Probamos esta opcion pensando que nos solucionaria el problema de la etiqueta [sourcecode], pero funciono igual que la opcion anterior y encima debiamos activar el plugin de wordpress en el archivo de configuracion del sitio.</p>
 <p>Como comentamos antes usamos la segunda opcion que nos creo la carpeta new_site con el contenido listo, asi que ahora debiamos construir el sitio:</p>
-<pre class="code bash"><a name="rest_code_9b40ce1bec7347f4ba403a2d26f0a6c9-1"></a>nikola build
+<pre class="code bash"><a name="rest_code_83b134fdbad14d8191d3c6f1c8edfe52-1"></a>nikola build
 </pre>
 <p>Y lanzar el servidor de pruebas:</p>
-<pre class="code bash"><a name="rest_code_87ce9aec229848a2a9a77a35cea5041e-1"></a>nikola serve -b
+<pre class="code bash"><a name="rest_code_4f9575ca0cc742d580ae81556790a425-1"></a>nikola serve -b
 </pre>
 <p>Cambiamos el tema por defecto por uno que nos parecio mas bonito llamado zen, pueden ver mas temas aqui:</p>
 <p><a class="reference external" href="https://themes.getnikola.com">https://themes.getnikola.com</a></p>
 <p>Lo instalamos asi:</p>
-<pre class="code bash"><a name="rest_code_7252803837774d758257c42af1b895dd-1"></a>nikola install_theme zen
+<pre class="code bash"><a name="rest_code_e622c1f9decc4e73b4eaeb28e1ef3495-1"></a>nikola install_theme zen
 </pre>
 <p>Y lo configuramos en nuestro sitio modificando el archivo conf.py y cambiando la linea:</p>
-<pre class="code python"><a name="rest_code_78deef8d339c49429ccfd4caaa988e3a-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap3"</span>
+<pre class="code python"><a name="rest_code_936ef602b15a4533a7b1ccc35cead69e-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap3"</span>
 </pre>
 <p>por:</p>
-<pre class="code python"><a name="rest_code_3c2c3a730f80483ea510416d3d6865d6-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"zen"</span>
+<pre class="code python"><a name="rest_code_a5adec92eaae410c9b25a7c8cab5ec4c-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"zen"</span>
 </pre>
 <p>y la linea:</p>
-<pre class="code python"><a name="rest_code_10ded3ddc6024ec09b4eb943d80defdb-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
-<a name="rest_code_10ded3ddc6024ec09b4eb943d80defdb-2"></a>        <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
-<a name="rest_code_10ded3ddc6024ec09b4eb943d80defdb-3"></a>            <span class="p">(</span><span class="s2">"/archive.html"</span><span class="p">,</span> <span class="s2">"Archives"</span><span class="p">),</span>
-<a name="rest_code_10ded3ddc6024ec09b4eb943d80defdb-4"></a>            <span class="p">(</span><span class="s2">"/categories/index.html"</span><span class="p">,</span> <span class="s2">"Tags"</span><span class="p">),</span>
-<a name="rest_code_10ded3ddc6024ec09b4eb943d80defdb-5"></a>            <span class="p">(</span><span class="s2">"/rss.xml"</span><span class="p">,</span> <span class="s2">"RSS feed"</span><span class="p">),</span>
-<a name="rest_code_10ded3ddc6024ec09b4eb943d80defdb-6"></a>        <span class="p">),</span>
-<a name="rest_code_10ded3ddc6024ec09b4eb943d80defdb-7"></a><span class="p">}</span>
+<pre class="code python"><a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-2"></a>        <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
+<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-3"></a>            <span class="p">(</span><span class="s2">"/archive.html"</span><span class="p">,</span> <span class="s2">"Archives"</span><span class="p">),</span>
+<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-4"></a>            <span class="p">(</span><span class="s2">"/categories/index.html"</span><span class="p">,</span> <span class="s2">"Tags"</span><span class="p">),</span>
+<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-5"></a>            <span class="p">(</span><span class="s2">"/rss.xml"</span><span class="p">,</span> <span class="s2">"RSS feed"</span><span class="p">),</span>
+<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-6"></a>        <span class="p">),</span>
+<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-7"></a><span class="p">}</span>
 </pre>
 <p>Por:</p>
-<pre class="code python"><a name="rest_code_e298c14f894648dab0433a502512d208-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-3"></a>        <span class="p">(</span><span class="s1">'/index.html'</span><span class="p">,</span> <span class="s1">'Home'</span><span class="p">,</span> <span class="s1">'icon-home'</span><span class="p">),</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-4"></a>        <span class="p">(</span><span class="s1">'/archive.html'</span><span class="p">,</span> <span class="s1">'Archives'</span><span class="p">,</span> <span class="s1">'icon-folder-open-alt'</span><span class="p">),</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-5"></a>        <span class="p">(</span><span class="s1">'/categories/index.html'</span><span class="p">,</span> <span class="s1">'Tags'</span><span class="p">,</span> <span class="s1">'icon-tags'</span><span class="p">),</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-6"></a>        <span class="p">(</span><span class="s1">'/rss.xml'</span><span class="p">,</span> <span class="s1">'RSS'</span><span class="p">,</span> <span class="s1">'icon-rss'</span><span class="p">),</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-7"></a>        <span class="p">(</span><span class="s1">'https://getnikola.com'</span><span class="p">,</span> <span class="s1">'About me'</span><span class="p">,</span> <span class="s1">'icon-user'</span><span class="p">),</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-8"></a>        <span class="p">(</span><span class="s1">'https://twitter.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Twitter'</span><span class="p">,</span> <span class="s1">'icon-twitter'</span><span class="p">),</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-9"></a>        <span class="p">(</span><span class="s1">'https://github.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Github'</span><span class="p">,</span> <span class="s1">'icon-github'</span><span class="p">),</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-10"></a>    <span class="p">)</span>
-<a name="rest_code_e298c14f894648dab0433a502512d208-11"></a><span class="p">}</span>
+<pre class="code python"><a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-3"></a>        <span class="p">(</span><span class="s1">'/index.html'</span><span class="p">,</span> <span class="s1">'Home'</span><span class="p">,</span> <span class="s1">'icon-home'</span><span class="p">),</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-4"></a>        <span class="p">(</span><span class="s1">'/archive.html'</span><span class="p">,</span> <span class="s1">'Archives'</span><span class="p">,</span> <span class="s1">'icon-folder-open-alt'</span><span class="p">),</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-5"></a>        <span class="p">(</span><span class="s1">'/categories/index.html'</span><span class="p">,</span> <span class="s1">'Tags'</span><span class="p">,</span> <span class="s1">'icon-tags'</span><span class="p">),</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-6"></a>        <span class="p">(</span><span class="s1">'/rss.xml'</span><span class="p">,</span> <span class="s1">'RSS'</span><span class="p">,</span> <span class="s1">'icon-rss'</span><span class="p">),</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-7"></a>        <span class="p">(</span><span class="s1">'https://getnikola.com'</span><span class="p">,</span> <span class="s1">'About me'</span><span class="p">,</span> <span class="s1">'icon-user'</span><span class="p">),</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-8"></a>        <span class="p">(</span><span class="s1">'https://twitter.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Twitter'</span><span class="p">,</span> <span class="s1">'icon-twitter'</span><span class="p">),</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-9"></a>        <span class="p">(</span><span class="s1">'https://github.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Github'</span><span class="p">,</span> <span class="s1">'icon-github'</span><span class="p">),</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-10"></a>    <span class="p">)</span>
+<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-11"></a><span class="p">}</span>
 </pre>
 <p>Lo anterior es por defecto para que funcione, pero ya luego lo modificamos a nuestro gusto.</p>
 <p>Volvimos a construir nuestro sitio:</p>
-<pre class="code bash"><a name="rest_code_72c235edc1e24a90aa8a284856e99421-1"></a>nikola build
+<pre class="code bash"><a name="rest_code_f90f592957514055967e222cca78e96d-1"></a>nikola build
 </pre>
 <p>Y a lanzar nuestro servidor:</p>
-<pre class="code bash"><a name="rest_code_43649b38d7a244d0adc9c8de1f0c22d6-1"></a>nikola serve -b
+<pre class="code bash"><a name="rest_code_805d6c6cc1d448c1a108d530d46b6d1c-1"></a>nikola serve -b
 </pre>
 <p>Ahora si nos tocaba deployar nuestro sitio en github:</p>
 <p>Para ello creamos un repositorio con el mismo nombre de nuestro usuario "pythonpiura" pero de la siguiente manera:</p>
 <p>pythonpiura.github.io</p>
 <p>Clonamos este repositorio:</p>
-<pre class="code bash"><a name="rest_code_fcbcb7b4c6174d4e8cceb115e233f3b5-1"></a>git clone https://github.com/pythonpiura/pythonpiura.github.io.git
+<pre class="code bash"><a name="rest_code_13ba783a298940d985bd84375eb3e324-1"></a>git clone https://github.com/pythonpiura/pythonpiura.github.io.git
 </pre>
 <p>Lo siguiente que hicimos, fue copiar el contenido de nuestra carpeta new_site en la carpeta del repositorio recien creado.</p>
 <p>Luego procedimos a modificar el archivo conf.py para que tenga los datos de nuetro nuevo sitio, modificando las siguientes lineas:</p>
-<pre class="code python"><a name="rest_code_c43fd35cac114358b1fb0648c28eabc7-1"></a><span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">"https://pythonpiura.github.io/"</span>
-<a name="rest_code_c43fd35cac114358b1fb0648c28eabc7-2"></a><span class="n">BLOG_EMAIL</span> <span class="o">=</span> <span class="s2">"pythonpiura@openmailbox.org"</span>
+<pre class="code python"><a name="rest_code_301f40c3802b4f459568c7e49cb6fa41-1"></a><span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">"https://pythonpiura.github.io/"</span>
+<a name="rest_code_301f40c3802b4f459568c7e49cb6fa41-2"></a><span class="n">BLOG_EMAIL</span> <span class="o">=</span> <span class="s2">"pythonpiura@openmailbox.org"</span>
 </pre>
 <p>y tambien las siguientes para que se deploye correctamente en github:</p>
-<pre class="code python"><a name="rest_code_bc1d2772f1c14ca5a768ef2f40d8b906-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'sources'</span>
-<a name="rest_code_bc1d2772f1c14ca5a768ef2f40d8b906-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
-<a name="rest_code_bc1d2772f1c14ca5a768ef2f40d8b906-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
+<pre class="code python"><a name="rest_code_be701d6550854b4d99280fa3b955ad42-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'sources'</span>
+<a name="rest_code_be701d6550854b4d99280fa3b955ad42-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
+<a name="rest_code_be701d6550854b4d99280fa3b955ad42-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
 </pre>
 <p>Agregamos lo siguiente a nuestro archivo .gitignore para que este contenido no sea subido al repositorio:</p>
-<pre class="code text"><a name="rest_code_7dc565fb29dd450bae839f9ed7c86227-1"></a>cache
-<a name="rest_code_7dc565fb29dd450bae839f9ed7c86227-2"></a>.doit.db
-<a name="rest_code_7dc565fb29dd450bae839f9ed7c86227-3"></a>__pycache__
-<a name="rest_code_7dc565fb29dd450bae839f9ed7c86227-4"></a>output
+<pre class="code text"><a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-1"></a>cache
+<a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-2"></a>.doit.db
+<a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-3"></a>__pycache__
+<a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-4"></a>output
 </pre>
 <p>Y corremos el comando:</p>
-<pre class="code bash"><a name="rest_code_bc6670ebabda4d79bcee0addda956066-1"></a>nikola github_deploy
+<pre class="code bash"><a name="rest_code_b5f09cdf7951413b8fe3e15f24328994-1"></a>nikola github_deploy
 </pre>
 <p>En este paso github nos solicito nuestro usuario y password, lo ingresamos y continuamos. Tardo varios minutos en subir el contenido pero ya con eso tenemos nuestro blog en la siguiente direccion.</p>
-<p><a class="reference external" href="https://pythonpiura.github.io/">https://pythonpiura.github.io/</a></p>
+<p><a class="reference external" href="http://pythonpiura.org/">http://pythonpiura.org/</a></p>
 <p>Saludos.</p>
 </div>
     </div>
@@ -192,65 +192,87 @@ Para hacer la migracion de Wordpress a Nikola leimos rapidamente el manual y enc
             <p class="dateline"><a href="../posts/2016/06/18/ipython-y-jupyter/" rel="bookmark"><time class="published dt-published" datetime="2016-06-18T04:46:26-05:00" title="2016-06-18 04:46">2016-06-18 04:46</time></a></p>
         </div>
     </header><div class="e-content entry-content">
-    <p style="text-align:justify;">Despues de un receso hemos regresado y esta vez para hablar de IPython y Jupyter, como todos sabemos cuando estamos aprendiendo Python utilizamos el interprete directamente desde una terminal y vamos probando nuestros programas, al principio todo nos va muy bien pero luego notamos que nos vamos quedando cortos, es alli donde aparece <a href="https://ipython.org/">IPython</a> que tal como nos dice su pagina web nos provee una arquitectura rica para computación interactiva con:</p>
-<ul>
-<li style="text-align:justify;">Una shell interactiva poderosa.</li>
-<li style="text-align:justify;">Un nucleo para Jupyter.</li>
-<li style="text-align:justify;">Soporte para visualización de datos interactivos y uso de herramientas GUI.</li>
-<li style="text-align:justify;">Interprete embebido flexible para cargar en nuestros propios proyectos.</li>
-<li style="text-align:justify;">Fácil de usar, herramientas de alta performance para computación paralela.</li>
+    <div>
+<p>Despues de un receso hemos regresado y esta vez para hablar de IPython
+y Jupyter, como todos sabemos cuando estamos aprendiendo Python
+utilizamos el interprete directamente desde una terminal y vamos
+probando nuestros programas, al principio todo nos va muy bien pero
+luego notamos que nos vamos quedando cortos, es alli donde aparece
+<a class="reference external" href="https://ipython.org/">IPython</a> que tal como nos dice su pagina web nos provee una
+arquitectura rica para computación interactiva con:</p>
+<ul class="simple">
+<li>Una shell interactiva poderosa.</li>
+<li>Un nucleo para Jupyter.</li>
+<li>Soporte para visualización de datos interactivos y uso de
+herramientas GUI.</li>
+<li>Interprete embebido flexible para cargar en nuestros propios
+proyectos.</li>
+<li>Fácil de usar, herramientas de alta performance para computación
+paralela.</li>
 </ul>
-<p style="text-align:justify;">Vamos a instalarlo para ir conociendolo mejor, para ello vamos a <a href="http://rukbottoland.com/blog/tutorial-de-python-virtualenv/">crear un entorno virtual</a>, al que llamaremos ipython:</p>
-<p>[sourcecode language="bash"]<br>
-virtualenv ipython<br>
-[/sourcecode]</p>
+<p>Vamos a instalarlo para ir conociendolo mejor, para ello vamos a
+<a class="reference external" href="http://rukbottoland.com/blog/tutorial-de-python-virtualenv/">crear un entorno virtual</a>, al que llamaremos ipython:</p>
+<pre class="code bash"><a name="rest_code_13838e3c1fbd438da7fd1ee4d1f2b384-1"></a>virtualenv ipython
+</pre>
 <p>Lo activamos:</p>
-<p>[sourcecode language="bash"]<br>
-source ipython/bin/activate<br>
-[/sourcecode]</p>
+<pre class="code bash"><a name="rest_code_844bdad53f684456bd84232a60737198-1"></a><span class="nb">source</span> ipython/bin/activate
+</pre>
 <p>Ahora procedemos a instalar ipython:</p>
-<p>[sourcecode language="bash"]<br>
-pip install ipython<br>
-[/sourcecode]</p>
-<p>Para probar que todo ha salido bien ponemos lo siguiente en la terminal:</p>
-<p>[sourcecode language="bash"]<br>
-ipython<br>
-[/sourcecode]</p>
-<p>Y nos aparecerá algo como esto, que nos indica que todo esta funcionando correctamente:</p>
-<p><a href="../2016/06/seleccic3b3n_369.png"><img class="aligncenter size-large wp-image-295" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_369.png?w=604" alt="Selección_369" width="604" height="156"></a></p>
-<p>Escribimos exit para salir del interprete y regresar a nuestra terminal:</p>
-<p>[sourcecode language="bash"]<br>
-exit<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Ahora conozcamos a <a href="http://jupyter.org/">Jupyter</a>, tal como nos dice su pagina web, es una aplicación web que permite crear y compartir documentos que contienen código vivo, ecuaciones, visualizaciones y texto explicativo. Se puede usar para simulación numérica, simulación estadística, machine learning y mucho mas.<br>
+<pre class="code bash"><a name="rest_code_d3fa9bbb152d4244b7276f6de29ac984-1"></a>pip install ipython
+</pre>
+<p>Para probar que todo ha salido bien ponemos lo siguiente en la
+terminal:</p>
+<pre class="code bash"><a name="rest_code_7f9dad70715140c6a97beacd8ca57c23-1"></a>ipython
+</pre>
+<p>Y nos aparecerá algo como esto, que nos indica que todo esta
+funcionando correctamente:</p>
+<img alt="/images/blog/seleccic3b3n_369.png" src="../images/blog/seleccic3b3n_369.png"><p>Escribimos exit para salir del interprete y regresar a nuestra
+terminal:</p>
+<pre class="code bash"><a name="rest_code_ca6ef614092b4be198ccea5b0b4b5096-1"></a><span class="nb">exit</span>
+</pre>
+<p>Ahora conozcamos a <a class="reference external" href="http://jupyter.org/">Jupyter</a>, tal como nos dice su pagina web, es una
+aplicación web que permite crear y compartir documentos que contienen
+código vivo, ecuaciones, visualizaciones y texto explicativo. Se puede
+usar para simulación numérica, simulación estadística, machine
+learning y mucho mas.
 Vamos a instalarlo para ir conociéndolo:</p>
-<p>[sourcecode language="bash"]<br>
-pip install jupyter<br>
-[/sourcecode]</p>
+<pre class="code bash"><a name="rest_code_151a0a9def324fdeaef7b016988f48a1-1"></a>pip install jupyter
+</pre>
 <p>Para correrlo debemos escribir lo siguiente:</p>
-<p>[sourcecode language="bash"]<br>
-ipython notebook<br>
-[/sourcecode]</p>
-<p>Y automáticamente nos abrirá en una pestaña del navegador lo siguiente:</p>
-<p><a href="../2016/06/seleccic3b3n_370.png"><img class="aligncenter size-large wp-image-296" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_370.png?w=604" alt="Selección_370" width="604" height="230"></a></p>
-<p style="text-align:justify;">Aqui podemos crear un nuevo notebook, dando click al boton new en la parte superior derecha y seleccionando Python 2:</p>
-<p><a href="../2016/06/seleccic3b3n_371.png"><img class="aligncenter size-full wp-image-297" src="../2016/06/seleccic3b3n_371.png" alt="Selección_371" width="329" height="312"></a></p>
-<p>Nos aparece una especie de consola web donde podemos ir escribiendo nuestros programas:</p>
-<p><a href="../2016/06/seleccic3b3n_373.png"><img class="aligncenter size-large wp-image-298" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_373.png?w=604" alt="Selección_373" width="604" height="135"></a></p>
-<p>Y ejecutando su contenido, como si trabajáramos en nuestra vieja terminal:</p>
-<p><a href="../2016/06/seleccic3b3n_372.png"><img class="aligncenter size-large wp-image-299" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_372.png?w=604" alt="Selección_372" width="604" height="272"></a></p>
-<p style="text-align:justify;">Maravilloso verdad, un interprete web, donde vamos escribiendo nuestros programas y viendo su funcionamiento, agregando texto, imagenes, generando graficos, podemos guardar cada noteboook, exportarlo a pdf, intercambiarlo, etc, como veran es una herramienta valiosisima para utilizar en la enseñanza, en el analisis de datos, en los trabajos de investigacion, etc.</p>
-<p style="text-align:justify;">En la red podemos encontrar una gran de cantidad de notebooks listos para descargar, hay tutoriales, tesis, trabajos de investigacion, etc. A nosotros nos intereso el siguiente curso, que es introductorio al leguaje Python:<br><a href="http://ricardoduarte.github.io/python-for-developers/">Python For Developers</a></p>
-<p style="text-align:justify;">Vamos a descargar el archivo <a href="https://github.com/ricardoduarte/python-for-developers/zipball/master">zip</a> conteniendo todos los notebooks y lo guardamos en la ruta desde donde ejecutamos el comando “ipython notebook”, lo descomprimimos y tendremos lo siguiente:</p>
-<p><a href="../2016/06/seleccic3b3n_375.png"><img class="aligncenter size-large wp-image-300" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_375.png?w=604" alt="Selección_375" width="604" height="163"></a></p>
-<p>Como verán ahora ya nos aparece la carpeta donde esta el curso, ingresamos a ella:<br><a href="../2016/06/seleccic3b3n_376.png"><img class="aligncenter size-full wp-image-301" src="../2016/06/seleccic3b3n_376.png" alt="Selección_376" width="451" height="523"></a></p>
-<p>Ahora ingresamos a uno de los capítulos:</p>
-<p style="text-align:justify;"><a href="../2016/06/seleccic3b3n_378.png"><img class="aligncenter size-large wp-image-302" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_378.png?w=604" alt="Selección_378" width="604" height="205"></a><br>
-Seleccionamos el archivo con la extensión “ipynb” y veremos un hermoso curso de introduccion a Python donde podemos ir interactuando con los programas de ejemplo:</p>
-<p style="text-align:justify;"><a href="../2016/06/seleccic3b3n_377.png"><img class="aligncenter size-large wp-image-303" src="https://pythonpiura.files.wordpress.com/2016/06/seleccic3b3n_377.png?w=604" alt="Selección_377" width="604" height="346"></a></p>
-<p>Genial no, ahora aprender Python y hacer demostraciones de código va a ser mas divertido :-)</p>
+<pre class="code bash"><a name="rest_code_093902df44e74cf182de6b644ef023ae-1"></a>ipython notebook
+</pre>
+<p>Y automáticamente nos abrirá en una pestaña del navegador lo
+siguiente:</p>
+<img alt="/images/blog/seleccic3b3n_370.png" src="../images/blog/seleccic3b3n_370.png"><p>Aqui podemos crear un nuevo notebook, dando click al boton new en la
+parte superior derecha y seleccionando Python 2:</p>
+<img alt="/images/blog/seleccic3b3n_371.png" src="../images/blog/seleccic3b3n_371.png"><p>Nos aparece una especie de consola web donde podemos ir escribiendo
+nuestros programas:</p>
+<img alt="/images/blog/seleccic3b3n_373.png" src="../images/blog/seleccic3b3n_373.png"><p>Y ejecutando su contenido, como si trabajáramos en nuestra vieja
+terminal:</p>
+<img alt="/images/blog/seleccic3b3n_372.png" src="../images/blog/seleccic3b3n_372.png"><p>Maravilloso verdad, un interprete web, donde vamos escribiendo
+nuestros programas y viendo su funcionamiento, agregando texto,
+imagenes, generando graficos, podemos guardar cada noteboook,
+exportarlo a pdf, intercambiarlo, etc, como veran es una herramienta
+valiosisima para utilizar en la enseñanza, en el analisis de datos, en
+los trabajos de investigacion, etc.</p>
+<p>En la red podemos encontrar una gran de cantidad de notebooks listos
+para descargar, hay tutoriales, tesis, trabajos de investigacion, etc.
+A nosotros nos intereso el siguiente curso, que es introductorio al
+leguaje Python:
+<a class="reference external" href="http://ricardoduarte.github.io/python-for-developers/">Python For Developers</a></p>
+<p>Vamos a descargar el archivo <a class="reference external" href="https://github.com/ricardoduarte/python-for-developers/zipball/master">zip</a> conteniendo todos los notebooks y
+lo guardamos en la ruta desde donde ejecutamos el comando “ipython
+notebook”, lo descomprimimos y tendremos lo siguiente:</p>
+<img alt="/images/blog/seleccic3b3n_375.png" src="../images/blog/seleccic3b3n_375.png"><p>Como verán ahora ya nos aparece la carpeta donde esta el curso,
+ingresamos a ella:</p>
+<img alt="/images/blog/seleccic3b3n_376.png" src="../images/blog/seleccic3b3n_376.png"><p>Ahora ingresamos a uno de los capítulos:</p>
+<img alt="/images/blog/seleccic3b3n_378.png" src="../images/blog/seleccic3b3n_378.png"><p>Seleccionamos el archivo con la extensión “ipynb” y veremos un hermoso
+curso de introduccion a Python donde podemos ir interactuando con los
+programas de ejemplo:</p>
+<img alt="/images/blog/seleccic3b3n_377.png" src="../images/blog/seleccic3b3n_377.png"><p>Genial no, ahora aprender Python y hacer demostraciones de código va a
+ser mas divertido :-)</p>
 <p>Eso es todo por hoy, saludos.</p>
-
+</div>
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/05/13/reporte-pdf-en-django-con-reportlab/" class="u-url">Reporte PDF en Django con Reportlab</a></h1>
         <div class="metadata">
@@ -260,141 +282,146 @@ Seleccionamos el archivo con la extensión “ipynb” y veremos un hermoso curs
             <p class="dateline"><a href="../posts/2016/05/13/reporte-pdf-en-django-con-reportlab/" rel="bookmark"><time class="published dt-published" datetime="2016-05-13T21:58:34-05:00" title="2016-05-13 21:58">2016-05-13 21:58</time></a></p>
         </div>
     </header><div class="e-content entry-content">
-    <p style="text-align:justify;">Vamos a retomar nuestro proyecto tutorial, al que hemos tenido bastante olvidado estos últimos días y haremos un reporte en pdf utilizando la librería <a href="http://www.reportlab.com/">reportlab</a>, para ello la instalamos:</p>
-<p>[sourcecode language="bash"]<br>
-pip install reportlab<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Lo primero que haremos es poner el logo de django en la parte superior de nuestro reporte, por lo que debemos tener la imagen guardada en una ubicación fácil de obtener, por eso crearemos una carpeta llamada “media” en nuestro proyecto y dentro de esta, otra carpeta llamada imagenes, es aquí donde pondremos nuestro archivo logo_django.png:</p>
-<p><a href="../2016/05/ubicacion_logo.jpg"><img class="aligncenter size-full wp-image-280" src="../2016/05/ubicacion_logo.jpg" alt="ubicacion_logo" width="197" height="138"></a></p>
-<p>Modificamos el archivo settings.py para poder establecer la ruta de la carpeta media:</p>
-<p>[sourcecode language="python"]<br>
-MEDIA_ROOT = os.path.join(BASE_DIR, ‘media’)<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Creamos la clase ReportePersonasPDF en el archivo views.py, el código está explicado en los comentarios:</p>
-<p>[sourcecode language="python"]<br>
-#Importamos settings para poder tener a la mano la ruta de la carpeta media<br>
-from django.conf import settings<br>
-from io import BytesIO<br>
-from reportlab.pdfgen import canvas<br>
-from django.views.generic import View</p>
-<p>class ReportePersonasPDF(View):  </p>
-<p>    def cabecera(self,pdf):<br>
-        #Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes<br>
-        archivo_imagen = settings.MEDIA_ROOT+’/imagenes/logo_django.png’<br>
-        #Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes<br>
-        pdf.drawImage(archivo_imagen, 40, 750, 120, 90,preserveAspectRatio=True)                </p>
-<p>    def get(self, request, *args, **kwargs):<br>
-        #Indicamos el tipo de contenido a devolver, en este caso un pdf<br>
-        response = HttpResponse(content_type=’application/pdf’)<br>
-        #La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal<br>
-        buffer = BytesIO()<br>
-        #Canvas nos permite hacer el reporte con coordenadas X y Y<br>
-        pdf = canvas.Canvas(buffer)<br>
-        #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.<br>
-        self.cabecera(pdf)<br>
-        #Con show page hacemos un corte de página para pasar a la siguiente<br>
-        pdf.showPage()<br>
-        pdf.save()<br>
-        pdf = buffer.getvalue()<br>
-        buffer.close()<br>
-        response.write(pdf)<br>
-        return response<br>
-[/sourcecode]</p>
-<p>Para poder acceder a esta clase debemos hacer la creación de la url correspondiente en el archivo urls.py:</p>
-<p>[sourcecode language="python"]<br>
-url(r’^reporte_personas_pdf/$’,login_required(ReportePersonasPDF.as_view()), name="reporte_personas_pdf"),<br>
-[/sourcecode]</p>
+    <div>
+<p>Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
+bastante olvidado estos últimos días y haremos un reporte en pdf
+utilizando la librería <a class="reference external" href="http://www.reportlab.com/">reportlab</a>, para ello la instalamos:</p>
+<pre class="code bash"><a name="rest_code_b97ab140299e4859b498771ba967fc1e-1"></a>pip install reportlab
+</pre>
+<p>Lo primero que haremos es poner el logo de django en la parte superior
+de nuestro reporte, por lo que debemos tener la imagen guardada en una
+ubicación fácil de obtener, por eso crearemos una carpeta llamada
+“media” en nuestro proyecto y dentro de esta, otra carpeta llamada
+imagenes, es aquí donde pondremos nuestro archivo logo_django.png:</p>
+<img alt="/images/blog/ubicacion_logo.jpg" src="../images/blog/ubicacion_logo.jpg"><p>Modificamos el archivo settings.py para poder establecer la ruta de la
+carpeta media:</p>
+<pre class="code python"><a name="rest_code_bd0cf13c57c64cb29592486d68d3c7f7-1"></a><span class="n">MEDIA_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">'media'</span><span class="p">)</span>
+</pre>
+<p>Creamos la clase ReportePersonasPDF en el archivo views.py, el código
+está explicado en los comentarios:</p>
+<pre class="code python"><a name="rest_code_81f39d76e7604e67b49da74a16421713-1"></a><span class="c1">#Importamos settings para poder tener a la mano la ruta de la carpeta media</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-2"></a><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-3"></a><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-4"></a><span class="kn">from</span> <span class="nn">reportlab.pdfgen</span> <span class="kn">import</span> <span class="n">canvas</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-5"></a><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">View</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-6"></a>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-7"></a><span class="k">class</span> <span class="nc">ReportePersonasPDF</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-8"></a>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-9"></a><span class="k">def</span> <span class="nf">cabecera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">):</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-10"></a>        <span class="c1">#Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-11"></a>        <span class="n">archivo_imagen</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="o">+</span><span class="s1">'/imagenes/logo_django.png'</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-12"></a>        <span class="c1">#Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">archivo_imagen</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span><span class="n">preserveAspectRatio</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-14"></a>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-15"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-16"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-17"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-18"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-19"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-20"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-21"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-22"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-24"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-25"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-26"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-27"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-28"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-29"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_81f39d76e7604e67b49da74a16421713-30"></a>        <span class="k">return</span> <span class="n">response</span>
+</pre>
+<p>Para poder acceder a esta clase debemos hacer la creación de la url
+correspondiente en el archivo urls.py:</p>
+<pre class="code python"><a name="rest_code_ec495684f066421cbaab358f2e8e884e-1"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_pdf/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">ReportePersonasPDF</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_pdf"</span><span class="p">),</span>
+</pre>
 <p>Ahora vamos a utilizar la url desde el archivo personas.html:</p>
-<p>[sourcecode language="html"]<br>
-&lt;div class=’form-group’&gt;<br>
-	&lt;div class="row"&gt;<br>
-		&lt;div class="col-lg-9"&gt;	</p>
-<p>		&lt;/div&gt;<br>
-		&lt;div class="col-lg-1"&gt;<br>
-			&lt;a href="{% url ‘personas:reporte_personas_excel’ %}" class="btn btn-info btn-block"&gt;<br>
-				&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
-			&lt;/a&gt;<br>
-		&lt;/div&gt;<br>
-		{% if perms.personas.add_persona %}<br>
-		&lt;div class="col-lg-1"&gt;<br>
-			&lt;a href="{% url ‘personas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
-				&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
-			&lt;/a&gt;<br>
-		&lt;/div&gt;<br>
-		{% endif %}<br>
-		&lt;div class="col-lg-1"&gt;<br>
-			&lt;a href="{% url ‘personas:reporte_personas_pdf’ %}" class="btn btn-info btn-block"&gt;<br>
-				&lt;span class="glyphicon glyphicon-file"&gt;&lt;/span&gt;<br>
-			&lt;/a&gt;<br>
-		&lt;/div&gt;<br>
-	&lt;/div&gt;<br>
-&lt;/div&gt;<br>
-[/sourcecode]</p>
+<pre class="code html"><a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-2"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-9"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-4"></a>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-5"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-6"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-7"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-8"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-9"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-10"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-11"></a>        {% if perms.personas.add_persona %}
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-12"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-13"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-14"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-15"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-16"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-17"></a>        {% endif %}
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-19"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_pdf' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-20"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-file"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-21"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-22"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-23"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-24"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
 <p>Nos tiene que aparecer un ícono de un archivo:</p>
-<p><a href="../2016/05/personas_pdf.jpg"><img class="aligncenter size-large wp-image-281" src="https://pythonpiura.files.wordpress.com/2016/05/personas_pdf.jpg?w=604" alt="personas_pdf" width="604" height="119"></a></p>
-<p>El primer resultado será este:</p>
-<p><a href="../2016/05/reporte_pdf1.jpg"><img class="aligncenter size-large wp-image-282" src="https://pythonpiura.files.wordpress.com/2016/05/reporte_pdf1.jpg?w=604" alt="reporte_pdf1" width="604" height="220"></a></p>
-<p style="text-align:justify;">Vamos a ponerle un encabezado a nuestro reporte que diga “Python Piura” y debajo “Reporte de Personas”, para ello colocamos el siguiente código debajo de la última linea del método “cabecera”:</p>
-<p>[sourcecode language="python"]<br>
-        #Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica<br>
-        pdf.setFont("Helvetica", 16)<br>
-        #Dibujamos una cadena en la ubicación X,Y especificada<br>
-        pdf.drawString(230, 790, u"PYTHON PIURA")<br>
-        pdf.setFont("Helvetica", 14)<br>
-        pdf.drawString(200, 770, u"REPORTE DE PERSONAS")<br>
-[/sourcecode]</p>
-<p><a href="../2016/05/reporte_pdf2.jpg"><img class="aligncenter size-large wp-image-283" src="https://pythonpiura.files.wordpress.com/2016/05/reporte_pdf2.jpg?w=604" alt="reporte_pdf2" width="604" height="155"></a></p>
-<p style="text-align:justify;">Visualizaremos la tabla de personas, por lo que creamos el método tabla en la clase ReportePersonasPDF:</p>
-<p>[sourcecode language="python"]<br>
-def tabla(self,pdf,y):<br>
-        #Creamos una tupla de encabezados para neustra tabla<br>
-        encabezados = (‘DNI’, ‘Nombre’, ‘Apellido Paterno’, ‘Apellido Materno’)<br>
-        #Creamos una lista de tuplas que van a contener a las personas<br>
-        detalles = [(persona.dni, persona.nombre, persona.apellido_paterno, persona.apellido_materno) for persona in Persona.objects.all()]<br>
-        #Establecemos el tamaño de cada una de las columnas de la tabla<br>
-        detalle_orden = Table([encabezados] + detalles, colWidths=[2 * cm, 5 * cm, 5 * cm, 5 * cm])<br>
-        #Aplicamos estilos a las celdas de la tabla<br>
-        detalle_orden.setStyle(TableStyle(<br>
-            [<br>
-                #La primera fila(encabezados) va a estar centrada<br>
-                ('ALIGN',(0,0),(3,0),'CENTER'),<br>
-                #Los bordes de todas las celdas serán de color negro y con un grosor de 1<br>
-                ('GRID', (0, 0), (-1, -1), 1, colors.black),<br>
-                #El tamaño de las letras de cada una de las celdas será de 10<br>
-                ('FONTSIZE', (0, 0), (-1, -1), 10),<br>
-            ]<br>
-        ))<br>
-        #Establecemos el tamaño de la hoja que ocupará la tabla<br>
-        detalle_orden.wrapOn(pdf, 800, 600)<br>
-        #Definimos la coordenada donde se dibujará la tabla<br>
-        detalle_orden.drawOn(pdf, 60,y)<br>
-[/sourcecode]</p>
-<p>Veamos como queda nuestro método get ahora con la nueva llamada al método tabla:</p>
-<p>[sourcecode language="python"]<br>
-def get(self, request, *args, **kwargs):<br>
-        #Indicamos el tipo de contenido a devolver, en este caso un pdf<br>
-        response = HttpResponse(content_type=’application/pdf’)<br>
-        #La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal<br>
-        buffer = BytesIO()<br>
-        #Canvas nos permite hacer el reporte con coordenadas X y Y<br>
-        pdf = canvas.Canvas(buffer)<br>
-        #Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.<br>
-        self.cabecera(pdf)<br>
-        y = 600<br>
-        self.tabla(pdf, y)<br>
-        #Con show page hacemos un corte de página para pasar a la siguiente<br>
-        pdf.showPage()<br>
-        pdf.save()<br>
-        pdf = buffer.getvalue()<br>
-        buffer.close()<br>
-        response.write(pdf)<br>
-        return response<br>
-[/sourcecode]</p>
+<img alt="/images/blog/personas_pdf.jpg" src="../images/blog/personas_pdf.jpg"><p>El primer resultado será este:</p>
+<img alt="/images/blog/reporte_pdf1.jpg" src="../images/blog/reporte_pdf1.jpg"><p>Vamos a ponerle un encabezado a nuestro reporte que diga “Python
+Piura” y debajo “Reporte de Personas”, para ello colocamos el
+siguiente código debajo de la última linea del método “cabecera”:</p>
+<pre class="code python"><a name="rest_code_81a68fd472eb48da9f8f78862c184d33-1"></a><span class="c1">#Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica</span>
+<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-2"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-3"></a><span class="c1">#Dibujamos una cadena en la ubicación X,Y especificada</span>
+<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-4"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="s2">u"PYTHON PIURA"</span><span class="p">)</span>
+<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-5"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-6"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">770</span><span class="p">,</span> <span class="s2">u"REPORTE DE PERSONAS"</span><span class="p">)</span>
+</pre>
+<img alt="/images/blog/reporte_pdf2.jpg" src="../images/blog/reporte_pdf2.jpg"><p>Visualizaremos la tabla de personas, por lo que creamos el método
+tabla en la clase ReportePersonasPDF:</p>
+<pre class="code python"><a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-1"></a><span class="k">def</span> <span class="nf">tabla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-2"></a>        <span class="c1">#Creamos una tupla de encabezados para neustra tabla</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-3"></a>        <span class="n">encabezados</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DNI'</span><span class="p">,</span> <span class="s1">'Nombre'</span><span class="p">,</span> <span class="s1">'Apellido Paterno'</span><span class="p">,</span> <span class="s1">'Apellido Materno'</span><span class="p">)</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-4"></a>        <span class="c1">#Creamos una lista de tuplas que van a contener a las personas</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-5"></a>        <span class="n">detalles</span> <span class="o">=</span> <span class="p">[(</span><span class="n">persona</span><span class="o">.</span><span class="n">dni</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_paterno</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_materno</span><span class="p">)</span> <span class="k">for</span> <span class="n">persona</span> <span class="ow">in</span> <span class="n">Persona</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-6"></a>        <span class="c1">#Establecemos el tamaño de cada una de las columnas de la tabla</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-7"></a>        <span class="n">detalle_orden</span> <span class="o">=</span> <span class="n">Table</span><span class="p">([</span><span class="n">encabezados</span><span class="p">]</span> <span class="o">+</span> <span class="n">detalles</span><span class="p">,</span> <span class="n">colWidths</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">])</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-8"></a>        <span class="c1">#Aplicamos estilos a las celdas de la tabla</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-9"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">TableStyle</span><span class="p">(</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-10"></a>        <span class="p">[</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-11"></a>                <span class="c1">#La primera fila(encabezados) va a estar centrada</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-12"></a>                <span class="p">(</span><span class="s1">'ALIGN'</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="s1">'CENTER'</span><span class="p">),</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-13"></a>                <span class="c1">#Los bordes de todas las celdas serán de color negro y con un grosor de 1</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-14"></a>                <span class="p">(</span><span class="s1">'GRID'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-15"></a>                <span class="c1">#El tamaño de las letras de cada una de las celdas será de 10</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-16"></a>                <span class="p">(</span><span class="s1">'FONTSIZE'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">),</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-17"></a>                <span class="p">]</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-18"></a>        <span class="p">))</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-19"></a>        <span class="c1">#Establecemos el tamaño de la hoja que ocupará la tabla</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-20"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">wrapOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-21"></a>        <span class="c1">#Definimos la coordenada donde se dibujará la tabla</span>
+<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-22"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">drawOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre>
+<p>Veamos como queda nuestro método get ahora con la nueva llamada al
+método tabla:</p>
+<pre class="code python"><a name="rest_code_6b75105e909a4a929b67263731711590-1"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-2"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-3"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-4"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-5"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-6"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-7"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-8"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-10"></a>        <span class="n">y</span> <span class="o">=</span> <span class="mi">600</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tabla</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-12"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-14"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-15"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-16"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-17"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_6b75105e909a4a929b67263731711590-18"></a>        <span class="k">return</span> <span class="n">response</span>
+</pre>
 <p>Y este será el resultado final:</p>
-<p><a href="../2016/05/reporte_pdf3.jpg"><img class="aligncenter size-large wp-image-285" src="https://pythonpiura.files.wordpress.com/2016/05/reporte_pdf3.jpg?w=604" alt="reporte_pdf3" width="604" height="379"></a></p>
-<p>Eso es todo por hoy.<br>
+<img alt="/images/blog/reporte_pdf3.jpg" src="../images/blog/reporte_pdf3.jpg"><p>Eso es todo por hoy.
 Saludos.</p>
-
+</div>
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/05/11/consulta-dni-reniec/" class="u-url">Consulta DNI - RENIEC</a></h1>
         <div class="metadata">
