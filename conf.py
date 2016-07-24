@@ -132,8 +132,8 @@ TRANSLATIONS_PATTERN = "{path}.{lang}.{ext}"
 NAVIGATION_LINKS = {
     DEFAULT_LANG: (
         ('/blog', 'Blog'),
-        ('/eventos.html', 'Eventos'),
-        ('/material-python.html', 'Material'),        
+        ('/eventos', 'Eventos'),
+        ('/recursos', 'Recursos'),        
         )
 }
 
