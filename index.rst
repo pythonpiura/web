@@ -6,7 +6,7 @@
 .. link: 
 .. description: 
 .. type: text
+.. template: notitle.tmpl
 
 .. image:: images/cabecera_circulo.jpg
    :align: center
-
