@@ -72,112 +72,112 @@
     <div>
 <p>Despues de haber trabajado durante mucho tiempo en Wordpress decidimos usar algo mas pythonesco y encontramos el proyecto Nikola, que se adapta muy bien a lo que nosotros necesitamos como comunidad, asi que decidimos migrar, para ello seguimos la documentacion oficial del proyecto y algunos tutoriales adicionales, en este post vamos a relatar nuestra experiencia, esperando que sea util a nuestros lectores.</p>
 <p>Primero creamos nuestro entorno virtual, en esta oportunidad usamos python3 para obtener un mejor rendimiento con Nikola,</p>
-<pre class="code bash"><a name="rest_code_02be095237e34ba89948f2fe150bf3ce-1"></a>python3 -m venv nikola
+<pre class="code bash"><a name="rest_code_7d2d29d9990042be9e5c7f95a2462032-1"></a>python3 -m venv nikola
 </pre>
 <p>Activamos el entorno virtual:</p>
-<pre class="code bash"><a name="rest_code_90000a9a29b84565a1c5c1df2a61e3b3-1"></a><span class="nb">source</span> nikola/bin/activate
+<pre class="code bash"><a name="rest_code_a8d2a23d60974b17a18c347e39d91e01-1"></a><span class="nb">source</span> nikola/bin/activate
 </pre>
 <p>Antes de iniciar la instalacion de Nikola debimos instalar algunas dependencias para asegurarnos que todo funcione sin ningun problema:</p>
-<pre class="code bash"><a name="rest_code_66d887fc59b744bfa6e46708ea8aed8a-1"></a>sudo apt-get install python3-dev
-<a name="rest_code_66d887fc59b744bfa6e46708ea8aed8a-2"></a>sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
-<a name="rest_code_66d887fc59b744bfa6e46708ea8aed8a-3"></a>sudo apt-get build-dep python3-lxml python3-pil
+<pre class="code bash"><a name="rest_code_14920555e45f4758b613853a5cf724f8-1"></a>sudo apt-get install python3-dev
+<a name="rest_code_14920555e45f4758b613853a5cf724f8-2"></a>sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+<a name="rest_code_14920555e45f4758b613853a5cf724f8-3"></a>sudo apt-get build-dep python3-lxml python3-pil
 </pre>
 <p>Luego de ello debimos hacer una actualizacion de pip por un problema raro que se nos estaba presentando en la instalacion:</p>
-<pre class="code bash"><a name="rest_code_ca2c674d0af7445094052c64c5aeed34-1"></a>pip install --upgrade pip
+<pre class="code bash"><a name="rest_code_0909af6144fc428ca8d7051c320ef360-1"></a>pip install --upgrade pip
 </pre>
 <p>Luego procedimos a instalar Nikola y lo hicimos, de acuerdo a la sugerencia de su propia pagina, de la siguiente manera:</p>
-<pre class="code bash"><a name="rest_code_e9aa03654cb2460da393b71be628fc83-1"></a>pip install --upgrade <span class="s2">"Nikola[extras]"</span>
+<pre class="code bash"><a name="rest_code_ab9846e0b95a458cb0aba3ca53cdad5a-1"></a>pip install --upgrade <span class="s2">"Nikola[extras]"</span>
 </pre>
 <p>Nos demoramos un poquito, pero finalmente ya teniamos a Nikola instalado en nuestra maquina, como a nosotros no nos interesaba iniciar un sitio desde cero, sino migrar el que ya tenemos en wordpress, hicimos un backup del contenido del blog en wordpress, que es descargado en formato xml, el nuestro se llama pythonpiura.wordpress.2016-06-28.xml y las indicaciones para hacerlo son bastante sencillas y estan explicadas en la documentacion del propio wordpress.
 Para hacer la migracion de Wordpress a Nikola leimos rapidamente el manual y encontramos que teniamos 3 opciones, probamos las tres para ver cual nos resultaba mejor, pero antes debimos ingresar en la ruta donde tenemos nuestro archivo xml con el backup, debemos mencionar que las tres opciones nos crean una carpeta new_site.</p>
 <p>1-La opcion por defecto:</p>
-<pre class="code bash"><a name="rest_code_aa3d6a81992246c28b39dff7dcebb37f-1"></a>nikola import_wordpress pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_0981f3b790bf49bab68e066039632bdd-1"></a>nikola import_wordpress pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Esta opcion descarga todo el contenido del blog de wordpress e intenta hacer una conversion de cada uno de los posts y paginas al formato .md, no nos funciono correctamente ya que muchos posts se migraron a medias.</p>
 <p>2-Convertir los posts a html:</p>
-<pre class="code bash"><a name="rest_code_112f135e81d648849a931ecdab438078-1"></a>nikola import_wordpress --transform-to-html pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_1220ec6bbba94e9e82f97652968b3105-1"></a>nikola import_wordpress --transform-to-html pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Para ello primero debemos instalar el plugin de conversion a wordpress</p>
-<pre class="code bash"><a name="rest_code_458e1b3696504beaa7ae97f3d1f79b92-1"></a>nikola plugin -i wordpress_compiler
+<pre class="code bash"><a name="rest_code_4ac2515161254d0ea9d67bf17f1a009d-1"></a>nikola plugin -i wordpress_compiler
 </pre>
 <p>Esta opcion descarga el contenido y convierte los posts y paginas a html, esta fue la opcion que mejor nos funciono, salvo por el problema con los ejemplos de codigo que tenemos y que llevan la etiqueta:</p>
-<pre class="code html"><a name="rest_code_a9adeedfb6cb4f80aec6ff723c8e13ea-1"></a>[sourcecode language="language"]
+<pre class="code html"><a name="rest_code_03d68e06d55c4311923107be936e78f1-1"></a>[sourcecode language="language"]
 </pre>
 <p>Hasta donde hemos visto no es posible llevar a cabo la conversion de esto a un formato adecuado asi que simplemente los deja con el texto normal sin darle ningun formato, por lo que este todavia es un tema pendiente de resolver.</p>
 <p>3-Dejar el contenido como formato de wordpress, los archivos de los posts y las paginas tienen las extension .wp</p>
-<pre class="code bash"><a name="rest_code_7edf790244924d7281c2509de36ffa1b-1"></a>nikola import_wordpress --use-wordpress-compiler pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_5fc86d1135754200a479695d76ec2f08-1"></a>nikola import_wordpress --use-wordpress-compiler pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Probamos esta opcion pensando que nos solucionaria el problema de la etiqueta [sourcecode], pero funciono igual que la opcion anterior y encima debiamos activar el plugin de wordpress en el archivo de configuracion del sitio.</p>
 <p>Como comentamos antes usamos la segunda opcion que nos creo la carpeta new_site con el contenido listo, asi que ahora debiamos construir el sitio:</p>
-<pre class="code bash"><a name="rest_code_83b134fdbad14d8191d3c6f1c8edfe52-1"></a>nikola build
+<pre class="code bash"><a name="rest_code_71e8828709d14341bbcabe00be2318c7-1"></a>nikola build
 </pre>
 <p>Y lanzar el servidor de pruebas:</p>
-<pre class="code bash"><a name="rest_code_4f9575ca0cc742d580ae81556790a425-1"></a>nikola serve -b
+<pre class="code bash"><a name="rest_code_a60b28bbc42d4ec8bedab1ba83ae928b-1"></a>nikola serve -b
 </pre>
 <p>Cambiamos el tema por defecto por uno que nos parecio mas bonito llamado zen, pueden ver mas temas aqui:</p>
 <p><a class="reference external" href="https://themes.getnikola.com">https://themes.getnikola.com</a></p>
 <p>Lo instalamos asi:</p>
-<pre class="code bash"><a name="rest_code_e622c1f9decc4e73b4eaeb28e1ef3495-1"></a>nikola install_theme zen
+<pre class="code bash"><a name="rest_code_df213adc9d3948ec9f4e3ba52e8f5d8b-1"></a>nikola install_theme zen
 </pre>
 <p>Y lo configuramos en nuestro sitio modificando el archivo conf.py y cambiando la linea:</p>
-<pre class="code python"><a name="rest_code_936ef602b15a4533a7b1ccc35cead69e-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap3"</span>
+<pre class="code python"><a name="rest_code_97fdb8e87fbf441e999d824a3d6fb604-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap3"</span>
 </pre>
 <p>por:</p>
-<pre class="code python"><a name="rest_code_a5adec92eaae410c9b25a7c8cab5ec4c-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"zen"</span>
+<pre class="code python"><a name="rest_code_78f5c70a27254073a1d734315232b7dc-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"zen"</span>
 </pre>
 <p>y la linea:</p>
-<pre class="code python"><a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
-<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-2"></a>        <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
-<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-3"></a>            <span class="p">(</span><span class="s2">"/archive.html"</span><span class="p">,</span> <span class="s2">"Archives"</span><span class="p">),</span>
-<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-4"></a>            <span class="p">(</span><span class="s2">"/categories/index.html"</span><span class="p">,</span> <span class="s2">"Tags"</span><span class="p">),</span>
-<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-5"></a>            <span class="p">(</span><span class="s2">"/rss.xml"</span><span class="p">,</span> <span class="s2">"RSS feed"</span><span class="p">),</span>
-<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-6"></a>        <span class="p">),</span>
-<a name="rest_code_5d6764f7f95f4093857d0bffda4bfda8-7"></a><span class="p">}</span>
+<pre class="code python"><a name="rest_code_93235f73f7c4460dac3ae43c950994bd-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_93235f73f7c4460dac3ae43c950994bd-2"></a>        <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
+<a name="rest_code_93235f73f7c4460dac3ae43c950994bd-3"></a>            <span class="p">(</span><span class="s2">"/archive.html"</span><span class="p">,</span> <span class="s2">"Archives"</span><span class="p">),</span>
+<a name="rest_code_93235f73f7c4460dac3ae43c950994bd-4"></a>            <span class="p">(</span><span class="s2">"/categories/index.html"</span><span class="p">,</span> <span class="s2">"Tags"</span><span class="p">),</span>
+<a name="rest_code_93235f73f7c4460dac3ae43c950994bd-5"></a>            <span class="p">(</span><span class="s2">"/rss.xml"</span><span class="p">,</span> <span class="s2">"RSS feed"</span><span class="p">),</span>
+<a name="rest_code_93235f73f7c4460dac3ae43c950994bd-6"></a>        <span class="p">),</span>
+<a name="rest_code_93235f73f7c4460dac3ae43c950994bd-7"></a><span class="p">}</span>
 </pre>
 <p>Por:</p>
-<pre class="code python"><a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-3"></a>        <span class="p">(</span><span class="s1">'/index.html'</span><span class="p">,</span> <span class="s1">'Home'</span><span class="p">,</span> <span class="s1">'icon-home'</span><span class="p">),</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-4"></a>        <span class="p">(</span><span class="s1">'/archive.html'</span><span class="p">,</span> <span class="s1">'Archives'</span><span class="p">,</span> <span class="s1">'icon-folder-open-alt'</span><span class="p">),</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-5"></a>        <span class="p">(</span><span class="s1">'/categories/index.html'</span><span class="p">,</span> <span class="s1">'Tags'</span><span class="p">,</span> <span class="s1">'icon-tags'</span><span class="p">),</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-6"></a>        <span class="p">(</span><span class="s1">'/rss.xml'</span><span class="p">,</span> <span class="s1">'RSS'</span><span class="p">,</span> <span class="s1">'icon-rss'</span><span class="p">),</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-7"></a>        <span class="p">(</span><span class="s1">'https://getnikola.com'</span><span class="p">,</span> <span class="s1">'About me'</span><span class="p">,</span> <span class="s1">'icon-user'</span><span class="p">),</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-8"></a>        <span class="p">(</span><span class="s1">'https://twitter.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Twitter'</span><span class="p">,</span> <span class="s1">'icon-twitter'</span><span class="p">),</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-9"></a>        <span class="p">(</span><span class="s1">'https://github.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Github'</span><span class="p">,</span> <span class="s1">'icon-github'</span><span class="p">),</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-10"></a>    <span class="p">)</span>
-<a name="rest_code_b3f5aae1b56f4b628b4f10ecbe50f022-11"></a><span class="p">}</span>
+<pre class="code python"><a name="rest_code_62707b0684264dfb92d635ce0b932b4c-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-3"></a>        <span class="p">(</span><span class="s1">'/index.html'</span><span class="p">,</span> <span class="s1">'Home'</span><span class="p">,</span> <span class="s1">'icon-home'</span><span class="p">),</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-4"></a>        <span class="p">(</span><span class="s1">'/archive.html'</span><span class="p">,</span> <span class="s1">'Archives'</span><span class="p">,</span> <span class="s1">'icon-folder-open-alt'</span><span class="p">),</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-5"></a>        <span class="p">(</span><span class="s1">'/categories/index.html'</span><span class="p">,</span> <span class="s1">'Tags'</span><span class="p">,</span> <span class="s1">'icon-tags'</span><span class="p">),</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-6"></a>        <span class="p">(</span><span class="s1">'/rss.xml'</span><span class="p">,</span> <span class="s1">'RSS'</span><span class="p">,</span> <span class="s1">'icon-rss'</span><span class="p">),</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-7"></a>        <span class="p">(</span><span class="s1">'https://getnikola.com'</span><span class="p">,</span> <span class="s1">'About me'</span><span class="p">,</span> <span class="s1">'icon-user'</span><span class="p">),</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-8"></a>        <span class="p">(</span><span class="s1">'https://twitter.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Twitter'</span><span class="p">,</span> <span class="s1">'icon-twitter'</span><span class="p">),</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-9"></a>        <span class="p">(</span><span class="s1">'https://github.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Github'</span><span class="p">,</span> <span class="s1">'icon-github'</span><span class="p">),</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-10"></a>    <span class="p">)</span>
+<a name="rest_code_62707b0684264dfb92d635ce0b932b4c-11"></a><span class="p">}</span>
 </pre>
 <p>Lo anterior es por defecto para que funcione, pero ya luego lo modificamos a nuestro gusto.</p>
 <p>Volvimos a construir nuestro sitio:</p>
-<pre class="code bash"><a name="rest_code_f90f592957514055967e222cca78e96d-1"></a>nikola build
+<pre class="code bash"><a name="rest_code_591a4921c1984b9f9f6a5e773ac56d8b-1"></a>nikola build
 </pre>
 <p>Y a lanzar nuestro servidor:</p>
-<pre class="code bash"><a name="rest_code_805d6c6cc1d448c1a108d530d46b6d1c-1"></a>nikola serve -b
+<pre class="code bash"><a name="rest_code_23e6d659893340d89e2adb5e6e7ba41e-1"></a>nikola serve -b
 </pre>
 <p>Ahora si nos tocaba deployar nuestro sitio en github:</p>
 <p>Para ello creamos un repositorio con el mismo nombre de nuestro usuario "pythonpiura" pero de la siguiente manera:</p>
 <p>pythonpiura.github.io</p>
 <p>Clonamos este repositorio:</p>
-<pre class="code bash"><a name="rest_code_13ba783a298940d985bd84375eb3e324-1"></a>git clone https://github.com/pythonpiura/pythonpiura.github.io.git
+<pre class="code bash"><a name="rest_code_191ff0c60a4144fdb20caa0f3b579500-1"></a>git clone https://github.com/pythonpiura/pythonpiura.github.io.git
 </pre>
 <p>Lo siguiente que hicimos, fue copiar el contenido de nuestra carpeta new_site en la carpeta del repositorio recien creado.</p>
 <p>Luego procedimos a modificar el archivo conf.py para que tenga los datos de nuetro nuevo sitio, modificando las siguientes lineas:</p>
-<pre class="code python"><a name="rest_code_301f40c3802b4f459568c7e49cb6fa41-1"></a><span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">"https://pythonpiura.github.io/"</span>
-<a name="rest_code_301f40c3802b4f459568c7e49cb6fa41-2"></a><span class="n">BLOG_EMAIL</span> <span class="o">=</span> <span class="s2">"pythonpiura@openmailbox.org"</span>
+<pre class="code python"><a name="rest_code_fbedf56fe7864316b928d23090b57b98-1"></a><span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">"https://pythonpiura.github.io/"</span>
+<a name="rest_code_fbedf56fe7864316b928d23090b57b98-2"></a><span class="n">BLOG_EMAIL</span> <span class="o">=</span> <span class="s2">"pythonpiura@openmailbox.org"</span>
 </pre>
 <p>y tambien las siguientes para que se deploye correctamente en github:</p>
-<pre class="code python"><a name="rest_code_be701d6550854b4d99280fa3b955ad42-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'sources'</span>
-<a name="rest_code_be701d6550854b4d99280fa3b955ad42-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
-<a name="rest_code_be701d6550854b4d99280fa3b955ad42-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
+<pre class="code python"><a name="rest_code_18833e7a2baf4276bd391bf8ddf454a1-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'sources'</span>
+<a name="rest_code_18833e7a2baf4276bd391bf8ddf454a1-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
+<a name="rest_code_18833e7a2baf4276bd391bf8ddf454a1-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
 </pre>
 <p>Agregamos lo siguiente a nuestro archivo .gitignore para que este contenido no sea subido al repositorio:</p>
-<pre class="code text"><a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-1"></a>cache
-<a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-2"></a>.doit.db
-<a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-3"></a>__pycache__
-<a name="rest_code_d1c5c10fc36b4512a58a508f852b4bff-4"></a>output
+<pre class="code text"><a name="rest_code_4e94d2a92f4c4f6f8d5720300d97632f-1"></a>cache
+<a name="rest_code_4e94d2a92f4c4f6f8d5720300d97632f-2"></a>.doit.db
+<a name="rest_code_4e94d2a92f4c4f6f8d5720300d97632f-3"></a>__pycache__
+<a name="rest_code_4e94d2a92f4c4f6f8d5720300d97632f-4"></a>output
 </pre>
 <p>Y corremos el comando:</p>
-<pre class="code bash"><a name="rest_code_b5f09cdf7951413b8fe3e15f24328994-1"></a>nikola github_deploy
+<pre class="code bash"><a name="rest_code_5e8cdefdef3e41038c298be14809b843-1"></a>nikola github_deploy
 </pre>
 <p>En este paso github nos solicito nuestro usuario y password, lo ingresamos y continuamos. Tardo varios minutos en subir el contenido pero ya con eso tenemos nuestro blog en la siguiente direccion.</p>
 <p><a class="reference external" href="http://pythonpiura.org/">http://pythonpiura.org/</a></p>
@@ -212,23 +212,23 @@ paralela.</li>
 </ul>
 <p>Vamos a instalarlo para ir conociendolo mejor, para ello vamos a
 <a class="reference external" href="http://rukbottoland.com/blog/tutorial-de-python-virtualenv/">crear un entorno virtual</a>, al que llamaremos ipython:</p>
-<pre class="code bash"><a name="rest_code_13838e3c1fbd438da7fd1ee4d1f2b384-1"></a>virtualenv ipython
+<pre class="code bash"><a name="rest_code_e146c1a9e5194ba2ae7ecdabaf243f11-1"></a>virtualenv ipython
 </pre>
 <p>Lo activamos:</p>
-<pre class="code bash"><a name="rest_code_844bdad53f684456bd84232a60737198-1"></a><span class="nb">source</span> ipython/bin/activate
+<pre class="code bash"><a name="rest_code_fb866a1a887749fc9d2c7a961a763b7d-1"></a><span class="nb">source</span> ipython/bin/activate
 </pre>
 <p>Ahora procedemos a instalar ipython:</p>
-<pre class="code bash"><a name="rest_code_d3fa9bbb152d4244b7276f6de29ac984-1"></a>pip install ipython
+<pre class="code bash"><a name="rest_code_622a4fb544c342ba896ef5d83c8ae097-1"></a>pip install ipython
 </pre>
 <p>Para probar que todo ha salido bien ponemos lo siguiente en la
 terminal:</p>
-<pre class="code bash"><a name="rest_code_7f9dad70715140c6a97beacd8ca57c23-1"></a>ipython
+<pre class="code bash"><a name="rest_code_1f8b89472aa248d9b4bfc7b6a5b53c2e-1"></a>ipython
 </pre>
 <p>Y nos aparecerá algo como esto, que nos indica que todo esta
 funcionando correctamente:</p>
 <img alt="/images/blog/seleccic3b3n_369.png" src="../images/blog/seleccic3b3n_369.png"><p>Escribimos exit para salir del interprete y regresar a nuestra
 terminal:</p>
-<pre class="code bash"><a name="rest_code_ca6ef614092b4be198ccea5b0b4b5096-1"></a><span class="nb">exit</span>
+<pre class="code bash"><a name="rest_code_fdd804b2b4d143238acc8604f44d2db7-1"></a><span class="nb">exit</span>
 </pre>
 <p>Ahora conozcamos a <a class="reference external" href="http://jupyter.org/">Jupyter</a>, tal como nos dice su pagina web, es una
 aplicación web que permite crear y compartir documentos que contienen
@@ -236,10 +236,10 @@ código vivo, ecuaciones, visualizaciones y texto explicativo. Se puede
 usar para simulación numérica, simulación estadística, machine
 learning y mucho mas.
 Vamos a instalarlo para ir conociéndolo:</p>
-<pre class="code bash"><a name="rest_code_151a0a9def324fdeaef7b016988f48a1-1"></a>pip install jupyter
+<pre class="code bash"><a name="rest_code_11df6eaebf9249d088794b2c851d9309-1"></a>pip install jupyter
 </pre>
 <p>Para correrlo debemos escribir lo siguiente:</p>
-<pre class="code bash"><a name="rest_code_093902df44e74cf182de6b644ef023ae-1"></a>ipython notebook
+<pre class="code bash"><a name="rest_code_5603c86dc4da4b8f8e5f8af8f90b5530-1"></a>ipython notebook
 </pre>
 <p>Y automáticamente nos abrirá en una pestaña del navegador lo
 siguiente:</p>
@@ -286,7 +286,7 @@ ser mas divertido :-)</p>
 <p>Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
 bastante olvidado estos últimos días y haremos un reporte en pdf
 utilizando la librería <a class="reference external" href="http://www.reportlab.com/">reportlab</a>, para ello la instalamos:</p>
-<pre class="code bash"><a name="rest_code_b97ab140299e4859b498771ba967fc1e-1"></a>pip install reportlab
+<pre class="code bash"><a name="rest_code_7c2e0667e7454f25b1d6bb04b96fdf2d-1"></a>pip install reportlab
 </pre>
 <p>Lo primero que haremos es poner el logo de django en la parte superior
 de nuestro reporte, por lo que debemos tener la imagen guardada en una
@@ -295,128 +295,128 @@ ubicación fácil de obtener, por eso crearemos una carpeta llamada
 imagenes, es aquí donde pondremos nuestro archivo logo_django.png:</p>
 <img alt="/images/blog/ubicacion_logo.jpg" src="../images/blog/ubicacion_logo.jpg"><p>Modificamos el archivo settings.py para poder establecer la ruta de la
 carpeta media:</p>
-<pre class="code python"><a name="rest_code_bd0cf13c57c64cb29592486d68d3c7f7-1"></a><span class="n">MEDIA_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">'media'</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_a93ae2093f544d32a651581c6f6a55d2-1"></a><span class="n">MEDIA_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">'media'</span><span class="p">)</span>
 </pre>
 <p>Creamos la clase ReportePersonasPDF en el archivo views.py, el código
 está explicado en los comentarios:</p>
-<pre class="code python"><a name="rest_code_81f39d76e7604e67b49da74a16421713-1"></a><span class="c1">#Importamos settings para poder tener a la mano la ruta de la carpeta media</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-2"></a><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-3"></a><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-4"></a><span class="kn">from</span> <span class="nn">reportlab.pdfgen</span> <span class="kn">import</span> <span class="n">canvas</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-5"></a><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">View</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-6"></a>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-7"></a><span class="k">class</span> <span class="nc">ReportePersonasPDF</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-8"></a>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-9"></a><span class="k">def</span> <span class="nf">cabecera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">):</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-10"></a>        <span class="c1">#Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-11"></a>        <span class="n">archivo_imagen</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="o">+</span><span class="s1">'/imagenes/logo_django.png'</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-12"></a>        <span class="c1">#Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">archivo_imagen</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span><span class="n">preserveAspectRatio</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-14"></a>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-15"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-16"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-17"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-18"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-19"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-20"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-21"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-22"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-24"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-25"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-26"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-27"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-28"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-29"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_81f39d76e7604e67b49da74a16421713-30"></a>        <span class="k">return</span> <span class="n">response</span>
+<pre class="code python"><a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-1"></a><span class="c1">#Importamos settings para poder tener a la mano la ruta de la carpeta media</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-2"></a><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-3"></a><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-4"></a><span class="kn">from</span> <span class="nn">reportlab.pdfgen</span> <span class="kn">import</span> <span class="n">canvas</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-5"></a><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">View</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-6"></a>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-7"></a><span class="k">class</span> <span class="nc">ReportePersonasPDF</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-8"></a>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-9"></a><span class="k">def</span> <span class="nf">cabecera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">):</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-10"></a>        <span class="c1">#Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-11"></a>        <span class="n">archivo_imagen</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="o">+</span><span class="s1">'/imagenes/logo_django.png'</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-12"></a>        <span class="c1">#Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">archivo_imagen</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span><span class="n">preserveAspectRatio</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-14"></a>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-15"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-16"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-17"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-18"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-19"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-20"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-21"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-22"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-24"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-25"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-26"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-27"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-28"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-29"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_214c6fe8aca3466287e11dbd993ad6e3-30"></a>        <span class="k">return</span> <span class="n">response</span>
 </pre>
 <p>Para poder acceder a esta clase debemos hacer la creación de la url
 correspondiente en el archivo urls.py:</p>
-<pre class="code python"><a name="rest_code_ec495684f066421cbaab358f2e8e884e-1"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_pdf/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">ReportePersonasPDF</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_pdf"</span><span class="p">),</span>
+<pre class="code python"><a name="rest_code_6304674e7a964f6c8d2bdb43a37e62a4-1"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_pdf/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">ReportePersonasPDF</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_pdf"</span><span class="p">),</span>
 </pre>
 <p>Ahora vamos a utilizar la url desde el archivo personas.html:</p>
-<pre class="code html"><a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-2"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-9"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-4"></a>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-5"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-6"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-7"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-8"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-9"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-10"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-11"></a>        {% if perms.personas.add_persona %}
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-12"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-13"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-14"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-15"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-16"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-17"></a>        {% endif %}
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-19"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_pdf' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-20"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-file"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-21"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-22"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-23"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_30fbf1d25e7f4cf8ab22b2878792d418-24"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_40f9361894e34442891bad3851aab0a2-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-2"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-9"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-4"></a>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-5"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-6"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-7"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-8"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-9"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-10"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-11"></a>        {% if perms.personas.add_persona %}
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-12"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-13"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-14"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-15"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-16"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-17"></a>        {% endif %}
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-19"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_pdf' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-20"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-file"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-21"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-22"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-23"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_40f9361894e34442891bad3851aab0a2-24"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre>
 <p>Nos tiene que aparecer un ícono de un archivo:</p>
 <img alt="/images/blog/personas_pdf.jpg" src="../images/blog/personas_pdf.jpg"><p>El primer resultado será este:</p>
 <img alt="/images/blog/reporte_pdf1.jpg" src="../images/blog/reporte_pdf1.jpg"><p>Vamos a ponerle un encabezado a nuestro reporte que diga “Python
 Piura” y debajo “Reporte de Personas”, para ello colocamos el
 siguiente código debajo de la última linea del método “cabecera”:</p>
-<pre class="code python"><a name="rest_code_81a68fd472eb48da9f8f78862c184d33-1"></a><span class="c1">#Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica</span>
-<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-2"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-3"></a><span class="c1">#Dibujamos una cadena en la ubicación X,Y especificada</span>
-<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-4"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="s2">u"PYTHON PIURA"</span><span class="p">)</span>
-<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-5"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
-<a name="rest_code_81a68fd472eb48da9f8f78862c184d33-6"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">770</span><span class="p">,</span> <span class="s2">u"REPORTE DE PERSONAS"</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_4ae490a7ffd74fed8c70f7a1bc88b20d-1"></a><span class="c1">#Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica</span>
+<a name="rest_code_4ae490a7ffd74fed8c70f7a1bc88b20d-2"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<a name="rest_code_4ae490a7ffd74fed8c70f7a1bc88b20d-3"></a><span class="c1">#Dibujamos una cadena en la ubicación X,Y especificada</span>
+<a name="rest_code_4ae490a7ffd74fed8c70f7a1bc88b20d-4"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="s2">u"PYTHON PIURA"</span><span class="p">)</span>
+<a name="rest_code_4ae490a7ffd74fed8c70f7a1bc88b20d-5"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<a name="rest_code_4ae490a7ffd74fed8c70f7a1bc88b20d-6"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">770</span><span class="p">,</span> <span class="s2">u"REPORTE DE PERSONAS"</span><span class="p">)</span>
 </pre>
 <img alt="/images/blog/reporte_pdf2.jpg" src="../images/blog/reporte_pdf2.jpg"><p>Visualizaremos la tabla de personas, por lo que creamos el método
 tabla en la clase ReportePersonasPDF:</p>
-<pre class="code python"><a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-1"></a><span class="k">def</span> <span class="nf">tabla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-2"></a>        <span class="c1">#Creamos una tupla de encabezados para neustra tabla</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-3"></a>        <span class="n">encabezados</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DNI'</span><span class="p">,</span> <span class="s1">'Nombre'</span><span class="p">,</span> <span class="s1">'Apellido Paterno'</span><span class="p">,</span> <span class="s1">'Apellido Materno'</span><span class="p">)</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-4"></a>        <span class="c1">#Creamos una lista de tuplas que van a contener a las personas</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-5"></a>        <span class="n">detalles</span> <span class="o">=</span> <span class="p">[(</span><span class="n">persona</span><span class="o">.</span><span class="n">dni</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_paterno</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_materno</span><span class="p">)</span> <span class="k">for</span> <span class="n">persona</span> <span class="ow">in</span> <span class="n">Persona</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-6"></a>        <span class="c1">#Establecemos el tamaño de cada una de las columnas de la tabla</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-7"></a>        <span class="n">detalle_orden</span> <span class="o">=</span> <span class="n">Table</span><span class="p">([</span><span class="n">encabezados</span><span class="p">]</span> <span class="o">+</span> <span class="n">detalles</span><span class="p">,</span> <span class="n">colWidths</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">])</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-8"></a>        <span class="c1">#Aplicamos estilos a las celdas de la tabla</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-9"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">TableStyle</span><span class="p">(</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-10"></a>        <span class="p">[</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-11"></a>                <span class="c1">#La primera fila(encabezados) va a estar centrada</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-12"></a>                <span class="p">(</span><span class="s1">'ALIGN'</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="s1">'CENTER'</span><span class="p">),</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-13"></a>                <span class="c1">#Los bordes de todas las celdas serán de color negro y con un grosor de 1</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-14"></a>                <span class="p">(</span><span class="s1">'GRID'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-15"></a>                <span class="c1">#El tamaño de las letras de cada una de las celdas será de 10</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-16"></a>                <span class="p">(</span><span class="s1">'FONTSIZE'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">),</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-17"></a>                <span class="p">]</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-18"></a>        <span class="p">))</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-19"></a>        <span class="c1">#Establecemos el tamaño de la hoja que ocupará la tabla</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-20"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">wrapOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-21"></a>        <span class="c1">#Definimos la coordenada donde se dibujará la tabla</span>
-<a name="rest_code_91bff1c1cbdb4b73be7a8da2bb0d03fb-22"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">drawOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-1"></a><span class="k">def</span> <span class="nf">tabla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-2"></a>        <span class="c1">#Creamos una tupla de encabezados para neustra tabla</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-3"></a>        <span class="n">encabezados</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DNI'</span><span class="p">,</span> <span class="s1">'Nombre'</span><span class="p">,</span> <span class="s1">'Apellido Paterno'</span><span class="p">,</span> <span class="s1">'Apellido Materno'</span><span class="p">)</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-4"></a>        <span class="c1">#Creamos una lista de tuplas que van a contener a las personas</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-5"></a>        <span class="n">detalles</span> <span class="o">=</span> <span class="p">[(</span><span class="n">persona</span><span class="o">.</span><span class="n">dni</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_paterno</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_materno</span><span class="p">)</span> <span class="k">for</span> <span class="n">persona</span> <span class="ow">in</span> <span class="n">Persona</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-6"></a>        <span class="c1">#Establecemos el tamaño de cada una de las columnas de la tabla</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-7"></a>        <span class="n">detalle_orden</span> <span class="o">=</span> <span class="n">Table</span><span class="p">([</span><span class="n">encabezados</span><span class="p">]</span> <span class="o">+</span> <span class="n">detalles</span><span class="p">,</span> <span class="n">colWidths</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">])</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-8"></a>        <span class="c1">#Aplicamos estilos a las celdas de la tabla</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-9"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">TableStyle</span><span class="p">(</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-10"></a>        <span class="p">[</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-11"></a>                <span class="c1">#La primera fila(encabezados) va a estar centrada</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-12"></a>                <span class="p">(</span><span class="s1">'ALIGN'</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="s1">'CENTER'</span><span class="p">),</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-13"></a>                <span class="c1">#Los bordes de todas las celdas serán de color negro y con un grosor de 1</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-14"></a>                <span class="p">(</span><span class="s1">'GRID'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-15"></a>                <span class="c1">#El tamaño de las letras de cada una de las celdas será de 10</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-16"></a>                <span class="p">(</span><span class="s1">'FONTSIZE'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">),</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-17"></a>                <span class="p">]</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-18"></a>        <span class="p">))</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-19"></a>        <span class="c1">#Establecemos el tamaño de la hoja que ocupará la tabla</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-20"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">wrapOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-21"></a>        <span class="c1">#Definimos la coordenada donde se dibujará la tabla</span>
+<a name="rest_code_ad5ec476b8ab4551a1b7c01d91e80095-22"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">drawOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 </pre>
 <p>Veamos como queda nuestro método get ahora con la nueva llamada al
 método tabla:</p>
-<pre class="code python"><a name="rest_code_6b75105e909a4a929b67263731711590-1"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-2"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-3"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-4"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-5"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-6"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-7"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-8"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-10"></a>        <span class="n">y</span> <span class="o">=</span> <span class="mi">600</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tabla</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-12"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-14"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-15"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-16"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-17"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_6b75105e909a4a929b67263731711590-18"></a>        <span class="k">return</span> <span class="n">response</span>
+<pre class="code python"><a name="rest_code_d37491c5102940849070fa1813dc1d72-1"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-2"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-3"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-4"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-5"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-6"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-7"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-8"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-10"></a>        <span class="n">y</span> <span class="o">=</span> <span class="mi">600</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tabla</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-12"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-14"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-15"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-16"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-17"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_d37491c5102940849070fa1813dc1d72-18"></a>        <span class="k">return</span> <span class="n">response</span>
 </pre>
 <p>Y este será el resultado final:</p>
 <img alt="/images/blog/reporte_pdf3.jpg" src="../images/blog/reporte_pdf3.jpg"><p>Eso es todo por hoy.
@@ -442,169 +442,169 @@ para romper este captcha tenemos que modificar la imagen para obtener
 el texto correcto, eliminando las lineas que atraviesan las letras y
 que tienen una tonalidad distinta de azul, el proceso no será 100%
 seguro pero funciona en la mayoría de los casos:</p>
-<pre class="code python"><a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-6"></a>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-7"></a><span class="k">try</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-8"></a>        <span class="kn">import</span> <span class="nn">Image</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-9"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-10"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-11"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-12"></a>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-13"></a><span class="k">def</span> <span class="nf">ir_reniec_web</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-14"></a>        <span class="n">fp</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-15"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-16"></a>        <span class="c1">#Definimos nuestra página objetivo</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-17"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://cel.reniec.gob.pe/valreg/valreg.do"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-18"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-19"></a>                <span class="c1">#Esperamos hasta que se cargue la imagen con el captcha</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-20"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">"imagcodigo"</span><span class="p">)))</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-21"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-22"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-23"></a>        <span class="c1">#Hacemos la captura de pantalla correspondiente</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-24"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.png"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-25"></a>        <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.png'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-26"></a>        <span class="c1">#Obtenemos el ancho y el largo de la imagen</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-27"></a>        <span class="n">ancho</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-28"></a>        <span class="n">alto</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-29"></a>        <span class="c1">#Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-30"></a>        <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">ancho</span><span class="o">/</span><span class="mf">4.26</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">alto</span><span class="o">/</span><span class="mf">3.64</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">ancho</span><span class="o">/</span><span class="mf">2.8</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">alto</span><span class="o">/</span><span class="mi">3</span><span class="p">)))</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-31"></a>        <span class="c1">#Guardamos el recorte</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-32"></a>        <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-33"></a>        <span class="c1">#Recorremos cada uno de los dígitos del DNI</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-34"></a>        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">dni</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-35"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_0</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-36"></a>                <span class="n">boton_0</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_0"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-37"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_0</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-38"></a>                <span class="n">valor_0</span> <span class="o">=</span> <span class="n">boton_0</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-39"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_1</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-40"></a>                <span class="n">boton_1</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_1"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-41"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_1</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-42"></a>                <span class="n">valor_1</span> <span class="o">=</span> <span class="n">boton_1</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-43"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_2</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-44"></a>                <span class="n">boton_2</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_2"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-45"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_2</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-46"></a>                <span class="n">valor_2</span> <span class="o">=</span> <span class="n">boton_2</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-47"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_3</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-48"></a>                <span class="n">boton_3</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_3"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-49"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_3</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-50"></a>                <span class="n">valor_3</span> <span class="o">=</span> <span class="n">boton_3</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-51"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_4</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-52"></a>                <span class="n">boton_4</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_4"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-53"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_4</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-54"></a>                <span class="n">valor_4</span> <span class="o">=</span> <span class="n">boton_4</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-55"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_5</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-56"></a>                <span class="n">boton_5</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_5"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-57"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_5</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-58"></a>                <span class="n">valor_5</span> <span class="o">=</span> <span class="n">boton_5</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-59"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_6</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-60"></a>                <span class="n">boton_6</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_6"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-61"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_6</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-62"></a>                <span class="n">valor_6</span> <span class="o">=</span> <span class="n">boton_6</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-63"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_7</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-64"></a>                <span class="n">boton_7</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_7"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-65"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_7</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-66"></a>                <span class="n">valor_7</span> <span class="o">=</span> <span class="n">boton_7</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-67"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_8</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-68"></a>                <span class="n">boton_8</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_8"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-69"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_8</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-70"></a>                <span class="n">valor_8</span> <span class="o">=</span> <span class="n">boton_8</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-71"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_9</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-72"></a>                <span class="n">boton_9</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_9"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-73"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_9</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-74"></a>                <span class="n">valor_9</span> <span class="o">=</span> <span class="n">boton_9</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-75"></a>        <span class="c1">#Consultamos si el dígito del DNI es igual al valor del botón, si es el caso entonces se da click en ese botón</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-76"></a>        <span class="k">if</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_0</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-77"></a>                <span class="n">boton_0</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-78"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_1</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-79"></a>                <span class="n">boton_1</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_1"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-80"></a>                <span class="n">boton_1</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-81"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_2</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-82"></a>                <span class="n">boton_2</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_2"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-83"></a>                <span class="n">boton_2</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-84"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_3</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-85"></a>                <span class="n">boton_3</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_3"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-86"></a>                <span class="n">boton_3</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-87"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_4</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-88"></a>                <span class="n">boton_4</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_4"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-89"></a>                <span class="n">boton_4</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-90"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_5</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-91"></a>                <span class="n">boton_5</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_5"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-92"></a>                <span class="n">boton_5</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-93"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_6</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-94"></a>                <span class="n">boton_6</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_6"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-95"></a>                <span class="n">boton_6</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-96"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_7</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-97"></a>                <span class="n">boton_7</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_7"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-98"></a>                <span class="n">boton_7</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-99"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_8</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-100"></a>                <span class="n">boton_8</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_8"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-101"></a>                <span class="n">boton_8</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-102"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_9</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-103"></a>                <span class="n">boton_9</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_9"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-104"></a>                <span class="n">boton_9</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-105"></a>        <span class="c1">#Se llama al método romper_captcha para obtener el texto correspondiente</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-106"></a>        <span class="n">captcha</span> <span class="o">=</span> <span class="n">romper_captcha</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-107"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-108"></a>                <span class="c1">#Obtenemos la caja de texto donde se escribe el texto del captcha</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-109"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"imagen"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-110"></a>                <span class="c1">#Si el captcha está vacio o no se ha logrado romper se cierra el navegador y se termina la aplicación</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-111"></a>                <span class="k">if</span> <span class="n">captcha</span><span class="o">==</span><span class="s2">""</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-112"></a>                        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-113"></a>                        <span class="k">return</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-114"></a>                <span class="c1">#Escribimos el texto</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-115"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-116"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-117"></a>                <span class="k">pass</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-118"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-119"></a>                <span class="c1">#Obtenemos el botón de consulta</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-120"></a>                <span class="n">boton_consultar</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"bot_consultar"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-121"></a>                <span class="c1">#Damos click al botón de consulta</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-122"></a>                <span class="n">boton_consultar</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-123"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-124"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-125"></a>        <span class="c1">#Obtengo el resultado que aparece en el elemento llamado style2</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-126"></a>        <span class="n">resultado</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">"style2"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-127"></a>        <span class="c1">#Partimos el resultado para obtener el nombre</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-128"></a>        <span class="n">nombre</span> <span class="o">=</span> <span class="n">resultado</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-129"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-130"></a>        <span class="k">return</span> <span class="n">nombre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-131"></a>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-132"></a><span class="k">def</span> <span class="nf">romper_captcha</span><span class="p">(</span><span class="n">nombre_imagen</span><span class="p">):</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-133"></a>        <span class="c1">#Abro la imagen</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-134"></a>        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">nombre_imagen</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-135"></a>        <span class="c1">#Obtengo un arreglo de píxeles de la imagen</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-136"></a>        <span class="n">pixdata</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-137"></a>        <span class="sd">"""Modifico los píxeles de la imagen de acuerdo al análisis de los</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-138"></a><span class="sd">        colores de las letras y las lineas que cruzan el texto, pintando de negro los píxeles del</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-139"></a><span class="sd">        texto y de blanco las lineas"""</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-140"></a>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-141"></a>                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-142"></a>                        <span class="k">if</span> <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">146</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-143"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-144"></a>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-145"></a>                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-146"></a>                        <span class="k">if</span> <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>     <span class="o">&gt;</span> <span class="mi">64</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-147"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-148"></a>                        <span class="k">else</span><span class="p">:</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-149"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-150"></a>        <span class="c1">#Guardo la imagen modificada</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-151"></a>        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"modificado.jpg"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-152"></a>        <span class="c1">#Abro la imagen modificado</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-153"></a>        <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"modificado.jpg"</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-154"></a>        <span class="c1">#Obtenemos el texto de la imagen</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-155"></a>        <span class="n">frase</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-156"></a>        <span class="c1">#Retornamos el texto eliminado los espacios en blanco entre las palabras y convirtiendolas en mayúsculas</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-157"></a>        <span class="k">return</span> <span class="n">frase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-158"></a>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-159"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-160"></a>        <span class="n">dni</span> <span class="o">=</span> <span class="s1">'123456789'</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-161"></a>        <span class="k">print</span> <span class="n">ir_reniec_web</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-162"></a>
-<a name="rest_code_7e9c4c5e37a14f41952337da7ff48077-163"></a><span class="n">main</span><span class="p">()</span>
+<pre class="code python"><a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-6"></a>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-7"></a><span class="k">try</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-8"></a>        <span class="kn">import</span> <span class="nn">Image</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-9"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-10"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-11"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-12"></a>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-13"></a><span class="k">def</span> <span class="nf">ir_reniec_web</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-14"></a>        <span class="n">fp</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-15"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-16"></a>        <span class="c1">#Definimos nuestra página objetivo</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-17"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://cel.reniec.gob.pe/valreg/valreg.do"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-18"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-19"></a>                <span class="c1">#Esperamos hasta que se cargue la imagen con el captcha</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-20"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">"imagcodigo"</span><span class="p">)))</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-21"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-22"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-23"></a>        <span class="c1">#Hacemos la captura de pantalla correspondiente</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-24"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.png"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-25"></a>        <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.png'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-26"></a>        <span class="c1">#Obtenemos el ancho y el largo de la imagen</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-27"></a>        <span class="n">ancho</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-28"></a>        <span class="n">alto</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-29"></a>        <span class="c1">#Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-30"></a>        <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">ancho</span><span class="o">/</span><span class="mf">4.26</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">alto</span><span class="o">/</span><span class="mf">3.64</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">ancho</span><span class="o">/</span><span class="mf">2.8</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">alto</span><span class="o">/</span><span class="mi">3</span><span class="p">)))</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-31"></a>        <span class="c1">#Guardamos el recorte</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-32"></a>        <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-33"></a>        <span class="c1">#Recorremos cada uno de los dígitos del DNI</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-34"></a>        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">dni</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-35"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_0</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-36"></a>                <span class="n">boton_0</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_0"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-37"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_0</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-38"></a>                <span class="n">valor_0</span> <span class="o">=</span> <span class="n">boton_0</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-39"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_1</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-40"></a>                <span class="n">boton_1</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_1"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-41"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_1</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-42"></a>                <span class="n">valor_1</span> <span class="o">=</span> <span class="n">boton_1</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-43"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_2</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-44"></a>                <span class="n">boton_2</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_2"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-45"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_2</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-46"></a>                <span class="n">valor_2</span> <span class="o">=</span> <span class="n">boton_2</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-47"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_3</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-48"></a>                <span class="n">boton_3</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_3"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-49"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_3</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-50"></a>                <span class="n">valor_3</span> <span class="o">=</span> <span class="n">boton_3</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-51"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_4</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-52"></a>                <span class="n">boton_4</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_4"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-53"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_4</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-54"></a>                <span class="n">valor_4</span> <span class="o">=</span> <span class="n">boton_4</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-55"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_5</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-56"></a>                <span class="n">boton_5</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_5"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-57"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_5</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-58"></a>                <span class="n">valor_5</span> <span class="o">=</span> <span class="n">boton_5</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-59"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_6</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-60"></a>                <span class="n">boton_6</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_6"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-61"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_6</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-62"></a>                <span class="n">valor_6</span> <span class="o">=</span> <span class="n">boton_6</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-63"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_7</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-64"></a>                <span class="n">boton_7</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_7"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-65"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_7</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-66"></a>                <span class="n">valor_7</span> <span class="o">=</span> <span class="n">boton_7</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-67"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_8</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-68"></a>                <span class="n">boton_8</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_8"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-69"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_8</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-70"></a>                <span class="n">valor_8</span> <span class="o">=</span> <span class="n">boton_8</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-71"></a>                <span class="c1">#Buscamos el boton que tenga como nombre tecla_9</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-72"></a>                <span class="n">boton_9</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_9"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-73"></a>                <span class="c1">#Obtenemos el valor del botón con nombre tecla_9</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-74"></a>                <span class="n">valor_9</span> <span class="o">=</span> <span class="n">boton_9</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'value'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-75"></a>        <span class="c1">#Consultamos si el dígito del DNI es igual al valor del botón, si es el caso entonces se da click en ese botón</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-76"></a>        <span class="k">if</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_0</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-77"></a>                <span class="n">boton_0</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-78"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_1</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-79"></a>                <span class="n">boton_1</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_1"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-80"></a>                <span class="n">boton_1</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-81"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_2</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-82"></a>                <span class="n">boton_2</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_2"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-83"></a>                <span class="n">boton_2</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-84"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_3</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-85"></a>                <span class="n">boton_3</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_3"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-86"></a>                <span class="n">boton_3</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-87"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_4</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-88"></a>                <span class="n">boton_4</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_4"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-89"></a>                <span class="n">boton_4</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-90"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_5</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-91"></a>                <span class="n">boton_5</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_5"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-92"></a>                <span class="n">boton_5</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-93"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_6</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-94"></a>                <span class="n">boton_6</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_6"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-95"></a>                <span class="n">boton_6</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-96"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_7</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-97"></a>                <span class="n">boton_7</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_7"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-98"></a>                <span class="n">boton_7</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-99"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_8</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-100"></a>                <span class="n">boton_8</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_8"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-101"></a>                <span class="n">boton_8</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-102"></a>        <span class="k">elif</span> <span class="n">num</span><span class="o">==</span><span class="n">valor_9</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-103"></a>                <span class="n">boton_9</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"tecla_9"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-104"></a>                <span class="n">boton_9</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-105"></a>        <span class="c1">#Se llama al método romper_captcha para obtener el texto correspondiente</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-106"></a>        <span class="n">captcha</span> <span class="o">=</span> <span class="n">romper_captcha</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-107"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-108"></a>                <span class="c1">#Obtenemos la caja de texto donde se escribe el texto del captcha</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-109"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"imagen"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-110"></a>                <span class="c1">#Si el captcha está vacio o no se ha logrado romper se cierra el navegador y se termina la aplicación</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-111"></a>                <span class="k">if</span> <span class="n">captcha</span><span class="o">==</span><span class="s2">""</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-112"></a>                        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-113"></a>                        <span class="k">return</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-114"></a>                <span class="c1">#Escribimos el texto</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-115"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-116"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-117"></a>                <span class="k">pass</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-118"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-119"></a>                <span class="c1">#Obtenemos el botón de consulta</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-120"></a>                <span class="n">boton_consultar</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"bot_consultar"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-121"></a>                <span class="c1">#Damos click al botón de consulta</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-122"></a>                <span class="n">boton_consultar</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-123"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-124"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-125"></a>        <span class="c1">#Obtengo el resultado que aparece en el elemento llamado style2</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-126"></a>        <span class="n">resultado</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">"style2"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-127"></a>        <span class="c1">#Partimos el resultado para obtener el nombre</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-128"></a>        <span class="n">nombre</span> <span class="o">=</span> <span class="n">resultado</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-129"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-130"></a>        <span class="k">return</span> <span class="n">nombre</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-131"></a>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-132"></a><span class="k">def</span> <span class="nf">romper_captcha</span><span class="p">(</span><span class="n">nombre_imagen</span><span class="p">):</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-133"></a>        <span class="c1">#Abro la imagen</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-134"></a>        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">nombre_imagen</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-135"></a>        <span class="c1">#Obtengo un arreglo de píxeles de la imagen</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-136"></a>        <span class="n">pixdata</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-137"></a>        <span class="sd">"""Modifico los píxeles de la imagen de acuerdo al análisis de los</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-138"></a><span class="sd">        colores de las letras y las lineas que cruzan el texto, pintando de negro los píxeles del</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-139"></a><span class="sd">        texto y de blanco las lineas"""</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-140"></a>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-141"></a>                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-142"></a>                        <span class="k">if</span> <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">146</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-143"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-144"></a>        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-145"></a>                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-146"></a>                        <span class="k">if</span> <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>     <span class="o">&gt;</span> <span class="mi">64</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-147"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-148"></a>                        <span class="k">else</span><span class="p">:</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-149"></a>                                <span class="n">pixdata</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-150"></a>        <span class="c1">#Guardo la imagen modificada</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-151"></a>        <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"modificado.jpg"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-152"></a>        <span class="c1">#Abro la imagen modificado</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-153"></a>        <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"modificado.jpg"</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-154"></a>        <span class="c1">#Obtenemos el texto de la imagen</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-155"></a>        <span class="n">frase</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-156"></a>        <span class="c1">#Retornamos el texto eliminado los espacios en blanco entre las palabras y convirtiendolas en mayúsculas</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-157"></a>        <span class="k">return</span> <span class="n">frase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span><span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-158"></a>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-159"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-160"></a>        <span class="n">dni</span> <span class="o">=</span> <span class="s1">'123456789'</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-161"></a>        <span class="k">print</span> <span class="n">ir_reniec_web</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-162"></a>
+<a name="rest_code_8670b8a4417a4f8db42dea6cf169bbfc-163"></a><span class="n">main</span><span class="p">()</span>
 </pre>
 <p>Espero que les sea útil.
 Saludos.</p>
@@ -625,111 +625,111 @@ sunat, esto ha sido un poco mas complejo debido a que la página en
 cuestión usa frames, también hemos mejorado un poquito el problema de
 los tamaños haciendo el recorte a partir del tamaño de la captura de
 pantalla:</p>
-<pre class="code python"><a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-6"></a><span class="k">try</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-7"></a>        <span class="kn">import</span> <span class="nn">Image</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-8"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-9"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-10"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-11"></a>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-12"></a><span class="k">def</span> <span class="nf">ir_sunat_web</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-13"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-14"></a>        <span class="c1">#Fijamos nuestra página objetivo</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-15"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"http://ww1.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-16"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-17"></a>                <span class="c1">#Debido a que la página tiene frames debemos hacer el cambio al frame con nombre "leftFrame"</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-18"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="s2">"leftFrame"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-19"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-20"></a>                <span class="k">return</span> <span class="p">[]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-21"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-22"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-23"></a>                <span class="c1">#Obtenemos los radio buttons que nos permiten seleccionar el tipo de búsqueda a hacer</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-24"></a>                <span class="n">radios</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements_by_name</span><span class="p">(</span><span class="s2">"tQuery"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-25"></a>                <span class="c1">#Seleccionamos la búsqueda por DNI</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-26"></a>                <span class="n">radios</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-27"></a>                <span class="c1">#Obtenemos la caja de texto donde se ingresa el DNI</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-28"></a>                <span class="n">documento</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"search2"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-29"></a>                <span class="c1">#Escribimos el DNI</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-30"></a>                <span class="n">documento</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-31"></a>                <span class="c1">#Esperamos hasta que el texto esté escrito en la caja de texto del DNI</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-32"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">text_to_be_present_in_element_value</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span><span class="s2">"search2"</span><span class="p">),</span><span class="n">dni</span><span class="p">))</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-33"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-34"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-35"></a>                <span class="k">return</span> <span class="p">[]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-36"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-37"></a>                <span class="c1">#Esperamos hasta que se cargue la imagen con el captcha</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-38"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s2">"imagen"</span><span class="p">)))</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-39"></a>                <span class="c1">#Hacemos la captura de pantalla correspondiente</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-40"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.jpg"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-41"></a>                <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.jpg'</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-42"></a>                <span class="c1">#Obtenemos el ancho y el largo de la imagen</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-43"></a>                <span class="n">ancho</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-44"></a>                <span class="n">alto</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-45"></a>                <span class="c1">#Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-46"></a>                <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="n">ancho</span><span class="o">/</span><span class="mf">1.4</span><span class="p">,</span><span class="n">alto</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span><span class="n">ancho</span><span class="o">/</span><span class="mf">1.25</span><span class="p">,</span><span class="n">alto</span><span class="o">/</span><span class="mf">6.9</span><span class="p">))</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-47"></a>                <span class="c1">#Guardamos el recorte</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-48"></a>                <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.jpg"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-49"></a>                <span class="c1">#Obtenemos el texto del captcha</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-50"></a>                <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-51"></a>                <span class="c1">#Obtenemos la caja de texto donde se escribe el texto del captcha</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-52"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"codigo"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-53"></a>                <span class="c1">#Escribimos el texto</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-54"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-55"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-56"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-57"></a>                <span class="k">return</span> <span class="p">[]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-58"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-59"></a>                <span class="c1">#Obtenemos el botón de búsqueda</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-60"></a>                <span class="n">boton</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">"form-button"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-61"></a>                <span class="c1">#Damos click al botón de búsqueda</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-62"></a>                <span class="n">boton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-63"></a>                <span class="c1">#Cambiamos al frame por defecto</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-64"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_default_content</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-65"></a>                <span class="c1">#Cambiamos al frame llamado "mainFrame" que contiene la tabla de resultados con un enlace conteniendo el ruc</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-66"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="s2">"mainFrame"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-67"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-68"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-69"></a>                <span class="k">return</span> <span class="p">[]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-70"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-71"></a>                <span class="c1">#Esperamos que se cargue la tabla de resultados</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-72"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s2">"form-table"</span><span class="p">)))</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-73"></a>                <span class="c1">#Obtenemos el enlace que contiene al RUC</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-74"></a>                <span class="n">enlace</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span><span class="s2">"a"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-75"></a>                <span class="c1">#Le damos click al enlace</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-76"></a>                <span class="n">enlace</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-77"></a>                <span class="c1">#Ahora si tenemos una tabla que contiene el detalle de los resultados del RUC consultado</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-78"></a>                <span class="c1">#Obtenemos todas las filas</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-79"></a>                <span class="n">trs</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"tr"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-80"></a>                <span class="c1">#Obtenemos las celdas de la primera fila</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-81"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-82"></a>                <span class="c1">#A la segunda celda la partimos ya que tiene el ruc y la razón social separados por un guión</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-83"></a>                <span class="n">primera_linea</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-84"></a>                <span class="n">ruc</span> <span class="o">=</span> <span class="n">primera_linea</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-85"></a>                <span class="n">razon_social</span> <span class="o">=</span> <span class="n">primera_linea</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-86"></a>                <span class="c1">#Obtenemos la segunda linea que tiene el tipo de contribuyente</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-87"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-88"></a>                <span class="n">tipo_contribuyente</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-89"></a>                <span class="c1">#Obtenemos la dirección</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-90"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-91"></a>                <span class="n">direccion</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-92"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-93"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-94"></a>                <span class="k">return</span> <span class="p">[]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-95"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-96"></a>        <span class="c1">#Devolvemos una lista con los resultados.</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-97"></a>        <span class="n">datos</span> <span class="o">=</span> <span class="p">[</span><span class="n">ruc</span><span class="p">,</span><span class="n">razon_social</span><span class="p">,</span><span class="n">tipo_contribuyente</span><span class="p">,</span><span class="n">direccion</span><span class="p">]</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-98"></a>        <span class="k">return</span> <span class="n">datos</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-99"></a>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-100"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-101"></a>        <span class="c1">#Ingresar DNI</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-102"></a>        <span class="n">dni</span> <span class="o">=</span> <span class="s1">'12345678'</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-103"></a>        <span class="k">print</span> <span class="n">ir_sunat_web</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-104"></a>
-<a name="rest_code_62d1a7ef8ee640b4944d69a0ae6c25ec-105"></a><span class="n">main</span><span class="p">()</span>
+<pre class="code python"><a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-6"></a><span class="k">try</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-7"></a>        <span class="kn">import</span> <span class="nn">Image</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-8"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-9"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-10"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-11"></a>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-12"></a><span class="k">def</span> <span class="nf">ir_sunat_web</span><span class="p">(</span><span class="n">dni</span><span class="p">):</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-13"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-14"></a>        <span class="c1">#Fijamos nuestra página objetivo</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-15"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"http://ww1.sunat.gob.pe/cl-ti-itmrconsruc/jcrS00Alias"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-16"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-17"></a>                <span class="c1">#Debido a que la página tiene frames debemos hacer el cambio al frame con nombre "leftFrame"</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-18"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="s2">"leftFrame"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-19"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-20"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-21"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-22"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-23"></a>                <span class="c1">#Obtenemos los radio buttons que nos permiten seleccionar el tipo de búsqueda a hacer</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-24"></a>                <span class="n">radios</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements_by_name</span><span class="p">(</span><span class="s2">"tQuery"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-25"></a>                <span class="c1">#Seleccionamos la búsqueda por DNI</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-26"></a>                <span class="n">radios</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-27"></a>                <span class="c1">#Obtenemos la caja de texto donde se ingresa el DNI</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-28"></a>                <span class="n">documento</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"search2"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-29"></a>                <span class="c1">#Escribimos el DNI</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-30"></a>                <span class="n">documento</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-31"></a>                <span class="c1">#Esperamos hasta que el texto esté escrito en la caja de texto del DNI</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-32"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">text_to_be_present_in_element_value</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span><span class="s2">"search2"</span><span class="p">),</span><span class="n">dni</span><span class="p">))</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-33"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-34"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-35"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-36"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-37"></a>                <span class="c1">#Esperamos hasta que se cargue la imagen con el captcha</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-38"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s2">"imagen"</span><span class="p">)))</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-39"></a>                <span class="c1">#Hacemos la captura de pantalla correspondiente</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-40"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.jpg"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-41"></a>                <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.jpg'</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-42"></a>                <span class="c1">#Obtenemos el ancho y el largo de la imagen</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-43"></a>                <span class="n">ancho</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-44"></a>                <span class="n">alto</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-45"></a>                <span class="c1">#Recortamos la parte del captcha teniendo en cuenta el ancho y el largo de la imagen</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-46"></a>                <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="n">ancho</span><span class="o">/</span><span class="mf">1.4</span><span class="p">,</span><span class="n">alto</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span><span class="n">ancho</span><span class="o">/</span><span class="mf">1.25</span><span class="p">,</span><span class="n">alto</span><span class="o">/</span><span class="mf">6.9</span><span class="p">))</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-47"></a>                <span class="c1">#Guardamos el recorte</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-48"></a>                <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.jpg"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-49"></a>                <span class="c1">#Obtenemos el texto del captcha</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-50"></a>                <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-51"></a>                <span class="c1">#Obtenemos la caja de texto donde se escribe el texto del captcha</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-52"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"codigo"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-53"></a>                <span class="c1">#Escribimos el texto</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-54"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-55"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-56"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-57"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-58"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-59"></a>                <span class="c1">#Obtenemos el botón de búsqueda</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-60"></a>                <span class="n">boton</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_class_name</span><span class="p">(</span><span class="s2">"form-button"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-61"></a>                <span class="c1">#Damos click al botón de búsqueda</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-62"></a>                <span class="n">boton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-63"></a>                <span class="c1">#Cambiamos al frame por defecto</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-64"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_default_content</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-65"></a>                <span class="c1">#Cambiamos al frame llamado "mainFrame" que contiene la tabla de resultados con un enlace conteniendo el ruc</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-66"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">switch_to_frame</span><span class="p">(</span><span class="s2">"mainFrame"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-67"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-68"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-69"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-70"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-71"></a>                <span class="c1">#Esperamos que se cargue la tabla de resultados</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-72"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s2">"form-table"</span><span class="p">)))</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-73"></a>                <span class="c1">#Obtenemos el enlace que contiene al RUC</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-74"></a>                <span class="n">enlace</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span><span class="s2">"a"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-75"></a>                <span class="c1">#Le damos click al enlace</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-76"></a>                <span class="n">enlace</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-77"></a>                <span class="c1">#Ahora si tenemos una tabla que contiene el detalle de los resultados del RUC consultado</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-78"></a>                <span class="c1">#Obtenemos todas las filas</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-79"></a>                <span class="n">trs</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"tr"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-80"></a>                <span class="c1">#Obtenemos las celdas de la primera fila</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-81"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-82"></a>                <span class="c1">#A la segunda celda la partimos ya que tiene el ruc y la razón social separados por un guión</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-83"></a>                <span class="n">primera_linea</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'-'</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-84"></a>                <span class="n">ruc</span> <span class="o">=</span> <span class="n">primera_linea</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-85"></a>                <span class="n">razon_social</span> <span class="o">=</span> <span class="n">primera_linea</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-86"></a>                <span class="c1">#Obtenemos la segunda linea que tiene el tipo de contribuyente</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-87"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-88"></a>                <span class="n">tipo_contribuyente</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-89"></a>                <span class="c1">#Obtenemos la dirección</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-90"></a>                <span class="n">tds</span> <span class="o">=</span> <span class="n">trs</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">find_elements</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s2">"td"</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-91"></a>                <span class="n">direccion</span> <span class="o">=</span> <span class="n">tds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-92"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-93"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-94"></a>                <span class="k">return</span> <span class="p">[]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-95"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-96"></a>        <span class="c1">#Devolvemos una lista con los resultados.</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-97"></a>        <span class="n">datos</span> <span class="o">=</span> <span class="p">[</span><span class="n">ruc</span><span class="p">,</span><span class="n">razon_social</span><span class="p">,</span><span class="n">tipo_contribuyente</span><span class="p">,</span><span class="n">direccion</span><span class="p">]</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-98"></a>        <span class="k">return</span> <span class="n">datos</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-99"></a>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-100"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-101"></a>        <span class="c1">#Ingresar DNI</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-102"></a>        <span class="n">dni</span> <span class="o">=</span> <span class="s1">'12345678'</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-103"></a>        <span class="k">print</span> <span class="n">ir_sunat_web</span><span class="p">(</span><span class="n">dni</span><span class="p">)</span>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-104"></a>
+<a name="rest_code_4785e0c14ac64b34a65e2d36f942100e-105"></a><span class="n">main</span><span class="p">()</span>
 </pre>
 <iframe width="459" height="344" src="https://www.youtube.com/embed/ijICFYtAuDE?feature=oembed" frameborder="0" allowfullscreen></iframe><p>Esperamos que les sea útil.
 Saludos.</p>
