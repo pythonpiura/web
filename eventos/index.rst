@@ -6,3 +6,7 @@
 .. link: 
 .. description: 
 .. type: text
+
+* `Primer PyDay en Piura`_
+	.. _`Primer PyDay en Piura`: /primer-pyday-en-piura
+
