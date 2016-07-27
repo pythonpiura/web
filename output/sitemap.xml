@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://pythonpiura.org/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2016-07-27T22:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/2014/</loc>
@@ -192,6 +192,10 @@
  <url>
   <loc>http://pythonpiura.org/posts/migrando-de-wordpress-a-nikola/</loc>
   <lastmod>2016-07-25T15:37:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/primer-pyday-en-piura/</loc>
+  <lastmod>2016-07-27T22:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/recursos/</loc>
