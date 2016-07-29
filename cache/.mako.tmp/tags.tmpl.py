@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1469812392.9999888
+_modified_time = 1469815827.835605
 _enable_loop = True
 _template_filename = '/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/tags.tmpl'
 _template_uri = 'tags.tmpl'
@@ -30,13 +30,13 @@ def render_body(context,**pageargs):
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         hidden_tags = context.get('hidden_tags', UNDEFINED)
         cat_items = context.get('cat_items', UNDEFINED)
-        cat_hierarchy = context.get('cat_hierarchy', UNDEFINED)
+        items = context.get('items', UNDEFINED)
         len = context.get('len', UNDEFINED)
         messages = context.get('messages', UNDEFINED)
-        items = context.get('items', UNDEFINED)
+        title = context.get('title', UNDEFINED)
+        cat_hierarchy = context.get('cat_hierarchy', UNDEFINED)
         def content():
             return render_content(context._locals(__M_locals))
-        title = context.get('title', UNDEFINED)
         range = context.get('range', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n\n')
@@ -55,13 +55,13 @@ def render_content(context,**pageargs):
     try:
         hidden_tags = context.get('hidden_tags', UNDEFINED)
         cat_items = context.get('cat_items', UNDEFINED)
-        cat_hierarchy = context.get('cat_hierarchy', UNDEFINED)
+        items = context.get('items', UNDEFINED)
         len = context.get('len', UNDEFINED)
         messages = context.get('messages', UNDEFINED)
-        items = context.get('items', UNDEFINED)
+        title = context.get('title', UNDEFINED)
+        cat_hierarchy = context.get('cat_hierarchy', UNDEFINED)
         def content():
             return render_content(context)
-        title = context.get('title', UNDEFINED)
         range = context.get('range', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<h1>')
@@ -107,6 +107,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"filename": "/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/tags.tmpl", "source_encoding": "utf-8", "line_map": {"67": 4, "68": 5, "69": 5, "70": 6, "71": 7, "72": 8, "73": 8, "74": 8, "75": 10, "76": 11, "77": 12, "78": 14, "79": 14, "80": 14, "81": 14, "82": 14, "83": 15, "84": 16, "85": 18, "86": 19, "87": 20, "88": 21, "89": 25, "90": 26, "27": 0, "92": 26, "93": 29, "94": 30, "95": 31, "96": 32, "97": 33, "98": 33, "91": 26, "100": 33, "101": 33, "102": 36, "42": 2, "108": 102, "47": 38, "99": 33, "53": 4}, "uri": "tags.tmpl"}
+{"uri": "tags.tmpl", "filename": "/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/tags.tmpl", "line_map": {"67": 4, "68": 5, "69": 5, "70": 6, "71": 7, "72": 8, "73": 8, "74": 8, "75": 10, "76": 11, "77": 12, "78": 14, "79": 14, "80": 14, "81": 14, "82": 14, "83": 15, "84": 16, "85": 18, "86": 19, "87": 20, "88": 21, "89": 25, "90": 26, "27": 0, "92": 26, "93": 29, "94": 30, "95": 31, "96": 32, "97": 33, "98": 33, "91": 26, "100": 33, "101": 33, "102": 36, "42": 2, "108": 102, "47": 38, "99": 33, "53": 4}, "source_encoding": "utf-8"}
 __M_END_METADATA
 """
