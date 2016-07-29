@@ -105,6 +105,10 @@ Organizadores
    :alt: alternate text
    :target: `pythonpiura`_
 
+.. raw:: html
+
+	<br>
+
 
 Auspiciadores
 -------------
