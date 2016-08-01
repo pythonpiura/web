@@ -92,40 +92,21 @@ Debes tener en cuenta que:
 Organizadores
 -------------
 
-.. image:: /images/pyday/logo-noggalito.png
-   :align: left
+.. image:: /images/pyday/organizadores.png
+   :align: center
    :height: 200 px
-   :width: 200 px
-   :alt: alternate text
-   :target: `noggalito`_
-.. image:: /images/cabecera_circulo.jpg
-   :align: right
-   :height: 200 px
-   :width: 550 px
-   :alt: alternate text
-   :target: `pythonpiura`_
-
+   :width: 600 px
+   :alt: Organizadores   
 
 Auspiciadores
 -------------
-
-.. raw:: html
-
-  <div class="row" style="margin-top: 50px;">
-    <div class="col-md-4">
 
 .. image:: /images/pyday/logounp.png
    :align: center
    :height: 200 px
    :width: 200 px
-   :alt: alternate text
-   :target: `unp`_
+   :alt: Auspiciadores
 
 .. _noggalito: http://noggalito.com/
 .. _pythonpiura: http://pythonpiura.org/
 .. _unp: http://www.unp.edu.pe
-
-.. raw:: html
-  
-  </div>
-     </div>
