@@ -133,7 +133,8 @@ NAVIGATION_LINKS = {
     DEFAULT_LANG: (
         ('/blog', 'Blog'),
         ('/eventos', 'Eventos'),
-        ('/recursos', 'Recursos'),        
+        ('/recursos', 'Recursos'),
+        ('/contactenos', 'Contáctenos'),        
         )
 }
 

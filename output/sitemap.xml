@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://pythonpiura.org/</loc>
-  <lastmod>2016-07-27T22:40:00Z</lastmod>
+  <lastmod>2016-08-01T22:23:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/2014/</loc>
@@ -23,7 +23,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2016-08-01T21:20:00Z</lastmod>
+  <lastmod>2016-08-01T22:23:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -31,11 +31,11 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-1.html</loc>
-  <lastmod>2016-08-01T21:20:00Z</lastmod>
+  <lastmod>2016-08-01T22:23:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-2.html</loc>
-  <lastmod>2016-08-01T21:20:00Z</lastmod>
+  <lastmod>2016-08-01T22:23:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
@@ -76,6 +76,10 @@
  <url>
   <loc>http://pythonpiura.org/categories/selenium/</loc>
   <lastmod>2016-07-25T15:37:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/contactenos/</loc>
+  <lastmod>2016-08-01T22:23:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/eventos/</loc>
@@ -199,6 +203,6 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/recursos/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2016-08-01T22:33:00Z</lastmod>
  </url>
 </urlset>
