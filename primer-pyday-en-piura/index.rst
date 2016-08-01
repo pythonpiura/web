@@ -105,13 +105,14 @@ Organizadores
    :alt: alternate text
    :target: `pythonpiura`_
 
-.. raw:: html
-
-	<br>
-
 
 Auspiciadores
 -------------
+
+.. raw:: html
+
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-md-4">
 
 .. image:: /images/pyday/logounp.png
    :align: center
@@ -123,3 +124,8 @@ Auspiciadores
 .. _noggalito: http://noggalito.com/
 .. _pythonpiura: http://pythonpiura.org/
 .. _unp: http://www.unp.edu.pe
+
+.. raw:: html
+  
+  </div>
+     </div>
