@@ -17,7 +17,7 @@ import time
 
 
 # Data about this site
-BLOG_AUTHOR = "Miguel Amaya"  # (translatable)
+BLOG_AUTHOR = "Comunidad Python Piura"  # (translatable)
 BLOG_TITLE = "Python Piura"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
@@ -25,7 +25,7 @@ SITE_URL = "http://pythonpiura.org/"
 # This is the URL where Nikola's output will be deployed.
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://example.com/"
-BLOG_EMAIL = "ythonpiura@openmailbox.org"
+BLOG_EMAIL = "pythonpiura@openmailbox.org"
 BLOG_DESCRIPTION = "Comunidad Python Piura"  # (translatable)
 
 # Nikola is multilingual!
@@ -83,7 +83,7 @@ BLOG_DESCRIPTION = "Comunidad Python Piura"  # (translatable)
 # in the default language will be shown instead.
 
 # What is the default language?
-DEFAULT_LANG = "en"
+DEFAULT_LANG = "es"
 
 # What other languages do you have?
 # The format is {"translationcode" : "path/to/translation" }
