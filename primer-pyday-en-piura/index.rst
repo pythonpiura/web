@@ -32,13 +32,22 @@ Ponentes
 	</p>
        </div>
 
-       <div class="col-md-4">
+  <div class="col-md-4">
 	 <p style="text-align: center"><img class="img-circle" src="/images/pyday/diego-saavedra.png"/></p>
 	 <h2 style="text-align: center">Diego Saavedra</h2>
 	 <p style="text-align: center">
 	 	<a href="http://www.aprendizajelibre.org/">Aprendizaje Libre</a><br>
 	<strong>Desarrollo de Videojuegos con Python.</strong>
 	 </p>
+       </div>   
+
+  <div class="col-md-4">
+   <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-cumpa.jpg"/></p>
+   <h2 style="text-align: center">Miguel Cumpa Ascuña</h2>
+   <p style="text-align: center">
+    <a href="http://mozilla.pe/">Mozilla Perú</a><br>
+  <strong>Django y Python para Todos.</strong>
+   </p>
        </div>
    </div>
 
