@@ -94,8 +94,6 @@ Organizadores
 
 .. image:: /images/pyday/organizadores.png
    :align: center
-   :height: 200 px
-   :width: 100%
    :alt: Organizadores   
 
 Auspiciadores
