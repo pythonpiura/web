@@ -42,7 +42,7 @@ Ponentes
        </div>   
 
   <div class="col-md-4">
-   <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-cumpa.jpg"/></p>
+   <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-cumpa.png"/></p>
    <h2 style="text-align: center">Miguel Cumpa Ascuña</h2>
    <p style="text-align: center">
     <a href="http://mozilla.pe/">Mozilla Perú</a><br>
