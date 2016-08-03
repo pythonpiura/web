@@ -51,6 +51,19 @@ Ponentes
        </div>
    </div>
 
+   <div class="row" style="margin-top: 50px;">
+       <div class="col-md-4">
+       </div> 
+       <div class="col-md-4">
+   <p style="text-align: center"><img class="img-circle" src="/images/pyday/rolando-herrera.png"/></p>
+   <h2 style="text-align: center">Rolando Herrera Matos</h2>
+   <p style="text-align: center">
+     <a href="http://www.apesol.org.pe/">APESOL</a><br>   
+  <strong>Python + Django Experiencias Cocinando Rápido y Caliente</strong>
+  </p>
+       </div>
+  </div>
+
    <br/>
 
 ¿Dónde y cuándo?
