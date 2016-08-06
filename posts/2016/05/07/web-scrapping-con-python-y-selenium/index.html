@@ -15,7 +15,9 @@
 <meta property="og:site_name" content="Python Piura">
 <meta property="og:title" content="Web Scrapping con Python y Selenium">
 <meta property="og:url" content="http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/">
-<meta property="og:description" content="El día de hoy tuvimos el agrado de ser invitados por el Círculo UEL a dar una charla en el marco del FLISOL 2016 en la Universidad Los Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Py">
+<meta property="og:description" content="El día de hoy tuvimos el agrado de ser invitados por el Círculo UEL
+a dar una charla en el marco del FLISOL 2016 en la Universidad Los
+Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Py">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-05-07T20:58:06-05:00">
 <meta property="article:tag" content="pillow">
@@ -62,7 +64,7 @@
 </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-    <a href="index.src.html" id="sourcelink">Código fuente</a>
+    <a href="index.rst" id="sourcelink">Código fuente</a>
     </li>
 
                 
@@ -85,76 +87,88 @@
             </span></p>
             <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-05-07T20:58:06-05:00" itemprop="datePublished" title="2016-05-07 20:58">2016-05-07 20:58</time></a></p>
             
-        <p class="sourceline"><a href="index.src.html" id="sourcelink">Código fuente</a></p>
+        <p class="sourceline"><a href="index.rst" id="sourcelink">Código fuente</a></p>
 
         </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <p style="text-align:justify;">El día de hoy tuvimos el agrado de ser invitados por el <a href="https://cideuel.wordpress.com/">Círculo UEL</a> a dar una charla en el marco del FLISOL 2016 en la Universidad Los Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Python y Selenium, hicimos algunos ejemplos muy interesantes y nos encantó la acogida del público y el interés suscitado, vamos a compartir los artículos que usamos:</p>
-<p style="text-align:justify;"><a href="https://pythonpiura.wordpress.com/2014/09/18/selenium-con-python/">Selenium con Python</a></p>
-<p style="text-align:justify;"><a href="https://pythonpiura.wordpress.com/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">Romper Captchas con Pytesseract y Selenium</a></p>
-<p style="text-align:justify;">Las diapositivas:</p>
-<p style="text-align:justify;"><a href="../../../../../2016/05/charlapythonflisol2016.pdf">Descargar</a></p>
+    <div>
+<p>El día de hoy tuvimos el agrado de ser invitados por el <a class="reference external" href="https://cideuel.wordpress.com/">Círculo UEL</a>
+a dar una charla en el marco del FLISOL 2016 en la Universidad Los
+Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Python
+y Selenium, hicimos algunos ejemplos muy interesantes y nos encantó la
+acogida del público y el interés suscitado, vamos a compartir los
+artículos que usamos:</p>
+<p><a class="reference external" href="https://pythonpiura.wordpress.com/2014/09/18/selenium-con-python/">Selenium con Python</a></p>
+<p><a class="reference external" href="https://pythonpiura.wordpress.com/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">Romper Captchas con Pytesseract y Selenium</a></p>
+<p>Las diapositivas:</p>
+<p><a class="reference external" href="../../../../../recursos/charlapythonflisol2016.pdf">Descargar</a></p>
 <p>El script que fue la estrella de la mañana:</p>
-<p>[sourcecode language="python"]<br>
-# -*- coding: utf-8 -*-<br>
-from selenium import webdriver<br>
-from selenium.webdriver.common.by import By<br>
-from selenium.webdriver.support.wait import WebDriverWait<br>
-from selenium.webdriver.support import expected_conditions as EC<br>
-import os</p>
-<p>try:<br>
-    import Image<br>
-except ImportError:<br>
-    from PIL import Image<br>
-import pytesseract</p>
-<p>def decodifica_campo(campo):<br>
-	return u"%s" % campo</p>
-<p>def ir_sunat_web(ruta):<br>
-	fp = webdriver.FirefoxProfile()<br>
-	fp.set_preference("browser.download.manager.showWhenStarting",False)<br>
-	fp.set_preference("browser.download.manager.closeWhenDone", True);<br>
-	fp.set_preference("browser.download.manager.showAlertOnComplete", False);<br>
-	fp.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/zip");<br>
-	driver = webdriver.Firefox(fp)<br>
-	driver.get("http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias")<br>
-	try:<br>
-		WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "imagen")))<br>
-	except:<br>
-		print "No carga imagen"<br>
-	driver.save_screenshot("screenshot.png")<br>
-	img=Image.open(‘screenshot.png’)<br>
-	img_recortada = img.crop((700,309,800,361))<br>
-	img_recortada.save("recorte.png")<br>
-        try:<br>
-            captcha = pytesseract.image_to_string(img_recortada)<br>
-            codigo = driver.find_element_by_name("codigoA")<br>
-            codigo.send_keys(captcha)<br>
-        except:<br>
-            pass<br>
-	archivo = driver.find_element_by_name("archivo")<br>
-	archivo.send_keys(ruta)<br>
-	form = driver.find_element_by_name("frmConsMulRucArchivo")<br>
-	botones=form.find_elements_by_class_name("form-button")<br>
-	botones[1].click()<br>
-	try:<br>
-		WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "form-table")))<br>
-		enlace=driver.find_element(By.TAG_NAME,"a")<br>
-		enlace.click()<br>
-	except:<br>
-		print "Element is not present"<br>
-	driver.close()</p>
-<p>def main():<br>
-	ruta = "/home/usuario/carpeta"<br>
-	ruta_archivo=os.path.join(ruta,"rucs.zip")<br>
-	ir_sunat_web(ruta_archivo)</p>
-<p>main()<br>
-[/sourcecode]</p>
+<pre class="code python"><a name="rest_code_927ded3618d14e56acf56703e4accbba-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-6"></a><span class="kn">import</span> <span class="nn">os</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-7"></a>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-8"></a><span class="k">try</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-9"></a>        <span class="kn">import</span> <span class="nn">Image</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-10"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-11"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-12"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-13"></a>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-14"></a><span class="k">def</span> <span class="nf">decodifica_campo</span><span class="p">(</span><span class="n">campo</span><span class="p">):</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-15"></a>        <span class="k">return</span> <span class="s2">u"</span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">campo</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-16"></a>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-17"></a><span class="k">def</span> <span class="nf">ir_sunat_web</span><span class="p">(</span><span class="n">ruta</span><span class="p">):</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-18"></a>        <span class="n">fp</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-19"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.download.manager.showWhenStarting"</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-20"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.download.manager.closeWhenDone"</span><span class="p">,</span> <span class="bp">True</span><span class="p">);</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-21"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.download.manager.showAlertOnComplete"</span><span class="p">,</span> <span class="bp">False</span><span class="p">);</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-22"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.helperApps.neverAsk.saveToDisk"</span><span class="p">,</span> <span class="s2">"application/zip"</span><span class="p">);</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-23"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-24"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-25"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-26"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s2">"imagen"</span><span class="p">)))</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-27"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-28"></a>                <span class="k">print</span> <span class="s2">"No carga imagen"</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-29"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.png"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-30"></a>        <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.png'</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-31"></a>        <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">700</span><span class="p">,</span><span class="mi">309</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">361</span><span class="p">))</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-32"></a>        <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-33"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-34"></a>                <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-35"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"codigoA"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-36"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-37"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-38"></a>                <span class="k">pass</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-39"></a>        <span class="n">archivo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"archivo"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-40"></a>        <span class="n">archivo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-41"></a>        <span class="n">form</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"frmConsMulRucArchivo"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-42"></a>        <span class="n">botones</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="s2">"form-button"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-43"></a>        <span class="n">botones</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-44"></a>        <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-45"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_all_elements_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s2">"form-table"</span><span class="p">)))</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-46"></a>                <span class="n">enlace</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span><span class="s2">"a"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-47"></a>                <span class="n">enlace</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-48"></a>        <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-49"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-50"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-51"></a>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-52"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-53"></a>        <span class="n">ruta</span> <span class="o">=</span> <span class="s2">"/home/usuario/carpeta"</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-54"></a>        <span class="n">ruta_archivo</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="s2">"rucs.zip"</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-55"></a>        <span class="n">ir_sunat_web</span><span class="p">(</span><span class="n">ruta_archivo</span><span class="p">)</span>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-56"></a>
+<a name="rest_code_927ded3618d14e56acf56703e4accbba-57"></a><span class="n">main</span><span class="p">()</span>
+</pre>
 <p>Así como también un vídeo de su funcionamiento.</p>
-<p>http://www.youtube.com/watch?v=mUaVFYTlibM</p>
+<div class="youtube-video">
+<iframe width="425" height="344" src="https://www.youtube.com/embed/mUaVFYTlibM?rel=0&amp;hd=1&amp;wmode=transparent"></iframe>
+</div>
 <p>Saludos y muchas gracias.</p>
-
+</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../../../../categories/pillow/" rel="tag">pillow</a></li>
