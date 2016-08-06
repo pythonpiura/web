@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Python Piura (Django)</title><link>http://pythonpiura.org/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://pythonpiura.org/categories/django.xml"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 17:02:47 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Python Piura (Django)</title><link>http://pythonpiura.org/</link><description></description><atom:link type="application/rss+xml" href="http://pythonpiura.org/categories/django.xml" rel="self"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 17:24:28 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
 bastante olvidado estos últimos días y haremos un reporte en pdf
 utilizando la librería &lt;a class="reference external" href="http://www.reportlab.com/"&gt;reportlab&lt;/a&gt;, para ello la instalamos:&lt;/p&gt;
 &lt;pre class="code bash"&gt;&lt;a name="rest_code_13527231d4a5419c93ddc7424ecc9a31-1"&gt;&lt;/a&gt;pip install reportlab
@@ -958,120 +958,127 @@ ser un conjunto de dígitos:&lt;/p&gt;
 siguiente:&lt;/p&gt;
 &lt;img alt="/images/blog/detalle_persona.jpg" src="http://pythonpiura.org/images/blog/detalle_persona.jpg"&gt;
 &lt;p&gt;Eso es todo.&lt;/p&gt;
-&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/</guid><pubDate>Fri, 22 Apr 2016 01:48:56 GMT</pubDate></item><item><title>Uso de TemplateView</title><link>http://pythonpiura.org/posts/2016/04/20/templateview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Vamos a trabajar con TemplateView para hacer una vista basada en clases, algo que ya hemos utilizado antes y que es bastante fácil de programar, para ello seguiremos con nuestro proyecto tutorial, primero le vamos a hacer unas pequeñas modificaciones para que se adapte a lo que necesitamos.&lt;br&gt;
-Editamos el archivo base.html para agregar un pequeño menú en la parte superior de la pantalla:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% load staticfiles %}&lt;br&gt;
-&amp;lt;!DOCTYPE html&amp;gt;&lt;br&gt;
-&amp;lt;html&amp;gt;&lt;br&gt;
-	&amp;lt;head&amp;gt;&lt;br&gt;
-		&amp;lt;meta charset="utf-8"&amp;gt;&lt;br&gt;
-	    &amp;lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&amp;gt;&lt;br&gt;
-	    &amp;lt;meta name="viewport" content="width=device-width, initial-scale=1"&amp;gt;&lt;br&gt;
-	    &amp;lt;meta name="description" content=""&amp;gt;&lt;br&gt;
-	    &amp;lt;meta name="author" content=""&amp;gt;&lt;br&gt;
-		&amp;lt;title&amp;gt;Ejemplo Círculo de Programadores de Python Piura&amp;lt;/title&amp;gt;&lt;br&gt;
-		&amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&amp;gt;&lt;br&gt;
-		&amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&amp;gt;&lt;br&gt;
-		&amp;lt;script src="{% static "js/jquery.js" %}"&amp;gt;&amp;lt;/script&amp;gt;&lt;br&gt;
-	    &amp;lt;script src="{% static "js/bootstrap.min.js" %}"&amp;gt;&amp;lt;/script&amp;gt;&lt;br&gt;
-	    &amp;lt;script src="{% static "js/jquery.dataTables.min.js" %}"&amp;gt;&amp;lt;/script&amp;gt;&lt;br&gt;
-	&amp;lt;/head&amp;gt;&lt;br&gt;
-	&amp;lt;body&amp;gt;&lt;br&gt;
-		&amp;lt;div id="wrapper"&amp;gt;&lt;br&gt;
-			&amp;lt;nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"&amp;gt;&lt;br&gt;
-				&amp;lt;div class="navbar-header"&amp;gt;&lt;br&gt;
-			        &amp;lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="sr-only"&amp;gt;Desplegar navegación&amp;lt;/span&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			        &amp;lt;/button&amp;gt;&lt;br&gt;
-			        &amp;lt;a class="navbar-brand" href="#"&amp;gt;&lt;br&gt;
-						&amp;lt;span class="glyphicon glyphicon-home"&amp;gt;&amp;lt;/span&amp;gt; Inicio&lt;br&gt;
-					&amp;lt;/a&amp;gt;&lt;br&gt;
-					&amp;lt;a class="navbar-brand" href="#"&amp;gt;&lt;br&gt;
-						&amp;lt;span class="glyphicon glyphicon-user"&amp;gt;&amp;lt;/span&amp;gt; Personas&lt;br&gt;
-					&amp;lt;/a&amp;gt;&lt;br&gt;
-			    &amp;lt;/div&amp;gt;&lt;br&gt;
-				{% block menu %}&lt;br&gt;
-		        {% endblock menu %}&lt;br&gt;
-		    &amp;lt;/nav&amp;gt;&lt;br&gt;
-			&amp;lt;div id="page-wrapper"&amp;gt;&lt;br&gt;
-				&amp;lt;div class="container-fluid"&amp;gt;&lt;br&gt;
-					{% block cuerpo %}&lt;br&gt;
-					{% endblock cuerpo %}&lt;br&gt;
-				&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-		&amp;lt;/div&amp;gt;&lt;br&gt;
-	&amp;lt;/body&amp;gt;&lt;br&gt;
-	{% block js %}&lt;br&gt;
-	{% endblock js %}&lt;br&gt;
-&amp;lt;/html&amp;gt;&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Tendremos algo como esto:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/menu.jpg"&gt;&lt;img class="wp-image-165 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/menu.jpg?w=300" alt="menu" width="600" height="48"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Creamos un archivo llamado bienvenida.html para poner un aviso de bienvenida y de esta manera no ingresar directamente a nuestra tabla de personas, para ello debemos crear una vista usando TemplateView y agregar el url correspondiente:&lt;/p&gt;
+&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/</guid><pubDate>Fri, 22 Apr 2016 01:48:56 GMT</pubDate></item><item><title>Uso de TemplateView</title><link>http://pythonpiura.org/posts/2016/04/20/templateview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a trabajar con TemplateView para hacer una vista basada en
+clases, algo que ya hemos utilizado antes y que es bastante fácil de
+programar, para ello seguiremos con nuestro proyecto tutorial, primero
+le vamos a hacer unas pequeñas modificaciones para que se adapte a lo
+que necesitamos.
+Editamos el archivo base.html para agregar un pequeño menú en la parte
+superior de la pantalla:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-1"&gt;&lt;/a&gt;{% load staticfiles %}
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-2"&gt;&lt;/a&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"utf-8"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-6"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;http-equiv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"X-UA-Compatible"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"IE=edge"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-7"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"viewport"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"width=device-width, initial-scale=1"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-8"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"description"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-9"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"author"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-10"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Ejemplo Círculo de Programadores de Python Piura&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-11"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt; &lt;span class="na"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"stylesheet"&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/css"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'css/bootstrap.min.css' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-12"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt; &lt;span class="na"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"stylesheet"&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/css"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'css/jquery.dataTables.min.css'  %}"&lt;/span&gt;  &lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-13"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'js/jquery.js' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-14"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'js/bootstrap.min.js' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-15"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'js/jquery.dataTables.min.js' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-16"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-17"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-18"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"wrapper"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-19"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;nav&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar navbar-default navbar-static-top"&lt;/span&gt; &lt;span class="na"&gt;role&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navigation"&lt;/span&gt; &lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"margin-bottom: 0"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-20"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-header"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-21"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"button"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-toggle"&lt;/span&gt; &lt;span class="na"&gt;data-toggle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"collapse"&lt;/span&gt; &lt;span class="na"&gt;data-target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;".navbar-collapse"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-22"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"sr-only"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Desplegar navegación&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-23"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"icon-bar"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-24"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"icon-bar"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-25"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"icon-bar"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-26"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-27"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-brand"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"#"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-28"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-home"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; Inicio
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-29"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-30"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-brand"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"#"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-31"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-user"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; Personas
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-32"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-33"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-34"&gt;&lt;/a&gt;                {% block menu %}
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-35"&gt;&lt;/a&gt;                {% endblock menu %}
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-36"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;nav&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-37"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"page-wrapper"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-38"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"container-fluid"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-39"&gt;&lt;/a&gt;                    {% block cuerpo %}
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-40"&gt;&lt;/a&gt;                    {% endblock cuerpo %}
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-41"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-42"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-43"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-44"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-45"&gt;&lt;/a&gt;    {% block js %}
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-46"&gt;&lt;/a&gt;    {% endblock js %}
+&lt;a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-47"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Tendremos algo como esto:&lt;/p&gt;
+&lt;img alt="/images/blog/menu.jpg" src="http://pythonpiura.org/images/blog/menu.jpg"&gt;
+&lt;p&gt;Creamos un archivo llamado bienvenida.html para poner un aviso de
+bienvenida y de esta manera no ingresar directamente a nuestra tabla
+de personas, para ello debemos crear una vista usando TemplateView y
+agregar el url correspondiente:&lt;/p&gt;
 &lt;p&gt;bienvenida.html&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% extends "base.html" %}&lt;br&gt;
-{% block cuerpo %}&lt;br&gt;
-&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-    &amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-        &amp;lt;h1 class="page-header"&amp;gt;Círculo de Programadores de Python Piura&amp;lt;/h1&amp;gt;&lt;br&gt;
-    &amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-	&amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-		&amp;lt;div class="panel panel-info"&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-heading"&amp;gt;&lt;br&gt;
-			    Bienvenido&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-body"&amp;gt;&lt;br&gt;
-				&amp;lt;div class=’form-group’&amp;gt;&lt;br&gt;
-					&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-						&amp;lt;h3 class="text-center"&amp;gt;Bienvenido.&amp;lt;/h3&amp;gt;&lt;br&gt;
-					&amp;lt;/div&amp;gt;&lt;br&gt;
-				&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-	&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-{% endblock cuerpo %}&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Creamos una clase llamada Bienvenida, que hereda de TemplateView y le decimos que la plantilla a utilizar se llamará bienvenida.html.&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-1"&gt;&lt;/a&gt;{% extends "base.html" %}
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-2"&gt;&lt;/a&gt;{% block cuerpo %}
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"page-header"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Círculo de Programadores de Python Piura&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-10"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel panel-info"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-11"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-heading"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-12"&gt;&lt;/a&gt;                Bienvenido
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-13"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-14"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-body"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-15"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'form-group'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-16"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-17"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h3&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Bienvenido.&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h3&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-18"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-19"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-20"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-21"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-22"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-23"&gt;&lt;/a&gt;{% endblock cuerpo %}
+&lt;/pre&gt;&lt;p&gt;Creamos una clase llamada Bienvenida, que hereda de TemplateView y le
+decimos que la plantilla a utilizar se llamará bienvenida.html.&lt;/p&gt;
 &lt;p&gt;views.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.views.generic.base import TemplateView&lt;/p&gt;
-&lt;p&gt;class Bienvenida(TemplateView):&lt;br&gt;
-    template_name = "bienvenida.html"&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;En el archivo urls.py cambiamos la url raiz para que apunte a la clase Bienvenida y creamos una url llamada personas para mostrar la tabla personas.&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_2a5176dcd3314663ac17917ae26a961c-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.views.generic.base&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TemplateView&lt;/span&gt;
+&lt;a name="rest_code_2a5176dcd3314663ac17917ae26a961c-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2a5176dcd3314663ac17917ae26a961c-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Bienvenida&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TemplateView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_2a5176dcd3314663ac17917ae26a961c-4"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"bienvenida.html"&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;En el archivo urls.py cambiamos la url raiz para que apunte a la clase
+Bienvenida y creamos una url llamada personas para mostrar la tabla
+personas.&lt;/p&gt;
 &lt;p&gt;urls.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.conf.urls import patterns, url&lt;br&gt;
-from personas.views import Personas, CrearPersona, ReportePersonasExcel,\&lt;br&gt;
-    Bienvenida&lt;/p&gt;
-&lt;p&gt;urlpatterns = patterns(”,&lt;br&gt;
-    url(r’^$’,Bienvenida.as_view(), name="bienvenida"),&lt;br&gt;
-    url(r’^personas/$’,Personas.as_view(), name="personas"),&lt;br&gt;
-    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),&lt;br&gt;
-    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),&lt;/p&gt;
-&lt;p&gt;)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Con lo que tendriamos algo como esto:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/nueva.jpg"&gt;&lt;img class="alignnone wp-image-164" src="https://pythonpiura.files.wordpress.com/2016/04/nueva.jpg?w=300" alt="nueva" width="458" height="136"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;¿Y ahora como vemos nuestra tabla personas? Muy fácil haciendo que el enlace llamado “Personas” apunte a la url personas y de paso también hacemos que el enlace “Inicio” apunte a la url de bienvenida, para ello modificamos el archivo base.html:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-&amp;lt;a class="navbar-brand" href="{% url ‘personas:bienvenida’ %}"&amp;gt;&lt;br&gt;
-	&amp;lt;span class="glyphicon glyphicon-home"&amp;gt;&amp;lt;/span&amp;gt; Inicio&lt;br&gt;
-&amp;lt;/a&amp;gt;&lt;br&gt;
-&amp;lt;a class="navbar-brand" href="{% url ‘personas:personas’ %}"&amp;gt;&lt;br&gt;
-	&amp;lt;span class="glyphicon glyphicon-user"&amp;gt;&amp;lt;/span&amp;gt; Personas&lt;br&gt;
-&amp;lt;/a&amp;gt;&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Con esto hemos podido ver el uso sencillo de TemplateView mas adelante vamos a utilizar otras vistas basadas en clases, hasta la próxima.&lt;br&gt;
-Saludos.&lt;/p&gt;
-</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/20/templateview/</guid><pubDate>Thu, 21 Apr 2016 02:20:23 GMT</pubDate></item><item><title>Generar Reportes en Excel desde Django</title><link>http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;En ocasiones necesitamos tener nuestros reportes en alguna hoja de cálculo, o peor aún un cliente nos pide un reporte específico en excel ¿Cómo hacemos para generar reportes desde Django en excel?&lt;br&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;personas.views&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;\
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-6"&gt;&lt;/a&gt;&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;",&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"bienvenida"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-8"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^personas/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"personas"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-9"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^crear_persona/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"crear_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-10"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^reporte_personas_excel/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"reporte_personas_excel"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_4178388e92a848d99855c4e3878dd75a-11"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Con lo que tendriamos algo como esto:&lt;/p&gt;
+&lt;img alt="/images/blog/nueva.jpg" src="http://pythonpiura.org/images/blog/nueva.jpg"&gt;
+&lt;p&gt;¿Y ahora como vemos nuestra tabla personas? Muy fácil haciendo que el
+enlace llamado “Personas" apunte a la url personas y de paso también
+hacemos que el enlace “Inicio" apunte a la url de bienvenida, para
+ello modificamos el archivo base.html:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_edffa514361142e88a56eb8229c06442-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-brand"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:bienvenida' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_edffa514361142e88a56eb8229c06442-2"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-home"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; Inicio
+&lt;a name="rest_code_edffa514361142e88a56eb8229c06442-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_edffa514361142e88a56eb8229c06442-4"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-brand"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:personas' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_edffa514361142e88a56eb8229c06442-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-user"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; Personas
+&lt;a name="rest_code_edffa514361142e88a56eb8229c06442-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Con esto hemos podido ver el uso sencillo de TemplateView mas adelante
+vamos a utilizar otras vistas basadas en clases, hasta la próxima.
+Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/20/templateview/</guid><pubDate>Thu, 21 Apr 2016 02:20:23 GMT</pubDate></item><item><title>Generar Reportes en Excel desde Django</title><link>http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;En ocasiones necesitamos tener nuestros reportes en alguna hoja de cálculo, o peor aún un cliente nos pide un reporte específico en excel ¿Cómo hacemos para generar reportes desde Django en excel?&lt;br&gt;
 En nuestra ayuda viene una librería muy interesante que se llama &lt;a href="https://openpyxl.readthedocs.org/en/default/"&gt;openpyxl&lt;/a&gt;, esta libreria nos permite generar contenido en los diferentes formatos de hojas de cálculo de Microsoft Office y soporta desde versiones antiguas hasta la versión Office 2010, para instalarla lo hacemos con nuestro viejo conocido pip:&lt;/p&gt;
 &lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
 pip install openpyxl&lt;br&gt;
