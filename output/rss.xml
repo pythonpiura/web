@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python Piura</title><link>http://pythonpiura.org/</link><description>Comunidad Python Piura</description><atom:link href="http://pythonpiura.org/rss.xml" rel="self" type="application/rss+xml"></atom:link><language>es</language><lastBuildDate>Mon, 01 Aug 2016 22:23:15 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Migrando de Wordpress a Nikola</title><link>http://pythonpiura.org/posts/migrando-de-wordpress-a-nikola/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Despues de haber trabajado durante mucho tiempo en Wordpress decidimos usar algo mas pythonesco y encontramos el proyecto Nikola, que se adapta muy bien a lo que nosotros necesitamos como comunidad, asi que decidimos migrar, para ello seguimos la documentacion oficial del proyecto y algunos tutoriales adicionales, en este post vamos a relatar nuestra experiencia, esperando que sea util a nuestros lectores.&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Python Piura</title><link>http://pythonpiura.org/</link><description>Comunidad Python Piura</description><atom:link type="application/rss+xml" rel="self" href="http://pythonpiura.org/rss.xml"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 15:13:43 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Migrando de Wordpress a Nikola</title><link>http://pythonpiura.org/posts/migrando-de-wordpress-a-nikola/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Despues de haber trabajado durante mucho tiempo en Wordpress decidimos usar algo mas pythonesco y encontramos el proyecto Nikola, que se adapta muy bien a lo que nosotros necesitamos como comunidad, asi que decidimos migrar, para ello seguimos la documentacion oficial del proyecto y algunos tutoriales adicionales, en este post vamos a relatar nuestra experiencia, esperando que sea util a nuestros lectores.&lt;/p&gt;
 &lt;p&gt;Primero creamos nuestro entorno virtual, en esta oportunidad usamos python3 para obtener un mejor rendimiento con Nikola,&lt;/p&gt;
 &lt;pre class="code bash"&gt;&lt;a name="rest_code_73733a20456c4cdba3fa20e4a7a17bac-1"&gt;&lt;/a&gt;python3 -m venv nikola
 &lt;/pre&gt;&lt;p&gt;Activamos el entorno virtual:&lt;/p&gt;
@@ -592,117 +592,147 @@ Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category
 &lt;img alt="/images/blog/p5070208.jpg" src="http://pythonpiura.org/images/blog/p5070208.jpg"&gt;
 &lt;img alt="/images/blog/p5070209.jpg" src="http://pythonpiura.org/images/blog/p5070209.jpg"&gt;
 &lt;img alt="/images/blog/p5070210.jpg" src="http://pythonpiura.org/images/blog/p5070210.jpg"&gt;
-&lt;img alt="/images/blog/p5070211.jpg" src="http://pythonpiura.org/images/blog/p5070211.jpg"&gt;&lt;/span&gt;</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/</guid><pubDate>Mon, 09 May 2016 20:52:18 GMT</pubDate></item><item><title>Web Scrapping con Python y Selenium</title><link>http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;El día de hoy tuvimos el agrado de ser invitados por el &lt;a href="https://cideuel.wordpress.com/"&gt;Círculo UEL&lt;/a&gt; a dar una charla en el marco del FLISOL 2016 en la Universidad Los Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Python y Selenium, hicimos algunos ejemplos muy interesantes y nos encantó la acogida del público y el interés suscitado, vamos a compartir los artículos que usamos:&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;&lt;a href="https://pythonpiura.wordpress.com/2014/09/18/selenium-con-python/"&gt;Selenium con Python&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;&lt;a href="https://pythonpiura.wordpress.com/2016/01/26/romper-captchas-con-pytesseract-y-selenium/"&gt;Romper Captchas con Pytesseract y Selenium&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Las diapositivas:&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;&lt;a href="http://pythonpiura.org/2016/05/charlapythonflisol2016.pdf"&gt;Descargar&lt;/a&gt;&lt;/p&gt;
+&lt;img alt="/images/blog/p5070211.jpg" src="http://pythonpiura.org/images/blog/p5070211.jpg"&gt;&lt;/span&gt;</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/</guid><pubDate>Mon, 09 May 2016 20:52:18 GMT</pubDate></item><item><title>Web Scrapping con Python y Selenium</title><link>http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;El día de hoy tuvimos el agrado de ser invitados por el &lt;a class="reference external" href="https://cideuel.wordpress.com/"&gt;Círculo UEL&lt;/a&gt;
+a dar una charla en el marco del FLISOL 2016 en la Universidad Los
+Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Python
+y Selenium, hicimos algunos ejemplos muy interesantes y nos encantó la
+acogida del público y el interés suscitado, vamos a compartir los
+artículos que usamos:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://pythonpiura.wordpress.com/2014/09/18/selenium-con-python/"&gt;Selenium con Python&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="https://pythonpiura.wordpress.com/2016/01/26/romper-captchas-con-pytesseract-y-selenium/"&gt;Romper Captchas con Pytesseract y Selenium&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Las diapositivas:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://pythonpiura.org/recursos/charlapythonflisol2016.pdf"&gt;Descargar&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;El script que fue la estrella de la mañana:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-# -*- coding: utf-8 -*-&lt;br&gt;
-from selenium import webdriver&lt;br&gt;
-from selenium.webdriver.common.by import By&lt;br&gt;
-from selenium.webdriver.support.wait import WebDriverWait&lt;br&gt;
-from selenium.webdriver.support import expected_conditions as EC&lt;br&gt;
-import os&lt;/p&gt;
-&lt;p&gt;try:&lt;br&gt;
-    import Image&lt;br&gt;
-except ImportError:&lt;br&gt;
-    from PIL import Image&lt;br&gt;
-import pytesseract&lt;/p&gt;
-&lt;p&gt;def decodifica_campo(campo):&lt;br&gt;
-	return u"%s" % campo&lt;/p&gt;
-&lt;p&gt;def ir_sunat_web(ruta):&lt;br&gt;
-	fp = webdriver.FirefoxProfile()&lt;br&gt;
-	fp.set_preference("browser.download.manager.showWhenStarting",False)&lt;br&gt;
-	fp.set_preference("browser.download.manager.closeWhenDone", True);&lt;br&gt;
-	fp.set_preference("browser.download.manager.showAlertOnComplete", False);&lt;br&gt;
-	fp.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/zip");&lt;br&gt;
-	driver = webdriver.Firefox(fp)&lt;br&gt;
-	driver.get("http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias")&lt;br&gt;
-	try:&lt;br&gt;
-		WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, "imagen")))&lt;br&gt;
-	except:&lt;br&gt;
-		print "No carga imagen"&lt;br&gt;
-	driver.save_screenshot("screenshot.png")&lt;br&gt;
-	img=Image.open(‘screenshot.png’)&lt;br&gt;
-	img_recortada = img.crop((700,309,800,361))&lt;br&gt;
-	img_recortada.save("recorte.png")&lt;br&gt;
-        try:&lt;br&gt;
-            captcha = pytesseract.image_to_string(img_recortada)&lt;br&gt;
-            codigo = driver.find_element_by_name("codigoA")&lt;br&gt;
-            codigo.send_keys(captcha)&lt;br&gt;
-        except:&lt;br&gt;
-            pass&lt;br&gt;
-	archivo = driver.find_element_by_name("archivo")&lt;br&gt;
-	archivo.send_keys(ruta)&lt;br&gt;
-	form = driver.find_element_by_name("frmConsMulRucArchivo")&lt;br&gt;
-	botones=form.find_elements_by_class_name("form-button")&lt;br&gt;
-	botones[1].click()&lt;br&gt;
-	try:&lt;br&gt;
-		WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "form-table")))&lt;br&gt;
-		enlace=driver.find_element(By.TAG_NAME,"a")&lt;br&gt;
-		enlace.click()&lt;br&gt;
-	except:&lt;br&gt;
-		print "Element is not present"&lt;br&gt;
-	driver.close()&lt;/p&gt;
-&lt;p&gt;def main():&lt;br&gt;
-	ruta = "/home/usuario/carpeta"&lt;br&gt;
-	ruta_archivo=os.path.join(ruta,"rucs.zip")&lt;br&gt;
-	ir_sunat_web(ruta_archivo)&lt;/p&gt;
-&lt;p&gt;main()&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Así como también un vídeo de su funcionamiento.&lt;/p&gt;
-&lt;p&gt;http://www.youtube.com/watch?v=mUaVFYTlibM&lt;/p&gt;
-&lt;p&gt;Saludos y muchas gracias.&lt;/p&gt;
-</description><category>pillow</category><category>pytesseract</category><category>Python</category><category>Selenium</category><guid>http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/</guid><pubDate>Sun, 08 May 2016 01:58:06 GMT</pubDate></item><item><title>Personalizando Permisos</title><link>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Hasta ahora hemos trabajado con los permisos básicos que nos proporciona Django de manera automática, pero que pasa si nosotros quisieramos restringir cosas mas al detalle, por ejemplo que un usuario determinado no vea el detalle de la persona, o la tabla que lista a todas las personas, o que no pueda exportar a una hoja de cálculo.&lt;br&gt;
-Empecemos por lo mas sencillo, creemos un permiso para restringir el acceso al detalle de la persona, para ello personalizaremos los permisos en el modelo, de la siguiente manera:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;selenium&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;webdriver&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-3"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;selenium.webdriver.common.by&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;By&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-4"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;selenium.webdriver.support.wait&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;WebDriverWait&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-5"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;selenium.webdriver.support&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;expected_conditions&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;EC&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-6"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-7"&gt;&lt;/a&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-8"&gt;&lt;/a&gt;&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-9"&gt;&lt;/a&gt;        &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;Image&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-10"&gt;&lt;/a&gt;&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;ImportError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-11"&gt;&lt;/a&gt;        &lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;PIL&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Image&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-12"&gt;&lt;/a&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pytesseract&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-14"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;decodifica_campo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;campo&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-15"&gt;&lt;/a&gt;        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="s2"&gt;u"&lt;/span&gt;&lt;span class="si"&gt;%s&lt;/span&gt;&lt;span class="s2"&gt;"&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="n"&gt;campo&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-16"&gt;&lt;/a&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-17"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;ir_sunat_web&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ruta&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-18"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fp&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;webdriver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FirefoxProfile&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-19"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_preference&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"browser.download.manager.showWhenStarting"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-20"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_preference&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"browser.download.manager.closeWhenDone"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-21"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_preference&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"browser.download.manager.showAlertOnComplete"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;False&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-22"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_preference&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"browser.helperApps.neverAsk.saveToDisk"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"application/zip"&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-23"&gt;&lt;/a&gt;        &lt;span class="n"&gt;driver&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;webdriver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Firefox&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;fp&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-24"&gt;&lt;/a&gt;        &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-25"&gt;&lt;/a&gt;        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-26"&gt;&lt;/a&gt;                &lt;span class="n"&gt;WebDriverWait&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;until&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EC&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;presence_of_element_located&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;NAME&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"imagen"&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-27"&gt;&lt;/a&gt;        &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-28"&gt;&lt;/a&gt;                &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;"No carga imagen"&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-29"&gt;&lt;/a&gt;        &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save_screenshot&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"screenshot.png"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-30"&gt;&lt;/a&gt;        &lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;Image&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'screenshot.png'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-31"&gt;&lt;/a&gt;        &lt;span class="n"&gt;img_recortada&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;img&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;crop&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;700&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;309&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;800&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;361&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-32"&gt;&lt;/a&gt;        &lt;span class="n"&gt;img_recortada&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"recorte.png"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-33"&gt;&lt;/a&gt;        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-34"&gt;&lt;/a&gt;                &lt;span class="n"&gt;captcha&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pytesseract&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;image_to_string&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;img_recortada&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-35"&gt;&lt;/a&gt;                &lt;span class="n"&gt;codigo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find_element_by_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"codigoA"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-36"&gt;&lt;/a&gt;                &lt;span class="n"&gt;codigo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;send_keys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;captcha&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-37"&gt;&lt;/a&gt;        &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-38"&gt;&lt;/a&gt;                &lt;span class="k"&gt;pass&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-39"&gt;&lt;/a&gt;        &lt;span class="n"&gt;archivo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find_element_by_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"archivo"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-40"&gt;&lt;/a&gt;        &lt;span class="n"&gt;archivo&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;send_keys&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ruta&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-41"&gt;&lt;/a&gt;        &lt;span class="n"&gt;form&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find_element_by_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"frmConsMulRucArchivo"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-42"&gt;&lt;/a&gt;        &lt;span class="n"&gt;botones&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find_elements_by_class_name&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"form-button"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-43"&gt;&lt;/a&gt;        &lt;span class="n"&gt;botones&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-44"&gt;&lt;/a&gt;        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-45"&gt;&lt;/a&gt;                &lt;span class="n"&gt;WebDriverWait&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;until&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;EC&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;presence_of_all_elements_located&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CLASS_NAME&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"form-table"&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-46"&gt;&lt;/a&gt;                &lt;span class="n"&gt;enlace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;find_element&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;By&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;TAG_NAME&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;"a"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-47"&gt;&lt;/a&gt;                &lt;span class="n"&gt;enlace&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-48"&gt;&lt;/a&gt;        &lt;span class="k"&gt;except&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-49"&gt;&lt;/a&gt;                &lt;span class="k"&gt;print&lt;/span&gt; &lt;span class="s2"&gt;"Element is not present"&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-50"&gt;&lt;/a&gt;                &lt;span class="n"&gt;driver&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-51"&gt;&lt;/a&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-52"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-53"&gt;&lt;/a&gt;        &lt;span class="n"&gt;ruta&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"/home/usuario/carpeta"&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-54"&gt;&lt;/a&gt;        &lt;span class="n"&gt;ruta_archivo&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ruta&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;"rucs.zip"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-55"&gt;&lt;/a&gt;        &lt;span class="n"&gt;ir_sunat_web&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ruta_archivo&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-56"&gt;&lt;/a&gt;
+&lt;a name="rest_code_927ded3618d14e56acf56703e4accbba-57"&gt;&lt;/a&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Así como también un vídeo de su funcionamiento.&lt;/p&gt;
+&lt;div class="youtube-video"&gt;
+&lt;iframe width="425" height="344" src="https://www.youtube.com/embed/mUaVFYTlibM?rel=0&amp;amp;hd=1&amp;amp;wmode=transparent"&gt;&lt;/iframe&gt;
+&lt;/div&gt;&lt;p&gt;Saludos y muchas gracias.&lt;/p&gt;&lt;/div&gt;</description><category>pillow</category><category>pytesseract</category><category>Python</category><category>Selenium</category><guid>http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/</guid><pubDate>Sun, 08 May 2016 01:58:06 GMT</pubDate></item><item><title>Personalizando Permisos</title><link>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Hasta ahora hemos trabajado con los permisos básicos que nos
+proporciona Django de manera automática, pero que pasa si nosotros
+quisieramos restringir cosas mas al detalle, por ejemplo que un
+usuario determinado no vea el detalle de la persona, o la tabla que
+lista a todas las personas, o que no pueda exportar a una hoja de
+cálculo.
+Empecemos por lo mas sencillo, creemos un permiso para restringir el
+acceso al detalle de la persona, para ello personalizaremos los
+permisos en el modelo, de la siguiente manera:&lt;/p&gt;
 &lt;p&gt;models.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.db import models&lt;/p&gt;
-&lt;p&gt;# Create your models here.&lt;br&gt;
-class Persona(models.Model):&lt;br&gt;
-    dni= models.CharField(primary_key=True,max_length=8)&lt;br&gt;
-    nombre = models.CharField(max_length=100)&lt;br&gt;
-    apellido_paterno = models.CharField(max_length=100)&lt;br&gt;
-    apellido_materno = models.CharField(max_length=100) &lt;/p&gt;
-&lt;p&gt;    class Meta:&lt;br&gt;
-        permissions = ((‘ver_detalle_persona’, ‘Puede ver detalle Persona’),)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Veamos que hay de nuevo en nuestro modelo y lo primero que salta a la vista es el uso de una &lt;a href="https://datafull.co/p/que-es-una-metaclase-en-python"&gt;metaclase&lt;/a&gt; aquí definiremos el atributo permissions que es una tupla donde se definiran los múltiples permisos personalizados que podemos crear en este caso tenemos el par (‘ver_detalle_persona’, ‘Puede ver detalle Persona’) donde ‘ver_detalle_persona’ es el nombre del permiso y ‘Puede ver detalle Persona’ es una especie de descripción de lo que significa ese permiso, ahora ya lo tenemos listo, pero no podemos aplicarlo directamente sino que primero tenemos que hacer la migración correspondiente a la base de datos, ya que ha ocurrido una modificación del modelo:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-python manage.py makemigrations personas&lt;br&gt;
-python manage.py migrate&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ya con esto podemos usar el permiso, para ello modificaremos el archivo personas.html:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% if perms.personas.ver_detalle_persona %}&lt;br&gt;
-&amp;lt;a class="btn btn-small" href="{% url ‘personas:detalle_persona’ persona.pk %}"&amp;gt;&lt;br&gt;
-	&amp;lt;span class="glyphicon glyphicon-folder-open"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-&amp;lt;/a&amp;gt;&lt;br&gt;
-{% endif %}&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora nos logueamos con cualquiera de los usuarios nuevos que creamos en la sesión pasada, en este caso lo haremos con usuario1:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/05/sin_permiso_ver_persona.jpg"&gt;&lt;img class="aligncenter size-large wp-image-247" src="https://pythonpiura.files.wordpress.com/2016/05/sin_permiso_ver_persona.jpg?w=604" alt="sin_permiso_ver_persona" width="604" height="208"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Y vemos que no aparece el ícono del libro por lo tanto aparentemente no podemos acceder al detalle de la persona, pero igual que la vez pasada si es posible acceder a través de la url:&lt;/p&gt;
-&lt;p&gt;http://localhost:8000/personas/detalle_persona/44626821/&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.db&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Create your models here.&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-4"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Persona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;dni&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;primary_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-6"&gt;&lt;/a&gt;        &lt;span class="n"&gt;nombre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;apellido_paterno&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-8"&gt;&lt;/a&gt;        &lt;span class="n"&gt;apellido_materno&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-9"&gt;&lt;/a&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-10"&gt;&lt;/a&gt;        &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-11"&gt;&lt;/a&gt;                &lt;span class="n"&gt;permissions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s1"&gt;'ver_detalle_persona'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Puede ver detalle Persona'&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Veamos que hay de nuevo en nuestro modelo y lo primero que salta a la
+vista es el uso de una &lt;a class="reference external" href="https://datafull.co/p/que-es-una-metaclase-en-python"&gt;metaclase&lt;/a&gt; aquí definiremos el atributo
+permissions que es una tupla donde se definiran los múltiples permisos
+personalizados que podemos crear en este caso tenemos el par
+('ver_detalle_persona', 'Puede ver detalle Persona') donde
+'ver_detalle_persona' es el nombre del permiso y 'Puede ver detalle
+Persona' es una especie de descripción de lo que significa ese
+permiso, ahora ya lo tenemos listo, pero no podemos aplicarlo
+directamente sino que primero tenemos que hacer la migración
+correspondiente a la base de datos, ya que ha ocurrido una
+modificación del modelo:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_e39758b83d944e699fc455e0a1d0934b-1"&gt;&lt;/a&gt;python manage.py makemigrations personas
+&lt;a name="rest_code_e39758b83d944e699fc455e0a1d0934b-2"&gt;&lt;/a&gt;python manage.py migrate
+&lt;/pre&gt;&lt;p&gt;Ya con esto podemos usar el permiso, para ello modificaremos el
+archivo personas.html:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-1"&gt;&lt;/a&gt;{% if perms.personas.ver_detalle_persona %}
+&lt;a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-2"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:detalle_persona' persona.pk %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-folder-open"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-4"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-5"&gt;&lt;/a&gt;{% endif %}
+&lt;/pre&gt;&lt;p&gt;Ahora nos logueamos con cualquiera de los usuarios nuevos que creamos
+en la sesión pasada, en este caso lo haremos con usuario1:&lt;/p&gt;
+&lt;img alt="/images/blog/sin_permiso_ver_persona.jpg" src="http://pythonpiura.org/images/blog/sin_permiso_ver_persona.jpg"&gt;
+&lt;p&gt;Y vemos que no aparece el ícono del libro por lo tanto aparentemente
+no podemos acceder al detalle de la persona, pero igual que la vez
+pasada si es posible acceder a través de la url:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://localhost:8000/personas/detalle_persona/44626821/"&gt;http://localhost:8000/personas/detalle_persona/44626821/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Nos falta hacer lo mismo de antes en nuestra vista DetallePersona:&lt;/p&gt;
 &lt;p&gt;views.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-class DetallePersona(DetailView):&lt;br&gt;
-    model = Persona&lt;br&gt;
-    template_name = ‘detalle_persona.html’&lt;/p&gt;
-&lt;p&gt;    @method_decorator(permission_required(‘personas.ver_detalle_persona’,reverse_lazy(‘personas:personas’)))&lt;br&gt;
-    def dispatch(self, *args, **kwargs):&lt;br&gt;
-        return super(DetallePersona, self).dispatch(*args, **kwargs)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Listo ya con esto el usuario no puede ingresar al detalle de la persona y es inmediatamente redireccionado a la tabla de personas, ahora otorguemosle permisos al usuario1 a través de la interfaz de administración:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/05/permiso_ver_detalle_persona.jpg"&gt;&lt;img class="aligncenter size-large wp-image-248" src="https://pythonpiura.files.wordpress.com/2016/05/permiso_ver_detalle_persona.jpg?w=604" alt="permiso_ver_detalle_persona" width="604" height="156"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Damos click en la flecha y guardamos la modificación, ahora ingresemos a la aplicación personas con el usuario1 y nos debe salir una pantalla como la siguiente:&lt;br&gt;
-&lt;a href="http://pythonpiura.org/2016/05/con_permiso_ver_persona.jpg"&gt;&lt;img class="aligncenter size-large wp-image-249" src="https://pythonpiura.files.wordpress.com/2016/05/con_permiso_ver_persona.jpg?w=604" alt="con_permiso_ver_persona" width="604" height="205"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Eso es todo por hoy, en un proximo post terminaremos de personalizar el resto de permisos y hacerle algunas modificaciones estéticas a nuestro proyecto.&lt;br&gt;
-Saludos.&lt;/p&gt;
-</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</guid><pubDate>Tue, 03 May 2016 02:13:53 GMT</pubDate></item><item><title>Aplicar Permisos por Usuario en Django</title><link>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Hasta ahora solo hemos trabajado con un usuario(el superusuario que creamos al principio) en nuestro proyecto, pero en la vida real son muchos los usuarios que interactuan con el software y todos no cuentan con los mismos permisos, hay algunos que pueden crear, ver, editar o eliminar elementos y otros no. Para empezar a trabajar con permisos primero debemos crear algunos usuarios adicionales, para ello vamos a ingresar a la consola de administración de Django, poniendo lo siguiente en nuestra barra de direcciones:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DetallePersona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DetailView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-2"&gt;&lt;/a&gt;        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Persona&lt;/span&gt;
+&lt;a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-3"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'detalle_persona.html'&lt;/span&gt;
+&lt;a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-5"&gt;&lt;/a&gt;        &lt;span class="nd"&gt;@method_decorator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;permission_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas.ver_detalle_persona'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas:personas'&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-6"&gt;&lt;/a&gt;        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-7"&gt;&lt;/a&gt;                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DetallePersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Listo ya con esto el usuario no puede ingresar al detalle de la
+persona y es inmediatamente redireccionado a la tabla de personas,
+ahora otorguemosle permisos al usuario1 a través de la interfaz de
+administración:&lt;/p&gt;
+&lt;img alt="/images/blog/permiso_ver_detalle_persona.jpg" src="http://pythonpiura.org/images/blog/permiso_ver_detalle_persona.jpg"&gt;
+&lt;p&gt;Damos click en la flecha y guardamos la modificación, ahora ingresemos
+a la aplicación personas con el usuario1 y nos debe salir una pantalla
+como la siguiente:&lt;/p&gt;
+&lt;img alt="/images/blog/con_permiso_ver_persona.jpg" src="http://pythonpiura.org/images/blog/con_permiso_ver_persona.jpg"&gt;
+&lt;p&gt;Eso es todo por hoy, en un proximo post terminaremos de personalizar
+el resto de permisos y hacerle algunas modificaciones estéticas a
+nuestro proyecto.
+Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</guid><pubDate>Tue, 03 May 2016 02:13:53 GMT</pubDate></item><item><title>Aplicar Permisos por Usuario en Django</title><link>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Hasta ahora solo hemos trabajado con un usuario(el superusuario que creamos al principio) en nuestro proyecto, pero en la vida real son muchos los usuarios que interactuan con el software y todos no cuentan con los mismos permisos, hay algunos que pueden crear, ver, editar o eliminar elementos y otros no. Para empezar a trabajar con permisos primero debemos crear algunos usuarios adicionales, para ello vamos a ingresar a la consola de administración de Django, poniendo lo siguiente en nuestra barra de direcciones:&lt;/p&gt;
 &lt;p&gt;http://localhost:8000/admin&lt;/p&gt;
 &lt;p&gt;A continuación veremos una pantalla como esta:&lt;/p&gt;
 &lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/login_administracion.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-223" src="https://pythonpiura.files.wordpress.com/2016/04/login_administracion.jpg?w=300" alt="login_administracion" width="300" height="127"&gt;&lt;/a&gt;&lt;/p&gt;
