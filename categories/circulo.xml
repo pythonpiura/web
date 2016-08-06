@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Python Piura (Círculo)</title><link>http://pythonpiura.org/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://pythonpiura.org/categories/circulo.xml"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 15:13:43 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Fotos Charla Web Scrapping con Python y Selenium</title><link>http://pythonpiura.org/posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;span&gt;&lt;img alt="/images/blog/p5070212.jpg" src="http://pythonpiura.org/images/blog/p5070212.jpg"&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Python Piura (Círculo)</title><link>http://pythonpiura.org/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://pythonpiura.org/categories/circulo.xml"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 15:48:42 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Fotos Charla Web Scrapping con Python y Selenium</title><link>http://pythonpiura.org/posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;span&gt;&lt;img alt="/images/blog/p5070212.jpg" src="http://pythonpiura.org/images/blog/p5070212.jpg"&gt;
 &lt;img alt="/images/blog/p5070204.jpg" src="http://pythonpiura.org/images/blog/p5070204.jpg"&gt;
 &lt;img alt="/images/blog/p5070208.jpg" src="http://pythonpiura.org/images/blog/p5070208.jpg"&gt;
 &lt;img alt="/images/blog/p5070209.jpg" src="http://pythonpiura.org/images/blog/p5070209.jpg"&gt;
@@ -73,42 +73,62 @@ como la siguiente:&lt;/p&gt;
 &lt;p&gt;Eso es todo por hoy, en un proximo post terminaremos de personalizar
 el resto de permisos y hacerle algunas modificaciones estéticas a
 nuestro proyecto.
-Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</guid><pubDate>Tue, 03 May 2016 02:13:53 GMT</pubDate></item><item><title>Mejorando Nuestro Login</title><link>http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Este es un post pequeñito donde vamos a demostrar como mejorar nuestro login que se ve un poco feo, para ello debemos crear un módulo de Python llamado forms.py en nuestra aplicación seguridad:&lt;br&gt;
-&lt;a href="http://pythonpiura.org/2016/04/forms.jpg"&gt;&lt;img class="aligncenter size-full wp-image-211" src="http://pythonpiura.org/2016/04/forms.jpg" alt="forms" width="237" height="201"&gt;&lt;/a&gt;&lt;br&gt;
-Ahora vamos a crear una clase llamada FormularioLogin que va a heredar de AuthenticationForm, la herencia en Python se determina poniendo la clase de la que se va a heredar entre parentesis en la definición de la clase hija:&lt;/p&gt;
+Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</guid><pubDate>Tue, 03 May 2016 02:13:53 GMT</pubDate></item><item><title>Mejorando Nuestro Login</title><link>http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Este es un post pequeñito donde vamos a demostrar como mejorar nuestro
+login que se ve un poco feo, para ello debemos crear un módulo de
+Python llamado forms.py en nuestra aplicación seguridad:&lt;/p&gt;
+&lt;img alt="/images/blog/forms.jpg" src="http://pythonpiura.org/images/blog/forms.jpg"&gt;
+&lt;p&gt;Ahora vamos a crear una clase llamada FormularioLogin que va a heredar
+de AuthenticationForm, la herencia en Python se determina poniendo la
+clase de la que se va a heredar entre parentesis en la definición de
+la clase hija:&lt;/p&gt;
 &lt;p&gt;forms.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.contrib.auth.forms import AuthenticationForm&lt;/p&gt;
-&lt;p&gt;class FormularioLogin(AuthenticationForm):&lt;br&gt;
-    def __init__(self, *args, **kwargs):&lt;br&gt;
-        super(FormularioLogin, self).__init__(*args, **kwargs)&lt;br&gt;
-        self.fields['username'].widget.attrs['class'] = ‘form-control’&lt;br&gt;
-        self.fields['username'].widget.attrs['placeholder'] = ‘Usuario’&lt;br&gt;
-        self.fields['password'].widget.attrs['class'] = ‘form-control’&lt;br&gt;
-        self.fields['password'].widget.attrs['placeholder'] = ‘Contraseña’&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;¿Que cosa hemos hecho aquí?, sencillo hemos sobreescrito el comportamiento de los campos del formulario AuthenticationForm, expliquemos esto: primero se necesita acceder a cada uno de los campos del formulario, estos son ‘username’ y ‘password’, y se accede a ellos a través de la lista “fields”, luego accederemos a los widgets de cada uno de estos campos, el widget es el elemento o etiqueta html que se dibuja en el navegador, en este caso los dos son “input”, al ser elementos html tienen atributos y cada atributo tiene un valor, en este caso vamos a modificar los atributos “class” y “placeholder”, el atributo class establece la clase CSS que se aplica a los estilos del elemento y el atributo placeholder provee una ayuda a los usuarios para indicar que cosa se debe escribir en las cajas de texto. Hemos aplicado la clase &lt;a href="http://librosweb.es/libro/bootstrap_3/capitulo_5/campos_de_formulario.html"&gt;form-control&lt;/a&gt; de bootstrap, que sirve para mostrar los elementos de un formulario mejor presentados, a ambos elementos y hemos definido la ayuda que aparecerá en cada caja de texto.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Recordemos que en nuestra vista Login el atributo form_class es AuthenticationForm, ahora esto va a cambiar:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib.auth.forms&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AuthenticationForm&lt;/span&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;FormularioLogin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;AuthenticationForm&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-5"&gt;&lt;/a&gt;        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-6"&gt;&lt;/a&gt;                &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FormularioLogin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__init__&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-7"&gt;&lt;/a&gt;                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fields&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'username'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;widget&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'class'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'form-control'&lt;/span&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-8"&gt;&lt;/a&gt;                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fields&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'username'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;widget&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'placeholder'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Usuario'&lt;/span&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-9"&gt;&lt;/a&gt;                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fields&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'password'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;widget&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'class'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'form-control'&lt;/span&gt;
+&lt;a name="rest_code_76fd9d7b52ca4d6e86e996b102e45830-10"&gt;&lt;/a&gt;                &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fields&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'password'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;widget&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;attrs&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'placeholder'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Contraseña'&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;¿Que cosa hemos hecho aquí?, sencillo hemos sobreescrito el
+comportamiento de los campos del formulario AuthenticationForm,
+expliquemos esto: primero se necesita acceder a cada uno de los campos
+del formulario, estos son 'username' y 'password', y se accede a ellos
+a través de la lista “fields”, luego accederemos a los widgets de cada
+uno de estos campos, el widget es el elemento o etiqueta html que se
+dibuja en el navegador, en este caso los dos son “input”, al ser
+elementos html tienen atributos y cada atributo tiene un valor, en
+este caso vamos a modificar los atributos “class” y “placeholder”, el
+atributo class establece la clase CSS que se aplica a los estilos del
+elemento y el atributo placeholder provee una ayuda a los usuarios
+para indicar que cosa se debe escribir en las cajas de texto. Hemos
+aplicado la clase &lt;a class="reference external" href="http://librosweb.es/libro/bootstrap_3/capitulo_5/campos_de_formulario.html"&gt;form-control&lt;/a&gt; de bootstrap, que sirve para mostrar
+los elementos de un formulario mejor presentados, a ambos elementos y
+hemos definido la ayuda que aparecerá en cada caja de texto.&lt;/p&gt;
+&lt;p&gt;Recordemos que en nuestra vista Login el atributo form_class es
+AuthenticationForm, ahora esto va a cambiar:&lt;/p&gt;
 &lt;p&gt;views.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from seguridad.forms import FormularioLogin&lt;/p&gt;
-&lt;p&gt;# Create your views here.&lt;br&gt;
-class Login(FormView):&lt;br&gt;
-    template_name = ‘login.html’&lt;br&gt;
-    form_class = FormularioLogin&lt;br&gt;
-    success_url =  reverse_lazy("personas:bienvenida")&lt;/p&gt;
-&lt;p&gt;    def dispatch(self, request, *args, **kwargs):&lt;br&gt;
-        if request.user.is_authenticated():&lt;br&gt;
-            return HttpResponseRedirect(self.get_success_url())&lt;br&gt;
-        else:&lt;br&gt;
-            return super(Login, self).dispatch(request, *args, **kwargs)&lt;/p&gt;
-&lt;p&gt;    def form_valid(self, form):&lt;br&gt;
-        login(self.request, form.get_user())&lt;br&gt;
-        return super(Login, self).form_valid(form)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Finalmente tendremos la siguiente presentación:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/login_bonito.jpg"&gt;&lt;img class="aligncenter wp-image-212" src="https://pythonpiura.files.wordpress.com/2016/04/login_bonito.jpg?w=300" alt="login_bonito" width="519" height="175"&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;seguridad.forms&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FormularioLogin&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Create your views here.&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-4"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Login&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FormView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'login.html'&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-6"&gt;&lt;/a&gt;        &lt;span class="n"&gt;form_class&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;FormularioLogin&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;success_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"personas:bienvenida"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-8"&gt;&lt;/a&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-9"&gt;&lt;/a&gt;        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-10"&gt;&lt;/a&gt;                &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_authenticated&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-11"&gt;&lt;/a&gt;                        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;HttpResponseRedirect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_success_url&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-12"&gt;&lt;/a&gt;                &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-13"&gt;&lt;/a&gt;                        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Login&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-14"&gt;&lt;/a&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-15"&gt;&lt;/a&gt;        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;form_valid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-16"&gt;&lt;/a&gt;                &lt;span class="n"&gt;login&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_user&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;a name="rest_code_894ecac2f07b4b7abaf30c96b7bccb38-17"&gt;&lt;/a&gt;                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Login&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;form_valid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Finalmente tendremos la siguiente presentación:&lt;/p&gt;
+&lt;img alt="/images/blog/login_bonito.jpg" src="http://pythonpiura.org/images/blog/login_bonito.jpg"&gt;
 &lt;p&gt;¿Mejor, verdad?, eso es todo por hoy.&lt;/p&gt;
-&lt;p&gt;Saludos.&lt;/p&gt;
-</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/</guid><pubDate>Fri, 29 Apr 2016 01:50:59 GMT</pubDate></item><item><title>Curso Básico de Python</title><link>http://pythonpiura.org/posts/2016/04/16/curso-basico-de-python/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p&gt;[polldaddy poll=9387861]&lt;/p&gt;
+&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/</guid><pubDate>Fri, 29 Apr 2016 01:50:59 GMT</pubDate></item><item><title>Curso Básico de Python</title><link>http://pythonpiura.org/posts/2016/04/16/curso-basico-de-python/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p&gt;[polldaddy poll=9387861]&lt;/p&gt;
 </description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/04/16/curso-basico-de-python/</guid><pubDate>Sat, 16 Apr 2016 19:52:19 GMT</pubDate></item></channel></rss>

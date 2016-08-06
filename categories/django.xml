@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python Piura (Django)</title><link>http://pythonpiura.org/</link><description></description><atom:link href="http://pythonpiura.org/categories/django.xml" type="application/rss+xml" rel="self"></atom:link><language>es</language><lastBuildDate>Mon, 01 Aug 2016 21:20:59 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Python Piura (Django)</title><link>http://pythonpiura.org/</link><description></description><atom:link href="http://pythonpiura.org/categories/django.xml" rel="self" type="application/rss+xml"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 15:41:19 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
 bastante olvidado estos últimos días y haremos un reporte en pdf
 utilizando la librería &lt;a class="reference external" href="http://www.reportlab.com/"&gt;reportlab&lt;/a&gt;, para ello la instalamos:&lt;/p&gt;
 &lt;pre class="code bash"&gt;&lt;a name="rest_code_13527231d4a5419c93ddc7424ecc9a31-1"&gt;&lt;/a&gt;pip install reportlab
@@ -245,109 +245,172 @@ pantalla:&lt;/p&gt;
 &lt;a name="rest_code_06314a8f15c343409ab8452e3aeb65e5-104"&gt;&lt;/a&gt;
 &lt;a name="rest_code_06314a8f15c343409ab8452e3aeb65e5-105"&gt;&lt;/a&gt;&lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/pre&gt;&lt;iframe width="459" height="344" src="https://www.youtube.com/embed/ijICFYtAuDE?feature=oembed" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;&lt;p&gt;Esperamos que les sea útil.
-Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>pytesseract</category><category>Selenium</category><guid>http://pythonpiura.org/posts/2016/05/10/otro-ejemplo-de-web-scrapping-con-python/</guid><pubDate>Wed, 11 May 2016 04:35:39 GMT</pubDate></item><item><title>Aplicar Permisos por Usuario en Django</title><link>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Hasta ahora solo hemos trabajado con un usuario(el superusuario que creamos al principio) en nuestro proyecto, pero en la vida real son muchos los usuarios que interactuan con el software y todos no cuentan con los mismos permisos, hay algunos que pueden crear, ver, editar o eliminar elementos y otros no. Para empezar a trabajar con permisos primero debemos crear algunos usuarios adicionales, para ello vamos a ingresar a la consola de administración de Django, poniendo lo siguiente en nuestra barra de direcciones:&lt;/p&gt;
-&lt;p&gt;http://localhost:8000/admin&lt;/p&gt;
+Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>pytesseract</category><category>Selenium</category><guid>http://pythonpiura.org/posts/2016/05/10/otro-ejemplo-de-web-scrapping-con-python/</guid><pubDate>Wed, 11 May 2016 04:35:39 GMT</pubDate></item><item><title>Aplicar Permisos por Usuario en Django</title><link>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Hasta ahora solo hemos trabajado con un usuario(el superusuario que
+creamos al principio) en nuestro proyecto, pero en la vida real son
+muchos los usuarios que interactuan con el software y todos no cuentan
+con los mismos permisos, hay algunos que pueden crear, ver, editar o
+eliminar elementos y otros no. Para empezar a trabajar con permisos
+primero debemos crear algunos usuarios adicionales, para ello vamos a
+ingresar a la consola de administración de Django, poniendo lo
+siguiente en nuestra barra de direcciones:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://localhost:8000/admin"&gt;http://localhost:8000/admin&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;A continuación veremos una pantalla como esta:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/login_administracion.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-223" src="https://pythonpiura.files.wordpress.com/2016/04/login_administracion.jpg?w=300" alt="login_administracion" width="300" height="127"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Aquí nos logueamos usando el superusuario con el que hemos venido trabajando y tendremos una pantalla como esta:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/admin_django.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-224" src="https://pythonpiura.files.wordpress.com/2016/04/admin_django.jpg?w=300" alt="admin_django" width="300" height="61"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;En el enlace donde dice Users vamos a dar click en Add para crear nuestro nuevo usuario, al que llamaremos usuario1:&lt;br&gt;
-&lt;a href="http://pythonpiura.org/2016/04/crear_usuario.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-225" src="https://pythonpiura.files.wordpress.com/2016/04/crear_usuario.jpg?w=300" alt="crear_usuario" width="300" height="88"&gt;&lt;/a&gt;&lt;br&gt;
-Completamos los campos y le damos click a save:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/usuario_creado.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-226" src="https://pythonpiura.files.wordpress.com/2016/04/usuario_creado.jpg?w=300" alt="usuario_creado" width="300" height="207"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Por ahora con esto es suficiente y ya tenemos nuestro usuario creado y listo para usarlo, salimos dando click en logout y nos vamos al login del proyecto para ingresar con nuestro nuevo usuario y la contraseña que le hemos asignado:&lt;br&gt;
-&lt;a href="http://pythonpiura.org/2016/04/nuevo_logueo.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-227" src="https://pythonpiura.files.wordpress.com/2016/04/nuevo_logueo.jpg?w=300" alt="nuevo_logueo" width="300" height="210"&gt;&lt;/a&gt;&lt;br&gt;
-En nuestra aplicación personas, con este usuario podemos hacer lo mismo que con el usuario anterior, pero que pasa si nosotros queremos restringir algunas cosas a este nuevo usuario, por ejemplo, no dejar que este usuario cree ni modifique personas, pero que si pueda ver su detalle y exportar el reporte en una hoja de calculo ¿Cómo hacemos esto?&lt;br&gt;
-Con Django otra vez esto es muy sencillo y podemos definir diferentes niveles de acceso, restringiendo las opciones en la plantilla html y negando el acceso a la vista en cuestión, hagamos lo primero:&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Si queremos restringir el acceso a las opciones desde la plantilla html, lo mas rápido que se nos ocurre es eliminar los íconos que nos brindan esas opciones, esto lo podemos hacer usando los permisos proporcionados por django de la siguiente manera:&lt;br&gt;
-Primero para restringir la visualización del ícono de crear personas:&lt;br&gt;
+&lt;img alt="/images/blog/login_administracion.jpg" src="http://pythonpiura.org/images/blog/login_administracion.jpg"&gt;
+&lt;p&gt;Aquí nos logueamos usando el superusuario con el que hemos venido
+trabajando y tendremos una pantalla como esta:&lt;/p&gt;
+&lt;img alt="/images/blog/admin_django.jpg" src="http://pythonpiura.org/images/blog/admin_django.jpg"&gt;
+&lt;p&gt;En el enlace donde dice Users vamos a dar click en Add para crear
+nuestro nuevo usuario, al que llamaremos usuario1:&lt;/p&gt;
+&lt;img alt="/images/blog/crear_usuario.jpg" src="http://pythonpiura.org/images/blog/crear_usuario.jpg"&gt;
+&lt;p&gt;Completamos los campos y le damos click a save:&lt;/p&gt;
+&lt;img alt="/images/blog/usuario_creado.jpg" src="http://pythonpiura.org/images/blog/usuario_creado.jpg"&gt;
+&lt;p&gt;Por ahora con esto es suficiente y ya tenemos nuestro usuario creado y
+listo para usarlo, salimos dando click en logout y nos vamos al login
+del proyecto para ingresar con nuestro nuevo usuario y la contraseña
+que le hemos asignado:&lt;/p&gt;
+&lt;img alt="/images/blog/nuevo_logueo.jpg" src="http://pythonpiura.org/images/blog/nuevo_logueo.jpg"&gt;
+&lt;p&gt;En nuestra aplicación personas, con este usuario podemos hacer lo
+mismo que con el usuario anterior, pero que pasa si nosotros queremos
+restringir algunas cosas a este nuevo usuario, por ejemplo, no dejar
+que este usuario cree ni modifique personas, pero que si pueda ver su
+detalle y exportar el reporte en una hoja de calculo ¿Cómo hacemos
+esto?
+Con Django otra vez esto es muy sencillo y podemos definir diferentes
+niveles de acceso, restringiendo las opciones en la plantilla html y
+negando el acceso a la vista en cuestión, hagamos lo primero:&lt;/p&gt;
+&lt;p&gt;Si queremos restringir el acceso a las opciones desde la plantilla
+html, lo mas rápido que se nos ocurre es eliminar los íconos que nos
+brindan esas opciones, esto lo podemos hacer usando los permisos
+proporcionados por django de la siguiente manera:
+Primero para restringir la visualización del ícono de crear personas:
 personas.html&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% if perms.personas.add_persona %}&lt;/p&gt;
-&lt;p&gt;&amp;lt;div class="col-lg-1"&amp;gt;&lt;br&gt;
-	&amp;lt;a id="crear_detalle" href="reporte_personas_excel’ %}" class="btn btn-info btn-block"&amp;gt;&lt;br&gt;
-		&amp;lt;span class="glyphicon glyphicon-list-alt"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-	&amp;lt;/a&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;/p&gt;
-&lt;p&gt;{% endif %}&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Si observamos detenidamente hemos agregado en la parte superior del div del enlace un condicional que utilizar una variable llamada perms, en esta variable se almacenan los permisos de los que dispone el usuario que ha iniciado sesión, luego de perms podemos observar el nombre de la aplicación, en nuestro caso personas, y finalmente tenemos el permiso llamado add y el modelo persona que configuran el permiso add_persona, esta condificional nos dice, si el usuario tiene el permiso add_persona, entonces se debe renderizar el div, sino no hace nada.&lt;br&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-1"&gt;&lt;/a&gt;{% if perms.personas.add_persona %}
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-1"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-4"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"crear_detalle"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"reporte_personas_excel' %}"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-info btn-block"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-5"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-list-alt"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-6"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-7"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-8"&gt;&lt;/a&gt;
+&lt;a name="rest_code_2bb54aeedfce4750972660d13e8177f8-9"&gt;&lt;/a&gt;{% endif %}
+&lt;/pre&gt;&lt;p&gt;Si observamos detenidamente hemos agregado en la parte superior del
+div del enlace un condicional que utilizar una variable llamada perms,
+en esta variable se almacenan los permisos de los que dispone el
+usuario que ha iniciado sesión, luego de perms podemos observar el
+nombre de la aplicación, en nuestro caso personas, y finalmente
+tenemos el permiso llamado add y el modelo persona que configuran el
+permiso add_persona, esta condificional nos dice, si el usuario tiene
+el permiso add_persona, entonces se debe renderizar el div, sino no
+hace nada.
 Si ejecutamos nuestra aplicación observamos lo siguiente:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/no_crear1.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-232" src="https://pythonpiura.files.wordpress.com/2016/04/no_crear1.jpg?w=300" alt="no_crear" width="300" height="119"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;El ícono de agregar ya no aparece, pero todavía no podemos cantar victoria, un usuario avispado puede recordar la url de creación de personas y tipearla directamente en la barra de direcciones:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/crear_persona.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-229" src="https://pythonpiura.files.wordpress.com/2016/04/crear_persona.jpg?w=300" alt="crear_persona" width="300" height="229"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Mmmm, vemos que si puede ingresar ¿Cómo hacemos para restringir eso? Nuestros viejos amigos los decoradores vuelven nuevamente a nuestro auxilio, para ello debemos editar el archivo views.py:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.contrib.auth.decorators import permission_required&lt;br&gt;
-from django.utils.decorators import method_decorator&lt;br&gt;
-class CrearPersona(CreateView):&lt;br&gt;
-    model = Persona&lt;br&gt;
-    fields =['dni','nombre','apellido_paterno','apellido_materno']&lt;br&gt;
-    template_name = ‘crear_persona.html’&lt;br&gt;
-    success_url = reverse_lazy(‘personas:personas’)&lt;/p&gt;
-&lt;p&gt;    @method_decorator(permission_required(‘personas.add_persona’,reverse_lazy(‘personas:personas’)))&lt;br&gt;
-    def dispatch(self, *args, **kwargs):&lt;br&gt;
-        return super(CrearPersona, self).dispatch(*args, **kwargs)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Expliquemos esto que está un poco endiablado:&lt;br&gt;
-Un método sobre una clase no equivale realmente a una función independiente, por lo que se debe transformar en un decorador primero, el decorador @method_decorator transforma un decorador de una función en un decorador de un método a fin de que puede ser usado sobre una instancia de un método, en el caso de las vistas basadas en clase a quien debemos aplicar el decorador es al método dispatch, en este ejemplo, cada instancia de CrearPersona tendrá protección de permission_required.&lt;br&gt;
-El punto de entrada as_view() crea una instancia de la clase y llama al método dispatch(), (el despachador o resolvedor de URL) que busca la petición para determinar si es un GET, POST, etc, y releva la petición a un método que coincida con uno definido, o levante una excepción HttpResponseNotAllowed si no encuentra coincidencias.&lt;br&gt;
-A la función permission_required se le deben pasar dos argumentos:&lt;br&gt;
-El primero es el permiso a verificar que en este caso es add_persona y tiene la misma notación, primero la aplicación y luego el permiso.&lt;br&gt;
-El segundo es la url a donde debe ser direccionado el usuario en caso de no tener el permiso necesario, en este caso a la url personas.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora pongamos nuevamente la url anterior y veamos que nos sale:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/permiso_denegado.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-230" src="https://pythonpiura.files.wordpress.com/2016/04/permiso_denegado.jpg?w=300" alt="permiso_denegado" width="300" height="142"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Bueno con esto ya nos aseguramos que el usuario “usuario1″ no va a poder entrar de ninguna manera a la funcionalidad de creación de personas, ahora lo que falta es aplicar lo mismo a la vista ModificarPersona las demás vistas tendrá un tratamiento especial en un artículo posterior:&lt;/p&gt;
+&lt;img alt="/images/blog/no_crear1.jpg" src="http://pythonpiura.org/images/blog/no_crear1.jpg"&gt;
+&lt;p&gt;El ícono de agregar ya no aparece, pero todavía no podemos cantar
+victoria, un usuario avispado puede recordar la url de creación de
+personas y tipearla directamente en la barra de direcciones:&lt;/p&gt;
+&lt;img alt="/images/blog/crear_persona.jpg" src="http://pythonpiura.org/images/blog/crear_persona.jpg"&gt;
+&lt;p&gt;Mmmm, vemos que si puede ingresar ¿Cómo hacemos para restringir eso?
+Nuestros viejos amigos los decoradores vuelven nuevamente a nuestro
+auxilio, para ello debemos editar el archivo views.py:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib.auth.decorators&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;permission_required&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.utils.decorators&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;method_decorator&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;CrearPersona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CreateView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-4"&gt;&lt;/a&gt;        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Persona&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'dni'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'nombre'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'apellido_paterno'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'apellido_materno'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-6"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'crear_persona.html'&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;success_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas:personas'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-8"&gt;&lt;/a&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-9"&gt;&lt;/a&gt;        &lt;span class="nd"&gt;@method_decorator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;permission_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas.add_persona'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas:personas'&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-10"&gt;&lt;/a&gt;        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-11"&gt;&lt;/a&gt;                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Expliquemos esto que está un poco endiablado:
+Un método sobre una clase no equivale realmente a una función
+independiente, por lo que se debe transformar en un decorador primero,
+el decorador @method_decorator transforma un decorador de una función
+en un decorador de un método a fin de que puede ser usado sobre una
+instancia de un método, en el caso de las vistas basadas en clase a
+quien debemos aplicar el decorador es al método dispatch, en este
+ejemplo, cada instancia de CrearPersona tendrá protección de
+permission_required.
+El punto de entrada as_view() crea una instancia de la clase y llama
+al método dispatch(), (el despachador o resolvedor de URL) que busca
+la petición para determinar si es un GET, POST, etc, y releva la
+petición a un método que coincida con uno definido, o levante una
+excepción HttpResponseNotAllowed si no encuentra coincidencias.
+A la función permission_required se le deben pasar dos argumentos:
+El primero es el permiso a verificar que en este caso es add_persona y
+tiene la misma notación, primero la aplicación y luego el permiso.
+El segundo es la url a donde debe ser direccionado el usuario en caso
+de no tener el permiso necesario, en este caso a la url personas.&lt;/p&gt;
+&lt;p&gt;Ahora pongamos nuevamente la url anterior y veamos que nos sale:&lt;/p&gt;
+&lt;img alt="/images/blog/permiso_denegado.jpg" src="http://pythonpiura.org/images/blog/permiso_denegado.jpg"&gt;
+&lt;p&gt;Bueno con esto ya nos aseguramos que el usuario “usuario1″ no va a
+poder entrar de ninguna manera a la funcionalidad de creación de
+personas, ahora lo que falta es aplicar lo mismo a la vista
+ModificarPersona las demás vistas tendrá un tratamiento especial en un
+artículo posterior:&lt;/p&gt;
 &lt;p&gt;personas.html&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;/p&gt;
-&lt;p&gt;&amp;lt;tbody&amp;gt;&lt;br&gt;
-{% for persona in personas %}&lt;br&gt;
-	&amp;lt;tr&amp;gt;&lt;br&gt;
-		&amp;lt;td&amp;gt;{{ persona.dni }}&amp;lt;/td&amp;gt;&lt;br&gt;
-		&amp;lt;td&amp;gt;{{ persona.nombre }}&amp;lt;/td&amp;gt;&lt;br&gt;
-		&amp;lt;td&amp;gt;{{ persona.apellido_paterno }}&amp;lt;/td&amp;gt;&lt;br&gt;
-		&amp;lt;td&amp;gt;{{ persona.apellido_materno }}&amp;lt;/td&amp;gt;&lt;br&gt;
-		&amp;lt;td class="text-center"&amp;gt;&lt;br&gt;
-			&amp;lt;a class="btn btn-small" href="{% url ‘personas:detalle_persona’ persona.pk %}"&amp;gt;&lt;br&gt;
-				&amp;lt;span class="glyphicon glyphicon-folder-open"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			&amp;lt;/a&amp;gt;&lt;br&gt;
-			{% if perms.personas.change_persona %}&lt;br&gt;
-			&amp;lt;a class="btn btn-small" href="{% url ‘personas:modificar_persona’ persona.pk %}"&amp;gt;&lt;br&gt;
-				&amp;lt;span class="glyphicon glyphicon-pencil"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			&amp;lt;/a&amp;gt;&lt;br&gt;
-			{% endif %}&lt;br&gt;
-		&amp;lt;/td&amp;gt;&lt;br&gt;
-	&amp;lt;/tr&amp;gt;&lt;br&gt;
-{% endfor %}&lt;br&gt;
-&amp;lt;/tbody&amp;gt;&lt;/p&gt;
-&lt;p&gt;[/sourcecode]&lt;/p&gt;
-&lt;p&gt;views.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-class ModificarPersona(UpdateView):&lt;br&gt;
-    model = Persona&lt;br&gt;
-    template_name = ‘modificar_persona.html’&lt;br&gt;
-    fields = ['dni','nombre','apellido_paterno','apellido_materno']&lt;br&gt;
-    success_url = reverse_lazy(‘personas:personas’)&lt;/p&gt;
-&lt;p&gt;    @method_decorator(permission_required(‘personas.change_persona’,reverse_lazy(‘personas:personas’)))&lt;br&gt;
-    def dispatch(self, *args, **kwargs):&lt;br&gt;
-        return super(ModificarPersona, self).dispatch(*args, **kwargs)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Notamos que el permiso ahora se llama change_persona, detengamonos un poco aquí y expliquemos esto, por defecto django aplica tres permisos a cada uno de nuestros modelos: add, change y delete, que especifican si un usuario puede crear, modificar o borrar un elemento de un modelo dado, en este caso el modelo es persona.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Si corremos nuestra proyecto tenemos lo siguiente:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/sin_accesos.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-233" src="https://pythonpiura.files.wordpress.com/2016/04/sin_accesos.jpg?w=300" alt="sin_accesos" width="300" height="113"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Nótese que ya no aparece el lápiz de edición y tampoco se puede acceder con el url de modificar directamente en la barra de direcciones.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora vamos a crear un nuevo usuario llamado usuario2, al que si le vamos a dar los permisos de crear y modificar, repetimos los pasos para crear el usuario en la interfaz de administración y nos detenemos en la ventana posterior a la creación del usuario, en la opción de permisos:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/permisos.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-234" src="https://pythonpiura.files.wordpress.com/2016/04/permisos.jpg?w=300" alt="permisos" width="300" height="86"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;En esta opción tenemos un sinnumero de permisos, busquemos los relacionados a la aplicación personas y al modelo persona y los seleccionamos:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/seleccionar_permisos.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-235" src="https://pythonpiura.files.wordpress.com/2016/04/seleccionar_permisos.jpg?w=300" alt="seleccionar_permisos" width="300" height="89"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Seleccionamos la flechita entre los dos cuadros y le damos al botón Save:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/escoger.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-236" src="https://pythonpiura.files.wordpress.com/2016/04/escoger.jpg?w=300" alt="escoger" width="300" height="78"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Con esto ya tenemos que el usuario “usuario2″ tiene los permisos asignados. Ahora salgamos de la interfaz de administración e ingresemos a nuestro proyecto con el “usuario2″:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/con_permisos.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-237" src="https://pythonpiura.files.wordpress.com/2016/04/con_permisos.jpg?w=300" alt="con_permisos" width="300" height="115"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Listo ahora si el usuario2, ya tendrá estos permisos básicos y el usuario1 no, el usuario mamaya es superusuario por lo tanto puede ingresar donde quiera.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Eso es todo.&lt;br&gt;
-Saludos.&lt;/p&gt;
-</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</guid><pubDate>Fri, 29 Apr 2016 03:33:04 GMT</pubDate></item><item><title>Logout y Protección de Vistas en Django</title><link>http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;En el post anterior habiamos creado un login con Django ahora nos toca hacer lo mismo pero para salir de la sesión que habiamos iniciado, para ello vamos a modificar nuestro archivo urls.py para crear la url llamada salir que invoca al método logout definido en django:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tbody&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-2"&gt;&lt;/a&gt;{% for persona in personas %}
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-4"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.dni }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-5"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.nombre }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-6"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.apellido_paterno }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-7"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.apellido_materno }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-8"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-9"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url personas:detalle_persona' persona.pk %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-10"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-folder-open"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-11"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-12"&gt;&lt;/a&gt;                {% if perms.personas.change_persona %}
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-13"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:modificar_persona' persona.pk %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-14"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-pencil"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-15"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-16"&gt;&lt;/a&gt;                {% endif %}
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-17"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-18"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-19"&gt;&lt;/a&gt;{% endfor %}
+&lt;a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-20"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tbody&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;views.py&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ModificarPersona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UpdateView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-2"&gt;&lt;/a&gt;        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Persona&lt;/span&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-3"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'modificar_persona.html'&lt;/span&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-4"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'dni'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'nombre'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'apellido_paterno'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'apellido_materno'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;success_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas:personas'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-7"&gt;&lt;/a&gt;        &lt;span class="nd"&gt;@method_decorator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;permission_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas.change_persona'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas:personas'&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-8"&gt;&lt;/a&gt;        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-9"&gt;&lt;/a&gt;                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ModificarPersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Notamos que el permiso ahora se llama change_persona, detengamonos un
+poco aquí y expliquemos esto, por defecto django aplica tres permisos
+a cada uno de nuestros modelos: add, change y delete, que especifican
+si un usuario puede crear, modificar o borrar un elemento de un modelo
+dado, en este caso el modelo es persona.&lt;/p&gt;
+&lt;p&gt;Si corremos nuestra proyecto tenemos lo siguiente:&lt;/p&gt;
+&lt;img alt="/images/blog/sin_accesos.jpg" src="http://pythonpiura.org/images/blog/sin_accesos.jpg"&gt;
+&lt;p&gt;Nótese que ya no aparece el lápiz de edición y tampoco se puede
+acceder con el url de modificar directamente en la barra de
+direcciones.&lt;/p&gt;
+&lt;p&gt;Ahora vamos a crear un nuevo usuario llamado usuario2, al que si le
+vamos a dar los permisos de crear y modificar, repetimos los pasos
+para crear el usuario en la interfaz de administración y nos detenemos
+en la ventana posterior a la creación del usuario, en la opción de
+permisos:&lt;/p&gt;
+&lt;img alt="/images/blog/permisos.jpg" src="http://pythonpiura.org/images/blog/permisos.jpg"&gt;
+&lt;p&gt;En esta opción tenemos un sinnumero de permisos, busquemos los
+relacionados a la aplicación personas y al modelo persona y los
+seleccionamos:&lt;/p&gt;
+&lt;img alt="/images/blog/seleccionar_permisos.jpg" src="http://pythonpiura.org/images/blog/seleccionar_permisos.jpg"&gt;
+&lt;p&gt;Seleccionamos la flechita entre los dos cuadros y le damos al botón
+Save:&lt;/p&gt;
+&lt;img alt="/images/blog/escoger.jpg" src="http://pythonpiura.org/images/blog/escoger.jpg"&gt;
+&lt;p&gt;Con esto ya tenemos que el usuario “usuario2″ tiene los permisos
+asignados. Ahora salgamos de la interfaz de administración e
+ingresemos a nuestro proyecto con el “usuario2″:&lt;/p&gt;
+&lt;img alt="/images/blog/con_permisos.jpg" src="http://pythonpiura.org/images/blog/con_permisos.jpg"&gt;
+&lt;p&gt;Listo ahora si el usuario2, ya tendrá estos permisos básicos y el
+usuario1 no, el usuario mamaya es superusuario por lo tanto puede
+ingresar donde quiera.&lt;/p&gt;
+&lt;p&gt;Eso es todo.
+Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</guid><pubDate>Fri, 29 Apr 2016 03:33:04 GMT</pubDate></item><item><title>Logout y Protección de Vistas en Django</title><link>http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;En el post anterior habiamos creado un login con Django ahora nos toca hacer lo mismo pero para salir de la sesión que habiamos iniciado, para ello vamos a modificar nuestro archivo urls.py para crear la url llamada salir que invoca al método logout definido en django:&lt;/p&gt;
 &lt;p&gt;[sourcecode language="python"]&lt;br&gt;
 from django.conf.urls import patterns, url&lt;br&gt;
 from seguridad.views import Login&lt;br&gt;
