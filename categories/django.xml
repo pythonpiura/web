@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Python Piura (Django)</title><link>http://pythonpiura.org/</link><description></description><atom:link href="http://pythonpiura.org/categories/django.xml" rel="self" type="application/rss+xml"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 15:41:19 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Python Piura (Django)</title><link>http://pythonpiura.org/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://pythonpiura.org/categories/django.xml"></atom:link><language>es</language><lastBuildDate>Sat, 06 Aug 2016 17:02:47 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
 bastante olvidado estos últimos días y haremos un reporte en pdf
 utilizando la librería &lt;a class="reference external" href="http://www.reportlab.com/"&gt;reportlab&lt;/a&gt;, para ello la instalamos:&lt;/p&gt;
 &lt;pre class="code bash"&gt;&lt;a name="rest_code_13527231d4a5419c93ddc7424ecc9a31-1"&gt;&lt;/a&gt;pip install reportlab
@@ -410,473 +410,555 @@ ingresemos a nuestro proyecto con el “usuario2″:&lt;/p&gt;
 usuario1 no, el usuario mamaya es superusuario por lo tanto puede
 ingresar donde quiera.&lt;/p&gt;
 &lt;p&gt;Eso es todo.
-Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</guid><pubDate>Fri, 29 Apr 2016 03:33:04 GMT</pubDate></item><item><title>Logout y Protección de Vistas en Django</title><link>http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;En el post anterior habiamos creado un login con Django ahora nos toca hacer lo mismo pero para salir de la sesión que habiamos iniciado, para ello vamos a modificar nuestro archivo urls.py para crear la url llamada salir que invoca al método logout definido en django:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.conf.urls import patterns, url&lt;br&gt;
-from seguridad.views import Login&lt;br&gt;
-from django.contrib.auth.views import logout&lt;/p&gt;
-&lt;p&gt;urlpatterns = patterns(”,&lt;br&gt;
-    url(r’^$’, Login.as_view(), name="login"),&lt;br&gt;
-    url(r’^salir$’, logout, name="salir", kwargs={‘next_page’: ‘/’}),&lt;br&gt;
-)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Como podemos observar llamamos a la vista logout de django.contrib.auth.views, que nos permite terminar la sesión que hemos iniciado pasandole el argumento next_page que nos redirecciona a la url raiz de nuestro proyecto, osea al login.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora vamos a utilizar la url creada, hacemos una modificación a nuestro archivo base.html para agregar un enlace de salida:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% load staticfiles %}&lt;br&gt;
-&amp;lt;!DOCTYPE html&amp;gt;&lt;br&gt;
-&amp;lt;html&amp;gt;&lt;br&gt;
-	&amp;lt;head&amp;gt;&lt;br&gt;
-		&amp;lt;meta charset="utf-8"&amp;gt;&lt;br&gt;
-	    &amp;lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&amp;gt;&lt;br&gt;
-	    &amp;lt;meta name="viewport" content="width=device-width, initial-scale=1"&amp;gt;&lt;br&gt;
-	    &amp;lt;meta name="description" content=""&amp;gt;&lt;br&gt;
-	    &amp;lt;meta name="author" content=""&amp;gt;&lt;br&gt;
-		&amp;lt;title&amp;gt;Ejemplo Círculo de Programadores de Python Piura&amp;lt;/title&amp;gt;&lt;br&gt;
-		&amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&amp;gt;&lt;br&gt;
-		&amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&amp;gt;&lt;br&gt;
-		&amp;lt;script src="{% static "js/jquery.js" %}"&amp;gt;&amp;lt;/script&amp;gt;&lt;br&gt;
-	    &amp;lt;script src="{% static "js/bootstrap.min.js" %}"&amp;gt;&amp;lt;/script&amp;gt;&lt;br&gt;
-	    &amp;lt;script src="{% static "js/jquery.dataTables.min.js" %}"&amp;gt;&amp;lt;/script&amp;gt;&lt;br&gt;
-	&amp;lt;/head&amp;gt;&lt;br&gt;
-	&amp;lt;body&amp;gt;&lt;br&gt;
-		&amp;lt;div id="wrapper"&amp;gt;&lt;br&gt;
-			&amp;lt;nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"&amp;gt;&lt;br&gt;
-				&amp;lt;div class="navbar-header"&amp;gt;&lt;br&gt;
-			        &amp;lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="sr-only"&amp;gt;Desplegar navegación&amp;lt;/span&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			            &amp;lt;span class="icon-bar"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-			        &amp;lt;/button&amp;gt;&lt;br&gt;
-			        &amp;lt;a class="navbar-brand" href="{% url ‘personas:bienvenida’ %}"&amp;gt;&lt;br&gt;
-						&amp;lt;span class="glyphicon glyphicon-home"&amp;gt;&amp;lt;/span&amp;gt; Inicio&lt;br&gt;
-					&amp;lt;/a&amp;gt;&lt;br&gt;
-					&amp;lt;a class="navbar-brand" href="{% url ‘personas:personas’ %}"&amp;gt;&lt;br&gt;
-						&amp;lt;span class="glyphicon glyphicon-user"&amp;gt;&amp;lt;/span&amp;gt; Personas&lt;br&gt;
-					&amp;lt;/a&amp;gt;&lt;br&gt;
-			    &amp;lt;/div&amp;gt;&lt;br&gt;
-			    &amp;lt;div class="navbar-right"&amp;gt;&lt;br&gt;
-					&amp;lt;a class="navbar-brand" href="{% url ‘seguridad:salir’ %}"&amp;gt;&lt;br&gt;
-						&amp;lt;span class="glyphicon glyphicon-log-out"&amp;gt;&amp;lt;/span&amp;gt; Salir&lt;br&gt;
-					&amp;lt;/a&amp;gt;&lt;br&gt;
-				&amp;lt;/div&amp;gt;&lt;br&gt;
-				{% block menu %}&lt;br&gt;
-		        {% endblock menu %}&lt;br&gt;
-		    &amp;lt;/nav&amp;gt;&lt;br&gt;
-			&amp;lt;div id="page-wrapper"&amp;gt;&lt;br&gt;
-				&amp;lt;div class="container-fluid"&amp;gt;&lt;br&gt;
-					{% block cuerpo %}&lt;br&gt;
-					{% endblock cuerpo %}&lt;br&gt;
-				&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-		&amp;lt;/div&amp;gt;&lt;br&gt;
-	&amp;lt;/body&amp;gt;&lt;br&gt;
-	{% block js %}&lt;br&gt;
-	{% endblock js %}&lt;br&gt;
-&amp;lt;/html&amp;gt;&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Con lo que tenemos lo siguiente:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/salir.jpg"&gt;&lt;img class="size-medium wp-image-204 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/salir.jpg?w=300" alt="salir" width="300" height="77"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora ya podemos dar click en salir y terminar la sesión que estamos utilizando, pero si observamos bien esto nos nos sirve de nada para proteger nuestra aplicación de accesos no deseados, es decir que un usuario sin estar logueado puede ingresar facilmente a cualquiera de nuestras urls, con solo ponerla en el navegador, por ejemplo, pongamos en la barra de direcciones:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://localhost:8000/personas/"&gt;http://localhost:8000/personas/&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Y observemos que podemos entrar sin ningún problema a pesar de no estar logueados.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;¿Cómo arreglamos esto? Sencillo, viene a nuestra ayuda un &lt;a href="http://www.juanjoconti.com.ar/2008/07/11/decoradores-en-python-i/"&gt;decorador&lt;/a&gt; muy útil llamado login_required, este va a proteger nuestra vista de aquellos usuarios que pretenden ingresar sin tener una sesión iniciada, para utilizarlo simplemente debemos modificar nuestro archivo urls.py de la aplicación con las vistas que queremos proteger:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.conf.urls import patterns, url&lt;br&gt;
-from personas.views import Personas, CrearPersona, ReportePersonasExcel,\&lt;br&gt;
-    Bienvenida, DetallePersona, ModificarPersona&lt;br&gt;
-from django.contrib.auth.decorators import login_required&lt;/p&gt;
-&lt;p&gt;urlpatterns = patterns(”,&lt;br&gt;
-    url(r’^$’,login_required(Bienvenida.as_view()), name="bienvenida"),&lt;br&gt;
-    url(r’^personas/$’,login_required(Personas.as_view()), name="personas"),&lt;br&gt;
-    url(r’^crear_persona/$’,login_required(CrearPersona.as_view()), name="crear_persona"),&lt;br&gt;
-    url(r’^reporte_personas_excel/$’,login_required(ReportePersonasExcel.as_view()), name="reporte_personas_excel"),&lt;br&gt;
-    url(r’^detalle_persona/(?P&amp;lt;pk&amp;gt;\d+)/$’, login_required(DetallePersona.as_view()), name="detalle_persona"),&lt;br&gt;
-    url(r’^modificar_persona/(?P&amp;lt;pk&amp;gt;\d+)/$’,login_required(ModificarPersona.as_view()), name="modificar_persona"),&lt;br&gt;
-)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Si probamos ahora poniendo nuevamente la dirección anterior en nuestra barra de direcciones sin habernos logueado, nos aparecerá la siguiente pantalla:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/error.jpg"&gt;&lt;img class="size-medium wp-image-205 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/error.jpg?w=300" alt="error" width="300" height="75"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;¿Muy feo, no? Lamentablemente no podemos presentar esto al usuario sino que quisieramos que cada vez que alguien intente acceder de esta forma, nos redireccione a la pantalla de login, esto lo hacemos con una linea agregada al archivo settings.py:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-LOGIN_URL = ‘/’&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ahora probemos nuevamente:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/correcto.jpg"&gt;&lt;img class="aligncenter size-medium wp-image-206" src="https://pythonpiura.files.wordpress.com/2016/04/correcto.jpg?w=300" alt="correcto" width="300" height="77"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Con esto ya tenemos protegidas nuestras vistas y garantizamos que no tendremos accesos no deseados.&lt;br&gt;
-Saludos.&lt;/p&gt;
-</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/</guid><pubDate>Thu, 28 Apr 2016 03:21:09 GMT</pubDate></item><item><title>Login en Django</title><link>http://pythonpiura.org/posts/2016/04/26/login-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Hasta este momento hemos podido tener acceso sin ningún tipo de restricciones a nuestro proyecto tutorial, pero todos sabemos que en el mundo real, eso no funciona así, por lo tanto es necesario que creemos un login para que los usuarios puedan iniciar sesión, para ello vamos a rediseñar nuestro proyecto tutorial y vamos a agregar nuevas cosas, para hacer este pequeño post me he basado en estos artículos:&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;&lt;a href="http://www.secnot.com/django-custom-login-cbv.html"&gt;Formulario Login usando Class Based Views &lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;&lt;a href="http://librosweb.es/libro/django_1_0/capitulo_12/utilizando_usuarios.html"&gt;El Libro de Django&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;
-Listo ahora si empecemos con todo:&lt;br&gt;
-Primero crearemos una aplicación llamada seguridad, donde vamos a manejar todo lo referente a los usuarios:&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;&lt;a href="http://pythonpiura.org/2016/04/seguridad.jpg"&gt;&lt;img class="alignnone size-full wp-image-195" src="http://pythonpiura.org/2016/04/seguridad.jpg" alt="seguridad" width="160" height="205"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Ahora vamos a decirle a nuestro settings.py que vamos a utilizar la aplicación seguridad:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-INSTALLED_APPS = (&lt;br&gt;
-    ‘django.contrib.admin’,&lt;br&gt;
-    ‘django.contrib.auth’,&lt;br&gt;
-    ‘django.contrib.contenttypes’,&lt;br&gt;
-    ‘django.contrib.sessions’,&lt;br&gt;
-    ‘django.contrib.messages’,&lt;br&gt;
-    ‘django.contrib.staticfiles’,&lt;br&gt;
-    ‘seguridad’,&lt;br&gt;
-    ‘personas’,&lt;br&gt;
-)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Y redefinimos nuestro archivo urls.py principal de tal manera que al ingresar ya no apunte a la aplicación personas sino a seguridad:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.conf.urls import include, url&lt;br&gt;
-from django.contrib import admin&lt;/p&gt;
-&lt;p&gt;urlpatterns = [&lt;br&gt;
-    url(r'^admin/', include(admin.site.urls)),&lt;br&gt;
-    url(r'^', include('seguridad.urls',namespace='seguridad')),&lt;br&gt;
-    url(r'^personas/', include('personas.urls',namespace='personas')),&lt;br&gt;
-]&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Dentro de nuestra aplicación seguridad vamos a crear una vista llamada Login:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-#Importamos la vista genérica FormView&lt;br&gt;
-from django.views.generic.edit import FormView&lt;br&gt;
-from django.http.response import HttpResponseRedirect&lt;br&gt;
-from django.core.urlresolvers import reverse_lazy&lt;br&gt;
-#Importamos el formulario de autenticación de django&lt;br&gt;
-from django.contrib.auth.forms import AuthenticationForm&lt;br&gt;
-from django.contrib.auth import login&lt;/p&gt;
-&lt;p&gt;# Create your views here.&lt;br&gt;
-class Login(FormView):&lt;br&gt;
-    #Establecemos la plantilla a utilizar&lt;br&gt;
-    template_name = ‘login.html’&lt;br&gt;
-    #Le indicamos que el formulario a utilizar es el formulario de autenticación de Django&lt;br&gt;
-    form_class = AuthenticationForm&lt;br&gt;
-    #Le decimos que cuando se haya completado exitosamente la operación nos redireccione a la url bienvenida de la aplicación personas&lt;br&gt;
-    success_url =  reverse_lazy("personas:bienvenida")&lt;/p&gt;
-&lt;p&gt;    def dispatch(self, request, *args, **kwargs):&lt;br&gt;
-        #Si el usuario está autenticado entonces nos direcciona a la url establecida en success_url&lt;br&gt;
-        if request.user.is_authenticated():&lt;br&gt;
-            return HttpResponseRedirect(self.get_success_url())&lt;br&gt;
-        #Sino lo está entonces nos muestra la plantilla del login simplemente&lt;br&gt;
-        else:&lt;br&gt;
-            return super(Login, self).dispatch(request, *args, **kwargs)&lt;/p&gt;
-&lt;p&gt;    def form_valid(self, form):&lt;br&gt;
-        login(self.request, form.get_user())&lt;br&gt;
-        return super(Login, self).form_valid(form)&lt;/p&gt;
-&lt;p&gt;[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Expliquemos algunas cosas:&lt;br&gt;
-reverse_lazy, como su nombre lo indica, es una implementación perezosa de la URL de resolución inversa(reverse). A diferencia de la función inversa tradicional, reverse_lazy no se ejecutará hasta que se necesite el valor. Es útil para prevenir excepciones ‘Reverse Not Found’ cuando se trabaja con direcciones URL que no pueden ser conocidos inmediatamente.&lt;br&gt;
-dispatch, en el archivo urls.py el punto de entrada as_view() crea una instancia de la clase y llama al método dispatch(), (el despachador o resolvedor de URL) que busca la petición para determinar si es un GET, POST, etc, y releva la petición a un método que coincida con uno definido, o levante una excepción HttpResponseNotAllowed si no encuentra coincidencias.&lt;br&gt;
-form_valid, este método es llamado cuando el formulario valida los datos.&lt;br&gt;
-login, la llamada a login() acepta un objeto de la clase HttpRequest y un objeto User y almacena el identificador del usuario en la sesión, usando el entorno de sesiones de Django. En el caso nuestro, al usar el formulario de autenticación de django, invocando a form.get_user() obtenemos el objeto User.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora vamos a crear la plantilla login.html y la guardaremos dentro de la carpeta templates(que debemos crear) en nuestra aplicación seguridad:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% load staticfiles %}&lt;br&gt;
-&amp;lt;!DOCTYPE html&amp;gt;&lt;br&gt;
-&amp;lt;html&amp;gt;&lt;br&gt;
-	&amp;lt;head&amp;gt;&lt;br&gt;
-	    &amp;lt;meta charset="utf-8"/&amp;gt;&amp;lt;/meta&amp;gt;&lt;br&gt;
-	    &amp;lt;title&amp;gt;CIPROPY&amp;lt;/title&amp;gt;&lt;br&gt;
-	    &amp;lt;meta content="width=device-width, initial-scale=1.0" name="viewport"&amp;gt;&amp;lt;/meta&amp;gt;&lt;br&gt;
-	    &amp;lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&amp;gt;&amp;lt;/link&amp;gt;&lt;br&gt;
-	&amp;lt;/head&amp;gt;&lt;br&gt;
-	&amp;lt;body&amp;gt;&lt;br&gt;
-		&amp;lt;div class="container"&amp;gt;&lt;br&gt;
-			&amp;lt;br&amp;gt;&lt;br&gt;
-			&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-				&amp;lt;div class="col-md-4 col-md-offset-4"&amp;gt;&lt;br&gt;
-					&amp;lt;div class="login-panel panel panel-default"&amp;gt;&lt;br&gt;
-					    &amp;lt;div class="panel-heading"&amp;gt;&lt;br&gt;
-					        &amp;lt;h3 class="panel-title"&amp;gt;CIPROPY&amp;lt;/h3&amp;gt;&lt;br&gt;
-					    &amp;lt;/div&amp;gt;&lt;br&gt;
-					    &amp;lt;div class="panel-body"&amp;gt;&lt;br&gt;
-							&amp;lt;form role="form" method="post" id=’form_login’&amp;gt;&lt;br&gt;
-								{% csrf_token %}&lt;br&gt;
-							    &amp;lt;div class="form-group"&amp;gt;&lt;br&gt;
-							    	&amp;lt;label&amp;gt;Usuario:&amp;lt;/label&amp;gt;&lt;br&gt;
-							        {{ form.username }}&lt;br&gt;
-							    &amp;lt;/div&amp;gt;&lt;br&gt;
-							    &amp;lt;div class="form-group"&amp;gt;&lt;br&gt;
-							    	&amp;lt;label&amp;gt;Contraseña:&amp;lt;/label&amp;gt;&lt;br&gt;
-							        {{ form.password }}&lt;br&gt;
-							    &amp;lt;/div&amp;gt;&lt;br&gt;
-							    &amp;lt;button class="btn btn-lg btn-success btn-block" type="submit" name="login"/&amp;gt;Login&amp;lt;/button&amp;gt;&lt;br&gt;
-						    &amp;lt;/form&amp;gt;&lt;br&gt;
-						&amp;lt;/div&amp;gt;&lt;br&gt;
-			        &amp;lt;/div&amp;gt;&lt;br&gt;
-			    &amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-		&amp;lt;/div&amp;gt;&lt;br&gt;
-	&amp;lt;/body&amp;gt;&lt;br&gt;
-&amp;lt;/html&amp;gt;&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Nótese que esta plantilla no extiende de ninguna otra, ya que su comportamiento es especial, otra cosa peculiar aquí es el uso de las etiquetas {{ form.username }} y {{ form.password }} que al renderizarse se comportan como dos cajas de texto una normal y la otra tipo password, esto es posible gracias a que estamos usando el Formulario AuthenticationForm de Django y lo hemos definido previamente en nuestra vista Login, este formulario tiene los campos username y password y los podemos utilizar en la plantilla anteponiendo el objeto form, este comportamiento especial es definido por la clase FormView.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora si debemos crear un archivo urls.py en nuestra aplicación seguridad de la siguiente manera:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.conf.urls import patterns, url&lt;br&gt;
-from seguridad.views import Login&lt;/p&gt;
-&lt;p&gt;urlpatterns = patterns(”,&lt;br&gt;
-    url(r’^$’, Login.as_view(), name="login"),&lt;br&gt;
-)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Y listo con eso ya tenemos que al momento de correr nuestro servidor de prueba nos va a mostrar lo siguiente:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/login.jpg"&gt;&lt;img class="wp-image-197 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/login1.jpg?w=300" alt="login" width="491" height="139"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Con esto ya tenemos el proyecto listo pero no tenemos ningún usuario, debemos crear el superusuario para probar, mas adelante en próximos tutoriales crearemos mas usuarios para hacer las pruebas correspondientes, nos movemos hasta la carpeta donde está ubicado el proyecto y desde una terminal escribimos lo siguiente:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-python manage.py createsuperuser&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Nos pedira algunos datos, que debemos completar o presionar enter para dejar el dato mostrado por defecto entre paréntesis:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-Username (leave blank to use ‘mamaya’):&lt;br&gt;
-Email address:&lt;br&gt;
-Password:&lt;br&gt;
-Password (again):&lt;br&gt;
-Superuser created successfully.&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;En mi caso he dejado por defecto el usuario mamaya, no le he puesto ninguna dirección de correo y he completado la password, esta no aparece al momento de ser digitada ya que es un mecanismo de protección de django, si todo se ha hecho correctamente nos aparecerá el mensaje “Superuser created successfully.”&lt;/p&gt;
-&lt;p&gt;Ahora si ya podemos usar el usuario mamaya para loguearnos&lt;br&gt;
-&lt;a href="http://pythonpiura.org/2016/04/login.jpg"&gt;&lt;img class="wp-image-197 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/login.jpg?w=300" alt="login" width="622" height="172"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Si hemos escrito correctamente la password nos redireccionará hasta nuestra vista principal de la aplicación personas y sino nos volverá a mostrar la ventana de login:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/presonas.jpg"&gt;&lt;img class="wp-image-199 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/presonas.jpg?w=300" alt="presonas" width="675" height="198"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Listo eso es todo, ya estaremos mejorando el funcionamiento de nuestro login en próximos posts.&lt;/p&gt;
-&lt;p&gt;Saludos.&lt;/p&gt;
-</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/26/login-en-django/</guid><pubDate>Wed, 27 Apr 2016 03:08:42 GMT</pubDate></item><item><title>Uso de UpdateView</title><link>http://pythonpiura.org/posts/2016/04/21/uso-de-updateview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;En este post vamos a terminar lo que dejamos inconcluso anteriormente, el uso de la clase UpdateView, como ya tenemos listo nuestro archivo personas.html, simplemente vamos a crear la clase y la url necesarias.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;views.py&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-class ModificarPersona(UpdateView):&lt;br&gt;
-    #Especificamos que el modelo a utilizar va a ser Persona&lt;br&gt;
-    model = Persona&lt;br&gt;
-    #Establecemos que la plantilla se llamará modificar persona&lt;br&gt;
-    template_name = ‘modificar_persona.html’&lt;br&gt;
-    #Determinamos los campos con los que se va a trabajar, esto es obligatorio sino nos saldrá un error&lt;br&gt;
-    fields = ['dni','nombre','apellido_paterno','apellido_materno']&lt;br&gt;
-    #Con esta linea establecemos que se hará despues que la operación de modificación se complete correctamente&lt;br&gt;
-    success_url = reverse_lazy(‘personas:personas’)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ahora creamos nuestra plantilla modificar_persona.html:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% extends "base.html" %}&lt;br&gt;
-{% block cuerpo %}&lt;/p&gt;
-&lt;p&gt;&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-    &amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-        &amp;lt;h1 class="page-header"&amp;gt;Modificar Persona&amp;lt;/h1&amp;gt;&lt;br&gt;
-    &amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-	&amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-		&amp;lt;div class="panel panel-default"&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-heading"&amp;gt;&lt;br&gt;
-			    Por favor ingrese todos los campos necesarios.&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-body"&amp;gt;&lt;br&gt;
-				&amp;lt;form role="form" method="post"&amp;gt;&lt;br&gt;
-					{% csrf_token %}&lt;br&gt;
-					&amp;lt;div class="form-group"&amp;gt;&lt;br&gt;
-						{{ form.as_p }}&lt;br&gt;
-					&amp;lt;/div&amp;gt;&lt;br&gt;
-					&amp;lt;div class=’form-group’&amp;gt;&lt;br&gt;
-						&amp;lt;input type="submit" class="btn btn-primary" name="submit" value="Modificar Persona"&amp;gt;&lt;br&gt;
-						&amp;lt;button type="reset" class="btn btn-primary" onclick="location.href=’{% url ‘personas:personas’ %}’"&amp;gt;&lt;br&gt;
-						    Cancelar&lt;br&gt;
-						&amp;lt;/button&amp;gt;&lt;br&gt;
-					&amp;lt;/div&amp;gt;&lt;br&gt;
-				&amp;lt;/form&amp;gt;&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-		&amp;lt;/div&amp;gt;&lt;br&gt;
-	&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;div id="popup"&amp;gt;&amp;lt;/div&amp;gt;&lt;br&gt;
-{% endblock cuerpo %}&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ahora le toca el turno a urls.py:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.conf.urls import patterns, url&lt;br&gt;
-from personas.views import Personas, CrearPersona, ReportePersonasExcel,\&lt;br&gt;
-    Bienvenida, DetallePersona, ModificarPersona&lt;/p&gt;
-&lt;p&gt;urlpatterns = patterns(”,&lt;br&gt;
-    url(r’^$’,Bienvenida.as_view(), name="bienvenida"),&lt;br&gt;
-    url(r’^personas/$’,Personas.as_view(), name="personas"),&lt;br&gt;
-    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),&lt;br&gt;
-    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),&lt;br&gt;
-    url(r’^detalle_persona/(?P&amp;lt;pk&amp;gt;\d+)/$’, DetallePersona.as_view(), name="detalle_persona"),&lt;br&gt;
-    url(r’^modificar_persona/(?P&amp;lt;pk&amp;gt;\d+)/$’,ModificarPersona.as_view(), name="modificar_persona"),&lt;br&gt;
-)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Nótese que la última url añadida es la de modificar persona, y funciona de manera parecida al detalle.&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora si hacemos que el enlace con el ícono del lapiz apunte a la url de modificar_persona:&lt;/p&gt;
-&lt;p&gt;personas.html&lt;br&gt;
-[sourcecode language="html"]&lt;br&gt;
-&amp;lt;a class="btn btn-small" href="{% url ‘personas:modificar_persona’ persona.pk %}"&amp;gt;&lt;br&gt;
-	&amp;lt;span class="glyphicon glyphicon-pencil"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-&amp;lt;/a&amp;gt;&lt;br&gt;
-[/sourcecode]&lt;br&gt;
-Con lo que tenemos lo siguiente:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/modificar_persona.jpg"&gt;&lt;img class="alignnone size-medium wp-image-183" src="https://pythonpiura.files.wordpress.com/2016/04/modificar_persona.jpg?w=300" alt="modificar_persona" width="500" height="250"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Saludos es todo por hoy.&lt;/p&gt;
-</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/21/uso-de-updateview/</guid><pubDate>Fri, 22 Apr 2016 03:26:16 GMT</pubDate></item><item><title>Uso de DetailView</title><link>http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Luego de haber visto el uso de TemplateView, CreateView y ListView, estos dos últimos los vimos de pasada casi sin mencionarlos, ahora vamos a agregar un par de nuevas funcionalidades a nuestro proyecto tutorial, para ello empezaremos modificando el archivo personas.html para agregarle un par de enlaces que nos van a permitir editar y ver el detalle de una persona en cuestión, en este post solamente cubriremos la funcionalidad de ver el detalle, posteriormente en otro post nos encargaremos de la funcionalidad de editar a la persona:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% extends "base.html" %}&lt;br&gt;
-{% block cuerpo %}&lt;br&gt;
-&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-    &amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-        &amp;lt;h1 class="page-header"&amp;gt;Tablas&amp;lt;/h1&amp;gt;&lt;br&gt;
-    &amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-	&amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-		&amp;lt;div class="panel panel-info"&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-heading"&amp;gt;&lt;br&gt;
-			    Personas&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-body"&amp;gt;&lt;br&gt;
-				&amp;lt;div class=’form-group’&amp;gt;&lt;br&gt;
-					&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-						&amp;lt;div class="col-lg-10"&amp;gt;	&lt;/p&gt;
-&lt;p&gt;						&amp;lt;/div&amp;gt;&lt;br&gt;
-						&amp;lt;div class="col-lg-1"&amp;gt;&lt;br&gt;
-							&amp;lt;a id="crear_detalle" href="{% url ‘personas:reporte_personas_excel’ %}" class="btn btn-info btn-block"&amp;gt;&lt;br&gt;
-								&amp;lt;span class="glyphicon glyphicon-list-alt"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-							&amp;lt;/a&amp;gt;&lt;br&gt;
-						&amp;lt;/div&amp;gt;&lt;br&gt;
-						&amp;lt;div class="col-lg-1"&amp;gt;&lt;br&gt;
-							&amp;lt;a id="crear_detalle" href="{% url ‘personas:crear_persona’ %}" class="btn btn-info btn-block"&amp;gt;&lt;br&gt;
-								&amp;lt;span class="glyphicon glyphicon-plus"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-							&amp;lt;/a&amp;gt;&lt;br&gt;
-						&amp;lt;/div&amp;gt;&lt;br&gt;
-					&amp;lt;/div&amp;gt;&lt;br&gt;
-				&amp;lt;/div&amp;gt;&lt;br&gt;
-				&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-					&amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-						&amp;lt;table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%"&amp;gt;&lt;br&gt;
-							&amp;lt;thead&amp;gt;&lt;br&gt;
-								&amp;lt;tr&amp;gt;&lt;br&gt;
-									&amp;lt;th class="text-center"&amp;gt;DNI&amp;lt;/th&amp;gt;&lt;br&gt;
-									&amp;lt;th class="text-center"&amp;gt;NOMBRE&amp;lt;/th&amp;gt;&lt;br&gt;
-									&amp;lt;th class="text-center"&amp;gt;APELLIDO PATERNO&amp;lt;/th&amp;gt;&lt;br&gt;
-									&amp;lt;th class="text-center"&amp;gt;APELLIDO MATERNO&amp;lt;/th&amp;gt;&lt;br&gt;
-									&amp;lt;th class="text-center"&amp;gt;ACCIONES&amp;lt;/th&amp;gt;&lt;br&gt;
-								&amp;lt;/tr&amp;gt;&lt;br&gt;
-							&amp;lt;/thead&amp;gt;&lt;br&gt;
-							&amp;lt;tbody&amp;gt;&lt;br&gt;
-							{% for persona in personas %}&lt;br&gt;
-								&amp;lt;tr&amp;gt;&lt;br&gt;
-									&amp;lt;td&amp;gt;{{ persona.dni }}&amp;lt;/td&amp;gt;&lt;br&gt;
-									&amp;lt;td&amp;gt;{{ persona.nombre }}&amp;lt;/td&amp;gt;&lt;br&gt;
-									&amp;lt;td&amp;gt;{{ persona.apellido_paterno }}&amp;lt;/td&amp;gt;&lt;br&gt;
-									&amp;lt;td&amp;gt;{{ persona.apellido_materno }}&amp;lt;/td&amp;gt;&lt;br&gt;
-									&amp;lt;td class="text-center"&amp;gt;&lt;br&gt;
-										&amp;lt;a class="btn btn-small" href="#"&amp;gt;&lt;br&gt;
-							                &amp;lt;span class="glyphicon glyphicon-folder-open"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-							            &amp;lt;/a&amp;gt;&lt;br&gt;
-							            &amp;lt;a class="btn btn-small" href="#"&amp;gt;&lt;br&gt;
-							                &amp;lt;span class="glyphicon glyphicon-pencil"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-							            &amp;lt;/a&amp;gt;&lt;br&gt;
-							        &amp;lt;/td&amp;gt;&lt;br&gt;
-								&amp;lt;/tr&amp;gt;&lt;br&gt;
-							{% endfor %}&lt;br&gt;
-							&amp;lt;/tbody&amp;gt;&lt;br&gt;
-						&amp;lt;/table&amp;gt;&lt;br&gt;
-					&amp;lt;/div&amp;gt;&lt;br&gt;
-				&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-		&amp;lt;/div&amp;gt;&lt;br&gt;
-	&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-{% endblock cuerpo %}&lt;br&gt;
-{% block js %}&lt;br&gt;
-&amp;lt;script&amp;gt;&lt;br&gt;
-$(document).ready(function()&lt;br&gt;
-{&lt;br&gt;
-    var table = $(‘#tabla’).DataTable( {&lt;br&gt;
-        "language": {&lt;br&gt;
-        	url: "/static/localizacion/es_ES.json"&lt;br&gt;
-        }&lt;br&gt;
-    } );&lt;/p&gt;
-&lt;p&gt;    $(‘#tabla tbody’).on( ‘click’, ‘tr’, function()&lt;br&gt;
-    {&lt;br&gt;
-    	if ($(this).hasClass(‘selected’) )&lt;br&gt;
-        {&lt;br&gt;
-        	$(this).removeClass(‘selected’);&lt;/p&gt;
-&lt;p&gt;        }&lt;br&gt;
-        else&lt;br&gt;
-        {&lt;br&gt;
-	        table.$(‘tr.selected’).removeClass(‘selected’);&lt;br&gt;
-	        $(this).addClass(‘selected’);&lt;br&gt;
-        }&lt;br&gt;
-    });   &lt;/p&gt;
-&lt;p&gt;});&lt;br&gt;
-&amp;lt;/script&amp;gt;&lt;br&gt;
-{% endblock js %}&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Nótese que en la cabecera de la tabla hemos puesto el encabezado acciones y que dentro del cuerpo de la tabla se ha agregado una columna que contiene dos enlaces: uno con el ícono de un libro y otro con el ícono de un lapiz, ambos son, para ver el detalle de la persona y el otro para editarlo.&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/tabla_nueva.jpg"&gt;&lt;img class="aligncenter wp-image-174" src="https://pythonpiura.files.wordpress.com/2016/04/tabla_nueva.jpg?w=300" alt="tabla_nueva" width="568" height="191"&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora vamos a implementar la funcionalidad de ver el detalle de la persona, para ello usamos la clase DetailView, esta clase nos simplifica la vida ya que nos permite mostrar el detalle de un modelo en particular, debiendo definir el modelo al que haremos referencia y la plantilla donde se renderizará el contenido:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.views.generic.detail import DetailView&lt;br&gt;
-class DetallePersona(DetailView):&lt;br&gt;
-    model = Persona&lt;br&gt;
-    template_name = ‘detalle_persona.html’&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ahora debemos crear la plantilla detalle_persona.html:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-{% extends "base.html" %}&lt;br&gt;
-{% block cuerpo %}&lt;br&gt;
-&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-    &amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-        &amp;lt;h1 class="page-header"&amp;gt;Personas&amp;lt;/h1&amp;gt;&lt;br&gt;
-    &amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-	&amp;lt;div class="col-lg-12"&amp;gt;&lt;br&gt;
-		&amp;lt;div class="panel panel-info"&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-heading"&amp;gt;&lt;br&gt;
-			    Detalle de Persona&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;div class="panel-body"&amp;gt;&lt;br&gt;
-				&amp;lt;div class=’form-group’&amp;gt;&lt;br&gt;
-					&amp;lt;div class="row"&amp;gt;&lt;br&gt;
-						&amp;lt;div class="col-md-12"&amp;gt;&lt;br&gt;
-							&amp;lt;label&amp;gt;DNI:&amp;lt;/label&amp;gt;&lt;br&gt;
-							&amp;lt;p&amp;gt;{{ object.dni }}&amp;lt;/p&amp;gt;&lt;br&gt;
-							&amp;lt;label&amp;gt;NOMBRE:&amp;lt;/label&amp;gt;&lt;br&gt;
-							&amp;lt;p&amp;gt;{{ object.nombre }}&amp;lt;/p&amp;gt;&lt;br&gt;
-							&amp;lt;label&amp;gt;APELLIDO PATERNO:&amp;lt;/label&amp;gt;&lt;br&gt;
-							&amp;lt;p&amp;gt;{{ object.apellido_paterno }}&amp;lt;/p&amp;gt;&lt;br&gt;
-							&amp;lt;label&amp;gt;APELLIDO MATERNO: &amp;lt;/label&amp;gt;&lt;br&gt;
-							&amp;lt;p&amp;gt;{{ object.apellido_materno }}&amp;lt;/p&amp;gt;&lt;br&gt;
-						&amp;lt;/div&amp;gt;&lt;br&gt;
-					&amp;lt;/div&amp;gt;&lt;br&gt;
-				&amp;lt;/div&amp;gt;&lt;br&gt;
-			&amp;lt;/div&amp;gt;&lt;br&gt;
-		&amp;lt;/div&amp;gt;&lt;br&gt;
-	&amp;lt;/div&amp;gt;&lt;br&gt;
-&amp;lt;/div&amp;gt;&lt;br&gt;
-{% endblock cuerpo %}&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Modificamos el archivo urls.py para crear el url detalle_persona:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="python"]&lt;br&gt;
-from django.conf.urls import patterns, url&lt;br&gt;
-from personas.views import Personas, CrearPersona, ReportePersonasExcel,\&lt;br&gt;
-    Bienvenida, DetallePersona&lt;/p&gt;
-&lt;p&gt;urlpatterns = patterns(”,&lt;br&gt;
-    url(r’^$’,Bienvenida.as_view(), name="bienvenida"),&lt;br&gt;
-    url(r’^personas/$’,Personas.as_view(), name="personas"),&lt;br&gt;
-    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),&lt;br&gt;
-    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),&lt;br&gt;
-    url(r’^detalle_persona/(?P&amp;lt;pk&amp;gt;\d+)/$’, DetallePersona.as_view(), name="detalle_persona"),&lt;br&gt;
-)&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora hacemos que el enlace con el ícono del libro abierto apunte a nuestra url detalle_persona, debemos tener en cuenta que el enlace debe estar de acuerdo a la definición de la expresión regular en la url, en este caso se le pasa como argumento la primary key que debe ser un conjunto de dígitos:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="html"]&lt;br&gt;
-&amp;lt;a class="btn btn-small" href="{% url ‘personas:detalle_persona’ persona.pk %}"&amp;gt;&lt;br&gt;
-	&amp;lt;span class="glyphicon glyphicon-folder-open"&amp;gt;&amp;lt;/span&amp;gt;&lt;br&gt;
-&amp;lt;/a&amp;gt;&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ahora cuando hagamos click en el ícono del lápiz nos mostrará lo siguiente:&lt;/p&gt;
-&lt;p&gt;&lt;a href="http://pythonpiura.org/2016/04/detalle_persona.jpg"&gt;&lt;img class="alignnone size-medium wp-image-175" src="https://pythonpiura.files.wordpress.com/2016/04/detalle_persona.jpg?w=300" alt="detalle_persona" width="400" height="125"&gt;&lt;/a&gt;&lt;/p&gt;
+Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</guid><pubDate>Fri, 29 Apr 2016 03:33:04 GMT</pubDate></item><item><title>Logout y Protección de Vistas en Django</title><link>http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;En el post anterior habiamos creado un login con Django ahora nos toca
+hacer lo mismo pero para salir de la sesión que habiamos iniciado,
+para ello vamos a modificar nuestro archivo urls.py para crear la url
+llamada salir que invoca al método logout definido en django:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;seguridad.views&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Login&lt;/span&gt;
+&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-3"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib.auth.views&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;logout&lt;/span&gt;
+&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-4"&gt;&lt;/a&gt;
+&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-5"&gt;&lt;/a&gt;&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;",&lt;/span&gt;
+&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-6"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Login&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"login"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^salir$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;logout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"salir"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;'next_page'&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;'/'&lt;/span&gt;&lt;span class="p"&gt;}),&lt;/span&gt;
+&lt;a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Como podemos observar llamamos a la vista logout de
+django.contrib.auth.views, que nos permite terminar la sesión que
+hemos iniciado pasandole el argumento next_page que nos redirecciona a
+la url raiz de nuestro proyecto, osea al login.&lt;/p&gt;
+&lt;p&gt;Ahora vamos a utilizar la url creada, hacemos una modificación a
+nuestro archivo base.html para agregar un enlace de salida:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-1"&gt;&lt;/a&gt;{% load staticfiles %}
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-2"&gt;&lt;/a&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"utf-8"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-6"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;http-equiv&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"X-UA-Compatible"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"IE=edge"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-7"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"viewport"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"width=device-width, initial-scale=1"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-8"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"description"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-9"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"author"&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;""&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-10"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Ejemplo Círculo de Programadores de Python Piura&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-11"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt; &lt;span class="na"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"stylesheet"&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/css"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'css/bootstrap.min.css' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-12"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt; &lt;span class="na"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"stylesheet"&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/css"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'css/query.dataTables.min.css' %}"&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-13"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'js/jquery.js' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-14"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'js/bootstrap.min.js' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-15"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt; &lt;span class="na"&gt;src&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% static 'js/jquery.dataTables.min.js' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-16"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-17"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-18"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"wrapper"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-19"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;nav&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar navbar-default navbar-static-top"&lt;/span&gt; &lt;span class="na"&gt;role&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navigation"&lt;/span&gt; &lt;span class="na"&gt;style&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"margin-bottom: 0"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-20"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-header"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-21"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"button"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-toggle"&lt;/span&gt; &lt;span class="na"&gt;data-toggle&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"collapse"&lt;/span&gt; &lt;span class="na"&gt;data-target&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;".navbar-collapse"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-22"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"sr-only"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Desplegar navegación&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-23"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"icon-bar"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-24"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"icon-bar"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-25"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"icon-bar"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-26"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-27"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-brand"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:bienvenida' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-28"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-home"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; Inicio
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-29"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-30"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-brand"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:personas' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-31"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-user"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; Personas
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-32"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-33"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-34"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-right"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-35"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"navbar-brand"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'seguridad:salir' %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-36"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-log-out"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt; Salir
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-37"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-38"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-39"&gt;&lt;/a&gt;                {% block menu %}
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-40"&gt;&lt;/a&gt;                {% endblock menu %}
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-41"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;nav&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-42"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"page-wrapper"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-43"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"container-fluid"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-44"&gt;&lt;/a&gt;                    {% block cuerpo %}
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-45"&gt;&lt;/a&gt;                    {% endblock cuerpo %}
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-46"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-47"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-48"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-49"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-50"&gt;&lt;/a&gt;    {% block js %}
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-51"&gt;&lt;/a&gt;    {% endblock js %}
+&lt;a name="rest_code_b210d37a0c254493a2286fdc06ffa371-52"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Con lo que tenemos lo siguiente:&lt;/p&gt;
+&lt;img alt="/images/blog/salir.jpg" src="http://pythonpiura.org/images/blog/salir.jpg"&gt;
+&lt;p&gt;Ahora ya podemos dar click en salir y terminar la sesión que estamos
+utilizando, pero si observamos bien esto nos nos sirve de nada para
+proteger nuestra aplicación de accesos no deseados, es decir que un
+usuario sin estar logueado puede ingresar facilmente a cualquiera de
+nuestras urls, con solo ponerla en el navegador, por ejemplo, pongamos
+en la barra de direcciones:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://localhost:8000/personas/"&gt;http://localhost:8000/personas/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Y observemos que podemos entrar sin ningún problema a pesar de no
+estar logueados.&lt;/p&gt;
+&lt;p&gt;¿Cómo arreglamos esto? Sencillo, viene a nuestra ayuda un &lt;a class="reference external" href="http://www.juanjoconti.com.ar/2008/07/11/decoradores-en-python-i/"&gt;decorador&lt;/a&gt;
+muy útil llamado login_required, este va a proteger nuestra vista de
+aquellos usuarios que pretenden ingresar sin tener una sesión
+iniciada, para utilizarlo simplemente debemos modificar nuestro
+archivo urls.py de la aplicación con las vistas que queremos proteger:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;personas.views&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;\
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DetallePersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ModificarPersona&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-5"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib.auth.decorators&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;login_required&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-6"&gt;&lt;/a&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-7"&gt;&lt;/a&gt;&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;",&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-8"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;login_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"bienvenida"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-9"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^personas/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;login_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-10"&gt;&lt;/a&gt;        &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"personas"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-11"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^crear_persona/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;login_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"crear_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^reporte_personas_excel/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;login_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-14"&gt;&lt;/a&gt;        &lt;span class="n"&gt;s_view&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"reporte_personas_excel"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-15"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^detalle_persona/(?P&amp;lt;pk&amp;gt;\d+)/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-16"&gt;&lt;/a&gt;        &lt;span class="n"&gt;login_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DetallePersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"detalle_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-17"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^modificar_persona/(?P&amp;lt;pk&amp;gt;\d+)/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;login_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;ModificarPerson&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-18"&gt;&lt;/a&gt;        &lt;span class="n"&gt;a&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;()),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"modificar_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-19"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Si probamos ahora poniendo nuevamente la dirección anterior en nuestra
+barra de direcciones sin habernos logueado, nos aparecerá la siguiente
+pantalla:&lt;/p&gt;
+&lt;img alt="/images/blog/error.jpg" src="http://pythonpiura.org/images/blog/error.jpg"&gt;
+&lt;p&gt;¿Muy feo, no? Lamentablemente no podemos presentar esto al usuario
+sino que quisieramos que cada vez que alguien intente acceder de esta
+forma, nos redireccione a la pantalla de login, esto lo hacemos con
+una linea agregada al archivo settings.py:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_193eeaf2e8d84ed5ab5fbb3432df2db4-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;LOGIN_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'/'&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Ahora probemos nuevamente:&lt;/p&gt;
+&lt;img alt="/images/blog/correcto.jpg" src="http://pythonpiura.org/images/blog/correcto.jpg"&gt;
+&lt;p&gt;Con esto ya tenemos protegidas nuestras vistas y garantizamos que no
+tendremos accesos no deseados.
+Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/</guid><pubDate>Thu, 28 Apr 2016 03:21:09 GMT</pubDate></item><item><title>Login en Django</title><link>http://pythonpiura.org/posts/2016/04/26/login-en-django/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Hasta este momento hemos podido tener acceso sin ningún tipo de
+restricciones a nuestro proyecto tutorial, pero todos sabemos que en
+el mundo real, eso no funciona así, por lo tanto es necesario que
+creemos un login para que los usuarios puedan iniciar sesión, para
+ello vamos a rediseñar nuestro proyecto tutorial y vamos a agregar
+nuevas cosas, para hacer este pequeño post me he basado en estos
+artículos:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.secnot.com/django-custom-login-cbv.html"&gt;Formulario Login usando Class Based Views&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://librosweb.es/libro/django_1_0/capitulo_12/utilizando_usuarios.html"&gt;El Libro de Django&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Listo ahora si empecemos con todo:
+Primero crearemos una aplicación llamada seguridad, donde vamos a
+manejar todo lo referente a los usuarios:&lt;/p&gt;
+&lt;img alt="/images/blog/seguridad.jpg" src="http://pythonpiura.org/images/blog/seguridad.jpg"&gt;
+&lt;p&gt;Ahora vamos a decirle a nuestro settings.py que vamos a utilizar la
+aplicación seguridad:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;INSTALLED_APPS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-2"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'django.contrib.admin'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-3"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'django.contrib.auth'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-4"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'django.contrib.contenttypes'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-5"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'django.contrib.sessions'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-6"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'django.contrib.messages'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-7"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'django.contrib.staticfiles'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-8"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'seguridad'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-9"&gt;&lt;/a&gt;        &lt;span class="s1"&gt;'personas'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_48ee4d90895844c7a4818768f535eb43-10"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Y redefinimos nuestro archivo urls.py principal de tal manera que al
+ingresar ya no apunte a la aplicación personas sino a seguridad:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;admin&lt;/span&gt;
+&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^admin/'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;admin&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urls&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-6"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'seguridad.urls'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;namespace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'seguridad'&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^personas/'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas.urls'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;namespace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'personas'&lt;/span&gt;&lt;span class="p"&gt;)),&lt;/span&gt;
+&lt;a name="rest_code_754e559cbe404b8bb4746c9dba6483cf-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Dentro de nuestra aplicación seguridad vamos a crear una vista llamada
+Login:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#Importamos la vista genérica FormView&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.views.generic.edit&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FormView&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-3"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.http.response&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;HttpResponseRedirect&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-4"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.core.urlresolvers&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;reverse_lazy&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-5"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#Importamos el formulario de autenticación de django&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-6"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib.auth.forms&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;AuthenticationForm&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-7"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.contrib.auth&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;login&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-8"&gt;&lt;/a&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-9"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Create your views here.&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-10"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Login&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;FormView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-11"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Establecemos la plantilla a utilizar&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'login.html'&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-13"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Le indicamos que el formulario a utilizar es el formulario de autenticación de Django&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-14"&gt;&lt;/a&gt;        &lt;span class="n"&gt;form_class&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;AuthenticationForm&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-15"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Le decimos que cuando se haya completado exitosamente la operación nos redireccione a la url bienvenida de la aplicación personas&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-16"&gt;&lt;/a&gt;        &lt;span class="n"&gt;success_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"personas:bienvenida"&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-17"&gt;&lt;/a&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-18"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-19"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Si el usuario está autenticado entonces nos direcciona a la url establecida en success_url&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-20"&gt;&lt;/a&gt;        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;is_authenticated&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-21"&gt;&lt;/a&gt;                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;HttpResponseRedirect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_success_url&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-22"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Sino lo está entonces nos muestra la plantilla del login simplemente&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-23"&gt;&lt;/a&gt;        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-24"&gt;&lt;/a&gt;                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Login&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-25"&gt;&lt;/a&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-26"&gt;&lt;/a&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;form_valid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-27"&gt;&lt;/a&gt;        &lt;span class="n"&gt;login&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_user&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;a name="rest_code_c086374b287745ce8340a4a69966fede-28"&gt;&lt;/a&gt;        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Login&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;form_valid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Expliquemos algunas cosas:&lt;/p&gt;
+&lt;p&gt;reverse_lazy, como su nombre lo indica, es una implementación perezosa
+de la URL de resolución inversa(reverse). A diferencia de la función
+inversa tradicional, reverse_lazy no se ejecutará hasta que se
+necesite el valor. Es útil para prevenir excepciones 'Reverse Not
+Found' cuando se trabaja con direcciones URL que no pueden ser
+conocidos inmediatamente.
+dispatch, en el archivo urls.py el punto de entrada as_view() crea una
+instancia de la clase y llama al método dispatch(), (el despachador o
+resolvedor de URL) que busca la petición para determinar si es un GET,
+POST, etc, y releva la petición a un método que coincida con uno
+definido, o levante una excepción HttpResponseNotAllowed si no
+encuentra coincidencias.
+form_valid, este método es llamado cuando el formulario valida los
+datos.
+login, la llamada a login() acepta un objeto de la clase HttpRequest y
+un objeto User y almacena el identificador del usuario en la sesión,
+usando el entorno de sesiones de Django. En el caso nuestro, al usar
+el formulario de autenticación de django, invocando a form.get_user()
+obtenemos el objeto User.&lt;/p&gt;
+&lt;p&gt;Ahora vamos a crear la plantilla login.html y la guardaremos dentro de
+la carpeta templates(que debemos crear) en nuestra aplicación
+seguridad:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-1"&gt;&lt;/a&gt;{% load staticfiles %}
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-2"&gt;&lt;/a&gt;&lt;span class="cp"&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"utf-8"&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-6"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;CIPROPY&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-7"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"width=device-width, initial-scale=1.0"&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"viewport"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-8"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt; &lt;span class="na"&gt;rel&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"stylesheet"&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text/css"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'{% static "css/bootstrap.min.css" %}'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;link&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-11"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"container"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-12"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;br&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-13"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-14"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-md-4 col-md-offset-4"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-15"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"login-panel panel panel-default"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-16"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-heading"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-17"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h3&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-title"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;CIPROPY&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h3&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-18"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-19"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-body"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-20"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;form&lt;/span&gt; &lt;span class="na"&gt;role&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"form"&lt;/span&gt; &lt;span class="na"&gt;method&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"post"&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'form_login'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-21"&gt;&lt;/a&gt;                                {% csrf_token %}
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-22"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"form-group"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-23"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Usuario:&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-24"&gt;&lt;/a&gt;                                    {{ form.username }}
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-25"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-26"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"form-group"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-27"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Contraseña:&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-28"&gt;&lt;/a&gt;                                    {{ form.password }}
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-29"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-30"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-lg btn-success btn-block"&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"submit"&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"login"&lt;/span&gt;&lt;span class="p"&gt;/&amp;gt;&lt;/span&gt;Login&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-31"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;form&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-32"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-33"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-34"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-35"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-36"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-37"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_859bcaa5a8f747d982082e5a54c43771-38"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Nótese que esta plantilla no extiende de ninguna otra, ya que su
+comportamiento es especial, otra cosa peculiar aquí es el uso de las
+etiquetas {{ form.username }} y {{ form.password }} que al
+renderizarse se comportan como dos cajas de texto una normal y la otra
+tipo password, esto es posible gracias a que estamos usando el
+Formulario AuthenticationForm de Django y lo hemos definido
+previamente en nuestra vista Login, este formulario tiene los campos
+username y password y los podemos utilizar en la plantilla
+anteponiendo el objeto form, este comportamiento especial es definido
+por la clase FormView.&lt;/p&gt;
+&lt;p&gt;Ahora si debemos crear un archivo urls.py en nuestra aplicación
+seguridad de la siguiente manera:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_568a00b617f3477fb03b7870afe9263e-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;a name="rest_code_568a00b617f3477fb03b7870afe9263e-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;seguridad.views&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Login&lt;/span&gt;
+&lt;a name="rest_code_568a00b617f3477fb03b7870afe9263e-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_568a00b617f3477fb03b7870afe9263e-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;",&lt;/span&gt;
+&lt;a name="rest_code_568a00b617f3477fb03b7870afe9263e-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Login&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"login"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_568a00b617f3477fb03b7870afe9263e-6"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Y listo con eso ya tenemos que al momento de correr nuestro servidor
+de prueba nos va a mostrar lo siguiente:&lt;/p&gt;
+&lt;img alt="/images/blog/login.jpg" src="http://pythonpiura.org/images/blog/login.jpg"&gt;
+&lt;p&gt;Con esto ya tenemos el proyecto listo pero no tenemos ningún usuario,
+debemos crear el superusuario para probar, mas adelante en próximos
+tutoriales crearemos mas usuarios para hacer las pruebas
+correspondientes, nos movemos hasta la carpeta donde está ubicado el
+proyecto y desde una terminal escribimos lo siguiente:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_f621586c51ac4f059307ba72b1c7e7ab-1"&gt;&lt;/a&gt;python manage.py createsuperuser
+&lt;/pre&gt;&lt;p&gt;Nos pedira algunos datos, que debemos completar o presionar enter para
+dejar el dato mostrado por defecto entre paréntesis:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_526389e4c2214219942b38058d1a69f4-1"&gt;&lt;/a&gt;Username &lt;span class="o"&gt;(&lt;/span&gt;leave blank to use &lt;span class="s1"&gt;'mamaya'&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;:
+&lt;a name="rest_code_526389e4c2214219942b38058d1a69f4-2"&gt;&lt;/a&gt;Email address:
+&lt;a name="rest_code_526389e4c2214219942b38058d1a69f4-3"&gt;&lt;/a&gt;Password:
+&lt;a name="rest_code_526389e4c2214219942b38058d1a69f4-4"&gt;&lt;/a&gt;Password &lt;span class="o"&gt;(&lt;/span&gt;again&lt;span class="o"&gt;)&lt;/span&gt;:
+&lt;a name="rest_code_526389e4c2214219942b38058d1a69f4-5"&gt;&lt;/a&gt;Superuser created successfully.
+&lt;/pre&gt;&lt;p&gt;En mi caso he dejado por defecto el usuario mamaya, no le he puesto
+ninguna dirección de correo y he completado la password, esta no
+aparece al momento de ser digitada ya que es un mecanismo de
+protección de django, si todo se ha hecho correctamente nos aparecerá
+el mensaje “Superuser created successfully."&lt;/p&gt;
+&lt;p&gt;Ahora si ya podemos usar el usuario mamaya para loguearnos
+.. image:: /images/blog/login.jpg&lt;/p&gt;
+&lt;p&gt;Si hemos escrito correctamente la password nos redireccionará hasta
+nuestra vista principal de la aplicación personas y sino nos volverá a
+mostrar la ventana de login:&lt;/p&gt;
+&lt;img alt="/images/blog/presonas.jpg" src="http://pythonpiura.org/images/blog/presonas.jpg"&gt;
+&lt;p&gt;Listo eso es todo, ya estaremos mejorando el funcionamiento de nuestro
+login en próximos posts.&lt;/p&gt;
+&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/26/login-en-django/</guid><pubDate>Wed, 27 Apr 2016 03:08:42 GMT</pubDate></item><item><title>Uso de UpdateView</title><link>http://pythonpiura.org/posts/2016/04/21/uso-de-updateview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;En este post vamos a terminar lo que dejamos inconcluso anteriormente,
+el uso de la clase UpdateView, como ya tenemos listo nuestro archivo
+personas.html, simplemente vamos a crear la clase y la url necesarias.&lt;/p&gt;
+&lt;p&gt;views.py&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;ModificarPersona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;UpdateView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-2"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Especificamos que el modelo a utilizar va a ser Persona&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-3"&gt;&lt;/a&gt;        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Persona&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-4"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Establecemos que la plantilla se llamará modificar persona&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'modificar_persona.html'&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-6"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Determinamos los campos con los que se va a trabajar, esto es&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;obligatorio&lt;/span&gt; &lt;span class="n"&gt;sino&lt;/span&gt; &lt;span class="n"&gt;nos&lt;/span&gt; &lt;span class="n"&gt;saldrá&lt;/span&gt; &lt;span class="n"&gt;un&lt;/span&gt; &lt;span class="n"&gt;error&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-8"&gt;&lt;/a&gt;        &lt;span class="n"&gt;fields&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'dni'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'nombre'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'apellido_paterno'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'apellido_materno'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-9"&gt;&lt;/a&gt;        &lt;span class="c1"&gt;#Con esta linea establecemos que se hará despues que la operación de&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-10"&gt;&lt;/a&gt;        &lt;span class="n"&gt;modificación&lt;/span&gt; &lt;span class="n"&gt;se&lt;/span&gt; &lt;span class="n"&gt;complete&lt;/span&gt; &lt;span class="n"&gt;correctamente&lt;/span&gt;
+&lt;a name="rest_code_16e692b2e22d4c29b0438547a46935e3-11"&gt;&lt;/a&gt;        &lt;span class="n"&gt;success_url&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas:personas'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Ahora creamos nuestra plantilla modificar_persona.html:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-1"&gt;&lt;/a&gt;{% extends "base.html" %}
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-2"&gt;&lt;/a&gt;{% block cuerpo %}
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-3"&gt;&lt;/a&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-4"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-5"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-6"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"page-header"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Modificar Persona&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-7"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-9"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-11"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel panel-default"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-12"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-heading"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-13"&gt;&lt;/a&gt;                Por favor ingrese todos los campos necesarios.
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-14"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-15"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-body"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-16"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;form&lt;/span&gt; &lt;span class="na"&gt;role&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"form"&lt;/span&gt; &lt;span class="na"&gt;method&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"post"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-17"&gt;&lt;/a&gt;                    {% csrf_token %}
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-18"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"form-group"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-19"&gt;&lt;/a&gt;                        {{ form.as_p }}
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-20"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-21"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'form-group'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-22"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;input&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"submit"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-primary"&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"submit"&lt;/span&gt; &lt;span class="na"&gt;value&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"Modificar Persona"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-23"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt; &lt;span class="na"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"reset"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-primary"&lt;/span&gt; &lt;span class="na"&gt;onclick&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"location.href='{% url 'personas:personas' %}'"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-24"&gt;&lt;/a&gt;                            Cancelar
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-25"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;button&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-26"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-27"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;form&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-28"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-29"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-30"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-31"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-32"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"popup"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4aa3141e4aac461d92cfa41c725c8a53-33"&gt;&lt;/a&gt;{% endblock cuerpo %}
+&lt;/pre&gt;&lt;p&gt;Ahora le toca el turno a urls.py:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;personas.views&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;\
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DetallePersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ModificarPersona&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-6"&gt;&lt;/a&gt;&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;",&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"bienvenida"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-8"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^personas/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"personas"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-9"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^crear_persona/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"crear_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-10"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^reporte_personas_excel/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-11"&gt;&lt;/a&gt;        &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"reporte_personas_excel"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^detalle_persona/(?P&amp;lt;pk&amp;gt;\d+)/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DetallePersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"detalle_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-14"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^modificar_persona/(?P&amp;lt;pk&amp;gt;\d+)/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ModificarPersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-15"&gt;&lt;/a&gt;        &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"modificar_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_6c69eb0c536847579bc5ba22a1c3e133-16"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Nótese que la última url añadida es la de modificar persona, y
+funciona de manera parecida al detalle.&lt;/p&gt;
+&lt;p&gt;Ahora si hacemos que el enlace con el ícono del lapiz apunte a la url
+de modificar_persona:&lt;/p&gt;
+&lt;p&gt;personas.html&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_f30bef45070f4608923e846492ad2028-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:modificar_persona' persona.pk %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_f30bef45070f4608923e846492ad2028-2"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-pencil"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_f30bef45070f4608923e846492ad2028-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Con lo que tenemos lo siguiente:&lt;/p&gt;
+&lt;img alt="/images/blog/modificar_persona.jpg" src="http://pythonpiura.org/images/blog/modificar_persona.jpg"&gt;
+&lt;p&gt;Saludos es todo por hoy.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/21/uso-de-updateview/</guid><pubDate>Fri, 22 Apr 2016 03:26:16 GMT</pubDate></item><item><title>Uso de DetailView</title><link>http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Luego de haber visto el uso de TemplateView, CreateView y ListView,
+estos dos últimos los vimos de pasada casi sin mencionarlos, ahora
+vamos a agregar un par de nuevas funcionalidades a nuestro proyecto
+tutorial, para ello empezaremos modificando el archivo personas.html
+para agregarle un par de enlaces que nos van a permitir editar y ver
+el detalle de una persona en cuestión, en este post solamente
+cubriremos la funcionalidad de ver el detalle, posteriormente en otro
+post nos encargaremos de la funcionalidad de editar a la persona:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_90327974700c4321b3279f23db995d70-1"&gt;&lt;/a&gt;{% extends "base.html" %}
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-2"&gt;&lt;/a&gt;{% block cuerpo %}
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"page-header"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Tablas&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-10"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel panel-info"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-11"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-heading"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-12"&gt;&lt;/a&gt;                Personas
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-13"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-14"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-body"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-15"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'form-group'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-16"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-17"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-10"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-18"&gt;&lt;/a&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-19"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-20"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-1"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-21"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"crear_detalle"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:reporte_personas_excel' %}"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-info btn-block"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-22"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-list-alt"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-23"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-24"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-25"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-1"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-26"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"crear_detalle"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:crear_persona' %}"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-info btn-block"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-27"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-plus"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-28"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-29"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-30"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-31"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-32"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-33"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-34"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt; &lt;span class="na"&gt;id&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"tabla"&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"table table-striped table-bordered"&lt;/span&gt; &lt;span class="na"&gt;cellspacing&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"0"&lt;/span&gt; &lt;span class="na"&gt;width&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"100%"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-35"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;thead&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-36"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-37"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;DNI&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-38"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;NOMBRE&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-39"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;APELLIDO PATERNO&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-40"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;APELLIDO MATERNO&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-41"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;ACCIONES&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;th&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-42"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-43"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;thead&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-44"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tbody&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-45"&gt;&lt;/a&gt;                            {% for persona in personas %}
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-46"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-47"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.dni }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-48"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.nombre }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-49"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.apellido_paterno }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-50"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ persona.apellido_materno }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-51"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"text-center"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-52"&gt;&lt;/a&gt;                                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"#"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-53"&gt;&lt;/a&gt;                                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-folder-open"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-54"&gt;&lt;/a&gt;                                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-55"&gt;&lt;/a&gt;                                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"#"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-56"&gt;&lt;/a&gt;                                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-pencil"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-57"&gt;&lt;/a&gt;                                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-58"&gt;&lt;/a&gt;                                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;td&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-59"&gt;&lt;/a&gt;                                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tr&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-60"&gt;&lt;/a&gt;                            {% endfor %}
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-61"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;tbody&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-62"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;table&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-63"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-64"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-65"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-66"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-67"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-68"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-69"&gt;&lt;/a&gt;{% endblock cuerpo %}
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-70"&gt;&lt;/a&gt;{% block js %}
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-71"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-72"&gt;&lt;/a&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;document&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;ready&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-73"&gt;&lt;/a&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-74"&gt;&lt;/a&gt;    &lt;span class="kd"&gt;var&lt;/span&gt; &lt;span class="nx"&gt;table&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'#tabla'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;DataTable&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-75"&gt;&lt;/a&gt;        &lt;span class="s2"&gt;"language"&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-76"&gt;&lt;/a&gt;            &lt;span class="nx"&gt;url&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;"/static/localizacion/es_ES.json"&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-77"&gt;&lt;/a&gt;        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-78"&gt;&lt;/a&gt;    &lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-79"&gt;&lt;/a&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-80"&gt;&lt;/a&gt;    &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'#tabla tbody'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;on&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="s1"&gt;'click'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'tr'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-81"&gt;&lt;/a&gt;    &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-82"&gt;&lt;/a&gt;        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;hasClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'selected'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-83"&gt;&lt;/a&gt;        &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-84"&gt;&lt;/a&gt;            &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;removeClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'selected'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-85"&gt;&lt;/a&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-86"&gt;&lt;/a&gt;        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-87"&gt;&lt;/a&gt;        &lt;span class="k"&gt;else&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-88"&gt;&lt;/a&gt;        &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-89"&gt;&lt;/a&gt;            &lt;span class="nx"&gt;table&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'tr.selected'&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;removeClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'selected'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-90"&gt;&lt;/a&gt;            &lt;span class="nx"&gt;$&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;this&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="nx"&gt;addClass&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'selected'&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-91"&gt;&lt;/a&gt;        &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-92"&gt;&lt;/a&gt;    &lt;span class="p"&gt;});&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-93"&gt;&lt;/a&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-94"&gt;&lt;/a&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-95"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_90327974700c4321b3279f23db995d70-96"&gt;&lt;/a&gt;{% endblock js %}
+&lt;/pre&gt;&lt;p&gt;Nótese que en la cabecera de la tabla hemos puesto el encabezado
+acciones y que dentro del cuerpo de la tabla se ha agregado una
+columna que contiene dos enlaces: uno con el ícono de un libro y otro
+con el ícono de un lapiz, ambos son, para ver el detalle de la persona
+y el otro para editarlo.&lt;/p&gt;
+&lt;img alt="/images/blog/tabla_nueva.jpg" src="http://pythonpiura.org/images/blog/tabla_nueva.jpg"&gt;
+&lt;p&gt;Ahora vamos a implementar la funcionalidad de ver el detalle de la
+persona, para ello usamos la clase DetailView, esta clase nos
+simplifica la vida ya que nos permite mostrar el detalle de un modelo
+en particular, debiendo definir el modelo al que haremos referencia y
+la plantilla donde se renderizará el contenido:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.views.generic.detail&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;DetailView&lt;/span&gt;
+&lt;a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-2"&gt;&lt;/a&gt;
+&lt;a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-3"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DetallePersona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DetailView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-4"&gt;&lt;/a&gt;        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Persona&lt;/span&gt;
+&lt;a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'detalle_persona.html'&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Ahora debemos crear la plantilla detalle_persona.html:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-1"&gt;&lt;/a&gt;{% extends "base.html" %}
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-2"&gt;&lt;/a&gt;{% block cuerpo %}
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-4"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"page-header"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Personas&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-6"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-8"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-9"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-lg-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-10"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel panel-info"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-11"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-heading"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-12"&gt;&lt;/a&gt;                Detalle de Persona
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-13"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-14"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"panel-body"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-15"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'form-group'&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-16"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"row"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-17"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"col-md-12"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-18"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;DNI:&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-19"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ object.dni }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-20"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;NOMBRE:&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-21"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ object.nombre }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-22"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;APELLIDO PATERNO:&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-23"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ object.apellido_paterno }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-24"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;APELLIDO MATERNO: &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;label&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-25"&gt;&lt;/a&gt;                            &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;{{ object.apellido_materno }}&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-26"&gt;&lt;/a&gt;                        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-27"&gt;&lt;/a&gt;                    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-28"&gt;&lt;/a&gt;                &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-29"&gt;&lt;/a&gt;            &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-30"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-31"&gt;&lt;/a&gt;    &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-32"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;div&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-33"&gt;&lt;/a&gt;{% endblock cuerpo %}
+&lt;/pre&gt;&lt;p&gt;Modificamos el archivo urls.py para crear el url detalle_persona:&lt;/p&gt;
+&lt;pre class="code python"&gt;&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf.urls&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;url&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-2"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;personas.views&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;\
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-4"&gt;&lt;/a&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DetallePersona&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-5"&gt;&lt;/a&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-6"&gt;&lt;/a&gt;&lt;span class="n"&gt;urlpatterns&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;",&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Bienvenida&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"bienvenida"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-8"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^personas/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;Personas&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"personas"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-9"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^crear_persona/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;CrearPersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"crear_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-10"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^reporte_personas_excel/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;ReportePersonasExcel&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-11"&gt;&lt;/a&gt;        &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"reporte_personas_excel"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-12"&gt;&lt;/a&gt;        &lt;span class="n"&gt;url&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;r'^detalle_persona/(?P&amp;lt;pk&amp;gt;\d+)/$'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;DetallePersona&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;as_view&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-13"&gt;&lt;/a&gt;        &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;"detalle_persona"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-14"&gt;&lt;/a&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Ahora hacemos que el enlace con el ícono del libro abierto apunte a
+nuestra url detalle_persona, debemos tener en cuenta que el enlace
+debe estar de acuerdo a la definición de la expresión regular en la
+url, en este caso se le pasa como argumento la primary key que debe
+ser un conjunto de dígitos:&lt;/p&gt;
+&lt;pre class="code html"&gt;&lt;a name="rest_code_4bab861f69044c169a1ef6ac385b5025-1"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:detalle_persona' persona.pk %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4bab861f69044c169a1ef6ac385b5025-2"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-folder-open"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;a name="rest_code_4bab861f69044c169a1ef6ac385b5025-3"&gt;&lt;/a&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Ahora cuando hagamos click en el ícono del lápiz nos mostrará lo
+siguiente:&lt;/p&gt;
+&lt;img alt="/images/blog/detalle_persona.jpg" src="http://pythonpiura.org/images/blog/detalle_persona.jpg"&gt;
 &lt;p&gt;Eso es todo.&lt;/p&gt;
-&lt;p&gt;Saludos.&lt;/p&gt;
-</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/</guid><pubDate>Fri, 22 Apr 2016 01:48:56 GMT</pubDate></item><item><title>Uso de TemplateView</title><link>http://pythonpiura.org/posts/2016/04/20/templateview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Vamos a trabajar con TemplateView para hacer una vista basada en clases, algo que ya hemos utilizado antes y que es bastante fácil de programar, para ello seguiremos con nuestro proyecto tutorial, primero le vamos a hacer unas pequeñas modificaciones para que se adapte a lo que necesitamos.&lt;br&gt;
+&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><guid>http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/</guid><pubDate>Fri, 22 Apr 2016 01:48:56 GMT</pubDate></item><item><title>Uso de TemplateView</title><link>http://pythonpiura.org/posts/2016/04/20/templateview/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Vamos a trabajar con TemplateView para hacer una vista basada en clases, algo que ya hemos utilizado antes y que es bastante fácil de programar, para ello seguiremos con nuestro proyecto tutorial, primero le vamos a hacer unas pequeñas modificaciones para que se adapte a lo que necesitamos.&lt;br&gt;
 Editamos el archivo base.html para agregar un pequeño menú en la parte superior de la pantalla:&lt;/p&gt;
 &lt;p&gt;[sourcecode language="html"]&lt;br&gt;
 {% load staticfiles %}&lt;br&gt;

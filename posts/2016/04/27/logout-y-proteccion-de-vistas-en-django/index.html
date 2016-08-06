@@ -15,7 +15,9 @@
 <meta property="og:site_name" content="Python Piura">
 <meta property="og:title" content="Logout y Protección de Vistas en Django">
 <meta property="og:url" content="http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/">
-<meta property="og:description" content="En el post anterior habiamos creado un login con Django ahora nos toca hacer lo mismo pero para salir de la sesión que habiamos iniciado, para ello vamos a modificar nuestro archivo urls.py para crear">
+<meta property="og:description" content="En el post anterior habiamos creado un login con Django ahora nos toca
+hacer lo mismo pero para salir de la sesión que habiamos iniciado,
+para ello vamos a modificar nuestro archivo urls.py para crear">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-04-27T22:21:09-05:00">
 <meta property="article:tag" content="Django">
@@ -59,7 +61,7 @@
 </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-    <a href="index.src.html" id="sourcelink">Código fuente</a>
+    <a href="index.rst" id="sourcelink">Código fuente</a>
     </li>
 
                 
@@ -82,109 +84,134 @@
             </span></p>
             <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-04-27T22:21:09-05:00" itemprop="datePublished" title="2016-04-27 22:21">2016-04-27 22:21</time></a></p>
             
-        <p class="sourceline"><a href="index.src.html" id="sourcelink">Código fuente</a></p>
+        <p class="sourceline"><a href="index.rst" id="sourcelink">Código fuente</a></p>
 
         </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <p style="text-align:justify;">En el post anterior habiamos creado un login con Django ahora nos toca hacer lo mismo pero para salir de la sesión que habiamos iniciado, para ello vamos a modificar nuestro archivo urls.py para crear la url llamada salir que invoca al método logout definido en django:</p>
-<p>[sourcecode language="python"]<br>
-from django.conf.urls import patterns, url<br>
-from seguridad.views import Login<br>
-from django.contrib.auth.views import logout</p>
-<p>urlpatterns = patterns(”,<br>
-    url(r’^$’, Login.as_view(), name="login"),<br>
-    url(r’^salir$’, logout, name="salir", kwargs={‘next_page’: ‘/’}),<br>
-)<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Como podemos observar llamamos a la vista logout de django.contrib.auth.views, que nos permite terminar la sesión que hemos iniciado pasandole el argumento next_page que nos redirecciona a la url raiz de nuestro proyecto, osea al login.</p>
-<p style="text-align:justify;">Ahora vamos a utilizar la url creada, hacemos una modificación a nuestro archivo base.html para agregar un enlace de salida:</p>
-<p>[sourcecode language="html"]<br>
-{% load staticfiles %}<br>
-&lt;!DOCTYPE html&gt;<br>
-&lt;html&gt;<br>
-	&lt;head&gt;<br>
-		&lt;meta charset="utf-8"&gt;<br>
-	    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;<br>
-	    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;<br>
-	    &lt;meta name="description" content=""&gt;<br>
-	    &lt;meta name="author" content=""&gt;<br>
-		&lt;title&gt;Ejemplo Círculo de Programadores de Python Piura&lt;/title&gt;<br>
-		&lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;<br>
-		&lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&gt;<br>
-		&lt;script src="{% static "js/jquery.js" %}"&gt;&lt;/script&gt;<br>
-	    &lt;script src="{% static "js/bootstrap.min.js" %}"&gt;&lt;/script&gt;<br>
-	    &lt;script src="{% static "js/jquery.dataTables.min.js" %}"&gt;&lt;/script&gt;<br>
-	&lt;/head&gt;<br>
-	&lt;body&gt;<br>
-		&lt;div id="wrapper"&gt;<br>
-			&lt;nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0"&gt;<br>
-				&lt;div class="navbar-header"&gt;<br>
-			        &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"&gt;<br>
-			            &lt;span class="sr-only"&gt;Desplegar navegación&lt;/span&gt;<br>
-			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
-			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
-			            &lt;span class="icon-bar"&gt;&lt;/span&gt;<br>
-			        &lt;/button&gt;<br>
-			        &lt;a class="navbar-brand" href="{% url ‘personas:bienvenida’ %}"&gt;<br>
-						&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt; Inicio<br>
-					&lt;/a&gt;<br>
-					&lt;a class="navbar-brand" href="{% url ‘personas:personas’ %}"&gt;<br>
-						&lt;span class="glyphicon glyphicon-user"&gt;&lt;/span&gt; Personas<br>
-					&lt;/a&gt;<br>
-			    &lt;/div&gt;<br>
-			    &lt;div class="navbar-right"&gt;<br>
-					&lt;a class="navbar-brand" href="{% url ‘seguridad:salir’ %}"&gt;<br>
-						&lt;span class="glyphicon glyphicon-log-out"&gt;&lt;/span&gt; Salir<br>
-					&lt;/a&gt;<br>
-				&lt;/div&gt;<br>
-				{% block menu %}<br>
-		        {% endblock menu %}<br>
-		    &lt;/nav&gt;<br>
-			&lt;div id="page-wrapper"&gt;<br>
-				&lt;div class="container-fluid"&gt;<br>
-					{% block cuerpo %}<br>
-					{% endblock cuerpo %}<br>
-				&lt;/div&gt;<br>
-			&lt;/div&gt;<br>
-		&lt;/div&gt;<br>
-	&lt;/body&gt;<br>
-	{% block js %}<br>
-	{% endblock js %}<br>
-&lt;/html&gt;<br>
-[/sourcecode]</p>
+    <div>
+<p>En el post anterior habiamos creado un login con Django ahora nos toca
+hacer lo mismo pero para salir de la sesión que habiamos iniciado,
+para ello vamos a modificar nuestro archivo urls.py para crear la url
+llamada salir que invoca al método logout definido en django:</p>
+<pre class="code python"><a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-2"></a><span class="kn">from</span> <span class="nn">seguridad.views</span> <span class="kn">import</span> <span class="n">Login</span>
+<a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-3"></a><span class="kn">from</span> <span class="nn">django.contrib.auth.views</span> <span class="kn">import</span> <span class="n">logout</span>
+<a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-4"></a>
+<a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-5"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
+<a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-6"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span> <span class="n">Login</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"login"</span><span class="p">),</span>
+<a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-7"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^salir$'</span><span class="p">,</span> <span class="n">logout</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"salir"</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">'next_page'</span><span class="p">:</span> <span class="s1">'/'</span><span class="p">}),</span>
+<a name="rest_code_69e375fa25e8450dbbff1ac8a928c50e-8"></a><span class="p">)</span>
+</pre>
+<p>Como podemos observar llamamos a la vista logout de
+django.contrib.auth.views, que nos permite terminar la sesión que
+hemos iniciado pasandole el argumento next_page que nos redirecciona a
+la url raiz de nuestro proyecto, osea al login.</p>
+<p>Ahora vamos a utilizar la url creada, hacemos una modificación a
+nuestro archivo base.html para agregar un enlace de salida:</p>
+<pre class="code html"><a name="rest_code_b210d37a0c254493a2286fdc06ffa371-1"></a>{% load staticfiles %}
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-2"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-3"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-4"></a>    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-5"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-6"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content</span><span class="o">=</span><span class="s">"IE=edge"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-7"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-8"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"description"</span> <span class="na">content</span><span class="o">=</span><span class="s">""</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-9"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"author"</span> <span class="na">content</span><span class="o">=</span><span class="s">""</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-10"></a>        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Ejemplo Círculo de Programadores de Python Piura<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-11"></a>        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/bootstrap.min.css' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-12"></a>        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/query.dataTables.min.css' %}"</span><span class="p">/&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-13"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-14"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/bootstrap.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-15"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.dataTables.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-16"></a>    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-17"></a>    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"wrapper"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-19"></a>            <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar navbar-default navbar-static-top"</span> <span class="na">role</span><span class="o">=</span><span class="s">"navigation"</span> <span class="na">style</span><span class="o">=</span><span class="s">"margin-bottom: 0"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-20"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-header"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-21"></a>                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-toggle"</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">"collapse"</span> <span class="na">data-target</span><span class="o">=</span><span class="s">".navbar-collapse"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-22"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sr-only"</span><span class="p">&gt;</span>Desplegar navegación<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-23"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-24"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-25"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-26"></a>                    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-27"></a>                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:bienvenida' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-28"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-home"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Inicio
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-29"></a>                    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-30"></a>                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:personas' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-31"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-user"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Personas
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-32"></a>                    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-33"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-34"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-right"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-35"></a>                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'seguridad:salir' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-36"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-log-out"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Salir
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-37"></a>                    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-38"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-39"></a>                {% block menu %}
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-40"></a>                {% endblock menu %}
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-41"></a>            <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-42"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"page-wrapper"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-43"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container-fluid"</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-44"></a>                    {% block cuerpo %}
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-45"></a>                    {% endblock cuerpo %}
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-46"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-47"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-48"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-49"></a>    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-50"></a>    {% block js %}
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-51"></a>    {% endblock js %}
+<a name="rest_code_b210d37a0c254493a2286fdc06ffa371-52"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre>
 <p>Con lo que tenemos lo siguiente:</p>
-<p><a href="../../../../../2016/04/salir.jpg"><img class="size-medium wp-image-204 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/salir.jpg?w=300" alt="salir" width="300" height="77"></a></p>
-<p style="text-align:justify;">Ahora ya podemos dar click en salir y terminar la sesión que estamos utilizando, pero si observamos bien esto nos nos sirve de nada para proteger nuestra aplicación de accesos no deseados, es decir que un usuario sin estar logueado puede ingresar facilmente a cualquiera de nuestras urls, con solo ponerla en el navegador, por ejemplo, pongamos en la barra de direcciones:</p>
-<p><a href="http://localhost:8000/personas/">http://localhost:8000/personas/</a></p>
-<p style="text-align:justify;">Y observemos que podemos entrar sin ningún problema a pesar de no estar logueados.</p>
-<p style="text-align:justify;">¿Cómo arreglamos esto? Sencillo, viene a nuestra ayuda un <a href="http://www.juanjoconti.com.ar/2008/07/11/decoradores-en-python-i/">decorador</a> muy útil llamado login_required, este va a proteger nuestra vista de aquellos usuarios que pretenden ingresar sin tener una sesión iniciada, para utilizarlo simplemente debemos modificar nuestro archivo urls.py de la aplicación con las vistas que queremos proteger:</p>
-<p>[sourcecode language="python"]<br>
-from django.conf.urls import patterns, url<br>
-from personas.views import Personas, CrearPersona, ReportePersonasExcel,\<br>
-    Bienvenida, DetallePersona, ModificarPersona<br>
-from django.contrib.auth.decorators import login_required</p>
-<p>urlpatterns = patterns(”,<br>
-    url(r’^$’,login_required(Bienvenida.as_view()), name="bienvenida"),<br>
-    url(r’^personas/$’,login_required(Personas.as_view()), name="personas"),<br>
-    url(r’^crear_persona/$’,login_required(CrearPersona.as_view()), name="crear_persona"),<br>
-    url(r’^reporte_personas_excel/$’,login_required(ReportePersonasExcel.as_view()), name="reporte_personas_excel"),<br>
-    url(r’^detalle_persona/(?P&lt;pk&gt;\d+)/$’, login_required(DetallePersona.as_view()), name="detalle_persona"),<br>
-    url(r’^modificar_persona/(?P&lt;pk&gt;\d+)/$’,login_required(ModificarPersona.as_view()), name="modificar_persona"),<br>
-)<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Si probamos ahora poniendo nuevamente la dirección anterior en nuestra barra de direcciones sin habernos logueado, nos aparecerá la siguiente pantalla:</p>
-<p><a href="../../../../../2016/04/error.jpg"><img class="size-medium wp-image-205 aligncenter" src="https://pythonpiura.files.wordpress.com/2016/04/error.jpg?w=300" alt="error" width="300" height="75"></a></p>
-<p style="text-align:justify;">¿Muy feo, no? Lamentablemente no podemos presentar esto al usuario sino que quisieramos que cada vez que alguien intente acceder de esta forma, nos redireccione a la pantalla de login, esto lo hacemos con una linea agregada al archivo settings.py:</p>
-<p>[sourcecode language="python"]<br>
-LOGIN_URL = ‘/’<br>
-[/sourcecode]</p>
+<img alt="/images/blog/salir.jpg" src="../../../../../images/blog/salir.jpg"><p>Ahora ya podemos dar click en salir y terminar la sesión que estamos
+utilizando, pero si observamos bien esto nos nos sirve de nada para
+proteger nuestra aplicación de accesos no deseados, es decir que un
+usuario sin estar logueado puede ingresar facilmente a cualquiera de
+nuestras urls, con solo ponerla en el navegador, por ejemplo, pongamos
+en la barra de direcciones:</p>
+<p><a class="reference external" href="http://localhost:8000/personas/">http://localhost:8000/personas/</a></p>
+<p>Y observemos que podemos entrar sin ningún problema a pesar de no
+estar logueados.</p>
+<p>¿Cómo arreglamos esto? Sencillo, viene a nuestra ayuda un <a class="reference external" href="http://www.juanjoconti.com.ar/2008/07/11/decoradores-en-python-i/">decorador</a>
+muy útil llamado login_required, este va a proteger nuestra vista de
+aquellos usuarios que pretenden ingresar sin tener una sesión
+iniciada, para utilizarlo simplemente debemos modificar nuestro
+archivo urls.py de la aplicación con las vistas que queremos proteger:</p>
+<pre class="code python"><a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-2"></a><span class="kn">from</span> <span class="nn">personas.views</span> <span class="kn">import</span> <span class="n">Personas</span><span class="p">,</span> <span class="n">CrearPersona</span><span class="p">,</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-3"></a><span class="n">ReportePersonasExcel</span><span class="p">,</span>\
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-4"></a><span class="n">Bienvenida</span><span class="p">,</span> <span class="n">DetallePersona</span><span class="p">,</span> <span class="n">ModificarPersona</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-5"></a><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-6"></a>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-7"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-8"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">Bienvenida</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"bienvenida"</span><span class="p">),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-9"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^personas/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">Personas</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-10"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">"personas"</span><span class="p">),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-11"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_persona/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">CrearPersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-12"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">"crear_persona"</span><span class="p">),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-13"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_excel/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">ReportePersonasExcel</span><span class="o">.</span><span class="n">a</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-14"></a>        <span class="n">s_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_excel"</span><span class="p">),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-15"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^detalle_persona/(?P&lt;pk&gt;\d+)/$'</span><span class="p">,</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-16"></a>        <span class="n">login_required</span><span class="p">(</span><span class="n">DetallePersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"detalle_persona"</span><span class="p">),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-17"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^modificar_persona/(?P&lt;pk&gt;\d+)/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">ModificarPerson</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-18"></a>        <span class="n">a</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"modificar_persona"</span><span class="p">),</span>
+<a name="rest_code_c81f62b8dd3749498bb3c78b62f48fff-19"></a><span class="p">)</span>
+</pre>
+<p>Si probamos ahora poniendo nuevamente la dirección anterior en nuestra
+barra de direcciones sin habernos logueado, nos aparecerá la siguiente
+pantalla:</p>
+<img alt="/images/blog/error.jpg" src="../../../../../images/blog/error.jpg"><p>¿Muy feo, no? Lamentablemente no podemos presentar esto al usuario
+sino que quisieramos que cada vez que alguien intente acceder de esta
+forma, nos redireccione a la pantalla de login, esto lo hacemos con
+una linea agregada al archivo settings.py:</p>
+<pre class="code python"><a name="rest_code_193eeaf2e8d84ed5ab5fbb3432df2db4-1"></a><span class="n">LOGIN_URL</span> <span class="o">=</span> <span class="s1">'/'</span>
+</pre>
 <p>Ahora probemos nuevamente:</p>
-<p><a href="../../../../../2016/04/correcto.jpg"><img class="aligncenter size-medium wp-image-206" src="https://pythonpiura.files.wordpress.com/2016/04/correcto.jpg?w=300" alt="correcto" width="300" height="77"></a></p>
-<p style="text-align:justify;">Con esto ya tenemos protegidas nuestras vistas y garantizamos que no tendremos accesos no deseados.<br>
+<img alt="/images/blog/correcto.jpg" src="../../../../../images/blog/correcto.jpg"><p>Con esto ya tenemos protegidas nuestras vistas y garantizamos que no
+tendremos accesos no deseados.
 Saludos.</p>
-
+</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../../../../categories/django/" rel="tag">Django</a></li>
