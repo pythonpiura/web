@@ -11,11 +11,11 @@
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/circulo.xml</loc>
-  <lastmod>2016-08-06T14:53:00Z</lastmod>
+  <lastmod>2016-08-06T15:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/django.xml</loc>
-  <lastmod>2016-08-01T21:20:00Z</lastmod>
+  <lastmod>2016-08-06T15:41:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/ipython.xml</loc>
@@ -43,10 +43,10 @@
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/rss.xml</loc>
-  <lastmod>2016-08-06T14:53:00Z</lastmod>
+  <lastmod>2016-08-06T15:44:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/sitemap.xml</loc>
-  <lastmod>2016-08-06T14:53:00Z</lastmod>
+  <lastmod>2016-08-06T15:44:00Z</lastmod>
  </sitemap>
 </sitemapindex>
