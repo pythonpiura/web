@@ -43,7 +43,7 @@ Ponentes
        <div class="col-md-4">
 	       <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-amaya.png"/></p>
    <h2 style="text-align: center">Miguel Amaya</h2>
-   <h2 style="text-align: center">Piura</h2>
+   <p style="text-align: center">Piura</p>
    <p style="text-align: center">
      <a href="http://pythonpiura.org/">Python Piura</a><br>   
   <strong>Un Vistazo a Python.</strong>
@@ -53,7 +53,7 @@ Ponentes
   <div class="col-md-4">
 	 <p style="text-align: center"><img class="img-circle" src="/images/pyday/diego-saavedra.png"/></p>
 	 <h2 style="text-align: center">Diego Saavedra</h2>
-   <h2 style="text-align: center">Loja - Ecuador</h2>
+   <p style="text-align: center">Loja - Ecuador</p>
 	 <p style="text-align: center">
 	 	<a href="http://www.aprendizajelibre.org/">Aprendizaje Libre</a><br>
 	<strong>Desarrollo de Videojuegos con Python.</strong>
@@ -63,7 +63,7 @@ Ponentes
   <div class="col-md-4">
    <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-cumpa.png"/></p>
    <h2 style="text-align: center">Miguel Cumpa Ascuña</h2>
-   <h2 style="text-align: center">Lima</h2>
+   <p style="text-align: center">Lima</p>
    <p style="text-align: center">
     <a href="http://mozilla.pe/">Mozilla Perú</a><br>
   <strong>Django y Python para Todos.</strong>
@@ -77,7 +77,7 @@ Ponentes
        <div class="col-md-4">
         <p style="text-align: center"><img class="img-circle" src="/images/pyday/jorge-rios.png"/></p>
    <h2 style="text-align: center">Jorge Ríos</h2>
-   <h2 style="text-align: center">Chiclayo</h2>
+   <p style="text-align: center">Chiclayo</p>
    <p style="text-align: center">
      <a href="http://hackspace.pe/">HackSpace</a><br>   
   <strong>Python con Raspberry Pi 3 y Arduino.</strong>
@@ -86,7 +86,7 @@ Ponentes
        <div class="col-md-4">
    <p style="text-align: center"><img class="img-circle" src="/images/pyday/rolando-herrera.png"/></p>
    <h2 style="text-align: center">Rolando Herrera Matos</h2>
-   <h2 style="text-align: center">Chiclayo</h2>
+   <p style="text-align: center">Chiclayo</p>
    <p style="text-align: center">
      <a href="http://www.apesol.org.pe/">APESOL</a><br>   
   <strong>Python + Django Experiencias Cocinando Rápido y Caliente</strong>
