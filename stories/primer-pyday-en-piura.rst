@@ -10,12 +10,29 @@
 Primer PyDay en Piura
 ======================
 
-¿Qué es?
---------
+.. class:: lead
+
+   ¡Ven, diviértete y aprende Python con nosotros!
+
+.. image:: /images/pyday/afiche.png
+   :target: afiche.png
+   :align: right
+   :width: 330px
+   :height: 400px
+
+¿Qué es Python?
+---------------
 
 .. class:: center
 
-	El Python Day es un evento libre y gratuito que dura un día(en nuestro caso solamente será hasta las 12:30), en donde se llevarán a cabo charlas relacionadas al lenguaje de programación Python. Queremos que este evento sirva como punto de inicio para que los programadores y no programadores conozcan Python y sepan como funciona, la idea es fortalecer a la comunidad Python Piura.
+  Python es un lenguaje de programación interpretado, de tipado dinámico y multiplataforma, cuya filosofía hace hincapié en una sintaxis que favorezca un código legible. Es también multiparadigma, ya que soporta orientación a objetos, programación imperativa y programación funcional. Es sencillo de aprender, y muchos programadores Python reconocen un sustancial aumento en su productividad además de sentir que el lenguaje mismo los incentiva al desarrollo de código de mayor calidad. Está disponible en múltiples plataformas, desde una PC hasta teléfonos celulares, y muchos sitios de Internet utilizan Python como soporte de sus servicios.
+
+El Evento
+---------
+
+.. class:: center
+
+  El Python Day es un evento libre y gratuito que dura un día(en nuestro caso solamente será hasta las 12:30), en donde se llevarán a cabo charlas relacionadas al lenguaje de programación Python. Queremos que este evento sirva como punto de inicio para que los programadores y no programadores conozcan Python y sepan como funciona, la idea es fortalecer a la comunidad Python Piura.
 
 Ponentes
 --------
@@ -24,17 +41,19 @@ Ponentes
 
    <div class="row" style="margin-top: 50px;">
        <div class="col-md-4">
-	 <p style="text-align: center"><img class="img-circle" src="/images/pyday/jorge-rios.png"/></p>
-	 <h2 style="text-align: center">Jorge Ríos</h2>
-	 <p style="text-align: center">
-	 	 <a href="http://hackspace.pe/">HackSpace</a><br> 	
-	<strong>Python con Raspberry Pi 3 y Arduino.</strong>
-	</p>
+	       <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-amaya.png"/></p>
+   <h2 style="text-align: center">Miguel Amaya</h2>
+   <h2 style="text-align: center">Piura</h2>
+   <p style="text-align: center">
+     <a href="http://pythonpiura.org/">Python Piura</a><br>   
+  <strong>Un Vistazo a Python.</strong>
+  </p>
        </div>
 
   <div class="col-md-4">
 	 <p style="text-align: center"><img class="img-circle" src="/images/pyday/diego-saavedra.png"/></p>
 	 <h2 style="text-align: center">Diego Saavedra</h2>
+   <h2 style="text-align: center">Loja - Ecuador</h2>
 	 <p style="text-align: center">
 	 	<a href="http://www.aprendizajelibre.org/">Aprendizaje Libre</a><br>
 	<strong>Desarrollo de Videojuegos con Python.</strong>
@@ -44,6 +63,7 @@ Ponentes
   <div class="col-md-4">
    <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-cumpa.png"/></p>
    <h2 style="text-align: center">Miguel Cumpa Ascuña</h2>
+   <h2 style="text-align: center">Lima</h2>
    <p style="text-align: center">
     <a href="http://mozilla.pe/">Mozilla Perú</a><br>
   <strong>Django y Python para Todos.</strong>
@@ -52,11 +72,21 @@ Ponentes
    </div>
 
    <div class="row" style="margin-top: 50px;">
+       <div class="col-md-2">
+        </div>  
        <div class="col-md-4">
+        <p style="text-align: center"><img class="img-circle" src="/images/pyday/jorge-rios.png"/></p>
+   <h2 style="text-align: center">Jorge Ríos</h2>
+   <h2 style="text-align: center">Chiclayo</h2>
+   <p style="text-align: center">
+     <a href="http://hackspace.pe/">HackSpace</a><br>   
+  <strong>Python con Raspberry Pi 3 y Arduino.</strong>
+  </p>
        </div> 
        <div class="col-md-4">
    <p style="text-align: center"><img class="img-circle" src="/images/pyday/rolando-herrera.png"/></p>
    <h2 style="text-align: center">Rolando Herrera Matos</h2>
+   <h2 style="text-align: center">Chiclayo</h2>
    <p style="text-align: center">
      <a href="http://www.apesol.org.pe/">APESOL</a><br>   
   <strong>Python + Django Experiencias Cocinando Rápido y Caliente</strong>
@@ -121,10 +151,8 @@ Organizadores
 Auspiciadores
 -------------
 
-.. image:: /images/pyday/logounp.png
+.. image:: /images/pyday/auspiciadores.png
    :align: center
-   :height: 200 px
-   :width: 200 px
    :alt: Auspiciadores
 
 .. _noggalito: http://noggalito.com/
