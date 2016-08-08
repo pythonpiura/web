@@ -43,30 +43,30 @@ Ponentes
        <div class="col-md-4">
 	       <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-amaya.png"/></p>
    <h2 style="text-align: center">Miguel Amaya</h2>
-   <p style="text-align: center">Piura</p>
+   <p style="text-align: center"><strong>Un Vistazo a Python.</strong></p>
    <p style="text-align: center">
      <a href="http://pythonpiura.org/">Python Piura</a><br>   
-  <strong>Un Vistazo a Python.</strong>
+      Piura
   </p>
        </div>
 
   <div class="col-md-4">
 	 <p style="text-align: center"><img class="img-circle" src="/images/pyday/diego-saavedra.png"/></p>
 	 <h2 style="text-align: center">Diego Saavedra</h2>
-   <p style="text-align: center">Loja - Ecuador</p>
+   <p style="text-align: center"><strong>Desarrollo de Videojuegos con Python.</strong></p>
 	 <p style="text-align: center">
 	 	<a href="http://www.aprendizajelibre.org/">Aprendizaje Libre</a><br>
-	<strong>Desarrollo de Videojuegos con Python.</strong>
+	   Loja - Ecuador
 	 </p>
        </div>   
 
   <div class="col-md-4">
    <p style="text-align: center"><img class="img-circle" src="/images/pyday/miguel-cumpa.png"/></p>
    <h2 style="text-align: center">Miguel Cumpa Ascuña</h2>
-   <p style="text-align: center">Lima</p>
+   <p style="text-align: center"><strong>Django y Python para Todos.</strong></p>
    <p style="text-align: center">
     <a href="http://mozilla.pe/">Mozilla Perú</a><br>
-  <strong>Django y Python para Todos.</strong>
+    Lima
    </p>
        </div>
    </div>
@@ -77,19 +77,19 @@ Ponentes
        <div class="col-md-4">
         <p style="text-align: center"><img class="img-circle" src="/images/pyday/jorge-rios.png"/></p>
    <h2 style="text-align: center">Jorge Ríos</h2>
-   <p style="text-align: center">Chiclayo</p>
+   <p style="text-align: center"><strong>Python con Raspberry Pi 3 y Arduino.</strong></p>
    <p style="text-align: center">
      <a href="http://hackspace.pe/">HackSpace</a><br>   
-  <strong>Python con Raspberry Pi 3 y Arduino.</strong>
+    Chiclayo
   </p>
        </div> 
        <div class="col-md-4">
    <p style="text-align: center"><img class="img-circle" src="/images/pyday/rolando-herrera.png"/></p>
    <h2 style="text-align: center">Rolando Herrera Matos</h2>
-   <p style="text-align: center">Chiclayo</p>
+   <p style="text-align: center"><strong>Python + Django Experiencias Cocinando Rápido y Caliente</strong></p>
    <p style="text-align: center">
      <a href="http://www.apesol.org.pe/">APESOL</a><br>   
-  <strong>Python + Django Experiencias Cocinando Rápido y Caliente</strong>
+    Chiclayo
   </p>
        </div>
   </div>
