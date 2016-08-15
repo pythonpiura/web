@@ -121,22 +121,26 @@ Debes tener en cuenta que:
 
 .. class:: center
 
-	* La inscripción no es obligatoria pero le recomendamos hacerlo para organizar mejor la entrega del material y los certificados, esta se realiza usando el botón "*Inscribirme*"
+  * La inscripción no es obligatoria pero le recomendamos hacerlo para organizar mejor la entrega del material y los certificados, esta se realiza usando el botón "*Inscribirme*".
 
-	* El evento es de entrada libre y gratuita. 
-	  Sin embargo, los que deseen certificado pueden adquirirlo a
-	  un costo de S/ 30.00 soles.
+  * El evento es de entrada libre y gratuita. Sin embargo, los que deseen certificado pueden adquirirlo a un costo de S/ 30.00 soles.
 
-	* En las charlas se repartirá material impreso y digital.
+  * En las charlas se repartirá material impreso y digital.
 
-	* Habrá comida gratis :-)
+  * Habrá comida gratis :-)
 
-
+  * Debes leer el código de conducta usando el botón "*Código de Conducta*"
+  
 .. raw:: html
 
    <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
      <a class="btn btn-lg btn-primary" target="_blank" href="http://x.noggalito.com/2arNQvX">
        Inscribirme
+     </a>
+   </div>
+   <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
+     <a class="btn btn-lg btn-primary" target="_blank" href="https://www.python.org/psf/codeofconduct/">
+       Código de Conducta
      </a>
    </div>
 
