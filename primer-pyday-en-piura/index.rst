@@ -17,8 +17,8 @@ Primer PyDay en Piura
 .. image:: /images/pyday/afiche.png
    :target: afiche.png
    :align: right
-   :width: 330px
-   :height: 400px
+   :width: 380px
+   :height: 500px
 
 ¿Qué es Python?
 ---------------
@@ -33,6 +33,36 @@ El Evento
 .. class:: center
 
   El Python Day es un evento libre y gratuito que dura un día(en nuestro caso solamente será hasta las 12:30), en donde se llevarán a cabo charlas relacionadas al lenguaje de programación Python. Queremos que este evento sirva como punto de inicio para que los programadores y no programadores conozcan Python y sepan como funciona, la idea es fortalecer a la comunidad Python Piura.
+
+Código de Conducta
+------------------
+
+.. class:: center
+
+  El PyDay es un evento de la comunidad que pretende dar a conocer el lenguaje de programación Python en la región de Piura. Nos entusiasma mucho la participación de todos los interesados y queremos brindarles un espacio acogedor donde puedan conocer, aprender y vivir una experiencia satisfactoria y enriquecedora, en un ambiente cordial y agradable. Por lo que esperamos que los asistentes se comporten con respeto, decoro y educación con los expositores, organizadores y el resto de participantes, durante todas las etapas del evento.
+
+  Para lograr desarrollar un buen evento todos los participantes deberán seguir el siguiente código de conducta:
+
+  * Este evento es libre y abierto a todos los que deseen participar, por lo que no se tolerará la discriminación de ningún tipo.
+  * El respeto y la consideración son nuestras premisas, por lo que   exhortamos a los participantes a no proferir insultos ni manifestaciones de ningún tipo que desprecien o menoscaben la integridad de de los demás.
+  * No se permitirán los chistes sexistas, clasistas o racistas.
+  * Todo el contenido generado en el evento debe ser apropiado para una audiencia profesional reconociendo la procedencia de asistentes de diferentes ámbitos y sectores.
+  * No está permitida la difusión de contenidos de índole sexual.
+  * Exhortamos a los participantes a compartir sus conocimientos con todos los asistentes, para generar un ambiente de cooperación.
+
+  Si un participante se comportara de forma que violase este Código de Conducta, los organizadores podrán tomar las medidas que ellos consideren adecuadas, incluyendo la expulsión del local donde se llevará a cabo el evento.
+
+Información de Contacto
+***********************
+
+.. class:: center
+
+  Si eres objeto de acoso, notas que alguien más está siendo acosado, o tienes cualquier otro reclamo, por favor contáctate con uno de los organizadores del evento.
+  Somos receptivos a escuchar críticas y comentarios que nos ayuden a mejorar en la organización de este de futuros eventos, siempre y cuando sean hechas de manera alturada y respetuosa.
+
+  Gracias por hacer de este un evento abierto a la comunidad y amistoso.
+
+  Este documento está basado en el Código de Conducta del PyCamp_ de Python Argentina.
 
 Ponentes
 --------
@@ -127,9 +157,7 @@ Debes tener en cuenta que:
 
   * En las charlas se repartirá material impreso y digital.
 
-  * Habrá comida gratis :-)
-
-  * Debes leer el código de conducta usando el botón "*Código de Conducta*"
+  * Habrá comida gratis :-) 
   
 .. raw:: html
 
@@ -138,12 +166,6 @@ Debes tener en cuenta que:
        Inscribirme
      </a>
    </div>
-   <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
-     <a class="btn btn-lg btn-primary" target="_blank" href="https://www.python.org/psf/codeofconduct/">
-       Código de Conducta
-     </a>
-   </div>
-
 
 Organizadores
 -------------
@@ -162,3 +184,4 @@ Auspiciadores
 .. _noggalito: http://noggalito.com/
 .. _pythonpiura: http://pythonpiura.org/
 .. _unp: http://www.unp.edu.pe
+.. _PyCamp: http://www.python.org.ar/wiki/PyCamp/CoC
