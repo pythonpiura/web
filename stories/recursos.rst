@@ -7,6 +7,20 @@
 .. description: 
 .. type: text
 
+Charlas
+-------
+
+* `Un Vistazo a Python`_
+	.. _`Un Vistazo a Python`: /recursos/charlas/Charla-UnVistazoPython.pdf
+* `Python + Django Experiencias Cocinando Rápido y Caliente`_
+	.. _`Python + Django Experiencias Cocinando Rápido y Caliente`: /recursos/charlas/python_django_cocinando_rapido.pdf
+* `Python con Raspberry Pi 3 y Arduino`_
+	.. _`Python con Raspberry Pi 3 y Arduino`: /recursos/charlas/Python_con_RaspberryPi3_Arduino.pdf
+* `Django y Python para Todos`_
+	.. _`Django y Python para Todos`: http://es.slideshare.net/mickymiseck/django-y-python-para-todos
+* `Desarrollo de Videojuegos con Python`_
+	.. _`Desarrollo de Videojuegos con Python`: http://slides.com/diegosaavedra/deck#/
+
 Libros
 ------
 
