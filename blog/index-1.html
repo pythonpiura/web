@@ -72,140 +72,166 @@
             <p class="dateline"><a href="../posts/2016/04/17/deployando-proyectos-django-en-heroku/" rel="bookmark"><time class="published dt-published" datetime="2016-04-17T16:44:49-05:00" title="2016-04-17 16:44">2016-04-17 16:44</time></a></p>
         </div>
     </header><div class="e-content entry-content">
-    <p style="text-align:justify;"><a href="https://www.heroku.com/">Heroku</a> es una plataforma que brinda servicios en la nube y soporta varios lenguajes de programación, funciona muy bien con Python y Django y en esta ocasión haremos un pequeño tutorial basado en el tutorial oficial, que se puede encontrar en la página del proyecto.<br>
-Para empezar  a trabajar debemos tener una cuenta en Heroku, hay planes de varios tipos, nosotros escogeremos el plan Free. Antes de empezar nos vamos a cerciorar de tener instaladas algunas cosas básicas, que ya hemos visto antes pero que siempre es bueno recordar:</p>
-<ul style="text-align:justify;">
+    <div>
+<p><a class="reference external" href="https://www.heroku.com/">Heroku</a> es una plataforma que brinda servicios en la nube y soporta
+varios lenguajes de programación, funciona muy bien con Python y
+Django y en esta ocasión haremos un pequeño tutorial basado en el
+tutorial oficial, que se puede encontrar en la página del proyecto.
+Para empezar a trabajar debemos tener una cuenta en Heroku, hay planes
+de varios tipos, nosotros escogeremos el plan Free. Antes de empezar
+nos vamos a cerciorar de tener instaladas algunas cosas básicas, que
+ya hemos visto antes pero que siempre es bueno recordar:</p>
+<ul class="simple">
 <li>Pip.</li>
 <li>Virtualenv</li>
 <li>Git.</li>
 <li>Y en nuestro caso la base de datos PostgreSQL.</li>
 </ul>
-<p style="text-align:justify;">El primer paso es instalar Heroku Toolbelt, esta aplicación provee acceso a la interfaz de linea de comandos(CLI) de Heroku, que es usada para administrar y escalar nuestras aplicaciones y sus añadidos, para tenerlo instalado debemos poner el siguiente comando en nuestra terminal:</p>
-<p>[sourcecode language="bash"]<br>
-wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">El script nos pedira permisos de superusuario para continuar, se los damos y esperamos que la instalación se efectue.</p>
-<p style="text-align:justify;">Una vez que hemos terminado de instalar debemos loguearnos utilizando el usuario y password que hemos registrado en la página de Heroku de la siguiente manera:</p>
-<p>[sourcecode language="bash"]<br>
-heroku login<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Si es la primera vez que lanzamos la aplicación se demorará un poquito instalando y configurando todo lo necesario, despues nos pedirá usuario y password, si ingresamos las credenciales correctamente nos saldrá un mensaje como este:</p>
-<p>[sourcecode language="bash"]<br>
-Logged in as miguel.amaya99@gmail.com<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Una vez que hemos hecho esto el manual oficial de Heroku nos indica que debemos clonar una aplicación de prueba para deployar, nosotros ya tenemos una aplicación desarrollada por lo que debemos hacer algunos cambios a esta para poder subirla sin ningún problema.</p>
-<p style="text-align:justify;">Primero debemos agregar dos archivos en la raiz del proyecto:</p>
-<p style="text-align:justify;">El archivo procfile que debe tener el siguiente contenido:</p>
-<p>[sourcecode language="python"]<br>
-web: gunicorn volpox.wsgi –log-file -<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">En la parte donde dice “volpox.wsgi” se debe reemplazar por el nombre de su proyecto.</p>
-<p style="text-align:justify;">El archivo requirements.txt debe tener todos las aplicaciones que nuestro proyecto necesita para funcionar correctamente, esto se puede averiguar facilmente ejecutando el comando pip freeze y guardando su contenido en el archivo, en nuestro caso el contenido del archivo es el siguiente:</p>
-<p>[sourcecode language="python"]<br>
-dj-database-url==0.4.0<br>
-Django==1.9.2<br>
-gunicorn==19.4.5<br>
-psycopg2==2.6.1<br>
-whitenoise==2.0.6<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Debemos tener en cuenta que este es el contenido básico para garantizar el correcto funcionamiento de nuestra aplicación en Heroku, hemos adicionado el paquete psycopg2 para poder trabajar con postgresql, si su proyecto usa algún paquete de software adicional, póngalo en este archivo.</p>
-<p style="text-align:justify;">Ahora debemos modificar el archivo settings.py agregando las siguientes lineas:</p>
-<p>[sourcecode language="python"]<br>
-#Al inicio</p>
-<p>import dj_database_url</p>
-<p>PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">En la parte donde está:</p>
-<p>[sourcecode language="python"]<br>
-ALLOWED_HOSTS = []<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Lo cambiamos por:</p>
-<p>[sourcecode language="python"]<br>
-ALLOWED_HOSTS = ['*']<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">En la parte final agregamos esto:</p>
-<p>[sourcecode language="python"]<br>
-db_from_env = dj_database_url.config(conn_max_age=500)<br>
-DATABASES['default'].update(db_from_env)</p>
-<p># Honor the ‘X-Forwarded-Proto’ header for request.is_secure()<br>
-SECURE_PROXY_SSL_HEADER = (‘HTTP_X_FORWARDED_PROTO’, ‘https’)<br>
-# Static files (CSS, JavaScript, Images)<br>
-# https://docs.djangoproject.com/en/1.8/howto/static-files/</p>
-<p>STATIC_ROOT = os.path.join(PROJECT_ROOT, ‘staticfiles’)</p>
-<p>STATIC_URL = ‘/static/’</p>
-<p># Extra places for collectstatic to find static files.<br>
-STATICFILES_DIRS = (<br>
-os.path.join(BASE_DIR, ‘static’),<br>
-)<br>
-STATICFILES_STORAGE = ‘whitenoise.django.GzipManifestStaticFilesStorage’<br>
-[/sourcecode]</p>
+<p>El primer paso es instalar Heroku Toolbelt, esta aplicación provee
+acceso a la interfaz de linea de comandos(CLI) de Heroku, que es usada
+para administrar y escalar nuestras aplicaciones y sus añadidos, para
+tenerlo instalado debemos poner el siguiente comando en nuestra
+terminal:</p>
+<pre class="code bash"><a name="rest_code_1026bbe8aa1d49af8022c2cd39fb9dcf-1"></a>wget -O- https://toolbelt.heroku.com/install-ubuntu.sh <span class="p">|</span> sh
+</pre>
+<p>El script nos pedira permisos de superusuario para continuar, se los
+damos y esperamos que la instalación se efectue.</p>
+<p>Una vez que hemos terminado de instalar debemos loguearnos utilizando
+el usuario y password que hemos registrado en la página de Heroku de
+la siguiente manera:</p>
+<pre class="code bash"><a name="rest_code_8a423dd515c44b759ca20b534b039295-1"></a>heroku login
+</pre>
+<p>Si es la primera vez que lanzamos la aplicación se demorará un poquito
+instalando y configurando todo lo necesario, despues nos pedirá
+usuario y password, si ingresamos las credenciales correctamente nos
+saldrá un mensaje como este:</p>
+<pre class="code bash"><a name="rest_code_2824ba2dae6945a6bba4b60950815fe8-1"></a>Logged in as miguel.amaya99@gmail.com
+</pre>
+<p>Una vez que hemos hecho esto el manual oficial de Heroku nos indica
+que debemos clonar una aplicación de prueba para deployar, nosotros ya
+tenemos una aplicación desarrollada por lo que debemos hacer algunos
+cambios a esta para poder subirla sin ningún problema.</p>
+<p>Primero debemos agregar dos archivos en la raiz del proyecto:</p>
+<p>El archivo procfile que debe tener el siguiente contenido:</p>
+<pre class="code python"><a name="rest_code_80b7a3286684407481d529ff2403070e-1"></a><span class="n">web</span><span class="p">:</span> <span class="n">gunicorn</span> <span class="n">volpox</span><span class="o">.</span><span class="n">wsgi</span> <span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="nb">file</span> <span class="o">-</span>
+</pre>
+<p>En la parte donde dice “volpox.wsgi” se debe reemplazar por el nombre
+de su proyecto.</p>
+<p>El archivo requirements.txt debe tener todos las aplicaciones que
+nuestro proyecto necesita para funcionar correctamente, esto se puede
+averiguar facilmente ejecutando el comando pip freeze y guardando su
+contenido en el archivo, en nuestro caso el contenido del archivo es
+el siguiente:</p>
+<pre class="code python"><a name="rest_code_5c967c2cd6e143c6b3bc8a1a199d109f-1"></a><span class="n">dj</span><span class="o">-</span><span class="n">database</span><span class="o">-</span><span class="n">url</span><span class="o">==</span><span class="mf">0.4</span><span class="o">.</span><span class="mi">0</span>
+<a name="rest_code_5c967c2cd6e143c6b3bc8a1a199d109f-2"></a><span class="n">Django</span><span class="o">==</span><span class="mf">1.9</span><span class="o">.</span><span class="mi">2</span>
+<a name="rest_code_5c967c2cd6e143c6b3bc8a1a199d109f-3"></a><span class="n">gunicorn</span><span class="o">==</span><span class="mf">19.4</span><span class="o">.</span><span class="mi">5</span>
+<a name="rest_code_5c967c2cd6e143c6b3bc8a1a199d109f-4"></a><span class="n">psycopg2</span><span class="o">==</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">1</span>
+<a name="rest_code_5c967c2cd6e143c6b3bc8a1a199d109f-5"></a><span class="n">whitenoise</span><span class="o">==</span><span class="mf">2.0</span><span class="o">.</span><span class="mi">6</span>
+</pre>
+<p>Debemos tener en cuenta que este es el contenido básico para
+garantizar el correcto funcionamiento de nuestra aplicación en Heroku,
+hemos adicionado el paquete psycopg2 para poder trabajar con
+postgresql, si su proyecto usa algún paquete de software adicional,
+póngalo en este archivo.</p>
+<p>Ahora debemos modificar el archivo settings.py agregando las
+siguientes lineas:</p>
+<pre class="code python"><a name="rest_code_13e28f2b11c5437a85584d93d6fc8905-1"></a><span class="c1">#Al inicio</span>
+<a name="rest_code_13e28f2b11c5437a85584d93d6fc8905-2"></a>
+<a name="rest_code_13e28f2b11c5437a85584d93d6fc8905-3"></a><span class="kn">import</span> <span class="nn">dj_database_url</span>
+<a name="rest_code_13e28f2b11c5437a85584d93d6fc8905-4"></a>
+<a name="rest_code_13e28f2b11c5437a85584d93d6fc8905-5"></a><span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">))</span>
+</pre>
+<p>En la parte donde está:</p>
+<pre class="code python"><a name="rest_code_26704d4034324ed89c6aa77e075da4be-1"></a><span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[]</span>
+</pre>
+<p>Lo cambiamos por:</p>
+<pre class="code python"><a name="rest_code_e4655541dc2d475799eeb9a72b78d53e-1"></a><span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'*'</span><span class="p">]</span>
+</pre>
+<p>En la parte final agregamos esto:</p>
+<pre class="code python"><a name="rest_code_4939c9e8213c481d82669f6e965eaa29-1"></a><span class="n">db_from_env</span> <span class="o">=</span> <span class="n">dj_database_url</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">conn_max_age</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-2"></a><span class="n">DATABASES</span><span class="p">[</span><span class="s1">'default'</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">db_from_env</span><span class="p">)</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-3"></a>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-4"></a><span class="c1"># Honor the 'X-Forwarded-Proto' header for request.is_secure()</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-5"></a><span class="n">SECURE_PROXY_SSL_HEADER</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'HTTP_X_FORWARDED_PROTO'</span><span class="p">,</span> <span class="s1">'https'</span><span class="p">)</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-6"></a><span class="c1"># Static files (CSS, JavaScript, Images)</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-7"></a><span class="c1"># https://docs.djangoproject.com/en/1.8/howto/static-files/</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-8"></a>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-9"></a><span class="n">STATIC_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">PROJECT_ROOT</span><span class="p">,</span> <span class="s1">'staticfiles'</span><span class="p">)</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-10"></a>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-11"></a><span class="n">STATIC_URL</span> <span class="o">=</span> <span class="s1">'/static/'</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-12"></a>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-13"></a><span class="c1"># Extra places for collectstatic to find static files.</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-14"></a><span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-15"></a><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">'static'</span><span class="p">),</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-16"></a><span class="p">)</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-17"></a><span class="n">STATICFILES_STORAGE</span> <span class="o">=</span>
+<a name="rest_code_4939c9e8213c481d82669f6e965eaa29-18"></a><span class="s1">'whitenoise.django.GzipManifestStaticFilesStorage'</span>
+</pre>
 <p>Ahora debemos cambiar el contenido del archivo wsgi.py</p>
-<p>[sourcecode language="python"]<br>
-import os<br>
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "volpox.settings")</p>
-<p>from django.core.wsgi import get_wsgi_application<br>
-from whitenoise.django import DjangoWhiteNoise</p>
-<p>application = get_wsgi_application()<br>
-application = DjangoWhiteNoise(application)<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">También debemos crear un archivo .gitignore, que es usado por git para no trabajar con las extensiones de archivos mencionados aquí en nuestro caso serán las siguientes:</p>
-<p>[sourcecode language="python"]<br>
-venv<br>
-*.pyc<br>
-staticfiles<br>
-.env<br>
-db.sqlite3<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Ahora debemos crear un repositorio git con el siguiente comando:</p>
-<p>[sourcecode language="bash"]<br>
-git init<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Añadimos los archivos:</p>
-<p>[sourcecode language="bash"]<br>
-git add *<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Y hacemos nuestro primer commit:</p>
-<p>[sourcecode language="bash"]<br>
-git commit -m "Deployando proyecto"<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Creamos nuestro proyecto en Heroku:</p>
-<p>[sourcecode language="bash"]<br>
-heroku create volpox<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Ahora si procedamos a subir nuestro proyecto a Heroku:</p>
-<p>[sourcecode language="bash"]<br>
-git push heroku master<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Si tuviesemos algún error, revisar los archivos de la carpeta static, generalmente la mayoría de errores se presentan por rutas no encontradas o cosas así.</p>
-<p style="text-align:justify;">Si todo ha salido correctamente vamos a proceder a asegurarnos de que al menos una instancia de la aplicación se está ejecutando:</p>
-<p>[sourcecode language="bash"]<br>
-heroku ps:scale web=1<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Ahora abrimos el proyecto con el navegador por defecto:</p>
-<p>[sourcecode language="bash"]<br>
-heroku open<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Listo, ya tenemos nuestra aplicación funcionando correctamente, ahora falta configurar la base de datos, para ello vamos a utilizar el siguiente comando:</p>
-<p>[sourcecode language="bash"]<br>
-heroku addons<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Con esto añadimos una base de datos PostgreSQL en el plan Free de nuestra cuenta.<br>
+<pre class="code python"><a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-1"></a><span class="kn">import</span> <span class="nn">os</span>
+<a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-2"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"DJANGO_SETTINGS_MODULE"</span><span class="p">,</span> <span class="s2">"volpox.settings"</span><span class="p">)</span>
+<a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-3"></a>
+<a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-4"></a><span class="kn">from</span> <span class="nn">django.core.wsgi</span> <span class="kn">import</span> <span class="n">get_wsgi_application</span>
+<a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-5"></a><span class="kn">from</span> <span class="nn">whitenoise.django</span> <span class="kn">import</span> <span class="n">DjangoWhiteNoise</span>
+<a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-6"></a>
+<a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-7"></a><span class="n">application</span> <span class="o">=</span> <span class="n">get_wsgi_application</span><span class="p">()</span>
+<a name="rest_code_9de6b20bd611417f80e19b8e0e6c5668-8"></a><span class="n">application</span> <span class="o">=</span> <span class="n">DjangoWhiteNoise</span><span class="p">(</span><span class="n">application</span><span class="p">)</span>
+</pre>
+<p>También debemos crear un archivo .gitignore, que es usado por git para
+no trabajar con las extensiones de archivos mencionados aquí en
+nuestro caso serán las siguientes:</p>
+<pre class="code python"><a name="rest_code_506f1db4b9d049438b16bacfd0a7cc1e-1"></a><span class="n">venv</span>
+<a name="rest_code_506f1db4b9d049438b16bacfd0a7cc1e-2"></a><span class="o">*.</span><span class="n">pyc</span>
+<a name="rest_code_506f1db4b9d049438b16bacfd0a7cc1e-3"></a><span class="n">staticfiles</span>
+<a name="rest_code_506f1db4b9d049438b16bacfd0a7cc1e-4"></a><span class="o">.</span><span class="n">env</span>
+<a name="rest_code_506f1db4b9d049438b16bacfd0a7cc1e-5"></a><span class="n">db</span><span class="o">.</span><span class="n">sqlite3</span>
+</pre>
+<p>Ahora debemos crear un repositorio git con el siguiente comando:</p>
+<pre class="code bash"><a name="rest_code_a9519bf76dc7487e845b066218eb8649-1"></a>git init
+</pre>
+<p>Añadimos los archivos:</p>
+<pre class="code bash"><a name="rest_code_9359f1c732774a5499867d4a6e3ed713-1"></a>git add *
+</pre>
+<p>Y hacemos nuestro primer commit:</p>
+<pre class="code bash"><a name="rest_code_4784e346f2594b43b218c22d03ae4504-1"></a>git commit -m <span class="s2">"Deployando proyecto"</span>
+</pre>
+<p>Creamos nuestro proyecto en Heroku:</p>
+<pre class="code bash"><a name="rest_code_21e12f7bc6e74954a9fda45ce9bbee1c-1"></a>heroku create volpox
+</pre>
+<p>Ahora si procedamos a subir nuestro proyecto a Heroku:</p>
+<pre class="code bash"><a name="rest_code_7a6c81a8a5aa4da9bcad073d346fa992-1"></a>git push heroku master
+</pre>
+<p>Si tuviesemos algún error, revisar los archivos de la carpeta static,
+generalmente la mayoría de errores se presentan por rutas no
+encontradas o cosas así.</p>
+<p>Si todo ha salido correctamente vamos a proceder a asegurarnos de que
+al menos una instancia de la aplicación se está ejecutando:</p>
+<pre class="code bash"><a name="rest_code_b6f0b9ba3670473b82e3707f079e3952-1"></a>heroku ps:scale <span class="nv">web</span><span class="o">=</span>1
+</pre>
+<p>Ahora abrimos el proyecto con el navegador por defecto:</p>
+<pre class="code bash"><a name="rest_code_8a6b57fb13d24253b87dfda899798570-1"></a>heroku open
+</pre>
+<p>Listo, ya tenemos nuestra aplicación funcionando correctamente, ahora
+falta configurar la base de datos, para ello vamos a utilizar el
+siguiente comando:</p>
+<pre class="code bash"><a name="rest_code_1a8937946efd4bb5817a856a7a1a3578-1"></a>heroku addons
+</pre>
+<p>Con esto añadimos una base de datos PostgreSQL en el plan Free de
+nuestra cuenta.
 Los siguiente comandos:</p>
-<p>[sourcecode language="bash"]<br>
-heroku config<br>
-heroku pg<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Nos permiten ver la configuración de nuestra base de datos.</p>
-<p style="text-align:justify;">Procedemos a crear nuestras tablas en la base de datos creada, usando el comando migrate de la siguiente manera:</p>
-<p>[sourcecode language="bash"]<br>
-heroku run python manage.py migrate<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Si es necesario procedemos a crear nuestro superusuario:</p>
-<p>[sourcecode language="bash"]<br>
-heroku run python manage.py createsuperuser<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Listo ya tenemos nuestra aplicación desplegada. Hasta la próxima.</p>
-
+<pre class="code bash"><a name="rest_code_9fe26a85020b44c69be07df535b4a0fb-1"></a>heroku config
+<a name="rest_code_9fe26a85020b44c69be07df535b4a0fb-2"></a>heroku pg
+</pre>
+<p>Nos permiten ver la configuración de nuestra base de datos.</p>
+<p>Procedemos a crear nuestras tablas en la base de datos creada, usando
+el comando migrate de la siguiente manera:</p>
+<pre class="code bash"><a name="rest_code_53579d22c6dd4f7cae7e57ec0c8d01be-1"></a>heroku run python manage.py migrate
+</pre>
+<p>Si es necesario procedemos a crear nuestro superusuario:</p>
+<pre class="code bash"><a name="rest_code_0f122c54c51a43849ae87b968e07fa9d-1"></a>heroku run python manage.py createsuperuser
+</pre>
+<p>Listo ya tenemos nuestra aplicación desplegada. Hasta la próxima.</p>
+</div>
     </div>
     </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/16/curso-basico-de-python/" class="u-url">Curso Básico de Python</a></h1>
         <div class="metadata">
