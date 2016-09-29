@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1471986441.4547353
+_modified_time = 1475158868.3130581
 _enable_loop = True
 _template_filename = '/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/listing.tmpl'
 _template_uri = 'listing.tmpl'
@@ -32,17 +32,17 @@ def render_body(context,**pageargs):
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
-        ui = _mako_get_namespace(context, 'ui')
-        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
-        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
-        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
         folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
-        def content():
-            return render_content(context._locals(__M_locals))
-        files = _import_ns.get('files', context.get('files', UNDEFINED))
         def sourcelink():
             return render_sourcelink(context._locals(__M_locals))
+        def content():
+            return render_content(context._locals(__M_locals))
+        ui = _mako_get_namespace(context, 'ui')
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
+        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
+        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
+        files = _import_ns.get('files', context.get('files', UNDEFINED))
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n\n')
@@ -88,13 +88,13 @@ def render_content(context,**pageargs):
     try:
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
-        ui = _mako_get_namespace(context, 'ui')
-        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
         folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
         def content():
             return render_content(context)
+        ui = _mako_get_namespace(context, 'ui')
+        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
         files = _import_ns.get('files', context.get('files', UNDEFINED))
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer(str(ui.bar(crumbs)))
@@ -125,6 +125,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"filename": "/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/listing.tmpl", "source_encoding": "utf-8", "uri": "listing.tmpl", "line_map": {"64": 22, "74": 22, "75": 23, "76": 24, "77": 25, "78": 25, "79": 25, "80": 25, "86": 5, "23": 3, "111": 13, "29": 0, "112": 13, "99": 5, "100": 6, "101": 6, "102": 7, "103": 8, "104": 9, "105": 10, "106": 10, "107": 10, "108": 10, "109": 10, "110": 12, "47": 2, "48": 3, "113": 13, "114": 13, "115": 13, "116": 15, "53": 20, "118": 18, "119": 18, "120": 18, "58": 28, "126": 120, "117": 17}}
+{"line_map": {"64": 22, "74": 22, "75": 23, "76": 24, "77": 25, "78": 25, "79": 25, "80": 25, "86": 5, "23": 3, "111": 13, "29": 0, "112": 13, "99": 5, "100": 6, "101": 6, "102": 7, "103": 8, "104": 9, "105": 10, "106": 10, "107": 10, "108": 10, "109": 10, "110": 12, "47": 2, "48": 3, "113": 13, "114": 13, "115": 13, "116": 15, "53": 20, "118": 18, "119": 18, "120": 18, "58": 28, "126": 120, "117": 17}, "source_encoding": "utf-8", "filename": "/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/listing.tmpl", "uri": "listing.tmpl"}
 __M_END_METADATA
 """
