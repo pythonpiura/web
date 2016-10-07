@@ -23,7 +23,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2016-08-05T21:49:00Z</lastmod>
+  <lastmod>2016-10-07T23:26:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -31,11 +31,11 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-1.html</loc>
-  <lastmod>2016-10-07T22:59:00Z</lastmod>
+  <lastmod>2016-10-07T23:43:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-2.html</loc>
-  <lastmod>2016-08-06T17:24:00Z</lastmod>
+  <lastmod>2016-10-07T23:26:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
@@ -115,11 +115,11 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2016-10-07T23:26:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/</loc>
-  <lastmod>2016-10-07T22:54:00Z</lastmod>
+  <lastmod>2016-10-07T23:00:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/16/curso-basico-de-python/</loc>
@@ -131,7 +131,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/18/datatables-jquery-bootstrap-y-django/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2016-10-07T23:31:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/</loc>
