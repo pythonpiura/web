@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Python Piura (Python)</title><link>http://pythonpiura.org/</link><description></description><atom:link rel="self" href="http://pythonpiura.org/categories/python.xml" type="application/rss+xml"></atom:link><language>es</language><lastBuildDate>Thu, 29 Sep 2016 14:19:05 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Python Piura (Python)</title><link>http://pythonpiura.org/</link><description></description><atom:link type="application/rss+xml" rel="self" href="http://pythonpiura.org/categories/python.xml"></atom:link><language>es</language><lastBuildDate>Fri, 07 Oct 2016 22:59:02 GMT</lastBuildDate><generator>https://getnikola.com/</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Reporte PDF en Django con Reportlab</title><link>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
 bastante olvidado estos últimos días y haremos un reporte en pdf
 utilizando la librería &lt;a class="reference external" href="http://www.reportlab.com/"&gt;reportlab&lt;/a&gt;, para ello la instalamos:&lt;/p&gt;
 &lt;pre class="code bash"&gt;&lt;a name="rest_code_13527231d4a5419c93ddc7424ecc9a31-1"&gt;&lt;/a&gt;pip install reportlab
@@ -514,104 +514,106 @@ el comando migrate de la siguiente manera:&lt;/p&gt;
 &lt;pre class="code bash"&gt;&lt;a name="rest_code_53579d22c6dd4f7cae7e57ec0c8d01be-1"&gt;&lt;/a&gt;heroku run python manage.py migrate
 &lt;/pre&gt;&lt;p&gt;Si es necesario procedemos a crear nuestro superusuario:&lt;/p&gt;
 &lt;pre class="code bash"&gt;&lt;a name="rest_code_0f122c54c51a43849ae87b968e07fa9d-1"&gt;&lt;/a&gt;heroku run python manage.py createsuperuser
-&lt;/pre&gt;&lt;p&gt;Listo ya tenemos nuestra aplicación desplegada. Hasta la próxima.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>Python</category><guid>http://pythonpiura.org/posts/2016/04/17/deployando-proyectos-django-en-heroku/</guid><pubDate>Sun, 17 Apr 2016 21:44:49 GMT</pubDate></item><item><title>Servir Aplicaciones Django con Apache y mod_wsgi en Centos 7</title><link>http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p style="text-align:justify;"&gt;Para instalar un servidor de producción Django en Centos 7 usaremos Apache y mod_wsgi, mod_wsgi es un módulo de Apache, que permite servir aplicaciones hechas en Python, que tengan soporte para la interfaz WSGI.&lt;br&gt;
-Los requisitos para esto son tener un servidor Centos 7 correctamente instalado y configurado y los permisos de root para poder hacer las instalaciones correspondientes. Para comenzar el proceso, vamos a descargar e instalar todos los elementos que necesitamos de los repositorios de la distribución. Esto incluirá el servidor web Apache, el módulo mod_wsgi utilizado para interactuar con nuestra aplicación Django, y pip. Para obtener pip, tendremos que habilitar el repositorio EPEL(paquetes para Linux Empresarial):&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-yum install epel-release&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Con EPEL habilitado nosotros podemos instalar los componentes tipeando:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-yum install python-pip httpd mod_wsgi&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Ahora que ya tenemos instalados los paquetes necesarios, debemos crear un entorno virtual para ellos instalaremos virtualenv usando pip:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-pip install virtualenv&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ahora procedemos a crear nuestro entorno virtual:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-virtualenv vproduccion&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Y lo activamos:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-source vproduccion/bin/activate&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Cuando activamos el entorno virtual nuestro prompt debe cambiar y aparecer entre paréntesis el nombre del entorno virtual activado.&lt;br&gt;
+&lt;/pre&gt;&lt;p&gt;Listo ya tenemos nuestra aplicación desplegada. Hasta la próxima.&lt;/p&gt;&lt;/div&gt;</description><category>Django</category><category>Python</category><guid>http://pythonpiura.org/posts/2016/04/17/deployando-proyectos-django-en-heroku/</guid><pubDate>Sun, 17 Apr 2016 21:44:49 GMT</pubDate></item><item><title>Servir Aplicaciones Django con Apache y mod_wsgi en Centos 7</title><link>http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Para instalar un servidor de producción Django en Centos 7 usaremos
+Apache y mod_wsgi, mod_wsgi es un módulo de Apache, que permite servir
+aplicaciones hechas en Python, que tengan soporte para la interfaz
+WSGI.
+Los requisitos para esto son tener un servidor Centos 7 correctamente
+instalado y configurado y los permisos de root para poder hacer las
+instalaciones correspondientes. Para comenzar el proceso, vamos a
+descargar e instalar todos los elementos que necesitamos de los
+repositorios de la distribución. Esto incluirá el servidor web Apache,
+el módulo mod_wsgi utilizado para interactuar con nuestra aplicación
+Django, y pip. Para obtener pip, tendremos que habilitar el
+repositorio EPEL(paquetes para Linux Empresarial):&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_ed55c85b2b334c369cd6c938ef709421-1"&gt;&lt;/a&gt;yum install epel-release
+&lt;/pre&gt;&lt;p&gt;Con EPEL habilitado nosotros podemos instalar los componentes
+tipeando:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_94679e24e08949afb49b30450227bffe-1"&gt;&lt;/a&gt;yum install python-pip httpd mod_wsgi
+&lt;/pre&gt;&lt;p&gt;Ahora que ya tenemos instalados los paquetes necesarios, debemos crear
+un entorno virtual para ellos instalaremos virtualenv usando pip:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_d4fcb12bb1cc4b92a4b33e89c4cc0429-1"&gt;&lt;/a&gt;pip install virtualenv
+&lt;/pre&gt;&lt;p&gt;Ahora procedemos a crear nuestro entorno virtual:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_556f593dc2f04fdda20cea2ac46d789f-1"&gt;&lt;/a&gt;virtualenv vproduccion
+&lt;/pre&gt;&lt;p&gt;Y lo activamos:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_e69d85259dea4d8ea0af518bd427faa1-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; vproduccion/bin/activate
+&lt;/pre&gt;&lt;p&gt;Cuando activamos el entorno virtual nuestro prompt debe cambiar y
+aparecer entre paréntesis el nombre del entorno virtual activado.
 Una vez que esto ha sucedido debemos instalar Django:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-pip install django&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;Cuando ya tengamos listo esto, subimos o creamos nuestro proyecto Django utilizando los comandos clásicos que ya hemos utilizado antes, ahora nos toca configurar Apache.&lt;br&gt;
-Una vez que comprobamos que el proyecto Django está funcionando, podemos configurar Apache como un front-end. Las conexiones de cliente que recibe serán traducidos al formato WSGI que la aplicación Django espera utilizando el módulo mod_wsgi. Esto debería haber sido activado automáticamente después de la instalación anterior. Para configurar lo anterior, tendremos que crear un nuevo archivo de configuración en el directorio /etc/httpd/conf.d. Vamos a llamar a este archivo django.conf:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-nano /etc/httpd/conf.d/django.conf&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Y dentro de él escribiremos lo siguiente:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-#En mi caso la ruta es /home/jamaya y mi proyecto se llama siad&lt;br&gt;
-#Configuración para mostrar correctamente losa archivos estáticos&lt;br&gt;
-Alias /static /home/jamaya/siad/static&lt;br&gt;
-&amp;lt;Directory /home/jamaya/siad/static&amp;gt;&lt;br&gt;
-        Require all granted&lt;br&gt;
-&amp;lt;/Directory&amp;gt;&lt;br&gt;
-#Configuración para acceder correctamente al wsgi.py&lt;br&gt;
-&amp;lt;Directory /home/jamaya/siad/siad/&amp;gt;&lt;br&gt;
-&amp;lt;Files wsgi.py&amp;gt;&lt;br&gt;
-        Require all granted&lt;br&gt;
-&amp;lt;/Files&amp;gt;&lt;br&gt;
-&amp;lt;/Directory&amp;gt;&lt;/p&gt;
-&lt;p&gt;WSGIDaemonProcess siad python-path=/home/jamaya/siad:/home/jamaya/vproduccion/lib/python2.7/site-packages&lt;br&gt;
-WSGIProcessGroup siad&lt;br&gt;
-WSGIScriptAlias /siad /home/jamaya/siad/siad/wsgi.py&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p style="text-align:justify;"&gt;A continuación, tenemos que arreglar los permisos para que el servicio de Apache puede acceder a nuestros archivos. Por defecto CentOS bloquea el directorio personal de cada usuario de manera muy restrictiva. Para evitar esto, añadiremos el usuario apache al grupo de nuestro propio usuario. Esto nos permitirá abrir los permisos sólo lo suficiente para que pueda llegar a los archivos correspondientes.&lt;br&gt;
-Añadimos el usuario apache a nuestro grupo, reemplazamos la palabra jamaya con nuestro usuario:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-usermod -a -G jamaya apache&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Damos permisos al grupo en la carpeta personal, esto permitirá al proceso apache acceder a los archivos.&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-chmod 710 /home/jamaya&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Ya podemos iniciar el servicio de apache:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-systemctl start httpd&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Vamos a probar si la carga del proyecto funciona, vamos a otra computadora de la red y colocamos la direccion ip de nuestro servidor y la aplicación:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-http://172.20.30.129/siad&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Si hubiese algún problema lo mas rápido y sencillo es deshabilitar SELINUX, esto lo hacemos editando el archivo:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-/etc/selinux/config&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Y cambiando la siguiente linea:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-SELINUX=disabled&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Si todo funciona correctamente habilitamos el servicio apache para que se inicie automaticamente:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-systemctl enable httpd&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Recuerden tener siempre su archivo requerimientos.txt o requirements.txt para instalar todas las dependendencias que hacen que nuestro proyecto funcione con éxito. Este archivo se obtiene en nuestro entorno de desarrollo escribiendo el siguiente comando:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-pip freeze &amp;gt; requirements.txt&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Y para instalarlas en nuestro entorno de producción usamos el mismo comando con algunas variantes:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-pip install -r requirements.txt&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;En el caso nuestro teniamos un par de dependencias un poco complicadas de instalar en Centos: Pillow y psycopg2, por lo que tuvimos algunos errores, para solucionarlos debemos instalar algunas librerias, en centos en el caso de psycopg2 tenemos:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-yum install gcc&lt;br&gt;
-yum install postgresql-devel python-devel&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Y en el caso de Pillow:&lt;/p&gt;
-&lt;p&gt;[sourcecode language="bash"]&lt;br&gt;
-yum install libjpeg-devel zlib-devel&lt;br&gt;
-[/sourcecode]&lt;/p&gt;
-&lt;p&gt;Y listo eso es todo, ya tenemos nuestro servidor de producción.&lt;/p&gt;
-&lt;p&gt;Saludos.&lt;/p&gt;
-</description><category>Centos</category><category>Django</category><category>Python</category><guid>http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/</guid><pubDate>Fri, 15 Apr 2016 03:34:33 GMT</pubDate></item><item><title>Romper Captchas con Pytesseract y Selenium</title><link>http://pythonpiura.org/posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p&gt;En muchas de las páginas que consultamos tenemos una imagen que contiene un pequeño texto que generalmente es de 4 o de 6 letras, esta imagen es conocida como captcha y sirve para evitar la consulta masiva de datos y el uso de boots para hacer consultas, el problema radica en que podemos convertir esta imagen en texto y buscar la forma de ingresar estos datos de manera automática sin intervención humana. Para hacer la conversión de la imagen en texto tenemos la librería pytesseract que hace uso del programa tesseract-ocr y para el ingreso automático de datos y el acceso a la página objetivo contamos con la ayuda de nuestro viejo conocido selenium, cabe destacar que este procedimiento funciona siempre y cuando la imagen del captcha no sea tan complejo y contenga solamente texto.&lt;br&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_6a4d9cc9df864ee2bca755674ec1ce37-1"&gt;&lt;/a&gt;pip install django
+&lt;/pre&gt;&lt;p&gt;Cuando ya tengamos listo esto, subimos o creamos nuestro proyecto
+Django utilizando los comandos clásicos que ya hemos utilizado antes,
+ahora nos toca configurar Apache.
+Una vez que comprobamos que el proyecto Django está funcionando,
+podemos configurar Apache como un front-end. Las conexiones de cliente
+que recibe serán traducidos al formato WSGI que la aplicación Django
+espera utilizando el módulo mod_wsgi. Esto debería haber sido activado
+automáticamente después de la instalación anterior. Para configurar lo
+anterior, tendremos que crear un nuevo archivo de configuración en el
+directorio /etc/httpd/conf.d. Vamos a llamar a este archivo
+django.conf:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_5b467e05630640bcb5c06dacdc22df8b-1"&gt;&lt;/a&gt;nano /etc/httpd/conf.d/django.conf
+&lt;/pre&gt;&lt;p&gt;Y dentro de él escribiremos lo siguiente:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-1"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#En mi caso la ruta es /home/jamaya y mi proyecto se llama siad&lt;/span&gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-2"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#Configuración para mostrar correctamente losa archivos estáticos&lt;/span&gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-3"&gt;&lt;/a&gt;Alias /static /home/jamaya/siad/static
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-4"&gt;&lt;/a&gt;&amp;lt;Directory /home/jamaya/siad/static&amp;gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-5"&gt;&lt;/a&gt;        Require all granted
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-6"&gt;&lt;/a&gt;&amp;lt;/Directory&amp;gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-7"&gt;&lt;/a&gt;&lt;span class="c1"&gt;#Configuración para acceder correctamente al wsgi.py&lt;/span&gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-8"&gt;&lt;/a&gt;&amp;lt;Directory /home/jamaya/siad/siad/&amp;gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-9"&gt;&lt;/a&gt;        &amp;lt;Files wsgi.py&amp;gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-10"&gt;&lt;/a&gt;                Require all granted
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-11"&gt;&lt;/a&gt;        &amp;lt;/Files&amp;gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-12"&gt;&lt;/a&gt;&amp;lt;/Directory&amp;gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-13"&gt;&lt;/a&gt;
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-14"&gt;&lt;/a&gt;WSGIDaemonProcess siad python-path&lt;span class="o"&gt;=&lt;/span&gt;/home/jamaya/siad:/home/jamaya/vproduccion/lib/python2.7/site-packages
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-15"&gt;&lt;/a&gt;WSGIProcessGroup siad
+&lt;a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-16"&gt;&lt;/a&gt;WSGIScriptAlias /siad /home/jamaya/siad/siad/wsgi.py
+&lt;/pre&gt;&lt;p&gt;A continuación, tenemos que arreglar los permisos para que el servicio
+de Apache puede acceder a nuestros archivos. Por defecto CentOS
+bloquea el directorio personal de cada usuario de manera muy
+restrictiva. Para evitar esto, añadiremos el usuario apache al grupo
+de nuestro propio usuario. Esto nos permitirá abrir los permisos sólo
+lo suficiente para que pueda llegar a los archivos correspondientes.
+Añadimos el usuario apache a nuestro grupo, reemplazamos la palabra
+jamaya con nuestro usuario:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_7a4e94f4959e4f40b3ae62c3b756a1d4-1"&gt;&lt;/a&gt;usermod -a -G jamaya apache
+&lt;/pre&gt;&lt;p&gt;Damos permisos al grupo en la carpeta personal, esto permitirá al
+proceso apache acceder a los archivos.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_731c7dcc4652446d95e7698da7e2a7d8-1"&gt;&lt;/a&gt;chmod &lt;span class="m"&gt;710&lt;/span&gt; /home/jamaya
+&lt;/pre&gt;&lt;p&gt;Ya podemos iniciar el servicio de apache:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_abd3dbf1e5e743efabb8eabb7c3216e2-1"&gt;&lt;/a&gt;systemctl start httpd
+&lt;/pre&gt;&lt;p&gt;Vamos a probar si la carga del proyecto funciona, vamos a otra
+computadora de la red y colocamos la direccion ip de nuestro servidor
+y la aplicación:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_1d8d98539f4d4e7cbbb4b18f48c25b87-1"&gt;&lt;/a&gt;http://172.20.30.129/siad
+&lt;/pre&gt;&lt;p&gt;Si hubiese algún problema lo mas rápido y sencillo es deshabilitar
+SELINUX, esto lo hacemos editando el archivo:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_0ac575a221aa47cbb1f58a597c222fd5-1"&gt;&lt;/a&gt;/etc/selinux/config
+&lt;/pre&gt;&lt;p&gt;Y cambiando la siguiente linea:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_f7a73805211a43c6a16243c858f27bc8-1"&gt;&lt;/a&gt;&lt;span class="nv"&gt;SELINUX&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;disabled
+&lt;/pre&gt;&lt;p&gt;Si todo funciona correctamente habilitamos el servicio apache para que
+se inicie automaticamente:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_310db2e786eb47d7be81de572d3a0613-1"&gt;&lt;/a&gt;systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; httpd
+&lt;/pre&gt;&lt;p&gt;Recuerden tener siempre su archivo requerimientos.txt o
+requirements.txt para instalar todas las dependendencias que hacen que
+nuestro proyecto funcione con éxito. Este archivo se obtiene en
+nuestro entorno de desarrollo escribiendo el siguiente comando:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_cc944d40218e418586bb220b9ea663ee-1"&gt;&lt;/a&gt;pip freeze &amp;gt; requirements.txt
+&lt;/pre&gt;&lt;p&gt;Y para instalarlas en nuestro entorno de producción usamos el mismo
+comando con algunas variantes:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_b8180f60af94468cb4e2255ebae6b38f-1"&gt;&lt;/a&gt;pip install -r requirements.txt
+&lt;/pre&gt;&lt;p&gt;En el caso nuestro teniamos un par de dependencias un poco complicadas
+de instalar en Centos: Pillow y psycopg2, por lo que tuvimos algunos
+errores, para solucionarlos debemos instalar algunas librerias, en
+centos en el caso de psycopg2 tenemos:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_1b810b42bed14a72851ff69a7401b26e-1"&gt;&lt;/a&gt;yum install gcc
+&lt;a name="rest_code_1b810b42bed14a72851ff69a7401b26e-2"&gt;&lt;/a&gt;yum install postgresql-devel python-devel
+&lt;/pre&gt;&lt;p&gt;Y en el caso de Pillow:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_0cafba1d541a407db19e0d1b422204e0-1"&gt;&lt;/a&gt;yum install libjpeg-devel zlib-devel
+&lt;/pre&gt;&lt;p&gt;Y listo eso es todo, ya tenemos nuestro servidor de producción.&lt;/p&gt;
+&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Centos</category><category>Django</category><category>Python</category><guid>http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/</guid><pubDate>Fri, 15 Apr 2016 03:34:33 GMT</pubDate></item><item><title>Romper Captchas con Pytesseract y Selenium</title><link>http://pythonpiura.org/posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;p&gt;En muchas de las páginas que consultamos tenemos una imagen que contiene un pequeño texto que generalmente es de 4 o de 6 letras, esta imagen es conocida como captcha y sirve para evitar la consulta masiva de datos y el uso de boots para hacer consultas, el problema radica en que podemos convertir esta imagen en texto y buscar la forma de ingresar estos datos de manera automática sin intervención humana. Para hacer la conversión de la imagen en texto tenemos la librería pytesseract que hace uso del programa tesseract-ocr y para el ingreso automático de datos y el acceso a la página objetivo contamos con la ayuda de nuestro viejo conocido selenium, cabe destacar que este procedimiento funciona siempre y cuando la imagen del captcha no sea tan complejo y contenga solamente texto.&lt;br&gt;
 Hemos creado un script de manera general sin tener una página objetivo en específico, pero para aplicarlo se debe conocer bien la página a testear tal como hemos explicado en posts anteriores, analizando sus elementos y la ubicación del captcha.&lt;br&gt;
 Antes de empezar debemos tener instalado el programa tesseract-ocr ya que no podremos hacer nada sin este, lo podemos descargar de la siguiente &lt;a href="http://en.osdn.jp/projects/sfnet_tesseract-ocr-alt/downloads/tesseract-ocr-setup-3.02.02.exe/"&gt;ubicación&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Posteriormente procedemos a instalar las librerias pytesseract y pillow(para el manejo y tratamiento de imágenes)&lt;/p&gt;

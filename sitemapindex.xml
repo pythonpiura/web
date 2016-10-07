@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
   <loc>http://pythonpiura.org/categories/centos.xml</loc>
-  <lastmod>2016-08-01T21:20:00Z</lastmod>
+  <lastmod>2016-10-07T22:59:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/circulo.xml</loc>
@@ -15,7 +15,7 @@
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/django.xml</loc>
-  <lastmod>2016-09-29T14:19:00Z</lastmod>
+  <lastmod>2016-10-07T22:59:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/ipython.xml</loc>
@@ -31,7 +31,7 @@
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/python.xml</loc>
-  <lastmod>2016-09-29T14:19:00Z</lastmod>
+  <lastmod>2016-10-07T22:59:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/reportlab.xml</loc>
@@ -47,6 +47,6 @@
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/sitemap.xml</loc>
-  <lastmod>2016-09-29T14:19:00Z</lastmod>
+  <lastmod>2016-10-07T22:59:00Z</lastmod>
  </sitemap>
 </sitemapindex>
