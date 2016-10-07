@@ -15,7 +15,9 @@
 <meta property="og:site_name" content="Python Piura">
 <meta property="og:title" content="DataTables JQuery, Bootstrap y Django">
 <meta property="og:url" content="http://pythonpiura.org/posts/2016/04/18/datatables-jquery-bootstrap-y-django/">
-<meta property="og:description" content="Muchas veces al querer mostrar un listado o un conjunto de objetos, necesitamos hacer uso de tablas, esto lo podemos trabajar de manera sencilla usando una simple tabla html, pero que pasa cuando quer">
+<meta property="og:description" content="Muchas veces al querer mostrar un listado o un conjunto de objetos,
+necesitamos hacer uso de tablas, esto lo podemos trabajar de manera
+sencilla usando una simple tabla html, pero que pasa cuando quer">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-04-18T22:35:28-05:00">
 <meta property="article:tag" content="Django">
@@ -59,7 +61,7 @@
 </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-    <a href="index.src.html" id="sourcelink">Código fuente</a>
+    <a href="index.rst" id="sourcelink">Código fuente</a>
     </li>
 
                 
@@ -82,236 +84,295 @@
             </span></p>
             <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-04-18T22:35:28-05:00" itemprop="datePublished" title="2016-04-18 22:35">2016-04-18 22:35</time></a></p>
             
-        <p class="sourceline"><a href="index.src.html" id="sourcelink">Código fuente</a></p>
+        <p class="sourceline"><a href="index.rst" id="sourcelink">Código fuente</a></p>
 
         </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <p style="text-align:justify;">Muchas veces al querer mostrar un listado o un conjunto de objetos, necesitamos hacer uso de tablas, esto lo podemos trabajar de manera sencilla usando una simple tabla html, pero que pasa cuando queremos tener mayores prestaciones, como búsquedas, ordenamiento paginación, etc. En este caso tenemos que recurrir a elementos mas avanzados, en internet podemos encontrar muchísimas aplicaciones con tablas que nos facilitan la vida, pero en esta oportunidad vamos a trabajar con una herramienta que nos ha parecido muy interesante y que nos ha resultado muy fácil de configurar y además trabaja con JQuery, la aplicación se llama <a href="https://datatables.net/">DataTables </a>y como su página dice es un plugin para JQuery, para empezar a trabajar debemos descargarla desde el siguiente <a href="https://datatables.net/download/download">enlace.</a></p>
-<p style="text-align:justify;">Para poder mostrar un sitio web mas o menos presentable vamos a echar mano de Bootstrap, como ya es bien conocido en el mundo del desarrollo web <a href="http://getbootstrap.com/">Bootstrap </a>es un framework que nos facilita el diseño de nuestras aplicaciones, contiene plantillas de diseño con tipografía, formularios, botones, cuadros, menús de navegación y otros elementos de diseño basado en HTML y CSS, así como, extensiones de JavaScript, la última versión la podemos descargar de <a href="https://github.com/twbs/bootstrap/releases/download/v3.3.6/bootstrap-3.3.6-dist.zip">aquí</a>.</p>
-<p style="text-align:justify;">Ahora si, vamos a empezar creando nuestro proyecto en django, nosotros utilizamos como IDE Eclipse con pydev, si quieren una guía para configurarlo dense una vuelta por <a href="http://www.pythondiario.com/2013/06/eclipse-y-pydev-configuracion-del-ide.html">aquí</a>. Nuestro proyecto se llamará tutorial, dentro del proyecto vamos a crear la aplicación personas, de tal manera que tengamos la siguiente estructura:</p>
-<p><a href="../../../../../2016/04/estructura.jpg" rel="attachment wp-att-143"><img class="alignnone size-full wp-image-143" src="../../../../../2016/04/estructura.jpg" alt="Estructura" width="260" height="257"></a></p>
-<p style="text-align:justify;">Ahora vamos a crear una carpeta llamada static en la raiz del proyecto y dentro de ella vamos a crear las carpetas css, js, fonts, images y localizacion.</p>
-<p><a href="../../../../../2016/04/estructura21.jpg" rel="attachment wp-att-145"><img class="alignnone size-full wp-image-145" src="../../../../../2016/04/estructura21.jpg" alt="Estructura2" width="264" height="187"></a></p>
-<p style="text-align:justify;">Nos toca configurar el archivo settings para que nuestros archivos estáticos se muestren correctamente, agregamos la siguiente linea al final del archivo.</p>
-<p>settings.py<br>
-[sourcecode language="python"]<br>
-STATICFILES_DIRS = (<br>
-os.path.join(BASE_DIR, ‘static’),<br>
-)<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Y ahora como ya tenemos descargados tanto DataTables como Bootstrap los descomprimimos, en DataTables buscamos la carpeta media, aquí encontraremos las carpetas css, images y js, vamos a trabajar de la manera mas sencilla que podamos por lo que no vamos a necesitar todo el contenido de las carpetas antes mencionadas, así que de la carpeta css seleccionamos el archivo jquery.dataTables.min.css y lo copiamos a la carpeta css de nuestro proyecto, de la carpeta js seleccionamos los archivos jquery.js y jquery.dataTables.min.js y los copiamos a la carpeta js de nuestro proyecto,el contenido de la carpeta images si lo copiamos integro dentro de nuestra carpeta images. Lo mismo hacemos con Bootstrap copiamos los archivos bootstrap.min.css y bootstrap.min.css.map a nuestra carpeta css, copiamos todo el contenido de la carpeta fonts a nuestra carpeta fonts y finalmente copiamos el archivo bootstrap.min.js a nuestra carpeta js.<br>
-Adicionalmente a esto debemos copiar el contenido del siguiente <a href="https://www.datatables.net/plug-ins/i18n/Spanish">enlace</a> y crear un archivo en la carpeta localización que en este caso le hemos llamado es_ES.json, esto sirve para traducir DataTables al español.</p>
-<p style="text-align:justify;">Finalmente tendremos lo siguiente dentro de nuestra carpeta static:</p>
-<p><a href="../../../../../2016/04/estructurastatic.jpg" rel="attachment wp-att-146"><img class="alignnone size-medium wp-image-146" src="https://pythonpiura.files.wordpress.com/2016/04/estructurastatic.jpg?w=163" alt="EstructuraStatic" width="163" height="300"></a></p>
-<p>Ahora vamos a crear una carpeta llamada templates que va a contener nuestras plantillas html dentro de la aplicación personas. Dentro de esta carpeta creamos un archivo llamado base.html que va a ser la plantilla madre de la que heredarán las demás, este archivo tendrá el siguiente contenido:<br>
-[sourcecode language="html"]<br>
-{% load staticfiles %}<br>
-&lt;!DOCTYPE html&gt;<br>
-&lt;html&gt;<br>
-	&lt;head&gt;<br>
-		Ejemplo Círculo de Programadores de Python Piura<br>
-		&lt;link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"&gt;<br>
-		&lt;link rel="stylesheet" type="text/css" href="{% static "css/jquery.dataTables.min.css"  %}"  /&gt;<br>
-		&lt;script src="{% static "js/jquery.js" %}"&gt;&lt;/script&gt;<br>
-		&lt;script src="{% static "js/bootstrap.min.js" %}"&gt;&lt;/script&gt;<br>
-		&lt;script src="{% static "js/jquery.dataTables.min.js" %}"&gt;&lt;/script&gt;<br>
-	&lt;/head&gt;<br>
-	&lt;body&gt;<br>
-	&lt;div id="page-wrapper"&gt;<br>
-		&lt;div class="container-fluid"&gt;<br>
-		{% block cuerpo %}<br>
-		{% endblock cuerpo %}<br>
-		&lt;/div&gt;<br>
-	&lt;/div&gt;<br>
-&lt;/body&gt;<br>
-{% block js %}<br>
-{% endblock js %}<br>
-&lt;/html&gt;<br>
-[/sourcecode]<br>
-Vamos a modificar el archivo urls.py del proyecto de tal manera que al correrlo este apunte directamente a nuestra aplicación personas:</p>
-<p>urls.py<br>
-[sourcecode language="python"]<br>
-from django.conf.urls import include, url<br>
- from django.contrib import admin</p>
-<p>urlpatterns = [<br>
- url(r'^admin/', include(admin.site.urls)),<br>
- url(r'^', include('personas.urls',namespace='personas')),<br>
- ]<br>
-[/sourcecode]<br>
-Ahora crearemos nuestro modelo y unas vistas bastante simples, en el archivo models.py de la aplicación personas, creamos el modelo Persona:</p>
-<p>models.py<br>
-[sourcecode language="python"]<br>
-from django.db import models</p>
-<p># Create your models here.<br>
- class Persona(models.Model):<br>
-    dni= models.CharField(primary_key=True,max_length=8)<br>
-    nombre = models.CharField(max_length=100)<br>
-    apellido_paterno = models.CharField(max_length=100)<br>
-    apellido_materno = models.CharField(max_length=100)<br>
-[/sourcecode]</p>
-<p>Creamos dos vistas con sus respectivas urls:<br>
-views.py<br>
-[sourcecode language="python"]</p>
-<p>from personas.models import Persona<br>
-from django.core.urlresolvers import reverse_lazy<br>
-from django.views.generic.edit import CreateView<br>
-from django.views.generic.list import ListView</p>
-<p># Create your views here.<br>
-class CrearPersona(CreateView):<br>
-    model = Persona<br>
-    fields =['dni','nombre','apellido_paterno','apellido_materno']<br>
-    template_name = ‘crear_persona.html’<br>
-    success_url = reverse_lazy(‘personas:personas’)</p>
-<p>class Personas(ListView):<br>
-    model = Persona<br>
-    template_name = ‘personas.html’<br>
-    context_object_name = ‘personas’ </p>
-<p>[/sourcecode]<br>
-urls.py<br>
-[sourcecode language="python"]<br>
-from django.conf.urls import patterns, url<br>
-from personas.views import Personas, CrearPersona</p>
-<p>urlpatterns = patterns(”,<br>
-    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
-    url(r’^',Personas.as_view(), name="personas"),<br>
-)<br>
-[/sourcecode]<br>
-Ahora debemos crear la plantilla:</p>
-<p>personas.html<br>
-[sourcecode language="html"]<br>
-{% extends "base.html" %}<br>
-{% block cuerpo %}<br>
-&lt;div class="row"&gt;<br>
-    &lt;div class="col-lg-12"&gt;<br>
-        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
-    &lt;/div&gt;<br>
-&lt;/div&gt;<br>
-&lt;div class="row"&gt;<br>
-	&lt;div class="col-lg-12"&gt;<br>
-		&lt;div class="panel panel-info"&gt;<br>
-			&lt;div class="panel-heading"&gt;<br>
-			    Personas<br>
-			&lt;/div&gt;<br>
-			&lt;div class="panel-body"&gt;<br>
-				&lt;div class=’form-group’&gt;<br>
-					&lt;div class="row"&gt;<br>
-						&lt;div class="col-lg-3"&gt;	</p>
-<p>						&lt;/div&gt;<br>
-						&lt;div class="col-lg-8"&gt;</p>
-<p>						&lt;/div&gt;<br>
-						&lt;div class="col-lg-1"&gt;<br>
-							&lt;a id="crear_detalle" href="{% url ‘tablas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
-								&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
-							&lt;/a&gt;<br>
-						&lt;/div&gt;<br>
-					&lt;/div&gt;<br>
-				&lt;/div&gt;<br>
-				&lt;div class="row"&gt;<br>
-					&lt;div class="col-lg-12"&gt;<br>
-						&lt;table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%"&gt;<br>
-							&lt;thead&gt;<br>
-								&lt;tr&gt;<br>
-									&lt;th class="text-center"&gt;DNI&lt;/th&gt;<br>
-									&lt;th class="text-center"&gt;NOMBRE&lt;/th&gt;<br>
-									&lt;th class="text-center"&gt;APELLIDO PATERNO&lt;/th&gt;<br>
-									&lt;th class="text-center"&gt;APELLIDO MATERNO&lt;/th&gt;<br>
-								&lt;/tr&gt;<br>
-							&lt;/thead&gt;<br>
-							&lt;tbody&gt;<br>
-							{% for persona in personas %}<br>
-								&lt;tr&gt;<br>
-									&lt;td&gt;{{ persona.dni }}&lt;/td&gt;<br>
-									&lt;td&gt;{{ persona.nombre }}&lt;/td&gt;<br>
-									&lt;td&gt;{{ persona.apellido_paterno }}&lt;/td&gt;<br>
-									&lt;td&gt;{{ persona.apellido_materno }}&lt;/td&gt;<br>
-								&lt;/tr&gt;<br>
-							{% endfor %}<br>
-							&lt;/tbody&gt;<br>
-						&lt;/table&gt;<br>
-					&lt;/div&gt;<br>
-				&lt;/div&gt;<br>
-			&lt;/div&gt;<br>
-		&lt;/div&gt;<br>
-	&lt;/div&gt;<br>
-&lt;/div&gt;<br>
-{% endblock cuerpo %}<br>
-{% block js %}<br>
-&lt;script&gt;<br>
-$(document).ready(function()<br>
-{<br>
-    var table = $(‘#tabla’).DataTable( {<br>
-        "language": {<br>
-        	url: "/static/localizacion/es_ES.json"<br>
-        }<br>
-    } );</p>
-<p>    $(‘#tabla tbody’).on( ‘click’, ‘tr’, function()<br>
-    {<br>
-    	if ($(this).hasClass(‘selected’) )<br>
-        {<br>
-        	$(this).removeClass(‘selected’);</p>
-<p>        }<br>
-        else<br>
-        {<br>
-	        table.$(‘tr.selected’).removeClass(‘selected’);<br>
-	        $(this).addClass(‘selected’);<br>
-        }<br>
-    });   </p>
-<p>});<br>
-&lt;/script&gt;<br>
-{% endblock js %}<br>
-[/sourcecode]<br>
-Como hemos visto lineas arriba es en esta plantilla donde se hace uso de DataTables, primero se crea la tabla teniendo en cuenta que se la ha puesto el id “tabla” y además se hace la traducción al español invocando al archivo es_ES.json:<br>
-[sourcecode language="js"]<br>
-    var table = $(‘#tabla’).DataTable( {<br>
-        "language": {<br>
-        	url: "/static/localizacion/es_ES.json"<br>
-        }<br>
-    } );<br>
-[/sourcecode]<br>
-Lo siguiente es un efecto que se le da al seleccionar una de las filas de la tabla.</p>
-<p>Y finalmente creamos el archivo:<br>
-crear_persona.html<br>
-[sourcecode language="html"]<br>
-{% extends "base.html" %}<br>
-{% block cuerpo %}</p>
-<p>&lt;div class="row"&gt;<br>
-    &lt;div class="col-lg-12"&gt;<br>
-        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
-    &lt;/div&gt;<br>
-&lt;/div&gt;<br>
-&lt;div class="row"&gt;<br>
-	&lt;div class="col-lg-12"&gt;<br>
-		&lt;div class="panel panel-default"&gt;<br>
-			&lt;div class="panel-heading"&gt;<br>
-			    Crear Persona<br>
-			&lt;/div&gt;<br>
-			&lt;div class="panel-body"&gt;<br>
-				&lt;form role="form" action="#" method="post"&gt;<br>
-					{% csrf_token %}<br>
-					&lt;div class="form-group"&gt;<br>
-						{{ form.as_p }}<br>
-					&lt;/div&gt;<br>
-					&lt;div class=’form-group’&gt;<br>
-						&lt;input type="submit" class="btn btn-primary" name="submit" value="Crear Persona"&gt;<br>
-						&lt;button type="reset" class="btn btn-primary" onclick="location.href=’{% url ‘personas:personas’ %}’"&gt;<br>
-						    Cancelar<br>
-						&lt;/button&gt;<br>
-					&lt;/div&gt;<br>
-				&lt;/form&gt;<br>
-			&lt;/div&gt;<br>
-		&lt;/div&gt;<br>
-	&lt;/div&gt;<br>
-&lt;/div&gt;<br>
-&lt;div id="popup"&gt;&lt;/div&gt;<br>
-{% endblock cuerpo %}</p>
-<p>{% block js %}</p>
-<p>{% endblock js %}<br>
-[/sourcecode]</p>
-<p>Hacemos las migraciones correspondientes de nuestros modelos y finalmente corremos el servidor de prueba, si todo ha salido bien tendremos una aplicación como la siguiente:</p>
-<p><a href="../../../../../2016/04/aplicacion.jpg" rel="attachment wp-att-147"><img class="alignnone size-medium wp-image-147" src="https://pythonpiura.files.wordpress.com/2016/04/aplicacion.jpg?w=300" alt="aplicacion" width="300" height="120"></a></p>
-
+    <div>
+<p>Muchas veces al querer mostrar un listado o un conjunto de objetos,
+necesitamos hacer uso de tablas, esto lo podemos trabajar de manera
+sencilla usando una simple tabla html, pero que pasa cuando queremos
+tener mayores prestaciones, como búsquedas, ordenamiento paginación,
+etc. En este caso tenemos que recurrir a elementos mas avanzados, en
+internet podemos encontrar muchísimas aplicaciones con tablas que nos
+facilitan la vida, pero en esta oportunidad vamos a trabajar con una
+herramienta que nos ha parecido muy interesante y que nos ha resultado
+muy fácil de configurar y además trabaja con JQuery, la aplicación se
+llama <a class="reference external" href="https://datatables.net/">DataTables</a> y como su página dice es un plugin para JQuery,
+para empezar a trabajar debemos descargarla desde el siguiente
+<a class="reference external" href="https://datatables.net/download/download">enlace.</a></p>
+<p>Para poder mostrar un sitio web mas o menos presentable vamos a echar
+mano de Bootstrap, como ya es bien conocido en el mundo del desarrollo
+web <a class="reference external" href="http://getbootstrap.com/">Bootstrap</a> es un framework que nos facilita el diseño de
+nuestras aplicaciones, contiene plantillas de diseño con tipografía,
+formularios, botones, cuadros, menús de navegación y otros elementos
+de diseño basado en HTML y CSS, así como, extensiones de JavaScript,
+la última versión la podemos descargar de esta <a class="reference external" href="https://github.com/twbs/bootstrap/releases/download/v3.3.6/bootstrap-3.3.6-dist.zip">ubicación</a>.</p>
+<p>Ahora si, vamos a empezar creando nuestro proyecto en django, nosotros
+utilizamos como IDE Eclipse con pydev, si quieren una guía para
+configurarlo dense una vuelta por <a class="reference external" href="http://www.pythondiario.com/2013/06/eclipse-y-pydev-configuracion-del-ide.html">aquí</a>. Nuestro proyecto se llamará
+tutorial, dentro del proyecto vamos a crear la aplicación personas, de
+tal manera que tengamos la siguiente estructura:</p>
+<p>Ahora vamos a crear una carpeta llamada static en la raiz del proyecto
+y dentro de ella vamos a crear las carpetas css, js, fonts, images y
+localizacion.</p>
+<p>Nos toca configurar el archivo settings para que nuestros archivos
+estáticos se muestren correctamente, agregamos la siguiente linea al
+final del archivo.</p>
+<p>settings.py</p>
+<pre class="code python"><a name="rest_code_e390e8d666974b2ca99c36518daac440-1"></a><span class="n">STATICFILES_DIRS</span> <span class="o">=</span> <span class="p">(</span>
+<a name="rest_code_e390e8d666974b2ca99c36518daac440-2"></a>        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">'static'</span><span class="p">),</span>
+<a name="rest_code_e390e8d666974b2ca99c36518daac440-3"></a><span class="p">)</span>
+</pre>
+<p>Y ahora como ya tenemos descargados tanto DataTables como Bootstrap
+los descomprimimos, en DataTables buscamos la carpeta media, aquí
+encontraremos las carpetas css, images y js, vamos a trabajar de la
+manera mas sencilla que podamos por lo que no vamos a necesitar todo
+el contenido de las carpetas antes mencionadas, así que de la carpeta
+css seleccionamos el archivo jquery.dataTables.min.css y lo copiamos a
+la carpeta css de nuestro proyecto, de la carpeta js seleccionamos los
+archivos jquery.js y jquery.dataTables.min.js y los copiamos a la
+carpeta js de nuestro proyecto,el contenido de la carpeta images si lo
+copiamos integro dentro de nuestra carpeta images. Lo mismo hacemos
+con Bootstrap copiamos los archivos bootstrap.min.css y
+bootstrap.min.css.map a nuestra carpeta css, copiamos todo el
+contenido de la carpeta fonts a nuestra carpeta fonts y finalmente
+copiamos el archivo bootstrap.min.js a nuestra carpeta js.
+Adicionalmente a esto debemos copiar el contenido del siguiente
+<a class="reference external" href="https://www.datatables.net/plug-ins/i18n/Spanish">enlace</a> y crear un archivo en la carpeta localización que en este
+caso le hemos llamado es_ES.json, esto sirve para traducir DataTables
+al español.</p>
+<p>Finalmente tendremos lo siguiente dentro de nuestra carpeta static:</p>
+<p>Ahora vamos a crear una carpeta llamada templates que va a contener
+nuestras plantillas html dentro de la aplicación personas. Dentro de
+esta carpeta creamos un archivo llamado base.html que va a ser la
+plantilla madre de la que heredarán las demás, este archivo tendrá el
+siguiente contenido:</p>
+<pre class="code html"><a name="rest_code_7f6258aee28041808f96933fde2b9bbb-1"></a>{% load staticfiles %}
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-2"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-3"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-4"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-5"></a>Ejemplo Círculo de Programadores de Python Piura
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-6"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static "</span><span class="na">css</span><span class="err">/</span><span class="na">bootstrap</span><span class="err">.</span><span class="na">min</span><span class="err">.</span><span class="na">css</span><span class="err">"</span> <span class="err">%}"</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-7"></a><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static "</span><span class="na">css</span><span class="err">/</span><span class="na">jquery</span><span class="err">.</span><span class="na">dataTables</span><span class="err">.</span><span class="na">min</span><span class="err">.</span><span class="na">css</span><span class="err">"</span> <span class="err">%}"</span> <span class="p">/&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-8"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static "</span><span class="na">js</span><span class="err">/</span><span class="na">jquery</span><span class="err">.</span><span class="na">js</span><span class="err">"</span> <span class="err">%}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-9"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static "</span><span class="na">js</span><span class="err">/</span><span class="na">bootstrap</span><span class="err">.</span><span class="na">min</span><span class="err">.</span><span class="na">js</span><span class="err">"</span> <span class="err">%}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-10"></a><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static "</span><span class="na">js</span><span class="err">/</span><span class="na">jquery</span><span class="err">.</span><span class="na">dataTables</span><span class="err">.</span><span class="na">min</span><span class="err">.</span><span class="na">js</span><span class="err">"</span> <span class="err">%}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-11"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-12"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-13"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"page-wrapper"</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-14"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container-fluid"</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-15"></a>{% block cuerpo %}
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-16"></a>{% endblock cuerpo %}
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-17"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-18"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-19"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-20"></a>{% block js %}
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-21"></a>{% endblock js %}
+<a name="rest_code_7f6258aee28041808f96933fde2b9bbb-22"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre>
+<p>Vamos a modificar el archivo urls.py del proyecto de tal manera que al
+correrlo este apunte directamente a nuestra aplicación personas:</p>
+<p>urls.py</p>
+<pre class="code python"><a name="rest_code_dcaea05d3628492b924dc7c44aa4e945-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">include</span><span class="p">,</span> <span class="n">url</span>
+<a name="rest_code_dcaea05d3628492b924dc7c44aa4e945-2"></a><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<a name="rest_code_dcaea05d3628492b924dc7c44aa4e945-3"></a>
+<a name="rest_code_dcaea05d3628492b924dc7c44aa4e945-4"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+<a name="rest_code_dcaea05d3628492b924dc7c44aa4e945-5"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^admin/'</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">)),</span>
+<a name="rest_code_dcaea05d3628492b924dc7c44aa4e945-6"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^'</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">'personas.urls'</span><span class="p">,</span><span class="n">namespace</span><span class="o">=</span><span class="s1">'personas'</span><span class="p">)),</span>
+<a name="rest_code_dcaea05d3628492b924dc7c44aa4e945-7"></a><span class="p">]</span>
+</pre>
+<p>Ahora crearemos nuestro modelo y unas vistas bastante simples, en el
+archivo models.py de la aplicación personas, creamos el modelo
+Persona:</p>
+<p>models.py</p>
+<pre class="code python"><a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-1"></a><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-2"></a>
+<a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-3"></a><span class="c1"># Create your models here.</span>
+<a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-4"></a><span class="k">class</span> <span class="nc">Persona</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-5"></a><span class="n">dni</span><span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">max_length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-6"></a><span class="n">nombre</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-7"></a><span class="n">apellido_paterno</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_9ebd73ca2bb14982a1f2e5e1782f4401-8"></a><span class="n">apellido_materno</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre>
+<p>Creamos dos vistas con sus respectivas urls:
+views.py</p>
+<pre class="code python"><a name="rest_code_d7953b16c1e24726a644adf6d3410e37-1"></a><span class="kn">from</span> <span class="nn">personas.models</span> <span class="kn">import</span> <span class="n">Persona</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-2"></a><span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse_lazy</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-3"></a><span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">CreateView</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-4"></a><span class="kn">from</span> <span class="nn">django.views.generic.list</span> <span class="kn">import</span> <span class="n">ListView</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-5"></a>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-6"></a><span class="c1"># Create your views here.</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-7"></a><span class="k">class</span> <span class="nc">CrearPersona</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-8"></a><span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-9"></a><span class="n">fields</span> <span class="o">=</span><span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-10"></a><span class="n">template_name</span> <span class="o">=</span> <span class="s1">'crear_persona.html'</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-11"></a><span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-12"></a>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-13"></a><span class="k">class</span> <span class="nc">Personas</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-14"></a><span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-15"></a><span class="n">template_name</span> <span class="o">=</span> <span class="s1">'personas.html'</span>
+<a name="rest_code_d7953b16c1e24726a644adf6d3410e37-16"></a><span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">'personas'</span>
+</pre>
+<p>urls.py</p>
+<pre class="code python"><a name="rest_code_16c47b0803b34a38852a961585fab869-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<a name="rest_code_16c47b0803b34a38852a961585fab869-2"></a><span class="kn">from</span> <span class="nn">personas.views</span> <span class="kn">import</span> <span class="n">Personas</span><span class="p">,</span> <span class="n">CrearPersona</span>
+<a name="rest_code_16c47b0803b34a38852a961585fab869-3"></a>
+<a name="rest_code_16c47b0803b34a38852a961585fab869-4"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
+<a name="rest_code_16c47b0803b34a38852a961585fab869-5"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_persona/$'</span><span class="p">,</span><span class="n">CrearPersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_persona"</span><span class="p">),</span>
+<a name="rest_code_16c47b0803b34a38852a961585fab869-6"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^'</span><span class="p">,</span><span class="n">Personas</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"personas"</span><span class="p">),</span>
+<a name="rest_code_16c47b0803b34a38852a961585fab869-7"></a><span class="p">)</span>
+</pre>
+<p>Ahora debemos crear la plantilla:</p>
+<p>personas.html</p>
+<pre class="code html"><a name="rest_code_3602203127ef40348bd5f8065cae6455-1"></a>{% extends "base.html" %}
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-2"></a>{% block cuerpo %}
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-4"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-5"></a><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Tablas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-6"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-9"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-10"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-11"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-12"></a>Personas
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-13"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-14"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-15"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-16"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-17"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-3"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-18"></a>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-19"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-20"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-8"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-21"></a>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-22"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-23"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-24"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'tablas:crear_persona' %}"</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-25"></a><span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-26"></a><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-27"></a><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-28"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-29"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-30"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-31"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-32"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-33"></a><span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">"tabla"</span> <span class="na">class</span><span class="o">=</span><span class="s">"table table-striped table-bordered"</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-34"></a><span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span> <span class="na">width</span><span class="o">=</span><span class="s">"100%"</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-35"></a><span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-36"></a><span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-37"></a><span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>DNI<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-38"></a><span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>NOMBRE<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-39"></a><span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO PATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-40"></a><span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO MATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-41"></a><span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-42"></a><span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-43"></a><span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-44"></a>{% for persona in personas %}
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-45"></a><span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-46"></a><span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-47"></a><span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-48"></a><span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-49"></a><span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-50"></a><span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-51"></a>{% endfor %}
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-52"></a><span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-53"></a><span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-54"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-55"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-56"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-57"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-58"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-59"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-60"></a>{% endblock cuerpo %}
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-61"></a>{% block js %}
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-62"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-63"></a><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-64"></a><span class="p">{</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-65"></a><span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">DataTable</span><span class="p">(</span> <span class="p">{</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-66"></a><span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-67"></a><span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-68"></a><span class="p">}</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-69"></a><span class="p">}</span> <span class="p">);</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-70"></a>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-71"></a><span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla tbody'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'click'</span><span class="p">,</span> <span class="s1">'tr'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-72"></a><span class="p">{</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-73"></a><span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">)</span> <span class="p">)</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-74"></a><span class="p">{</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-75"></a><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-76"></a>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-77"></a><span class="p">}</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-78"></a><span class="k">else</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-79"></a><span class="p">{</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-80"></a><span class="nx">table</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">'tr.selected'</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-81"></a><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-82"></a><span class="p">}</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-83"></a><span class="p">});</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-84"></a>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-85"></a><span class="p">});</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-86"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_3602203127ef40348bd5f8065cae6455-87"></a>{% endblock js %}
+</pre>
+<p>Como hemos visto lineas arriba es en esta plantilla donde se hace uso
+de DataTables, primero se crea la tabla teniendo en cuenta que se la
+ha puesto el id “tabla" y además se hace la traducción al español
+invocando al archivo es_ES.json:</p>
+<pre class="code javascript"><a name="rest_code_8e5d31d44f214fec824c99c78e7fb415-1"></a><span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">DataTable</span><span class="p">(</span> <span class="p">{</span>
+<a name="rest_code_8e5d31d44f214fec824c99c78e7fb415-2"></a><span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
+<a name="rest_code_8e5d31d44f214fec824c99c78e7fb415-3"></a><span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
+<a name="rest_code_8e5d31d44f214fec824c99c78e7fb415-4"></a><span class="p">}</span>
+<a name="rest_code_8e5d31d44f214fec824c99c78e7fb415-5"></a><span class="p">}</span> <span class="p">);</span>
+</pre>
+<p>Lo siguiente es un efecto que se le da al seleccionar una de las filas
+de la tabla.</p>
+<p>Y finalmente creamos el archivo:</p>
+<p>crear_persona.html</p>
+<pre class="code html"><a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-1"></a>{% extends "base.html" %}
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-2"></a>{% block cuerpo %}
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-3"></a>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-4"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-5"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-6"></a><span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Tablas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-8"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-9"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-10"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-11"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-default"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-12"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-13"></a>Crear Persona
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-14"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-15"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-16"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">"form"</span> <span class="na">action</span><span class="o">=</span><span class="s">"#"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-17"></a>{% csrf_token %}
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-18"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"form-group"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-19"></a>{{ form.as_p }}
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-20"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-21"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-22"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">name</span><span class="o">=</span><span class="s">"submit"</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-23"></a><span class="na">value</span><span class="o">=</span><span class="s">"Crear Persona"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-24"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"reset"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-25"></a><span class="na">onclick</span><span class="o">=</span><span class="s">"location.href='{% url 'personas:personas' %}'"</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-26"></a>Cancelar
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-27"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-28"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-29"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-30"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-31"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-32"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-33"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-34"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"popup"</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-35"></a>{% endblock cuerpo %}
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-36"></a>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-37"></a>{% block js %}
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-38"></a>
+<a name="rest_code_88fd3376d9874e549f2cab85c0bbf8a3-39"></a>{% endblock js %}
+</pre>
+<p>Hacemos las migraciones correspondientes de nuestros modelos y
+finalmente corremos el servidor de prueba, si todo ha salido bien
+tendremos una aplicación como la siguiente:</p>
+</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../../../../categories/django/" rel="tag">Django</a></li>

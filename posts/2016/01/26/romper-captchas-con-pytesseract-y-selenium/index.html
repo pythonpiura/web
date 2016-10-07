@@ -15,7 +15,9 @@
 <meta property="og:site_name" content="Python Piura">
 <meta property="og:title" content="Romper Captchas con Pytesseract y Selenium">
 <meta property="og:url" content="http://pythonpiura.org/posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">
-<meta property="og:description" content="En muchas de las páginas que consultamos tenemos una imagen que contiene un pequeño texto que generalmente es de 4 o de 6 letras, esta imagen es conocida como captcha y sirve para evitar la consulta m">
+<meta property="og:description" content="En muchas de las páginas que consultamos tenemos una imagen que
+contiene un pequeño texto que generalmente es de 4 o de 6 letras, esta
+imagen es conocida como captcha y sirve para evitar la consulta m">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-01-26T14:17:00-05:00">
 <meta property="article:tag" content="Python">
@@ -60,7 +62,7 @@
 </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-    <a href="index.src.html" id="sourcelink">Código fuente</a>
+    <a href="index.rst" id="sourcelink">Código fuente</a>
     </li>
 
                 
@@ -83,73 +85,97 @@
             </span></p>
             <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2016-01-26T14:17:00-05:00" itemprop="datePublished" title="2016-01-26 14:17">2016-01-26 14:17</time></a></p>
             
-        <p class="sourceline"><a href="index.src.html" id="sourcelink">Código fuente</a></p>
+        <p class="sourceline"><a href="index.rst" id="sourcelink">Código fuente</a></p>
 
         </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <p>En muchas de las páginas que consultamos tenemos una imagen que contiene un pequeño texto que generalmente es de 4 o de 6 letras, esta imagen es conocida como captcha y sirve para evitar la consulta masiva de datos y el uso de boots para hacer consultas, el problema radica en que podemos convertir esta imagen en texto y buscar la forma de ingresar estos datos de manera automática sin intervención humana. Para hacer la conversión de la imagen en texto tenemos la librería pytesseract que hace uso del programa tesseract-ocr y para el ingreso automático de datos y el acceso a la página objetivo contamos con la ayuda de nuestro viejo conocido selenium, cabe destacar que este procedimiento funciona siempre y cuando la imagen del captcha no sea tan complejo y contenga solamente texto.<br>
-Hemos creado un script de manera general sin tener una página objetivo en específico, pero para aplicarlo se debe conocer bien la página a testear tal como hemos explicado en posts anteriores, analizando sus elementos y la ubicación del captcha.<br>
-Antes de empezar debemos tener instalado el programa tesseract-ocr ya que no podremos hacer nada sin este, lo podemos descargar de la siguiente <a href="http://en.osdn.jp/projects/sfnet_tesseract-ocr-alt/downloads/tesseract-ocr-setup-3.02.02.exe/">ubicación</a>.</p>
-<p>Posteriormente procedemos a instalar las librerias pytesseract y pillow(para el manejo y tratamiento de imágenes)</p>
-<blockquote><p>pip install pillow<br>
-pip install pytesseract</p></blockquote>
-<p>Y finalmente hacemos nuestro script el cual está debidamente documentado para que lo puedan adaptar y modificar a su gusto.</p>
-<p>[sourcecode language="python"]<br>
-# -*- coding: utf-8 -*-<br>
-from selenium import webdriver<br>
-from selenium.webdriver.common.by import By<br>
-from selenium.webdriver.support.wait import WebDriverWait<br>
-from selenium.webdriver.support import expected_conditions as EC</p>
-<p>try:<br>
-    import Image<br>
-except ImportError:<br>
-    from PIL import Image<br>
-import pytesseract</p>
-<p>def ir_pagina_web(cadena,direccion_web):<br>
-    driver = webdriver.Firefox()<br>
-    #Vamos a la dirección web de la página objetivo<br>
-    driver.get(direccion_web)<br>
-    try:<br>
-        #Esperamos que se cargue correctamente la caja de texto de búsqueda<br>
-        WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, "txtBusqueda")))<br>
-    except:<br>
-        print "El elemento no está presente"<br>
-    #Obtenemos la caja de texto de búsqueda<br>
-    placa = driver.find_element_by_id("txtBusqueda")<br>
-    #Enviamos la cadena a buscar en la caja de texto<br>
-    placa.send_keys(cadena)<br>
-    #Hacemos una captura de pantalla de la página objetivo<br>
-    driver.save_screenshot("screenshot.jpg")<br>
-    #Abrimos la captura hecha<br>
-    img=Image.open(‘screenshot.jpg’)<br>
-    #Recortamos la captura de acuerdo a la ubicación del captcha.<br>
-    #El primer argumento es la posición "x" inicial, el segundo la posición "y" inicial.<br>
-    #El tercer argumento es la posición "x" final y el cuarto la posición "y" final.<br>
-    img_recortada = img.crop((380,300,550,340))<br>
-    #Guardamos el área seleccionada con el nombre de "recorte.jpg"<br>
-    img_recortada.save("recorte.jpg")<br>
-    try:<br>
-        #Convertimos la imagen a cadena de texto usando la libreria pytesseract<br>
-        captcha = pytesseract.image_to_string(img_recortada)<br>
-        #Obtenemos la caja de texto donde se ingresa el contenido del captcha<br>
-        codigo = driver.find_element_by_id("txtCaptcha")<br>
-        #Enviamos el captcha obtenido<br>
-        codigo.send_keys(captcha)<br>
-    except:<br>
-        print "Error al convertir imagen en texto"<br>
-    #Obtenemos el botón buscar<br>
-    boton=driver.find_element_by_id("btn_buscar")<br>
-    #Hacemos click en el botón<br>
-    boton.click()<br>
-    driver.close()</p>
-<p>def main():<br>
-    ir_pagina_web("cadena","direccion_web")</p>
-<p>main()<br>
-[/sourcecode]</p>
-<p>Por cierto hemos realizado esta prueba en Windows, nos queda la tarea pendiente de hacerlo en GNU/Linux.</p>
-
+    <div>
+<p>En muchas de las páginas que consultamos tenemos una imagen que
+contiene un pequeño texto que generalmente es de 4 o de 6 letras, esta
+imagen es conocida como captcha y sirve para evitar la consulta masiva
+de datos y el uso de boots para hacer consultas, el problema radica en
+que podemos convertir esta imagen en texto y buscar la forma de
+ingresar estos datos de manera automática sin intervención humana.
+Para hacer la conversión de la imagen en texto tenemos la librería
+pytesseract que hace uso del programa tesseract-ocr y para el ingreso
+automático de datos y el acceso a la página objetivo contamos con la
+ayuda de nuestro viejo conocido selenium, cabe destacar que este
+procedimiento funciona siempre y cuando la imagen del captcha no sea
+tan complejo y contenga solamente texto.
+Hemos creado un script de manera general sin tener una página objetivo
+en específico, pero para aplicarlo se debe conocer bien la página a
+testear tal como hemos explicado en posts anteriores, analizando sus
+elementos y la ubicación del captcha.
+Antes de empezar debemos tener instalado el programa tesseract-ocr ya
+que no podremos hacer nada sin este, lo podemos descargar de la
+siguiente <a class="reference external" href="http://en.osdn.jp/projects/sfnet_tesseract-ocr-alt/downloads/tesseract-ocr-setup-3.02.02.exe/">ubicación</a>.</p>
+<p>Posteriormente procedemos a instalar las librerias pytesseract y
+pillow(para el manejo y tratamiento de imágenes)</p>
+<pre class="code bash"><a name="rest_code_42faaafe09434728a945aa3cb402d38f-1"></a>pip install pillow
+<a name="rest_code_42faaafe09434728a945aa3cb402d38f-2"></a>pip install pytesseract
+</pre>
+<p>Y finalmente hacemos nuestro script el cual está debidamente
+documentado para que lo puedan adaptar y modificar a su gusto.</p>
+<pre class="code python"><a name="rest_code_5b71c93989bd4895af0aa65d73710f10-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-6"></a>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-7"></a><span class="k">try</span><span class="p">:</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-8"></a>    <span class="kn">import</span> <span class="nn">Image</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-9"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-10"></a>    <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-11"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-12"></a>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-13"></a><span class="k">def</span> <span class="nf">ir_pagina_web</span><span class="p">(</span><span class="n">cadena</span><span class="p">,</span><span class="n">direccion_web</span><span class="p">):</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-14"></a>    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-15"></a>    <span class="c1">#Vamos a la dirección web de la página objetivo</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-16"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">direccion_web</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-17"></a>    <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-18"></a>        <span class="c1">#Esperamos que se cargue correctamente la caja de texto de búsqueda</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-19"></a>        <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">"txtBusqueda"</span><span class="p">)))</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-20"></a>    <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-21"></a>        <span class="k">print</span> <span class="s2">"El elemento no está presente"</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-22"></a>    <span class="c1">#Obtenemos la caja de texto de búsqueda</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-23"></a>    <span class="n">placa</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"txtBusqueda"</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-24"></a>    <span class="c1">#Enviamos la cadena a buscar en la caja de texto</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-25"></a>    <span class="n">placa</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">cadena</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-26"></a>    <span class="c1">#Hacemos una captura de pantalla de la página objetivo</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-27"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.jpg"</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-28"></a>    <span class="c1">#Abrimos la captura hecha</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-29"></a>    <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.jpg'</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-30"></a>    <span class="c1">#Recortamos la captura de acuerdo a la ubicación del captcha.</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-31"></a>    <span class="c1">#El primer argumento es la posición "x" inicial, el segundo la posición "y" inicial.</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-32"></a>    <span class="c1">#El tercer argumento es la posición "x" final y el cuarto la posición "y" final.</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-33"></a>    <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">380</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">550</span><span class="p">,</span><span class="mi">340</span><span class="p">))</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-34"></a>    <span class="c1">#Guardamos el área seleccionada con el nombre de "recorte.jpg"</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-35"></a>    <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.jpg"</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-36"></a>    <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-37"></a>        <span class="c1">#Convertimos la imagen a cadena de texto usando la libreria pytesseract</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-38"></a>        <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-39"></a>        <span class="c1">#Obtenemos la caja de texto donde se ingresa el contenido del captcha</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-40"></a>        <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"txtCaptcha"</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-41"></a>        <span class="c1">#Enviamos el captcha obtenido</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-42"></a>        <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-43"></a>    <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-44"></a>        <span class="k">print</span> <span class="s2">"Error al convertir imagen en texto"</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-45"></a>    <span class="c1">#Obtenemos el botón buscar</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-46"></a>    <span class="n">boton</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"btn_buscar"</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-47"></a>    <span class="c1">#Hacemos click en el botón</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-48"></a>    <span class="n">boton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-49"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-50"></a>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-51"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-52"></a>    <span class="n">ir_pagina_web</span><span class="p">(</span><span class="s2">"cadena"</span><span class="p">,</span><span class="s2">"direccion_web"</span><span class="p">)</span>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-53"></a>
+<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-54"></a><span class="n">main</span><span class="p">()</span>
+</pre>
+<p>Por cierto hemos realizado esta prueba en Windows, nos queda la tarea
+pendiente de hacerlo en GNU/Linux.</p>
+</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../../../../categories/python/" rel="tag">Python</a></li>
