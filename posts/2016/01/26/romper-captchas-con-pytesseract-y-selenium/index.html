@@ -2,11 +2,11 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
 <head>
 <meta charset="utf-8">
-<base href="http://pythonpiura.org/posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Romper Captchas con Pytesseract y Selenium | Python Piura</title>
 <link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">
 <!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
@@ -32,7 +32,7 @@ imagen es conocida como captcha y sirve para evitar la consulta m">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Mostrar navegación</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -113,65 +113,65 @@ que no podremos hacer nada sin este, lo podemos descargar de la
 siguiente <a class="reference external" href="http://en.osdn.jp/projects/sfnet_tesseract-ocr-alt/downloads/tesseract-ocr-setup-3.02.02.exe/">ubicación</a>.</p>
 <p>Posteriormente procedemos a instalar las librerias pytesseract y
 pillow(para el manejo y tratamiento de imágenes)</p>
-<pre class="code bash"><a name="rest_code_42faaafe09434728a945aa3cb402d38f-1"></a>pip install pillow
-<a name="rest_code_42faaafe09434728a945aa3cb402d38f-2"></a>pip install pytesseract
+<pre class="code bash"><a name="rest_code_a6a792588f90431e8b05941c4001a4ff-1"></a>pip install pillow
+<a name="rest_code_a6a792588f90431e8b05941c4001a4ff-2"></a>pip install pytesseract
 </pre>
 <p>Y finalmente hacemos nuestro script el cual está debidamente
 documentado para que lo puedan adaptar y modificar a su gusto.</p>
-<pre class="code python"><a name="rest_code_5b71c93989bd4895af0aa65d73710f10-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-6"></a>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-7"></a><span class="k">try</span><span class="p">:</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-8"></a>    <span class="kn">import</span> <span class="nn">Image</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-9"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-10"></a>    <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-11"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-12"></a>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-13"></a><span class="k">def</span> <span class="nf">ir_pagina_web</span><span class="p">(</span><span class="n">cadena</span><span class="p">,</span><span class="n">direccion_web</span><span class="p">):</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-14"></a>    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-15"></a>    <span class="c1">#Vamos a la dirección web de la página objetivo</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-16"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">direccion_web</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-17"></a>    <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-18"></a>        <span class="c1">#Esperamos que se cargue correctamente la caja de texto de búsqueda</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-19"></a>        <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">"txtBusqueda"</span><span class="p">)))</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-20"></a>    <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-21"></a>        <span class="k">print</span> <span class="s2">"El elemento no está presente"</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-22"></a>    <span class="c1">#Obtenemos la caja de texto de búsqueda</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-23"></a>    <span class="n">placa</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"txtBusqueda"</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-24"></a>    <span class="c1">#Enviamos la cadena a buscar en la caja de texto</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-25"></a>    <span class="n">placa</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">cadena</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-26"></a>    <span class="c1">#Hacemos una captura de pantalla de la página objetivo</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-27"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.jpg"</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-28"></a>    <span class="c1">#Abrimos la captura hecha</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-29"></a>    <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.jpg'</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-30"></a>    <span class="c1">#Recortamos la captura de acuerdo a la ubicación del captcha.</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-31"></a>    <span class="c1">#El primer argumento es la posición "x" inicial, el segundo la posición "y" inicial.</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-32"></a>    <span class="c1">#El tercer argumento es la posición "x" final y el cuarto la posición "y" final.</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-33"></a>    <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">380</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">550</span><span class="p">,</span><span class="mi">340</span><span class="p">))</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-34"></a>    <span class="c1">#Guardamos el área seleccionada con el nombre de "recorte.jpg"</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-35"></a>    <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.jpg"</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-36"></a>    <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-37"></a>        <span class="c1">#Convertimos la imagen a cadena de texto usando la libreria pytesseract</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-38"></a>        <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-39"></a>        <span class="c1">#Obtenemos la caja de texto donde se ingresa el contenido del captcha</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-40"></a>        <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"txtCaptcha"</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-41"></a>        <span class="c1">#Enviamos el captcha obtenido</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-42"></a>        <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-43"></a>    <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-44"></a>        <span class="k">print</span> <span class="s2">"Error al convertir imagen en texto"</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-45"></a>    <span class="c1">#Obtenemos el botón buscar</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-46"></a>    <span class="n">boton</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"btn_buscar"</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-47"></a>    <span class="c1">#Hacemos click en el botón</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-48"></a>    <span class="n">boton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-49"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-50"></a>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-51"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-52"></a>    <span class="n">ir_pagina_web</span><span class="p">(</span><span class="s2">"cadena"</span><span class="p">,</span><span class="s2">"direccion_web"</span><span class="p">)</span>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-53"></a>
-<a name="rest_code_5b71c93989bd4895af0aa65d73710f10-54"></a><span class="n">main</span><span class="p">()</span>
+<pre class="code python"><a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-6"></a>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-7"></a><span class="k">try</span><span class="p">:</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-8"></a>    <span class="kn">import</span> <span class="nn">Image</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-9"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-10"></a>    <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-11"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-12"></a>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-13"></a><span class="k">def</span> <span class="nf">ir_pagina_web</span><span class="p">(</span><span class="n">cadena</span><span class="p">,</span><span class="n">direccion_web</span><span class="p">):</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-14"></a>    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">()</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-15"></a>    <span class="c1">#Vamos a la dirección web de la página objetivo</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-16"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">direccion_web</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-17"></a>    <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-18"></a>        <span class="c1">#Esperamos que se cargue correctamente la caja de texto de búsqueda</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-19"></a>        <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">ID</span><span class="p">,</span> <span class="s2">"txtBusqueda"</span><span class="p">)))</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-20"></a>    <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-21"></a>        <span class="k">print</span> <span class="s2">"El elemento no está presente"</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-22"></a>    <span class="c1">#Obtenemos la caja de texto de búsqueda</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-23"></a>    <span class="n">placa</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"txtBusqueda"</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-24"></a>    <span class="c1">#Enviamos la cadena a buscar en la caja de texto</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-25"></a>    <span class="n">placa</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">cadena</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-26"></a>    <span class="c1">#Hacemos una captura de pantalla de la página objetivo</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-27"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.jpg"</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-28"></a>    <span class="c1">#Abrimos la captura hecha</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-29"></a>    <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.jpg'</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-30"></a>    <span class="c1">#Recortamos la captura de acuerdo a la ubicación del captcha.</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-31"></a>    <span class="c1">#El primer argumento es la posición "x" inicial, el segundo la posición "y" inicial.</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-32"></a>    <span class="c1">#El tercer argumento es la posición "x" final y el cuarto la posición "y" final.</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-33"></a>    <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">380</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">550</span><span class="p">,</span><span class="mi">340</span><span class="p">))</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-34"></a>    <span class="c1">#Guardamos el área seleccionada con el nombre de "recorte.jpg"</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-35"></a>    <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.jpg"</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-36"></a>    <span class="k">try</span><span class="p">:</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-37"></a>        <span class="c1">#Convertimos la imagen a cadena de texto usando la libreria pytesseract</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-38"></a>        <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-39"></a>        <span class="c1">#Obtenemos la caja de texto donde se ingresa el contenido del captcha</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-40"></a>        <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"txtCaptcha"</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-41"></a>        <span class="c1">#Enviamos el captcha obtenido</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-42"></a>        <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-43"></a>    <span class="k">except</span><span class="p">:</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-44"></a>        <span class="k">print</span> <span class="s2">"Error al convertir imagen en texto"</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-45"></a>    <span class="c1">#Obtenemos el botón buscar</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-46"></a>    <span class="n">boton</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_id</span><span class="p">(</span><span class="s2">"btn_buscar"</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-47"></a>    <span class="c1">#Hacemos click en el botón</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-48"></a>    <span class="n">boton</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-49"></a>    <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-50"></a>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-51"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-52"></a>    <span class="n">ir_pagina_web</span><span class="p">(</span><span class="s2">"cadena"</span><span class="p">,</span><span class="s2">"direccion_web"</span><span class="p">)</span>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-53"></a>
+<a name="rest_code_380b6cb6b5bf448292631805fb4cf2e3-54"></a><span class="n">main</span><span class="p">()</span>
 </pre>
 <p>Por cierto hemos realizado esta prueba en Windows, nos queda la tarea
 pendiente de hacerlo en GNU/Linux.</p>
@@ -193,7 +193,7 @@ pendiente de hacerlo en GNU/Linux.</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2016         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             

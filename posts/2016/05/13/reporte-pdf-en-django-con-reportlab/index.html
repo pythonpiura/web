@@ -2,11 +2,11 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
 <head>
 <meta charset="utf-8">
-<base href="http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reporte PDF en Django con Reportlab | Python Piura</title>
 <link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/">
 <!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
@@ -34,7 +34,7 @@ pip install r">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Mostrar navegación</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -97,7 +97,7 @@ pip install r">
 <p>Vamos a retomar nuestro proyecto tutorial, al que hemos tenido
 bastante olvidado estos últimos días y haremos un reporte en pdf
 utilizando la librería <a class="reference external" href="http://www.reportlab.com/">reportlab</a>, para ello la instalamos:</p>
-<pre class="code bash"><a name="rest_code_13527231d4a5419c93ddc7424ecc9a31-1"></a>pip install reportlab
+<pre class="code bash"><a name="rest_code_99badd7f1e0f4140a20236fbba136b80-1"></a>pip install reportlab
 </pre>
 <p>Lo primero que haremos es poner el logo de django en la parte superior
 de nuestro reporte, por lo que debemos tener la imagen guardada en una
@@ -106,128 +106,128 @@ ubicación fácil de obtener, por eso crearemos una carpeta llamada
 imagenes, es aquí donde pondremos nuestro archivo logo_django.png:</p>
 <img alt="/images/blog/ubicacion_logo.jpg" src="../../../../../images/blog/ubicacion_logo.jpg"><p>Modificamos el archivo settings.py para poder establecer la ruta de la
 carpeta media:</p>
-<pre class="code python"><a name="rest_code_92f41481ec9a4d2e9f6dba193779e716-1"></a><span class="n">MEDIA_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">'media'</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_cdb27626fb7447a498dd42b8bb636709-1"></a><span class="n">MEDIA_ROOT</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">,</span> <span class="s1">'media'</span><span class="p">)</span>
 </pre>
 <p>Creamos la clase ReportePersonasPDF en el archivo views.py, el código
 está explicado en los comentarios:</p>
-<pre class="code python"><a name="rest_code_d2608f31c000444cbe7b613d282bbf91-1"></a><span class="c1">#Importamos settings para poder tener a la mano la ruta de la carpeta media</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-2"></a><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-3"></a><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-4"></a><span class="kn">from</span> <span class="nn">reportlab.pdfgen</span> <span class="kn">import</span> <span class="n">canvas</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-5"></a><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">View</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-6"></a>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-7"></a><span class="k">class</span> <span class="nc">ReportePersonasPDF</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-8"></a>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-9"></a><span class="k">def</span> <span class="nf">cabecera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">):</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-10"></a>        <span class="c1">#Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-11"></a>        <span class="n">archivo_imagen</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="o">+</span><span class="s1">'/imagenes/logo_django.png'</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-12"></a>        <span class="c1">#Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">archivo_imagen</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span><span class="n">preserveAspectRatio</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-14"></a>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-15"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-16"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-17"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-18"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-19"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-20"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-21"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-22"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-24"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-25"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-26"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-27"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-28"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-29"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_d2608f31c000444cbe7b613d282bbf91-30"></a>        <span class="k">return</span> <span class="n">response</span>
+<pre class="code python"><a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-1"></a><span class="c1">#Importamos settings para poder tener a la mano la ruta de la carpeta media</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-2"></a><span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-3"></a><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-4"></a><span class="kn">from</span> <span class="nn">reportlab.pdfgen</span> <span class="kn">import</span> <span class="n">canvas</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-5"></a><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">View</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-6"></a>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-7"></a><span class="k">class</span> <span class="nc">ReportePersonasPDF</span><span class="p">(</span><span class="n">View</span><span class="p">):</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-8"></a>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-9"></a><span class="k">def</span> <span class="nf">cabecera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">):</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-10"></a>        <span class="c1">#Utilizamos el archivo logo_django.png que está guardado en la carpeta media/imagenes</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-11"></a>        <span class="n">archivo_imagen</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">MEDIA_ROOT</span><span class="o">+</span><span class="s1">'/imagenes/logo_django.png'</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-12"></a>        <span class="c1">#Definimos el tamaño de la imagen a cargar y las coordenadas correspondientes</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">archivo_imagen</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span><span class="n">preserveAspectRatio</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-14"></a>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-15"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-16"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-17"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-18"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-19"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-20"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-21"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-22"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-24"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-25"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-26"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-27"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-28"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-29"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_7119f256fec249eb9ebde46315bc6a8e-30"></a>        <span class="k">return</span> <span class="n">response</span>
 </pre>
 <p>Para poder acceder a esta clase debemos hacer la creación de la url
 correspondiente en el archivo urls.py:</p>
-<pre class="code python"><a name="rest_code_25383995340c4d558697e6d82dd0112f-1"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_pdf/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">ReportePersonasPDF</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_pdf"</span><span class="p">),</span>
+<pre class="code python"><a name="rest_code_1ef9be5dcae84dd286a25eab55affce9-1"></a><span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_pdf/$'</span><span class="p">,</span><span class="n">login_required</span><span class="p">(</span><span class="n">ReportePersonasPDF</span><span class="o">.</span><span class="n">as_view</span><span class="p">()),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_pdf"</span><span class="p">),</span>
 </pre>
 <p>Ahora vamos a utilizar la url desde el archivo personas.html:</p>
-<pre class="code html"><a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-2"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-9"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-4"></a>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-5"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-6"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-7"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-8"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-9"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-10"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-11"></a>        {% if perms.personas.add_persona %}
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-12"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-13"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-14"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-15"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-16"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-17"></a>        {% endif %}
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-19"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_pdf' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-20"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-file"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-21"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-22"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-23"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_b72bf9d87de2466aa62d45c3dd70a23a-24"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-2"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-9"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-4"></a>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-5"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-6"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-7"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-8"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-9"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-10"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-11"></a>        {% if perms.personas.add_persona %}
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-12"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-13"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-14"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-15"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-16"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-17"></a>        {% endif %}
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-19"></a>            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_pdf' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-20"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-file"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-21"></a>            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-22"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-23"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b125a10bdf24441baa0587d23f7cbb07-24"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre>
 <p>Nos tiene que aparecer un ícono de un archivo:</p>
 <img alt="/images/blog/personas_pdf.jpg" src="../../../../../images/blog/personas_pdf.jpg"><p>El primer resultado será este:</p>
 <img alt="/images/blog/reporte_pdf1.jpg" src="../../../../../images/blog/reporte_pdf1.jpg"><p>Vamos a ponerle un encabezado a nuestro reporte que diga “Python
 Piura” y debajo “Reporte de Personas”, para ello colocamos el
 siguiente código debajo de la última linea del método “cabecera”:</p>
-<pre class="code python"><a name="rest_code_8b075459fed94bb1adf6fe764d69635f-1"></a><span class="c1">#Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica</span>
-<a name="rest_code_8b075459fed94bb1adf6fe764d69635f-2"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
-<a name="rest_code_8b075459fed94bb1adf6fe764d69635f-3"></a><span class="c1">#Dibujamos una cadena en la ubicación X,Y especificada</span>
-<a name="rest_code_8b075459fed94bb1adf6fe764d69635f-4"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="s2">u"PYTHON PIURA"</span><span class="p">)</span>
-<a name="rest_code_8b075459fed94bb1adf6fe764d69635f-5"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
-<a name="rest_code_8b075459fed94bb1adf6fe764d69635f-6"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">770</span><span class="p">,</span> <span class="s2">u"REPORTE DE PERSONAS"</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_87816de618e34a09bfa7c251708c9b94-1"></a><span class="c1">#Establecemos el tamaño de letra en 16 y el tipo de letra Helvetica</span>
+<a name="rest_code_87816de618e34a09bfa7c251708c9b94-2"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<a name="rest_code_87816de618e34a09bfa7c251708c9b94-3"></a><span class="c1">#Dibujamos una cadena en la ubicación X,Y especificada</span>
+<a name="rest_code_87816de618e34a09bfa7c251708c9b94-4"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">230</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="s2">u"PYTHON PIURA"</span><span class="p">)</span>
+<a name="rest_code_87816de618e34a09bfa7c251708c9b94-5"></a><span class="n">pdf</span><span class="o">.</span><span class="n">setFont</span><span class="p">(</span><span class="s2">"Helvetica"</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+<a name="rest_code_87816de618e34a09bfa7c251708c9b94-6"></a><span class="n">pdf</span><span class="o">.</span><span class="n">drawString</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">770</span><span class="p">,</span> <span class="s2">u"REPORTE DE PERSONAS"</span><span class="p">)</span>
 </pre>
 <img alt="/images/blog/reporte_pdf2.jpg" src="../../../../../images/blog/reporte_pdf2.jpg"><p>Visualizaremos la tabla de personas, por lo que creamos el método
 tabla en la clase ReportePersonasPDF:</p>
-<pre class="code python"><a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-1"></a><span class="k">def</span> <span class="nf">tabla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-2"></a>        <span class="c1">#Creamos una tupla de encabezados para neustra tabla</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-3"></a>        <span class="n">encabezados</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DNI'</span><span class="p">,</span> <span class="s1">'Nombre'</span><span class="p">,</span> <span class="s1">'Apellido Paterno'</span><span class="p">,</span> <span class="s1">'Apellido Materno'</span><span class="p">)</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-4"></a>        <span class="c1">#Creamos una lista de tuplas que van a contener a las personas</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-5"></a>        <span class="n">detalles</span> <span class="o">=</span> <span class="p">[(</span><span class="n">persona</span><span class="o">.</span><span class="n">dni</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_paterno</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_materno</span><span class="p">)</span> <span class="k">for</span> <span class="n">persona</span> <span class="ow">in</span> <span class="n">Persona</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-6"></a>        <span class="c1">#Establecemos el tamaño de cada una de las columnas de la tabla</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-7"></a>        <span class="n">detalle_orden</span> <span class="o">=</span> <span class="n">Table</span><span class="p">([</span><span class="n">encabezados</span><span class="p">]</span> <span class="o">+</span> <span class="n">detalles</span><span class="p">,</span> <span class="n">colWidths</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">])</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-8"></a>        <span class="c1">#Aplicamos estilos a las celdas de la tabla</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-9"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">TableStyle</span><span class="p">(</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-10"></a>        <span class="p">[</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-11"></a>                <span class="c1">#La primera fila(encabezados) va a estar centrada</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-12"></a>                <span class="p">(</span><span class="s1">'ALIGN'</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="s1">'CENTER'</span><span class="p">),</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-13"></a>                <span class="c1">#Los bordes de todas las celdas serán de color negro y con un grosor de 1</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-14"></a>                <span class="p">(</span><span class="s1">'GRID'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-15"></a>                <span class="c1">#El tamaño de las letras de cada una de las celdas será de 10</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-16"></a>                <span class="p">(</span><span class="s1">'FONTSIZE'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">),</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-17"></a>                <span class="p">]</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-18"></a>        <span class="p">))</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-19"></a>        <span class="c1">#Establecemos el tamaño de la hoja que ocupará la tabla</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-20"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">wrapOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-21"></a>        <span class="c1">#Definimos la coordenada donde se dibujará la tabla</span>
-<a name="rest_code_ff3cb90a32c84c3d8025dbe5e4a2a56c-22"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">drawOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-1"></a><span class="k">def</span> <span class="nf">tabla</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">pdf</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-2"></a>        <span class="c1">#Creamos una tupla de encabezados para neustra tabla</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-3"></a>        <span class="n">encabezados</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DNI'</span><span class="p">,</span> <span class="s1">'Nombre'</span><span class="p">,</span> <span class="s1">'Apellido Paterno'</span><span class="p">,</span> <span class="s1">'Apellido Materno'</span><span class="p">)</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-4"></a>        <span class="c1">#Creamos una lista de tuplas que van a contener a las personas</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-5"></a>        <span class="n">detalles</span> <span class="o">=</span> <span class="p">[(</span><span class="n">persona</span><span class="o">.</span><span class="n">dni</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_paterno</span><span class="p">,</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_materno</span><span class="p">)</span> <span class="k">for</span> <span class="n">persona</span> <span class="ow">in</span> <span class="n">Persona</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()]</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-6"></a>        <span class="c1">#Establecemos el tamaño de cada una de las columnas de la tabla</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-7"></a>        <span class="n">detalle_orden</span> <span class="o">=</span> <span class="n">Table</span><span class="p">([</span><span class="n">encabezados</span><span class="p">]</span> <span class="o">+</span> <span class="n">detalles</span><span class="p">,</span> <span class="n">colWidths</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">cm</span><span class="p">])</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-8"></a>        <span class="c1">#Aplicamos estilos a las celdas de la tabla</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-9"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">TableStyle</span><span class="p">(</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-10"></a>        <span class="p">[</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-11"></a>                <span class="c1">#La primera fila(encabezados) va a estar centrada</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-12"></a>                <span class="p">(</span><span class="s1">'ALIGN'</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="s1">'CENTER'</span><span class="p">),</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-13"></a>                <span class="c1">#Los bordes de todas las celdas serán de color negro y con un grosor de 1</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-14"></a>                <span class="p">(</span><span class="s1">'GRID'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">.</span><span class="n">black</span><span class="p">),</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-15"></a>                <span class="c1">#El tamaño de las letras de cada una de las celdas será de 10</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-16"></a>                <span class="p">(</span><span class="s1">'FONTSIZE'</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">10</span><span class="p">),</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-17"></a>                <span class="p">]</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-18"></a>        <span class="p">))</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-19"></a>        <span class="c1">#Establecemos el tamaño de la hoja que ocupará la tabla</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-20"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">wrapOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-21"></a>        <span class="c1">#Definimos la coordenada donde se dibujará la tabla</span>
+<a name="rest_code_4538f62ceaef48949ff6cbbb6320dff8-22"></a>        <span class="n">detalle_orden</span><span class="o">.</span><span class="n">drawOn</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 </pre>
 <p>Veamos como queda nuestro método get ahora con la nueva llamada al
 método tabla:</p>
-<pre class="code python"><a name="rest_code_373e653f77774bdeac488c75e5e18b29-1"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-2"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-3"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-4"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-5"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-6"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-7"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-8"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-10"></a>        <span class="n">y</span> <span class="o">=</span> <span class="mi">600</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tabla</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-12"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-14"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-15"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-16"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-17"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
-<a name="rest_code_373e653f77774bdeac488c75e5e18b29-18"></a>        <span class="k">return</span> <span class="n">response</span>
+<pre class="code python"><a name="rest_code_47d7923bc5b044edad76bc1e731095f9-1"></a><span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-2"></a>        <span class="c1">#Indicamos el tipo de contenido a devolver, en este caso un pdf</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-3"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s1">'application/pdf'</span><span class="p">)</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-4"></a>        <span class="c1">#La clase io.BytesIO permite tratar un array de bytes como un fichero binario, se utiliza como almacenamiento temporal</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-5"></a>        <span class="nb">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-6"></a>        <span class="c1">#Canvas nos permite hacer el reporte con coordenadas X y Y</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-7"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="nb">buffer</span><span class="p">)</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-8"></a>        <span class="c1">#Llamo al método cabecera donde están definidos los datos que aparecen en la cabecera del reporte.</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cabecera</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-10"></a>        <span class="n">y</span> <span class="o">=</span> <span class="mi">600</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tabla</span><span class="p">(</span><span class="n">pdf</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-12"></a>        <span class="c1">#Con show page hacemos un corte de página para pasar a la siguiente</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-13"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">showPage</span><span class="p">()</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-14"></a>        <span class="n">pdf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-15"></a>        <span class="n">pdf</span> <span class="o">=</span> <span class="nb">buffer</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-16"></a>        <span class="nb">buffer</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-17"></a>        <span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pdf</span><span class="p">)</span>
+<a name="rest_code_47d7923bc5b044edad76bc1e731095f9-18"></a>        <span class="k">return</span> <span class="n">response</span>
 </pre>
 <p>Y este será el resultado final:</p>
 <img alt="/images/blog/reporte_pdf3.jpg" src="../../../../../images/blog/reporte_pdf3.jpg"><p>Eso es todo por hoy.
@@ -251,7 +251,7 @@ Saludos.</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2016         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             

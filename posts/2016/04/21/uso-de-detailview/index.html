@@ -2,11 +2,11 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
 <head>
 <meta charset="utf-8">
-<base href="http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Uso de DetailView | Python Piura</title>
 <link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/">
 <!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
@@ -31,7 +31,7 @@ vamos a agregar un par de nuevas funcionalidades a nuestro proyec">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Mostrar navegación</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -99,102 +99,102 @@ para agregarle un par de enlaces que nos van a permitir editar y ver
 el detalle de una persona en cuestión, en este post solamente
 cubriremos la funcionalidad de ver el detalle, posteriormente en otro
 post nos encargaremos de la funcionalidad de editar a la persona:</p>
-<pre class="code html"><a name="rest_code_90327974700c4321b3279f23db995d70-1"></a>{% extends "base.html" %}
-<a name="rest_code_90327974700c4321b3279f23db995d70-2"></a>{% block cuerpo %}
-<a name="rest_code_90327974700c4321b3279f23db995d70-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-5"></a>        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Tablas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-6"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-9"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-10"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-11"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-12"></a>                Personas
-<a name="rest_code_90327974700c4321b3279f23db995d70-13"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-14"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-15"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-16"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-17"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-10"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-18"></a>
-<a name="rest_code_90327974700c4321b3279f23db995d70-19"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-20"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-21"></a>                            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-22"></a>                                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-23"></a>                            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-24"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-25"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-26"></a>                            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-27"></a>                                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-28"></a>                            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-29"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-30"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-31"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-32"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-33"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-34"></a>                        <span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">"tabla"</span> <span class="na">class</span><span class="o">=</span><span class="s">"table table-striped table-bordered"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span> <span class="na">width</span><span class="o">=</span><span class="s">"100%"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-35"></a>                            <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-36"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-37"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>DNI<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-38"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>NOMBRE<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-39"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO PATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-40"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO MATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-41"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ACCIONES<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-42"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-43"></a>                            <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-44"></a>                            <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-45"></a>                            {% for persona in personas %}
-<a name="rest_code_90327974700c4321b3279f23db995d70-46"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-47"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-48"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-49"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-50"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-51"></a>                                    <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-52"></a>                                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-53"></a>                                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-54"></a>                                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-55"></a>                                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-56"></a>                                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-pencil"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-57"></a>                                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-58"></a>                                    <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-59"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-60"></a>                            {% endfor %}
-<a name="rest_code_90327974700c4321b3279f23db995d70-61"></a>                            <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-62"></a>                        <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-63"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-64"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-65"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-66"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-67"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-68"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-69"></a>{% endblock cuerpo %}
-<a name="rest_code_90327974700c4321b3279f23db995d70-70"></a>{% block js %}
-<a name="rest_code_90327974700c4321b3279f23db995d70-71"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-72"></a><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-73"></a><span class="p">{</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-74"></a>    <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">DataTable</span><span class="p">(</span> <span class="p">{</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-75"></a>        <span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-76"></a>            <span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-77"></a>        <span class="p">}</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-78"></a>    <span class="p">}</span> <span class="p">);</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-79"></a>
-<a name="rest_code_90327974700c4321b3279f23db995d70-80"></a>    <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla tbody'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'click'</span><span class="p">,</span> <span class="s1">'tr'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-81"></a>    <span class="p">{</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-82"></a>        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">)</span> <span class="p">)</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-83"></a>        <span class="p">{</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-84"></a>            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-85"></a>
-<a name="rest_code_90327974700c4321b3279f23db995d70-86"></a>        <span class="p">}</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-87"></a>        <span class="k">else</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-88"></a>        <span class="p">{</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-89"></a>            <span class="nx">table</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">'tr.selected'</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-90"></a>            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-91"></a>        <span class="p">}</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-92"></a>    <span class="p">});</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-93"></a>
-<a name="rest_code_90327974700c4321b3279f23db995d70-94"></a><span class="p">});</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-95"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_90327974700c4321b3279f23db995d70-96"></a>{% endblock js %}
+<pre class="code html"><a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-1"></a>{% extends "base.html" %}
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-2"></a>{% block cuerpo %}
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-5"></a>        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Tablas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-6"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-9"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-10"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-11"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-12"></a>                Personas
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-13"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-14"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-15"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-16"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-17"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-10"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-18"></a>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-19"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-20"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-21"></a>                            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-22"></a>                                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-23"></a>                            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-24"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-25"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-26"></a>                            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-27"></a>                                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-28"></a>                            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-29"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-30"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-31"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-32"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-33"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-34"></a>                        <span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">"tabla"</span> <span class="na">class</span><span class="o">=</span><span class="s">"table table-striped table-bordered"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span> <span class="na">width</span><span class="o">=</span><span class="s">"100%"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-35"></a>                            <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-36"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-37"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>DNI<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-38"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>NOMBRE<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-39"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO PATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-40"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO MATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-41"></a>                                    <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ACCIONES<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-42"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-43"></a>                            <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-44"></a>                            <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-45"></a>                            {% for persona in personas %}
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-46"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-47"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-48"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-49"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-50"></a>                                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-51"></a>                                    <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-52"></a>                                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-53"></a>                                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-54"></a>                                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-55"></a>                                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-56"></a>                                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-pencil"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-57"></a>                                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-58"></a>                                    <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-59"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-60"></a>                            {% endfor %}
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-61"></a>                            <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-62"></a>                        <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-63"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-64"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-65"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-66"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-67"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-68"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-69"></a>{% endblock cuerpo %}
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-70"></a>{% block js %}
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-71"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-72"></a><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-73"></a><span class="p">{</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-74"></a>    <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">DataTable</span><span class="p">(</span> <span class="p">{</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-75"></a>        <span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-76"></a>            <span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-77"></a>        <span class="p">}</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-78"></a>    <span class="p">}</span> <span class="p">);</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-79"></a>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-80"></a>    <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla tbody'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'click'</span><span class="p">,</span> <span class="s1">'tr'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-81"></a>    <span class="p">{</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-82"></a>        <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">)</span> <span class="p">)</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-83"></a>        <span class="p">{</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-84"></a>            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-85"></a>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-86"></a>        <span class="p">}</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-87"></a>        <span class="k">else</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-88"></a>        <span class="p">{</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-89"></a>            <span class="nx">table</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">'tr.selected'</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-90"></a>            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-91"></a>        <span class="p">}</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-92"></a>    <span class="p">});</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-93"></a>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-94"></a><span class="p">});</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-95"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_034b3a8ecbb6433ea40c04af21fa3eeb-96"></a>{% endblock js %}
 </pre>
 <p>Nótese que en la cabecera de la tabla hemos puesto el encabezado
 acciones y que dentro del cuerpo de la tabla se ha agregado una
@@ -206,71 +206,71 @@ persona, para ello usamos la clase DetailView, esta clase nos
 simplifica la vida ya que nos permite mostrar el detalle de un modelo
 en particular, debiendo definir el modelo al que haremos referencia y
 la plantilla donde se renderizará el contenido:</p>
-<pre class="code python"><a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-1"></a><span class="kn">from</span> <span class="nn">django.views.generic.detail</span> <span class="kn">import</span> <span class="n">DetailView</span>
-<a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-2"></a>
-<a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-3"></a><span class="k">class</span> <span class="nc">DetallePersona</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
-<a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-4"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
-<a name="rest_code_b7dc4ef0af874306a5f9262ebc62ba9c-5"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'detalle_persona.html'</span>
+<pre class="code python"><a name="rest_code_523efbb2cf074183a2549b6eb48e824b-1"></a><span class="kn">from</span> <span class="nn">django.views.generic.detail</span> <span class="kn">import</span> <span class="n">DetailView</span>
+<a name="rest_code_523efbb2cf074183a2549b6eb48e824b-2"></a>
+<a name="rest_code_523efbb2cf074183a2549b6eb48e824b-3"></a><span class="k">class</span> <span class="nc">DetallePersona</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+<a name="rest_code_523efbb2cf074183a2549b6eb48e824b-4"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_523efbb2cf074183a2549b6eb48e824b-5"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'detalle_persona.html'</span>
 </pre>
 <p>Ahora debemos crear la plantilla detalle_persona.html:</p>
-<pre class="code html"><a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-1"></a>{% extends "base.html" %}
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-2"></a>{% block cuerpo %}
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-5"></a>        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Personas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-6"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-9"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-10"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-11"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-12"></a>                Detalle de Persona
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-13"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-14"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-15"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-16"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-17"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-md-12"</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-18"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>DNI:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-19"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.dni }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-20"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>NOMBRE:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-21"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.nombre }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-22"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>APELLIDO PATERNO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-23"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-24"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>APELLIDO MATERNO: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-25"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.apellido_materno }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-26"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-27"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-28"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-29"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-30"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-31"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-32"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_980ac65060aa45b8bd4ab6f06405c0cf-33"></a>{% endblock cuerpo %}
+<pre class="code html"><a name="rest_code_25c2b7045a9b45ee95207699edee7c02-1"></a>{% extends "base.html" %}
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-2"></a>{% block cuerpo %}
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-5"></a>        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Personas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-6"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-9"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-10"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-11"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-12"></a>                Detalle de Persona
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-13"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-14"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-15"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-16"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-17"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-md-12"</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-18"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>DNI:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-19"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.dni }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-20"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>NOMBRE:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-21"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.nombre }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-22"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>APELLIDO PATERNO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-23"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-24"></a>                            <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>APELLIDO MATERNO: <span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-25"></a>                            <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.apellido_materno }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-26"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-27"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-28"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-29"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-30"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-31"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-32"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_25c2b7045a9b45ee95207699edee7c02-33"></a>{% endblock cuerpo %}
 </pre>
 <p>Modificamos el archivo urls.py para crear el url detalle_persona:</p>
-<pre class="code python"><a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-2"></a><span class="kn">from</span> <span class="nn">personas.views</span> <span class="kn">import</span> <span class="n">Personas</span><span class="p">,</span> <span class="n">CrearPersona</span><span class="p">,</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-3"></a><span class="n">ReportePersonasExcel</span><span class="p">,</span>\
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-4"></a><span class="n">Bienvenida</span><span class="p">,</span> <span class="n">DetallePersona</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-5"></a>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-6"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-7"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span><span class="n">Bienvenida</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"bienvenida"</span><span class="p">),</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-8"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^personas/$'</span><span class="p">,</span><span class="n">Personas</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"personas"</span><span class="p">),</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-9"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_persona/$'</span><span class="p">,</span><span class="n">CrearPersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_persona"</span><span class="p">),</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-10"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_excel/$'</span><span class="p">,</span><span class="n">ReportePersonasExcel</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-11"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_excel"</span><span class="p">),</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-12"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^detalle_persona/(?P&lt;pk&gt;\d+)/$'</span><span class="p">,</span> <span class="n">DetallePersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-13"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">"detalle_persona"</span><span class="p">),</span>
-<a name="rest_code_871ece4153c2400f82cc0d16ea8d0a50-14"></a><span class="p">)</span>
+<pre class="code python"><a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-2"></a><span class="kn">from</span> <span class="nn">personas.views</span> <span class="kn">import</span> <span class="n">Personas</span><span class="p">,</span> <span class="n">CrearPersona</span><span class="p">,</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-3"></a><span class="n">ReportePersonasExcel</span><span class="p">,</span>\
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-4"></a><span class="n">Bienvenida</span><span class="p">,</span> <span class="n">DetallePersona</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-5"></a>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-6"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-7"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span><span class="n">Bienvenida</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"bienvenida"</span><span class="p">),</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-8"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^personas/$'</span><span class="p">,</span><span class="n">Personas</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"personas"</span><span class="p">),</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-9"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_persona/$'</span><span class="p">,</span><span class="n">CrearPersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_persona"</span><span class="p">),</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-10"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_excel/$'</span><span class="p">,</span><span class="n">ReportePersonasExcel</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-11"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_excel"</span><span class="p">),</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-12"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^detalle_persona/(?P&lt;pk&gt;\d+)/$'</span><span class="p">,</span> <span class="n">DetallePersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-13"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">"detalle_persona"</span><span class="p">),</span>
+<a name="rest_code_ebd457fb8e8a4f358a66181b6163bfb3-14"></a><span class="p">)</span>
 </pre>
 <p>Ahora hacemos que el enlace con el ícono del libro abierto apunte a
 nuestra url detalle_persona, debemos tener en cuenta que el enlace
 debe estar de acuerdo a la definición de la expresión regular en la
 url, en este caso se le pasa como argumento la primary key que debe
 ser un conjunto de dígitos:</p>
-<pre class="code html"><a name="rest_code_4bab861f69044c169a1ef6ac385b5025-1"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
-<a name="rest_code_4bab861f69044c169a1ef6ac385b5025-2"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_4bab861f69044c169a1ef6ac385b5025-3"></a><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_e306ee7a658e4273beacabd9a8862fcc-1"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
+<a name="rest_code_e306ee7a658e4273beacabd9a8862fcc-2"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_e306ee7a658e4273beacabd9a8862fcc-3"></a><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </pre>
 <p>Ahora cuando hagamos click en el ícono del lápiz nos mostrará lo
 siguiente:</p>
@@ -293,7 +293,7 @@ siguiente:</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2016         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             

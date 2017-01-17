@@ -2,11 +2,11 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
 <head>
 <meta charset="utf-8">
-<base href="http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Servir Aplicaciones Django con Apache y mod_wsgi en Centos 7 | Python Piura</title>
 <link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/">
 <!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
@@ -33,7 +33,7 @@ aplicaciones hechas en Python, que tengan soporte para la int">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Mostrar navegación</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -105,26 +105,26 @@ repositorios de la distribución. Esto incluirá el servidor web Apache,
 el módulo mod_wsgi utilizado para interactuar con nuestra aplicación
 Django, y pip. Para obtener pip, tendremos que habilitar el
 repositorio EPEL(paquetes para Linux Empresarial):</p>
-<pre class="code bash"><a name="rest_code_ed55c85b2b334c369cd6c938ef709421-1"></a>yum install epel-release
+<pre class="code bash"><a name="rest_code_7702a9fd166f4083a34d230d1651b7e5-1"></a>yum install epel-release
 </pre>
 <p>Con EPEL habilitado nosotros podemos instalar los componentes
 tipeando:</p>
-<pre class="code bash"><a name="rest_code_94679e24e08949afb49b30450227bffe-1"></a>yum install python-pip httpd mod_wsgi
+<pre class="code bash"><a name="rest_code_b88211f2c56e43128fb44e0b4b06e3bd-1"></a>yum install python-pip httpd mod_wsgi
 </pre>
 <p>Ahora que ya tenemos instalados los paquetes necesarios, debemos crear
 un entorno virtual para ellos instalaremos virtualenv usando pip:</p>
-<pre class="code bash"><a name="rest_code_d4fcb12bb1cc4b92a4b33e89c4cc0429-1"></a>pip install virtualenv
+<pre class="code bash"><a name="rest_code_718dc4445785433e8a986fffe776c86e-1"></a>pip install virtualenv
 </pre>
 <p>Ahora procedemos a crear nuestro entorno virtual:</p>
-<pre class="code bash"><a name="rest_code_556f593dc2f04fdda20cea2ac46d789f-1"></a>virtualenv vproduccion
+<pre class="code bash"><a name="rest_code_ca322ffd0ebe4e8fb669c7e8be2eb5fa-1"></a>virtualenv vproduccion
 </pre>
 <p>Y lo activamos:</p>
-<pre class="code bash"><a name="rest_code_e69d85259dea4d8ea0af518bd427faa1-1"></a><span class="nb">source</span> vproduccion/bin/activate
+<pre class="code bash"><a name="rest_code_a1b3da853b87493898e9a90146a2bf94-1"></a><span class="nb">source</span> vproduccion/bin/activate
 </pre>
 <p>Cuando activamos el entorno virtual nuestro prompt debe cambiar y
 aparecer entre paréntesis el nombre del entorno virtual activado.
 Una vez que esto ha sucedido debemos instalar Django:</p>
-<pre class="code bash"><a name="rest_code_6a4d9cc9df864ee2bca755674ec1ce37-1"></a>pip install django
+<pre class="code bash"><a name="rest_code_7027b7232dfc4433a4204fd82ac55922-1"></a>pip install django
 </pre>
 <p>Cuando ya tengamos listo esto, subimos o creamos nuestro proyecto
 Django utilizando los comandos clásicos que ya hemos utilizado antes,
@@ -137,25 +137,25 @@ automáticamente después de la instalación anterior. Para configurar lo
 anterior, tendremos que crear un nuevo archivo de configuración en el
 directorio /etc/httpd/conf.d. Vamos a llamar a este archivo
 django.conf:</p>
-<pre class="code bash"><a name="rest_code_5b467e05630640bcb5c06dacdc22df8b-1"></a>nano /etc/httpd/conf.d/django.conf
+<pre class="code bash"><a name="rest_code_e7363c97df2a4a61876b51e3c4dd337c-1"></a>nano /etc/httpd/conf.d/django.conf
 </pre>
 <p>Y dentro de él escribiremos lo siguiente:</p>
-<pre class="code bash"><a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-1"></a><span class="c1">#En mi caso la ruta es /home/jamaya y mi proyecto se llama siad</span>
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-2"></a><span class="c1">#Configuración para mostrar correctamente losa archivos estáticos</span>
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-3"></a>Alias /static /home/jamaya/siad/static
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-4"></a>&lt;Directory /home/jamaya/siad/static&gt;
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-5"></a>        Require all granted
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-6"></a>&lt;/Directory&gt;
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-7"></a><span class="c1">#Configuración para acceder correctamente al wsgi.py</span>
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-8"></a>&lt;Directory /home/jamaya/siad/siad/&gt;
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-9"></a>        &lt;Files wsgi.py&gt;
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-10"></a>                Require all granted
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-11"></a>        &lt;/Files&gt;
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-12"></a>&lt;/Directory&gt;
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-13"></a>
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-14"></a>WSGIDaemonProcess siad python-path<span class="o">=</span>/home/jamaya/siad:/home/jamaya/vproduccion/lib/python2.7/site-packages
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-15"></a>WSGIProcessGroup siad
-<a name="rest_code_5aea15a1a6ff4e3c9b7b826b05e50a4a-16"></a>WSGIScriptAlias /siad /home/jamaya/siad/siad/wsgi.py
+<pre class="code bash"><a name="rest_code_48d14a2b97fb469f926f3dd272144c32-1"></a><span class="c1">#En mi caso la ruta es /home/jamaya y mi proyecto se llama siad</span>
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-2"></a><span class="c1">#Configuración para mostrar correctamente losa archivos estáticos</span>
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-3"></a>Alias /static /home/jamaya/siad/static
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-4"></a>&lt;Directory /home/jamaya/siad/static&gt;
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-5"></a>        Require all granted
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-6"></a>&lt;/Directory&gt;
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-7"></a><span class="c1">#Configuración para acceder correctamente al wsgi.py</span>
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-8"></a>&lt;Directory /home/jamaya/siad/siad/&gt;
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-9"></a>        &lt;Files wsgi.py&gt;
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-10"></a>                Require all granted
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-11"></a>        &lt;/Files&gt;
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-12"></a>&lt;/Directory&gt;
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-13"></a>
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-14"></a>WSGIDaemonProcess siad python-path<span class="o">=</span>/home/jamaya/siad:/home/jamaya/vproduccion/lib/python2.7/site-packages
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-15"></a>WSGIProcessGroup siad
+<a name="rest_code_48d14a2b97fb469f926f3dd272144c32-16"></a>WSGIScriptAlias /siad /home/jamaya/siad/siad/wsgi.py
 </pre>
 <p>A continuación, tenemos que arreglar los permisos para que el servicio
 de Apache puede acceder a nuestros archivos. Por defecto CentOS
@@ -165,50 +165,50 @@ de nuestro propio usuario. Esto nos permitirá abrir los permisos sólo
 lo suficiente para que pueda llegar a los archivos correspondientes.
 Añadimos el usuario apache a nuestro grupo, reemplazamos la palabra
 jamaya con nuestro usuario:</p>
-<pre class="code bash"><a name="rest_code_7a4e94f4959e4f40b3ae62c3b756a1d4-1"></a>usermod -a -G jamaya apache
+<pre class="code bash"><a name="rest_code_e128b42ad2a34d84b7f869fcedb5246d-1"></a>usermod -a -G jamaya apache
 </pre>
 <p>Damos permisos al grupo en la carpeta personal, esto permitirá al
 proceso apache acceder a los archivos.</p>
-<pre class="code bash"><a name="rest_code_731c7dcc4652446d95e7698da7e2a7d8-1"></a>chmod <span class="m">710</span> /home/jamaya
+<pre class="code bash"><a name="rest_code_78ec93d9aaf94985a6b49ac9200be474-1"></a>chmod <span class="m">710</span> /home/jamaya
 </pre>
 <p>Ya podemos iniciar el servicio de apache:</p>
-<pre class="code bash"><a name="rest_code_abd3dbf1e5e743efabb8eabb7c3216e2-1"></a>systemctl start httpd
+<pre class="code bash"><a name="rest_code_cf4e4e057daa48478fbee0d9c3875250-1"></a>systemctl start httpd
 </pre>
 <p>Vamos a probar si la carga del proyecto funciona, vamos a otra
 computadora de la red y colocamos la direccion ip de nuestro servidor
 y la aplicación:</p>
-<pre class="code bash"><a name="rest_code_1d8d98539f4d4e7cbbb4b18f48c25b87-1"></a>http://172.20.30.129/siad
+<pre class="code bash"><a name="rest_code_4f9540a51fb543aa97f2b5b54a6fd67d-1"></a>http://172.20.30.129/siad
 </pre>
 <p>Si hubiese algún problema lo mas rápido y sencillo es deshabilitar
 SELINUX, esto lo hacemos editando el archivo:</p>
-<pre class="code bash"><a name="rest_code_0ac575a221aa47cbb1f58a597c222fd5-1"></a>/etc/selinux/config
+<pre class="code bash"><a name="rest_code_778532fcc52e43b99ead4631e4040fbd-1"></a>/etc/selinux/config
 </pre>
 <p>Y cambiando la siguiente linea:</p>
-<pre class="code bash"><a name="rest_code_f7a73805211a43c6a16243c858f27bc8-1"></a><span class="nv">SELINUX</span><span class="o">=</span>disabled
+<pre class="code bash"><a name="rest_code_ea743b90e1964cfcbc731f7bae5bdbcb-1"></a><span class="nv">SELINUX</span><span class="o">=</span>disabled
 </pre>
 <p>Si todo funciona correctamente habilitamos el servicio apache para que
 se inicie automaticamente:</p>
-<pre class="code bash"><a name="rest_code_310db2e786eb47d7be81de572d3a0613-1"></a>systemctl <span class="nb">enable</span> httpd
+<pre class="code bash"><a name="rest_code_9cfc4072357d4ddeaa8a231775dc2701-1"></a>systemctl <span class="nb">enable</span> httpd
 </pre>
 <p>Recuerden tener siempre su archivo requerimientos.txt o
 requirements.txt para instalar todas las dependendencias que hacen que
 nuestro proyecto funcione con éxito. Este archivo se obtiene en
 nuestro entorno de desarrollo escribiendo el siguiente comando:</p>
-<pre class="code bash"><a name="rest_code_cc944d40218e418586bb220b9ea663ee-1"></a>pip freeze &gt; requirements.txt
+<pre class="code bash"><a name="rest_code_c4417885b5a0494b826e1774b6e77759-1"></a>pip freeze &gt; requirements.txt
 </pre>
 <p>Y para instalarlas en nuestro entorno de producción usamos el mismo
 comando con algunas variantes:</p>
-<pre class="code bash"><a name="rest_code_b8180f60af94468cb4e2255ebae6b38f-1"></a>pip install -r requirements.txt
+<pre class="code bash"><a name="rest_code_fbf2acaf7fd3492f874f3f44e5b79680-1"></a>pip install -r requirements.txt
 </pre>
 <p>En el caso nuestro teniamos un par de dependencias un poco complicadas
 de instalar en Centos: Pillow y psycopg2, por lo que tuvimos algunos
 errores, para solucionarlos debemos instalar algunas librerias, en
 centos en el caso de psycopg2 tenemos:</p>
-<pre class="code bash"><a name="rest_code_1b810b42bed14a72851ff69a7401b26e-1"></a>yum install gcc
-<a name="rest_code_1b810b42bed14a72851ff69a7401b26e-2"></a>yum install postgresql-devel python-devel
+<pre class="code bash"><a name="rest_code_361d2518d8374c3a833669062e9b0215-1"></a>yum install gcc
+<a name="rest_code_361d2518d8374c3a833669062e9b0215-2"></a>yum install postgresql-devel python-devel
 </pre>
 <p>Y en el caso de Pillow:</p>
-<pre class="code bash"><a name="rest_code_0cafba1d541a407db19e0d1b422204e0-1"></a>yum install libjpeg-devel zlib-devel
+<pre class="code bash"><a name="rest_code_2bb692d162e94e16bfcb7a8826363e4e-1"></a>yum install libjpeg-devel zlib-devel
 </pre>
 <p>Y listo eso es todo, ya tenemos nuestro servidor de producción.</p>
 <p>Saludos.</p>
@@ -231,7 +231,7 @@ centos en el caso de psycopg2 tenemos:</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2016         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             

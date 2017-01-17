@@ -7,202 +7,206 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://pythonpiura.org/</loc>
-  <lastmod>2016-08-02T22:02:00Z</lastmod>
+  <lastmod>2017-01-17T05:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/2014/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/2016/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/2017/</loc>
+  <lastmod>2017-01-17T05:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/acerca-de/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2016-10-07T23:26:00Z</lastmod>
+  <lastmod>2017-01-17T05:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-1.html</loc>
-  <lastmod>2016-10-07T23:43:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-2.html</loc>
-  <lastmod>2016-10-07T23:26:00Z</lastmod>
+  <lastmod>2017-01-17T05:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/centos/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/circulo/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/django/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/ipython/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/pillow/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/pytesseract/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/python/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/reportlab/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/selenium/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/contactenos/</loc>
-  <lastmod>2016-08-01T22:23:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/eventos/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/material-python/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2014/05/23/primeros-pasos-con-django/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2014/09/14/python-y-la-vision-artificial/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2014/09/18/selenium-con-python/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/01/19/obtener-modulos-de-un-proyecto-y-vistas-de-una-aplicacion-en-django/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/01/25/django-y-microsoft-sql-server/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/01/25/web-scraping-con-selenium/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/01/26/romper-captchas-con-pytesseract-y-selenium/</loc>
-  <lastmod>2016-10-07T23:26:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/14/servir-aplicaciones-django-con-apache-y-mod_wsgi-en-centos-7/</loc>
-  <lastmod>2016-10-07T23:00:00Z</lastmod>
- </url>
- <url>
-  <loc>http://pythonpiura.org/posts/2016/04/16/curso-basico-de-python/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/17/deployando-proyectos-django-en-heroku/</loc>
-  <lastmod>2016-09-29T14:21:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/18/datatables-jquery-bootstrap-y-django/</loc>
-  <lastmod>2016-10-07T23:31:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/20/templateview/</loc>
-  <lastmod>2016-08-06T17:33:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/21/uso-de-detailview/</loc>
-  <lastmod>2016-08-06T17:03:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/21/uso-de-updateview/</loc>
-  <lastmod>2016-08-06T17:03:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/26/login-en-django/</loc>
-  <lastmod>2016-08-06T17:03:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/27/logout-y-proteccion-de-vistas-en-django/</loc>
-  <lastmod>2016-08-06T17:03:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/28/mejorando-nuestro-login/</loc>
-  <lastmod>2016-08-06T15:49:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/</loc>
-  <lastmod>2016-08-06T15:49:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</loc>
-  <lastmod>2016-08-06T15:14:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/</loc>
-  <lastmod>2016-08-06T15:14:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/05/10/otro-ejemplo-de-web-scrapping-con-python/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/05/11/consulta-dni-reniec/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/05/13/reporte-pdf-en-django-con-reportlab/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/2016/06/18/ipython-y-jupyter/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:53:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/</loc>
+  <lastmod>2017-01-17T05:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/migrando-de-wordpress-a-nikola/</loc>
-  <lastmod>2016-07-25T15:37:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/primer-pyday-en-piura/</loc>
-  <lastmod>2016-07-27T22:40:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/recursos/</loc>
-  <lastmod>2016-08-23T20:50:00Z</lastmod>
+  <lastmod>2017-01-17T04:52:00Z</lastmod>
  </url>
 </urlset>

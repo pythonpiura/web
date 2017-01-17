@@ -2,11 +2,11 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
 <head>
 <meta charset="utf-8">
-<base href="http://pythonpiura.org/posts/2016/04/20/templateview/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Uso de TemplateView | Python Piura</title>
 <link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/posts/2016/04/20/templateview/">
 <!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
@@ -31,7 +31,7 @@ programar, para ello seguiremos con nuestro proyecto tutorial, pri">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Mostrar navegación</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -98,53 +98,53 @@ le vamos a hacer unas pequeñas modificaciones para que se adapte a lo
 que necesitamos.
 Editamos el archivo base.html para agregar un pequeño menú en la parte
 superior de la pantalla:</p>
-<pre class="code html"><a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-1"></a>{% load staticfiles %}
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-2"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-3"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-4"></a>    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-5"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-6"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content</span><span class="o">=</span><span class="s">"IE=edge"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-7"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-8"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"description"</span> <span class="na">content</span><span class="o">=</span><span class="s">""</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-9"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"author"</span> <span class="na">content</span><span class="o">=</span><span class="s">""</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-10"></a>        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Ejemplo Círculo de Programadores de Python Piura<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-11"></a>        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/bootstrap.min.css' %}"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-12"></a>        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/jquery.dataTables.min.css'  %}"</span>  <span class="p">/&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-13"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-14"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/bootstrap.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-15"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.dataTables.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-16"></a>    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-17"></a>    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"wrapper"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-19"></a>            <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar navbar-default navbar-static-top"</span> <span class="na">role</span><span class="o">=</span><span class="s">"navigation"</span> <span class="na">style</span><span class="o">=</span><span class="s">"margin-bottom: 0"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-20"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-header"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-21"></a>                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-toggle"</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">"collapse"</span> <span class="na">data-target</span><span class="o">=</span><span class="s">".navbar-collapse"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-22"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sr-only"</span><span class="p">&gt;</span>Desplegar navegación<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-23"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-24"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-25"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-26"></a>                    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-27"></a>                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-28"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-home"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Inicio
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-29"></a>                    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-30"></a>                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-31"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-user"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Personas
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-32"></a>                    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-33"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-34"></a>                {% block menu %}
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-35"></a>                {% endblock menu %}
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-36"></a>            <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-37"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"page-wrapper"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-38"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container-fluid"</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-39"></a>                    {% block cuerpo %}
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-40"></a>                    {% endblock cuerpo %}
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-41"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-42"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-43"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-44"></a>    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-45"></a>    {% block js %}
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-46"></a>    {% endblock js %}
-<a name="rest_code_2813239edd1848f0b2140d9cc24caaf0-47"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_af269d1660fe47a589c7b11b1aa89514-1"></a>{% load staticfiles %}
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-2"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-3"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-4"></a>    <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-5"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"utf-8"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-6"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">http-equiv</span><span class="o">=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content</span><span class="o">=</span><span class="s">"IE=edge"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-7"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-8"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"description"</span> <span class="na">content</span><span class="o">=</span><span class="s">""</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-9"></a>        <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"author"</span> <span class="na">content</span><span class="o">=</span><span class="s">""</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-10"></a>        <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Ejemplo Círculo de Programadores de Python Piura<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-11"></a>        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/bootstrap.min.css' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-12"></a>        <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/jquery.dataTables.min.css'  %}"</span>  <span class="p">/&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-13"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-14"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/bootstrap.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-15"></a>        <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.dataTables.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-16"></a>    <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-17"></a>    <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-18"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"wrapper"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-19"></a>            <span class="p">&lt;</span><span class="nt">nav</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar navbar-default navbar-static-top"</span> <span class="na">role</span><span class="o">=</span><span class="s">"navigation"</span> <span class="na">style</span><span class="o">=</span><span class="s">"margin-bottom: 0"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-20"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-header"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-21"></a>                    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-toggle"</span> <span class="na">data-toggle</span><span class="o">=</span><span class="s">"collapse"</span> <span class="na">data-target</span><span class="o">=</span><span class="s">".navbar-collapse"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-22"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"sr-only"</span><span class="p">&gt;</span>Desplegar navegación<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-23"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-24"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-25"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"icon-bar"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-26"></a>                    <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-27"></a>                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-28"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-home"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Inicio
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-29"></a>                    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-30"></a>                    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-31"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-user"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Personas
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-32"></a>                    <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-33"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-34"></a>                {% block menu %}
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-35"></a>                {% endblock menu %}
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-36"></a>            <span class="p">&lt;/</span><span class="nt">nav</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-37"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"page-wrapper"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-38"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container-fluid"</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-39"></a>                    {% block cuerpo %}
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-40"></a>                    {% endblock cuerpo %}
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-41"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-42"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-43"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-44"></a>    <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-45"></a>    {% block js %}
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-46"></a>    {% endblock js %}
+<a name="rest_code_af269d1660fe47a589c7b11b1aa89514-47"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre>
 <p>Tendremos algo como esto:</p>
 <img alt="/images/blog/menu.jpg" src="../../../../../images/blog/menu.jpg"><p>Creamos un archivo llamado bienvenida.html para poner un aviso de
@@ -152,65 +152,65 @@ bienvenida y de esta manera no ingresar directamente a nuestra tabla
 de personas, para ello debemos crear una vista usando TemplateView y
 agregar el url correspondiente:</p>
 <p>bienvenida.html</p>
-<pre class="code html"><a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-1"></a>{% extends "base.html" %}
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-2"></a>{% block cuerpo %}
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-5"></a>        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Círculo de Programadores de Python Piura<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-6"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-9"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-10"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-11"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-12"></a>                Bienvenido
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-13"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-14"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-15"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-16"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-17"></a>                        <span class="p">&lt;</span><span class="nt">h3</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>Bienvenido.<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-18"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-19"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-20"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-21"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-22"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_4d369d2f8d9b48e8aeded837a92d1d9b-23"></a>{% endblock cuerpo %}
+<pre class="code html"><a name="rest_code_7af75b727fec450bae7a9fc205825e6b-1"></a>{% extends "base.html" %}
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-2"></a>{% block cuerpo %}
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-5"></a>        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Círculo de Programadores de Python Piura<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-6"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-9"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-10"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-11"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-12"></a>                Bienvenido
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-13"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-14"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-15"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-16"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-17"></a>                        <span class="p">&lt;</span><span class="nt">h3</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>Bienvenido.<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-18"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-19"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-20"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-21"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-22"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_7af75b727fec450bae7a9fc205825e6b-23"></a>{% endblock cuerpo %}
 </pre>
 <p>Creamos una clase llamada Bienvenida, que hereda de TemplateView y le
 decimos que la plantilla a utilizar se llamará bienvenida.html.</p>
 <p>views.py</p>
-<pre class="code python"><a name="rest_code_2a5176dcd3314663ac17917ae26a961c-1"></a><span class="kn">from</span> <span class="nn">django.views.generic.base</span> <span class="kn">import</span> <span class="n">TemplateView</span>
-<a name="rest_code_2a5176dcd3314663ac17917ae26a961c-2"></a>
-<a name="rest_code_2a5176dcd3314663ac17917ae26a961c-3"></a><span class="k">class</span> <span class="nc">Bienvenida</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
-<a name="rest_code_2a5176dcd3314663ac17917ae26a961c-4"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s2">"bienvenida.html"</span>
+<pre class="code python"><a name="rest_code_9c705b05e32149828be3a6dcffb06476-1"></a><span class="kn">from</span> <span class="nn">django.views.generic.base</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+<a name="rest_code_9c705b05e32149828be3a6dcffb06476-2"></a>
+<a name="rest_code_9c705b05e32149828be3a6dcffb06476-3"></a><span class="k">class</span> <span class="nc">Bienvenida</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+<a name="rest_code_9c705b05e32149828be3a6dcffb06476-4"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s2">"bienvenida.html"</span>
 </pre>
 <p>En el archivo urls.py cambiamos la url raiz para que apunte a la clase
 Bienvenida y creamos una url llamada personas para mostrar la tabla
 personas.</p>
 <p>urls.py</p>
-<pre class="code python"><a name="rest_code_4178388e92a848d99855c4e3878dd75a-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-2"></a><span class="kn">from</span> <span class="nn">personas.views</span> <span class="kn">import</span> <span class="n">Personas</span><span class="p">,</span> <span class="n">CrearPersona</span><span class="p">,</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-3"></a><span class="n">ReportePersonasExcel</span><span class="p">,</span>\
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-4"></a><span class="n">Bienvenida</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-5"></a>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-6"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-7"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span><span class="n">Bienvenida</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"bienvenida"</span><span class="p">),</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-8"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^personas/$'</span><span class="p">,</span><span class="n">Personas</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"personas"</span><span class="p">),</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-9"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_persona/$'</span><span class="p">,</span><span class="n">CrearPersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_persona"</span><span class="p">),</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-10"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_excel/$'</span><span class="p">,</span><span class="n">ReportePersonasExcel</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_excel"</span><span class="p">),</span>
-<a name="rest_code_4178388e92a848d99855c4e3878dd75a-11"></a><span class="p">)</span>
+<pre class="code python"><a name="rest_code_733491d1067d467d883128c5c227e226-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-2"></a><span class="kn">from</span> <span class="nn">personas.views</span> <span class="kn">import</span> <span class="n">Personas</span><span class="p">,</span> <span class="n">CrearPersona</span><span class="p">,</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-3"></a><span class="n">ReportePersonasExcel</span><span class="p">,</span>\
+<a name="rest_code_733491d1067d467d883128c5c227e226-4"></a><span class="n">Bienvenida</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-5"></a>
+<a name="rest_code_733491d1067d467d883128c5c227e226-6"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-7"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span><span class="n">Bienvenida</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"bienvenida"</span><span class="p">),</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-8"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^personas/$'</span><span class="p">,</span><span class="n">Personas</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"personas"</span><span class="p">),</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-9"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_persona/$'</span><span class="p">,</span><span class="n">CrearPersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_persona"</span><span class="p">),</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-10"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_excel/$'</span><span class="p">,</span><span class="n">ReportePersonasExcel</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_excel"</span><span class="p">),</span>
+<a name="rest_code_733491d1067d467d883128c5c227e226-11"></a><span class="p">)</span>
 </pre>
 <p>Con lo que tendriamos algo como esto:</p>
 <img alt="/images/blog/nueva.jpg" src="../../../../../images/blog/nueva.jpg"><p>¿Y ahora como vemos nuestra tabla personas? Muy fácil haciendo que el
 enlace llamado “Personas" apunte a la url personas y de paso también
 hacemos que el enlace “Inicio" apunte a la url de bienvenida, para
 ello modificamos el archivo base.html:</p>
-<pre class="code html"><a name="rest_code_edffa514361142e88a56eb8229c06442-1"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:bienvenida' %}"</span><span class="p">&gt;</span>
-<a name="rest_code_edffa514361142e88a56eb8229c06442-2"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-home"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Inicio
-<a name="rest_code_edffa514361142e88a56eb8229c06442-3"></a><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_edffa514361142e88a56eb8229c06442-4"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:personas' %}"</span><span class="p">&gt;</span>
-<a name="rest_code_edffa514361142e88a56eb8229c06442-5"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-user"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Personas
-<a name="rest_code_edffa514361142e88a56eb8229c06442-6"></a><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_34f6c249934c45ca93cf2ea5bf3f0378-1"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:bienvenida' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_34f6c249934c45ca93cf2ea5bf3f0378-2"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-home"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Inicio
+<a name="rest_code_34f6c249934c45ca93cf2ea5bf3f0378-3"></a><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_34f6c249934c45ca93cf2ea5bf3f0378-4"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"navbar-brand"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:personas' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_34f6c249934c45ca93cf2ea5bf3f0378-5"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-user"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> Personas
+<a name="rest_code_34f6c249934c45ca93cf2ea5bf3f0378-6"></a><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
 </pre>
 <p>Con esto hemos podido ver el uso sencillo de TemplateView mas adelante
 vamos a utilizar otras vistas basadas en clases, hasta la próxima.
@@ -232,7 +232,7 @@ Saludos.</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2016         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             

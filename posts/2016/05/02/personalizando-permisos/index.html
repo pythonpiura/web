@@ -2,11 +2,11 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
 <head>
 <meta charset="utf-8">
-<base href="http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Personalizando Permisos | Python Piura</title>
 <link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/">
 <!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
@@ -32,7 +32,7 @@ usuario ">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Mostrar navegación</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -102,17 +102,17 @@ Empecemos por lo mas sencillo, creemos un permiso para restringir el
 acceso al detalle de la persona, para ello personalizaremos los
 permisos en el modelo, de la siguiente manera:</p>
 <p>models.py</p>
-<pre class="code python"><a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-1"></a><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-2"></a>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-3"></a><span class="c1"># Create your models here.</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-4"></a><span class="k">class</span> <span class="nc">Persona</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-5"></a>        <span class="n">dni</span><span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">max_length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-6"></a>        <span class="n">nombre</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-7"></a>        <span class="n">apellido_paterno</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-8"></a>        <span class="n">apellido_materno</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-9"></a>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-10"></a>        <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-<a name="rest_code_17d8c833d1274f3a9106fe4e34a9019f-11"></a>                <span class="n">permissions</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'ver_detalle_persona'</span><span class="p">,</span> <span class="s1">'Puede ver detalle Persona'</span><span class="p">),)</span>
+<pre class="code python"><a name="rest_code_95d1a3685025480a9dc770a9eb32c761-1"></a><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-2"></a>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-3"></a><span class="c1"># Create your models here.</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-4"></a><span class="k">class</span> <span class="nc">Persona</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-5"></a>        <span class="n">dni</span><span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">max_length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-6"></a>        <span class="n">nombre</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-7"></a>        <span class="n">apellido_paterno</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-8"></a>        <span class="n">apellido_materno</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-9"></a>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-10"></a>        <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<a name="rest_code_95d1a3685025480a9dc770a9eb32c761-11"></a>                <span class="n">permissions</span> <span class="o">=</span> <span class="p">((</span><span class="s1">'ver_detalle_persona'</span><span class="p">,</span> <span class="s1">'Puede ver detalle Persona'</span><span class="p">),)</span>
 </pre>
 <p>Veamos que hay de nuevo en nuestro modelo y lo primero que salta a la
 vista es el uso de una <a class="reference external" href="https://datafull.co/p/que-es-una-metaclase-en-python">metaclase</a> aquí definiremos el atributo
@@ -125,16 +125,16 @@ permiso, ahora ya lo tenemos listo, pero no podemos aplicarlo
 directamente sino que primero tenemos que hacer la migración
 correspondiente a la base de datos, ya que ha ocurrido una
 modificación del modelo:</p>
-<pre class="code bash"><a name="rest_code_e39758b83d944e699fc455e0a1d0934b-1"></a>python manage.py makemigrations personas
-<a name="rest_code_e39758b83d944e699fc455e0a1d0934b-2"></a>python manage.py migrate
+<pre class="code bash"><a name="rest_code_754375ccad024345b9295b8710461a6a-1"></a>python manage.py makemigrations personas
+<a name="rest_code_754375ccad024345b9295b8710461a6a-2"></a>python manage.py migrate
 </pre>
 <p>Ya con esto podemos usar el permiso, para ello modificaremos el
 archivo personas.html:</p>
-<pre class="code html"><a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-1"></a>{% if perms.personas.ver_detalle_persona %}
-<a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-2"></a>        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
-<a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-3"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-4"></a>        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_7a03c44d3ead41c0878816c27acd45dc-5"></a>{% endif %}
+<pre class="code html"><a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-1"></a>{% if perms.personas.ver_detalle_persona %}
+<a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-2"></a>        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
+<a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-3"></a>        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-4"></a>        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-5"></a>{% endif %}
 </pre>
 <p>Ahora nos logueamos con cualquiera de los usuarios nuevos que creamos
 en la sesión pasada, en este caso lo haremos con usuario1:</p>
@@ -144,13 +144,13 @@ pasada si es posible acceder a través de la url:</p>
 <p><a class="reference external" href="http://localhost:8000/personas/detalle_persona/44626821/">http://localhost:8000/personas/detalle_persona/44626821/</a></p>
 <p>Nos falta hacer lo mismo de antes en nuestra vista DetallePersona:</p>
 <p>views.py</p>
-<pre class="code python"><a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-1"></a><span class="k">class</span> <span class="nc">DetallePersona</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
-<a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-2"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
-<a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-3"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'detalle_persona.html'</span>
-<a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-4"></a>
-<a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-5"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.ver_detalle_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
-<a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-6"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_a4cff8ae234f46549bf55705fdf052d0-7"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">DetallePersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_23526db516674616b8f6c6d5d756d517-1"></a><span class="k">class</span> <span class="nc">DetallePersona</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+<a name="rest_code_23526db516674616b8f6c6d5d756d517-2"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_23526db516674616b8f6c6d5d756d517-3"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'detalle_persona.html'</span>
+<a name="rest_code_23526db516674616b8f6c6d5d756d517-4"></a>
+<a name="rest_code_23526db516674616b8f6c6d5d756d517-5"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.ver_detalle_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
+<a name="rest_code_23526db516674616b8f6c6d5d756d517-6"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_23526db516674616b8f6c6d5d756d517-7"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">DetallePersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre>
 <p>Listo ya con esto el usuario no puede ingresar al detalle de la
 persona y es inmediatamente redireccionado a la tabla de personas,
@@ -180,7 +180,7 @@ Saludos.</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2016         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             

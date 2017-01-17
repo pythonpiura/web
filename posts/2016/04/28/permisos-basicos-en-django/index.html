@@ -2,11 +2,11 @@
 <html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
 <head>
 <meta charset="utf-8">
-<base href="http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aplicar Permisos por Usuario en Django | Python Piura</title>
 <link href="../../../../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
-<meta content="#5670d4" name="theme-color">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/posts/2016/04/28/permisos-basicos-en-django/">
 <!--[if lt IE 9]><script src="../../../../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
@@ -31,7 +31,7 @@ muchos los usuarios que interactuan con el software y todos no c">
 <!-- This keeps the margins nice -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only">Mostrar navegación</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -125,15 +125,15 @@ brindan esas opciones, esto lo podemos hacer usando los permisos
 proporcionados por django de la siguiente manera:
 Primero para restringir la visualización del ícono de crear personas:
 personas.html</p>
-<pre class="code html"><a name="rest_code_2bb54aeedfce4750972660d13e8177f8-1"></a>{% if perms.personas.add_persona %}
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-2"></a>
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-4"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-5"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-6"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-7"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-8"></a>
-<a name="rest_code_2bb54aeedfce4750972660d13e8177f8-9"></a>{% endif %}
+<pre class="code html"><a name="rest_code_14ad353d43624df1a643dcb36f98e146-1"></a>{% if perms.personas.add_persona %}
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-2"></a>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-4"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-5"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-6"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-7"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-8"></a>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-9"></a>{% endif %}
 </pre>
 <p>Si observamos detenidamente hemos agregado en la parte superior del
 div del enlace un condicional que utilizar una variable llamada perms,
@@ -151,17 +151,17 @@ personas y tipearla directamente en la barra de direcciones:</p>
 <img alt="/images/blog/crear_persona.jpg" src="../../../../../images/blog/crear_persona.jpg"><p>Mmmm, vemos que si puede ingresar ¿Cómo hacemos para restringir eso?
 Nuestros viejos amigos los decoradores vuelven nuevamente a nuestro
 auxilio, para ello debemos editar el archivo views.py:</p>
-<pre class="code python"><a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-1"></a><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-2"></a><span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-3"></a><span class="k">class</span> <span class="nc">CrearPersona</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-4"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-5"></a>        <span class="n">fields</span> <span class="o">=</span><span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-6"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'crear_persona.html'</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-7"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-8"></a>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-9"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.add_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-10"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_a02d9805131a4395ad6c8ab7682a16b4-11"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CrearPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-1"></a><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-2"></a><span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-3"></a><span class="k">class</span> <span class="nc">CrearPersona</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-4"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-5"></a>        <span class="n">fields</span> <span class="o">=</span><span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-6"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'crear_persona.html'</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-7"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-8"></a>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-9"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.add_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-10"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-11"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CrearPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre>
 <p>Expliquemos esto que está un poco endiablado:
 Un método sobre una clase no equivale realmente a una función
@@ -189,37 +189,37 @@ personas, ahora lo que falta es aplicar lo mismo a la vista
 ModificarPersona las demás vistas tendrá un tratamiento especial en un
 artículo posterior:</p>
 <p>personas.html</p>
-<pre class="code html"><a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-1"></a><span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-2"></a>{% for persona in personas %}
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-3"></a>        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-4"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-5"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-6"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-7"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-8"></a>                <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-9"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-10"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-11"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-12"></a>                {% if perms.personas.change_persona %}
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-13"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:modificar_persona' persona.pk %}"</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-14"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-pencil"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-15"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-16"></a>                {% endif %}
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-17"></a>                <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-18"></a>        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-19"></a>{% endfor %}
-<a name="rest_code_47a694bae1be4fe7a8b95d4b8ac1287a-20"></a><span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_395e57c19b42459198a99a32af8450ce-1"></a><span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-2"></a>{% for persona in personas %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-3"></a>        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-4"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-5"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-6"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-7"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-8"></a>                <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-9"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-10"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-11"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-12"></a>                {% if perms.personas.change_persona %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-13"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:modificar_persona' persona.pk %}"</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-14"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-pencil"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-15"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-16"></a>                {% endif %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-17"></a>                <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-18"></a>        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-19"></a>{% endfor %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-20"></a><span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
 </pre>
 <p>views.py</p>
-<pre class="code python"><a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-1"></a><span class="k">class</span> <span class="nc">ModificarPersona</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-2"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-3"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'modificar_persona.html'</span>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-4"></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-5"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-6"></a>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-7"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.change_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-8"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_6564d19c510e43cfaa400b8e8e2a88ab-9"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ModificarPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<pre class="code python"><a name="rest_code_541c90dd20bc4e219ef34b44819ed980-1"></a><span class="k">class</span> <span class="nc">ModificarPersona</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-2"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-3"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'modificar_persona.html'</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-4"></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-5"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-6"></a>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-7"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.change_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-8"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-9"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ModificarPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre>
 <p>Notamos que el permiso ahora se llama change_persona, detengamonos un
 poco aquí y expliquemos esto, por defecto django aplica tres permisos
@@ -265,7 +265,7 @@ Saludos.</p>
         <!--End of body content-->
 
         <footer id="footer">
-            Contents © 2016         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
 <img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
             
