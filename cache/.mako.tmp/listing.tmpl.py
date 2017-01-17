@@ -5,9 +5,9 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1475883932.4399734
+_modified_time = 1484633291.220635
 _enable_loop = True
-_template_filename = '/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/listing.tmpl'
+_template_filename = '/home/inkarri/entornos/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/listing.tmpl'
 _template_uri = 'listing.tmpl'
 _source_encoding = 'utf-8'
 _exports = ['sourcelink', 'content']
@@ -32,20 +32,21 @@ def render_body(context,**pageargs):
         __M_locals = __M_dict_builtin(pageargs=pageargs)
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
-        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
-        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
-        ui = _mako_get_namespace(context, 'ui')
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
         def sourcelink():
             return render_sourcelink(context._locals(__M_locals))
+        ui = _mako_get_namespace(context, 'ui')
+        title = _import_ns.get('title', context.get('title', UNDEFINED))
+        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
+        files = _import_ns.get('files', context.get('files', UNDEFINED))
+        folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
+        crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
         def content():
             return render_content(context._locals(__M_locals))
         messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
-        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
-        files = _import_ns.get('files', context.get('files', UNDEFINED))
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
-        __M_writer('\n\n')
+        __M_writer('\n')
         if 'parent' not in context._data or not hasattr(context._data['parent'], 'content'):
             context['self'].content(**pageargs)
         
@@ -66,10 +67,10 @@ def render_sourcelink(context,**pageargs):
     try:
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         def sourcelink():
             return render_sourcelink(context)
         source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
-        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         if source_link:
@@ -88,19 +89,22 @@ def render_content(context,**pageargs):
     try:
         _import_ns = {}
         _mako_get_namespace(context, 'ui')._populate(_import_ns, ['bar'])
+        ui = _mako_get_namespace(context, 'ui')
+        title = _import_ns.get('title', context.get('title', UNDEFINED))
+        source_link = _import_ns.get('source_link', context.get('source_link', UNDEFINED))
+        files = _import_ns.get('files', context.get('files', UNDEFINED))
         folders = _import_ns.get('folders', context.get('folders', UNDEFINED))
         crumbs = _import_ns.get('crumbs', context.get('crumbs', UNDEFINED))
-        ui = _mako_get_namespace(context, 'ui')
-        code = _import_ns.get('code', context.get('code', UNDEFINED))
         def content():
             return render_content(context)
-        files = _import_ns.get('files', context.get('files', UNDEFINED))
+        messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
+        code = _import_ns.get('code', context.get('code', UNDEFINED))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer(str(ui.bar(crumbs)))
         __M_writer('\n')
         if folders or files:
-            __M_writer('<ul class="list-unstyled">\n')
+            __M_writer('<ul>\n')
             for name in folders:
                 __M_writer('    <li><a href="')
                 __M_writer(filters.url_escape(str(name)))
@@ -115,7 +119,16 @@ def render_content(context,**pageargs):
                 __M_writer('</a>\n')
             __M_writer('</ul>\n')
         if code:
-            __M_writer('    ')
+            __M_writer('<h1>')
+            __M_writer(str(title))
+            __M_writer('\n')
+            if source_link:
+                __M_writer('        <small><a href="')
+                __M_writer(str(source_link))
+                __M_writer('">(')
+                __M_writer(str(messages("Source")))
+                __M_writer(')</a></small>\n')
+            __M_writer('    </h1>\n    ')
             __M_writer(str(code))
             __M_writer('\n')
         return ''
@@ -125,6 +138,6 @@ def render_content(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"line_map": {"64": 22, "74": 22, "75": 23, "76": 24, "77": 25, "78": 25, "79": 25, "80": 25, "86": 5, "23": 3, "111": 13, "29": 0, "112": 13, "99": 5, "100": 6, "101": 6, "102": 7, "103": 8, "104": 9, "105": 10, "106": 10, "107": 10, "108": 10, "109": 10, "110": 12, "47": 2, "48": 3, "113": 13, "114": 13, "115": 13, "116": 15, "53": 20, "118": 18, "119": 18, "120": 18, "58": 28, "126": 120, "117": 17}, "filename": "/home/mamaya/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/listing.tmpl", "uri": "listing.tmpl", "source_encoding": "utf-8"}
+{"uri": "listing.tmpl", "source_encoding": "utf-8", "filename": "/home/inkarri/entornos/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/listing.tmpl", "line_map": {"128": 19, "129": 19, "130": 19, "131": 21, "132": 22, "133": 22, "139": 133, "23": 3, "29": 0, "48": 2, "49": 3, "54": 24, "59": 32, "65": 26, "75": 26, "76": 27, "77": 28, "78": 29, "79": 29, "80": 29, "81": 29, "87": 4, "103": 4, "104": 5, "105": 5, "106": 6, "107": 7, "108": 8, "109": 9, "110": 9, "111": 9, "112": 9, "113": 9, "114": 11, "115": 12, "116": 12, "117": 12, "118": 12, "119": 12, "120": 14, "121": 16, "122": 17, "123": 17, "124": 17, "125": 18, "126": 19, "127": 19}}
 __M_END_METADATA
 """
