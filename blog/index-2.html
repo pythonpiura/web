@@ -65,7 +65,175 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/28/mejorando-nuestro-login/" class="u-url">Mejorando Nuestro Login</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/28/permisos-basicos-en-django/" class="u-url">Aplicar Permisos por Usuario en Django</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Comunidad Python Piura
+            </span></p>
+            <p class="dateline"><a href="../posts/2016/04/28/permisos-basicos-en-django/" rel="bookmark"><time class="published dt-published" datetime="2016-04-28T22:33:04-05:00" title="2016-04-28 22:33">2016-04-28 22:33</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>Hasta ahora solo hemos trabajado con un usuario(el superusuario que
+creamos al principio) en nuestro proyecto, pero en la vida real son
+muchos los usuarios que interactuan con el software y todos no cuentan
+con los mismos permisos, hay algunos que pueden crear, ver, editar o
+eliminar elementos y otros no. Para empezar a trabajar con permisos
+primero debemos crear algunos usuarios adicionales, para ello vamos a
+ingresar a la consola de administración de Django, poniendo lo
+siguiente en nuestra barra de direcciones:</p>
+<p><a class="reference external" href="http://localhost:8000/admin">http://localhost:8000/admin</a></p>
+<p>A continuación veremos una pantalla como esta:</p>
+<img alt="/images/blog/login_administracion.jpg" src="../images/blog/login_administracion.jpg"><p>Aquí nos logueamos usando el superusuario con el que hemos venido
+trabajando y tendremos una pantalla como esta:</p>
+<img alt="/images/blog/admin_django.jpg" src="../images/blog/admin_django.jpg"><p>En el enlace donde dice Users vamos a dar click en Add para crear
+nuestro nuevo usuario, al que llamaremos usuario1:</p>
+<img alt="/images/blog/crear_usuario.jpg" src="../images/blog/crear_usuario.jpg"><p>Completamos los campos y le damos click a save:</p>
+<img alt="/images/blog/usuario_creado.jpg" src="../images/blog/usuario_creado.jpg"><p>Por ahora con esto es suficiente y ya tenemos nuestro usuario creado y
+listo para usarlo, salimos dando click en logout y nos vamos al login
+del proyecto para ingresar con nuestro nuevo usuario y la contraseña
+que le hemos asignado:</p>
+<img alt="/images/blog/nuevo_logueo.jpg" src="../images/blog/nuevo_logueo.jpg"><p>En nuestra aplicación personas, con este usuario podemos hacer lo
+mismo que con el usuario anterior, pero que pasa si nosotros queremos
+restringir algunas cosas a este nuevo usuario, por ejemplo, no dejar
+que este usuario cree ni modifique personas, pero que si pueda ver su
+detalle y exportar el reporte en una hoja de calculo ¿Cómo hacemos
+esto?
+Con Django otra vez esto es muy sencillo y podemos definir diferentes
+niveles de acceso, restringiendo las opciones en la plantilla html y
+negando el acceso a la vista en cuestión, hagamos lo primero:</p>
+<p>Si queremos restringir el acceso a las opciones desde la plantilla
+html, lo mas rápido que se nos ocurre es eliminar los íconos que nos
+brindan esas opciones, esto lo podemos hacer usando los permisos
+proporcionados por django de la siguiente manera:
+Primero para restringir la visualización del ícono de crear personas:
+personas.html</p>
+<pre class="code html"><a name="rest_code_14ad353d43624df1a643dcb36f98e146-1"></a>{% if perms.personas.add_persona %}
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-2"></a>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-4"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-5"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-6"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-7"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-8"></a>
+<a name="rest_code_14ad353d43624df1a643dcb36f98e146-9"></a>{% endif %}
+</pre>
+<p>Si observamos detenidamente hemos agregado en la parte superior del
+div del enlace un condicional que utilizar una variable llamada perms,
+en esta variable se almacenan los permisos de los que dispone el
+usuario que ha iniciado sesión, luego de perms podemos observar el
+nombre de la aplicación, en nuestro caso personas, y finalmente
+tenemos el permiso llamado add y el modelo persona que configuran el
+permiso add_persona, esta condificional nos dice, si el usuario tiene
+el permiso add_persona, entonces se debe renderizar el div, sino no
+hace nada.
+Si ejecutamos nuestra aplicación observamos lo siguiente:</p>
+<img alt="/images/blog/no_crear1.jpg" src="../images/blog/no_crear1.jpg"><p>El ícono de agregar ya no aparece, pero todavía no podemos cantar
+victoria, un usuario avispado puede recordar la url de creación de
+personas y tipearla directamente en la barra de direcciones:</p>
+<img alt="/images/blog/crear_persona.jpg" src="../images/blog/crear_persona.jpg"><p>Mmmm, vemos que si puede ingresar ¿Cómo hacemos para restringir eso?
+Nuestros viejos amigos los decoradores vuelven nuevamente a nuestro
+auxilio, para ello debemos editar el archivo views.py:</p>
+<pre class="code python"><a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-1"></a><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-2"></a><span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-3"></a><span class="k">class</span> <span class="nc">CrearPersona</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-4"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-5"></a>        <span class="n">fields</span> <span class="o">=</span><span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-6"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'crear_persona.html'</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-7"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-8"></a>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-9"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.add_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-10"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-11"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CrearPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre>
+<p>Expliquemos esto que está un poco endiablado:
+Un método sobre una clase no equivale realmente a una función
+independiente, por lo que se debe transformar en un decorador primero,
+el decorador @method_decorator transforma un decorador de una función
+en un decorador de un método a fin de que puede ser usado sobre una
+instancia de un método, en el caso de las vistas basadas en clase a
+quien debemos aplicar el decorador es al método dispatch, en este
+ejemplo, cada instancia de CrearPersona tendrá protección de
+permission_required.
+El punto de entrada as_view() crea una instancia de la clase y llama
+al método dispatch(), (el despachador o resolvedor de URL) que busca
+la petición para determinar si es un GET, POST, etc, y releva la
+petición a un método que coincida con uno definido, o levante una
+excepción HttpResponseNotAllowed si no encuentra coincidencias.
+A la función permission_required se le deben pasar dos argumentos:
+El primero es el permiso a verificar que en este caso es add_persona y
+tiene la misma notación, primero la aplicación y luego el permiso.
+El segundo es la url a donde debe ser direccionado el usuario en caso
+de no tener el permiso necesario, en este caso a la url personas.</p>
+<p>Ahora pongamos nuevamente la url anterior y veamos que nos sale:</p>
+<img alt="/images/blog/permiso_denegado.jpg" src="../images/blog/permiso_denegado.jpg"><p>Bueno con esto ya nos aseguramos que el usuario “usuario1″ no va a
+poder entrar de ninguna manera a la funcionalidad de creación de
+personas, ahora lo que falta es aplicar lo mismo a la vista
+ModificarPersona las demás vistas tendrá un tratamiento especial en un
+artículo posterior:</p>
+<p>personas.html</p>
+<pre class="code html"><a name="rest_code_395e57c19b42459198a99a32af8450ce-1"></a><span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-2"></a>{% for persona in personas %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-3"></a>        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-4"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-5"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-6"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-7"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-8"></a>                <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-9"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-10"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-11"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-12"></a>                {% if perms.personas.change_persona %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-13"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:modificar_persona' persona.pk %}"</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-14"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-pencil"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-15"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-16"></a>                {% endif %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-17"></a>                <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-18"></a>        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-19"></a>{% endfor %}
+<a name="rest_code_395e57c19b42459198a99a32af8450ce-20"></a><span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+</pre>
+<p>views.py</p>
+<pre class="code python"><a name="rest_code_541c90dd20bc4e219ef34b44819ed980-1"></a><span class="k">class</span> <span class="nc">ModificarPersona</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-2"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-3"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'modificar_persona.html'</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-4"></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-5"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-6"></a>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-7"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.change_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-8"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-9"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ModificarPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre>
+<p>Notamos que el permiso ahora se llama change_persona, detengamonos un
+poco aquí y expliquemos esto, por defecto django aplica tres permisos
+a cada uno de nuestros modelos: add, change y delete, que especifican
+si un usuario puede crear, modificar o borrar un elemento de un modelo
+dado, en este caso el modelo es persona.</p>
+<p>Si corremos nuestra proyecto tenemos lo siguiente:</p>
+<img alt="/images/blog/sin_accesos.jpg" src="../images/blog/sin_accesos.jpg"><p>Nótese que ya no aparece el lápiz de edición y tampoco se puede
+acceder con el url de modificar directamente en la barra de
+direcciones.</p>
+<p>Ahora vamos a crear un nuevo usuario llamado usuario2, al que si le
+vamos a dar los permisos de crear y modificar, repetimos los pasos
+para crear el usuario en la interfaz de administración y nos detenemos
+en la ventana posterior a la creación del usuario, en la opción de
+permisos:</p>
+<img alt="/images/blog/permisos.jpg" src="../images/blog/permisos.jpg"><p>En esta opción tenemos un sinnumero de permisos, busquemos los
+relacionados a la aplicación personas y al modelo persona y los
+seleccionamos:</p>
+<img alt="/images/blog/seleccionar_permisos.jpg" src="../images/blog/seleccionar_permisos.jpg"><p>Seleccionamos la flechita entre los dos cuadros y le damos al botón
+Save:</p>
+<img alt="/images/blog/escoger.jpg" src="../images/blog/escoger.jpg"><p>Con esto ya tenemos que el usuario “usuario2″ tiene los permisos
+asignados. Ahora salgamos de la interfaz de administración e
+ingresemos a nuestro proyecto con el “usuario2″:</p>
+<img alt="/images/blog/con_permisos.jpg" src="../images/blog/con_permisos.jpg"><p>Listo ahora si el usuario2, ya tendrá estos permisos básicos y el
+usuario1 no, el usuario mamaya es superusuario por lo tanto puede
+ingresar donde quiera.</p>
+<p>Eso es todo.
+Saludos.</p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/28/mejorando-nuestro-login/" class="u-url">Mejorando Nuestro Login</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Comunidad Python Piura

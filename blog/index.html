@@ -64,7 +64,88 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/instalacion-odoo-10-en-produccion/" class="u-url">Instalación de Odoo 10 en Producción</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/configurando-un-proxy-inverso-para-odoo-10/" class="u-url">Configurando un Proxy Inverso para Odoo 10</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Comunidad Python Piura
+            </span></p>
+            <p class="dateline"><a href="../posts/configurando-un-proxy-inverso-para-odoo-10/" rel="bookmark"><time class="published dt-published" datetime="2017-01-19T11:09:29-05:00" title="2017-01-19 11:09">2017-01-19 11:09</time></a></p>
+        </div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>Teniendo en cuenta la configuración realizada en nuestro anterior artículo <a class="reference external" href="../posts/instalacion-odoo-10-en-produccion/">Instalación de Odoo 10 en Producción</a>
+en esta oportunidad, vamos a configurar un proxy inverso para poder acceder a nuestro odoo mediante el puerto 80, en otro artículo haremos lo mismo para el protocolo https usando el puerto 443, debemos recalcar que en esta oportunidad hemos utilizado como guía el libro "Odoo 10 Development Essentials" de Daniel Reis, entonces manos a la obra.</p>
+<p>Odoo puede servir páginas web por si mismo, pero se recomienda tener un proxy Inverso en frente. Un proxy inverso actúa como un intermediario que gestiona el tráfico entre los clientes que envían solicitudes y el servidor Odoo que les responde. El uso de un proxy inverso tiene varios beneficios.</p>
+<p>A nivel de seguridad:</p>
+<ul class="simple">
+<li>Manejar (y hacer cumplir) los protocolos HTTPS para cifrar el tráfico</li>
+<li>Ocultar las características de la red interna</li>
+<li>Actuar como un cortafuegos que limita las URL aceptadas para el procesamiento</li>
+</ul>
+<p>A nivel de rendimiento:</p>
+<ul class="simple">
+<li>Caché de contenido estático, reduciendo así la carga en los servidores Odoo</li>
+<li>Comprimir contenido para acelerar los tiempos de carga</li>
+<li>Actuar como un equilibrador de carga, distribuyendola entre varios servidores.</li>
+</ul>
+<p>Apache es una opción popular para usar como un proxy inverso, pero en esta oportunidad usaremos Nginx, Nginx es una alternativa reciente con buenas características técnicas y fácil de configurar.</p>
+<div class="section" id="configurando-nginx-como-proxy-inverso">
+<h2>Configurando Nginx como Proxy Inverso</h2>
+<p>Nginx, escucha en los puertos HTTP predeterminados(80), por lo que debemos asegurarnos que ninguna otra aplicación esté usando estos puertos, probaremos esto con la herramienta curl:</p>
+<pre class="code bash"><a name="rest_code_df5aaec9929746338a9acd38ce37ca9a-1"></a>apt-get install curl
+<a name="rest_code_df5aaec9929746338a9acd38ce37ca9a-2"></a>curl http://localhost
+</pre>
+<p>Si nos sale un mensaje como el siguiente entonces el puerto está libre:</p>
+<pre class="code bash"><a name="rest_code_2428aec94b8b46658114415fa55d8a55-1"></a>curl: <span class="o">(</span>7<span class="o">)</span> Failed to connect to localhost port 80: Conexión rehusada
+</pre>
+<p>Ahora procedemos a instalar nginx:</p>
+<pre class="code bash"><a name="rest_code_6e434560dc384daf88f414b8f92bc220-1"></a>apt-get install nginx
+</pre>
+<p>Para confirmar que está funcionando correctamente debemos ver una página de bienvenida cuando visitemos el servidor con un navegador web o usando curl:</p>
+<p><a class="reference external" href="http://IP_SERVER">http://IP_SERVER</a></p>
+<p>Los archivos de configuración de Nginx siguen el mismo enfoque que Apache se almacenan en:</p>
+<pre class="code bash"><a name="rest_code_d0b0709e30244f3e9533d0a7a0921f15-1"></a>/etc/nginx/available-sites/
+</pre>
+<p>Y se activan añadiendo un enlace simbólico en:</p>
+<pre class="code bash"><a name="rest_code_492cda1e442f4c45b3ad504acef01d73-1"></a>/etc/nginx/enabled-sites
+</pre>
+<p>También debemos desactivar la configuración predeterminada proporcionada por la instalación de Nginx, borrando el archivo default:</p>
+<pre class="code bash"><a name="rest_code_4dd548914b0b40318ac800815209ebbe-1"></a>rm /etc/nginx/sites-enabled/default
+</pre>
+<p>Ahora creamos el archivo para odoo:</p>
+<pre class="code bash"><a name="rest_code_d8fce4f24cc7480a8e8ba92c413910cf-1"></a>nano /etc/nginx/sites-available/odoo
+</pre>
+<p>y le agregamos el siguiente contenido:</p>
+<pre class="code bash"><a name="rest_code_30f71ea95d084ba49949094c4fd1539a-1"></a>upstream backend-odoo<span class="o">{</span>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-2"></a>        server 127.0.0.1:8069<span class="p">;</span>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-3"></a><span class="o">}</span>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-4"></a>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-5"></a>server<span class="o">{</span>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-6"></a>        location / <span class="o">{</span>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-7"></a>                proxy_pass http://backend-odoo<span class="p">;</span>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-8"></a>        <span class="o">}</span>
+<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-9"></a><span class="o">}</span>
+</pre>
+<p>Primero, agregamos los upstreams, y los servidores backend Nginx redirigirán el tráfico al servidor Odoo en que está escuchando en el puerto 8069</p>
+<p>Añadimos el enlace simbólico:</p>
+<pre class="code bash"><a name="rest_code_bb8def662ed346068a421943697fa1a0-1"></a>ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo
+</pre>
+<p>Para testear si la configuración es correcta hacemos lo siguiente:</p>
+<pre class="code bash"><a name="rest_code_1da46946fbbe499fa8eeb3c1b97624a6-1"></a>nginx -t
+</pre>
+<p>Si hay errores revisar si hemos escrito correctamente la configuración en el archivo odoo.</p>
+<p>Recargamos nginx:</p>
+<pre class="code bash"><a name="rest_code_016d26c09f1e437e8026cc5f65d74fec-1"></a>/etc/init.d/nginx reload
+</pre>
+<p>Y visitamos nuestro servidor a través del navegador web:</p>
+<pre class="code bash"><a name="rest_code_57c6f932bb3f4038b979f62f72c26edd-1"></a>http://IP_SERVER
+</pre>
+<p>Este nos redirigirá automáticamente a Odoo, eso es todo por hoy.</p>
+<p>Saludos.</p>
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/instalacion-odoo-10-en-produccion/" class="u-url">Instalación de Odoo 10 en Producción</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Comunidad Python Piura
@@ -1129,174 +1210,6 @@ como la siguiente:</p>
 <img alt="/images/blog/con_permiso_ver_persona.jpg" src="../images/blog/con_permiso_ver_persona.jpg"><p>Eso es todo por hoy, en un proximo post terminaremos de personalizar
 el resto de permisos y hacerle algunas modificaciones estéticas a
 nuestro proyecto.
-Saludos.</p>
-</div>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/04/28/permisos-basicos-en-django/" class="u-url">Aplicar Permisos por Usuario en Django</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Comunidad Python Piura
-            </span></p>
-            <p class="dateline"><a href="../posts/2016/04/28/permisos-basicos-en-django/" rel="bookmark"><time class="published dt-published" datetime="2016-04-28T22:33:04-05:00" title="2016-04-28 22:33">2016-04-28 22:33</time></a></p>
-        </div>
-    </header><div class="e-content entry-content">
-    <div>
-<p>Hasta ahora solo hemos trabajado con un usuario(el superusuario que
-creamos al principio) en nuestro proyecto, pero en la vida real son
-muchos los usuarios que interactuan con el software y todos no cuentan
-con los mismos permisos, hay algunos que pueden crear, ver, editar o
-eliminar elementos y otros no. Para empezar a trabajar con permisos
-primero debemos crear algunos usuarios adicionales, para ello vamos a
-ingresar a la consola de administración de Django, poniendo lo
-siguiente en nuestra barra de direcciones:</p>
-<p><a class="reference external" href="http://localhost:8000/admin">http://localhost:8000/admin</a></p>
-<p>A continuación veremos una pantalla como esta:</p>
-<img alt="/images/blog/login_administracion.jpg" src="../images/blog/login_administracion.jpg"><p>Aquí nos logueamos usando el superusuario con el que hemos venido
-trabajando y tendremos una pantalla como esta:</p>
-<img alt="/images/blog/admin_django.jpg" src="../images/blog/admin_django.jpg"><p>En el enlace donde dice Users vamos a dar click en Add para crear
-nuestro nuevo usuario, al que llamaremos usuario1:</p>
-<img alt="/images/blog/crear_usuario.jpg" src="../images/blog/crear_usuario.jpg"><p>Completamos los campos y le damos click a save:</p>
-<img alt="/images/blog/usuario_creado.jpg" src="../images/blog/usuario_creado.jpg"><p>Por ahora con esto es suficiente y ya tenemos nuestro usuario creado y
-listo para usarlo, salimos dando click en logout y nos vamos al login
-del proyecto para ingresar con nuestro nuevo usuario y la contraseña
-que le hemos asignado:</p>
-<img alt="/images/blog/nuevo_logueo.jpg" src="../images/blog/nuevo_logueo.jpg"><p>En nuestra aplicación personas, con este usuario podemos hacer lo
-mismo que con el usuario anterior, pero que pasa si nosotros queremos
-restringir algunas cosas a este nuevo usuario, por ejemplo, no dejar
-que este usuario cree ni modifique personas, pero que si pueda ver su
-detalle y exportar el reporte en una hoja de calculo ¿Cómo hacemos
-esto?
-Con Django otra vez esto es muy sencillo y podemos definir diferentes
-niveles de acceso, restringiendo las opciones en la plantilla html y
-negando el acceso a la vista en cuestión, hagamos lo primero:</p>
-<p>Si queremos restringir el acceso a las opciones desde la plantilla
-html, lo mas rápido que se nos ocurre es eliminar los íconos que nos
-brindan esas opciones, esto lo podemos hacer usando los permisos
-proporcionados por django de la siguiente manera:
-Primero para restringir la visualización del ícono de crear personas:
-personas.html</p>
-<pre class="code html"><a name="rest_code_14ad353d43624df1a643dcb36f98e146-1"></a>{% if perms.personas.add_persona %}
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-2"></a>
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-4"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-5"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-6"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-7"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-8"></a>
-<a name="rest_code_14ad353d43624df1a643dcb36f98e146-9"></a>{% endif %}
-</pre>
-<p>Si observamos detenidamente hemos agregado en la parte superior del
-div del enlace un condicional que utilizar una variable llamada perms,
-en esta variable se almacenan los permisos de los que dispone el
-usuario que ha iniciado sesión, luego de perms podemos observar el
-nombre de la aplicación, en nuestro caso personas, y finalmente
-tenemos el permiso llamado add y el modelo persona que configuran el
-permiso add_persona, esta condificional nos dice, si el usuario tiene
-el permiso add_persona, entonces se debe renderizar el div, sino no
-hace nada.
-Si ejecutamos nuestra aplicación observamos lo siguiente:</p>
-<img alt="/images/blog/no_crear1.jpg" src="../images/blog/no_crear1.jpg"><p>El ícono de agregar ya no aparece, pero todavía no podemos cantar
-victoria, un usuario avispado puede recordar la url de creación de
-personas y tipearla directamente en la barra de direcciones:</p>
-<img alt="/images/blog/crear_persona.jpg" src="../images/blog/crear_persona.jpg"><p>Mmmm, vemos que si puede ingresar ¿Cómo hacemos para restringir eso?
-Nuestros viejos amigos los decoradores vuelven nuevamente a nuestro
-auxilio, para ello debemos editar el archivo views.py:</p>
-<pre class="code python"><a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-1"></a><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">permission_required</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-2"></a><span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-3"></a><span class="k">class</span> <span class="nc">CrearPersona</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-4"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-5"></a>        <span class="n">fields</span> <span class="o">=</span><span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-6"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'crear_persona.html'</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-7"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-8"></a>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-9"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.add_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-10"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_4b16811f95254b328be0c94d16ab3ef8-11"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CrearPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre>
-<p>Expliquemos esto que está un poco endiablado:
-Un método sobre una clase no equivale realmente a una función
-independiente, por lo que se debe transformar en un decorador primero,
-el decorador @method_decorator transforma un decorador de una función
-en un decorador de un método a fin de que puede ser usado sobre una
-instancia de un método, en el caso de las vistas basadas en clase a
-quien debemos aplicar el decorador es al método dispatch, en este
-ejemplo, cada instancia de CrearPersona tendrá protección de
-permission_required.
-El punto de entrada as_view() crea una instancia de la clase y llama
-al método dispatch(), (el despachador o resolvedor de URL) que busca
-la petición para determinar si es un GET, POST, etc, y releva la
-petición a un método que coincida con uno definido, o levante una
-excepción HttpResponseNotAllowed si no encuentra coincidencias.
-A la función permission_required se le deben pasar dos argumentos:
-El primero es el permiso a verificar que en este caso es add_persona y
-tiene la misma notación, primero la aplicación y luego el permiso.
-El segundo es la url a donde debe ser direccionado el usuario en caso
-de no tener el permiso necesario, en este caso a la url personas.</p>
-<p>Ahora pongamos nuevamente la url anterior y veamos que nos sale:</p>
-<img alt="/images/blog/permiso_denegado.jpg" src="../images/blog/permiso_denegado.jpg"><p>Bueno con esto ya nos aseguramos que el usuario “usuario1″ no va a
-poder entrar de ninguna manera a la funcionalidad de creación de
-personas, ahora lo que falta es aplicar lo mismo a la vista
-ModificarPersona las demás vistas tendrá un tratamiento especial en un
-artículo posterior:</p>
-<p>personas.html</p>
-<pre class="code html"><a name="rest_code_395e57c19b42459198a99a32af8450ce-1"></a><span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-2"></a>{% for persona in personas %}
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-3"></a>        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-4"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-5"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-6"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-7"></a>                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-8"></a>                <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-9"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url personas:detalle_persona' persona.pk %}"</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-10"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-folder-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-11"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-12"></a>                {% if perms.personas.change_persona %}
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-13"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-small"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:modificar_persona' persona.pk %}"</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-14"></a>                        <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-pencil"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-15"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-16"></a>                {% endif %}
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-17"></a>                <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-18"></a>        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-19"></a>{% endfor %}
-<a name="rest_code_395e57c19b42459198a99a32af8450ce-20"></a><span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
-</pre>
-<p>views.py</p>
-<pre class="code python"><a name="rest_code_541c90dd20bc4e219ef34b44819ed980-1"></a><span class="k">class</span> <span class="nc">ModificarPersona</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-2"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Persona</span>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-3"></a>        <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'modificar_persona.html'</span>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-4"></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'dni'</span><span class="p">,</span><span class="s1">'nombre'</span><span class="p">,</span><span class="s1">'apellido_paterno'</span><span class="p">,</span><span class="s1">'apellido_materno'</span><span class="p">]</span>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-5"></a>        <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)</span>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-6"></a>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-7"></a>        <span class="nd">@method_decorator</span><span class="p">(</span><span class="n">permission_required</span><span class="p">(</span><span class="s1">'personas.change_persona'</span><span class="p">,</span><span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'personas:personas'</span><span class="p">)))</span>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-8"></a>        <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_541c90dd20bc4e219ef34b44819ed980-9"></a>                <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ModificarPersona</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</pre>
-<p>Notamos que el permiso ahora se llama change_persona, detengamonos un
-poco aquí y expliquemos esto, por defecto django aplica tres permisos
-a cada uno de nuestros modelos: add, change y delete, que especifican
-si un usuario puede crear, modificar o borrar un elemento de un modelo
-dado, en este caso el modelo es persona.</p>
-<p>Si corremos nuestra proyecto tenemos lo siguiente:</p>
-<img alt="/images/blog/sin_accesos.jpg" src="../images/blog/sin_accesos.jpg"><p>Nótese que ya no aparece el lápiz de edición y tampoco se puede
-acceder con el url de modificar directamente en la barra de
-direcciones.</p>
-<p>Ahora vamos a crear un nuevo usuario llamado usuario2, al que si le
-vamos a dar los permisos de crear y modificar, repetimos los pasos
-para crear el usuario en la interfaz de administración y nos detenemos
-en la ventana posterior a la creación del usuario, en la opción de
-permisos:</p>
-<img alt="/images/blog/permisos.jpg" src="../images/blog/permisos.jpg"><p>En esta opción tenemos un sinnumero de permisos, busquemos los
-relacionados a la aplicación personas y al modelo persona y los
-seleccionamos:</p>
-<img alt="/images/blog/seleccionar_permisos.jpg" src="../images/blog/seleccionar_permisos.jpg"><p>Seleccionamos la flechita entre los dos cuadros y le damos al botón
-Save:</p>
-<img alt="/images/blog/escoger.jpg" src="../images/blog/escoger.jpg"><p>Con esto ya tenemos que el usuario “usuario2″ tiene los permisos
-asignados. Ahora salgamos de la interfaz de administración e
-ingresemos a nuestro proyecto con el “usuario2″:</p>
-<img alt="/images/blog/con_permisos.jpg" src="../images/blog/con_permisos.jpg"><p>Listo ahora si el usuario2, ya tendrá estos permisos básicos y el
-usuario1 no, el usuario mamaya es superusuario por lo tanto puede
-ingresar donde quiera.</p>
-<p>Eso es todo.
 Saludos.</p>
 </div>
     </div>
