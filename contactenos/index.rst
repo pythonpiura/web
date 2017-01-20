@@ -13,4 +13,6 @@ Encuéntranos y conversa con nosotros usando los siguientes medios:
 
 :Facebook: https://www.facebook.com/pythonpiura
 
+:Twitter: https://www.twitter.com/pythonpiura
+
 :Slack: https://pythonpiura.slack.com/
