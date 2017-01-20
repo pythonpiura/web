@@ -1,7 +1,7 @@
 .. title: Migrando de Wordpress a Nikola
 .. slug: migrando-de-wordpress-a-nikola
 .. date: 2016-07-02 05:01:23 UTC
-.. tags: 
+.. tags: nikola
 .. category: 
 .. link: 
 .. description: 

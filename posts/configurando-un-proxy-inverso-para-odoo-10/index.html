@@ -18,6 +18,7 @@
 en esta oportunidad, vamos a configurar un proxy inverso para poder acceder a nuestro od">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2017-01-19T11:09:29-05:00">
+<meta property="article:tag" content="odoo">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Ir al contenido principal</a>
@@ -113,60 +114,63 @@ en esta oportunidad, vamos a configurar un proxy inverso para poder acceder a nu
 <div class="section" id="configurando-nginx-como-proxy-inverso">
 <h2>Configurando Nginx como Proxy Inverso</h2>
 <p>Nginx, escucha en los puertos HTTP predeterminados(80), por lo que debemos asegurarnos que ninguna otra aplicación esté usando estos puertos, probaremos esto con la herramienta curl:</p>
-<pre class="code bash"><a name="rest_code_df5aaec9929746338a9acd38ce37ca9a-1"></a>apt-get install curl
-<a name="rest_code_df5aaec9929746338a9acd38ce37ca9a-2"></a>curl http://localhost
+<pre class="code bash"><a name="rest_code_548d09f6f6b5414fab6d02ef20edec54-1"></a>apt-get install curl
+<a name="rest_code_548d09f6f6b5414fab6d02ef20edec54-2"></a>curl http://localhost
 </pre>
 <p>Si nos sale un mensaje como el siguiente entonces el puerto está libre:</p>
-<pre class="code bash"><a name="rest_code_2428aec94b8b46658114415fa55d8a55-1"></a>curl: <span class="o">(</span>7<span class="o">)</span> Failed to connect to localhost port 80: Conexión rehusada
+<pre class="code bash"><a name="rest_code_37128db7caa040c6b6cb81fd3b8e586a-1"></a>curl: <span class="o">(</span>7<span class="o">)</span> Failed to connect to localhost port 80: Conexión rehusada
 </pre>
 <p>Ahora procedemos a instalar nginx:</p>
-<pre class="code bash"><a name="rest_code_6e434560dc384daf88f414b8f92bc220-1"></a>apt-get install nginx
+<pre class="code bash"><a name="rest_code_8ece38c9019d4d098bb0389df87e4130-1"></a>apt-get install nginx
 </pre>
 <p>Para confirmar que está funcionando correctamente debemos ver una página de bienvenida cuando visitemos el servidor con un navegador web o usando curl:</p>
 <p><a class="reference external" href="http://IP_SERVER">http://IP_SERVER</a></p>
 <p>Los archivos de configuración de Nginx siguen el mismo enfoque que Apache se almacenan en:</p>
-<pre class="code bash"><a name="rest_code_d0b0709e30244f3e9533d0a7a0921f15-1"></a>/etc/nginx/available-sites/
+<pre class="code bash"><a name="rest_code_27962c11c379475db20307cab7bad630-1"></a>/etc/nginx/available-sites/
 </pre>
 <p>Y se activan añadiendo un enlace simbólico en:</p>
-<pre class="code bash"><a name="rest_code_492cda1e442f4c45b3ad504acef01d73-1"></a>/etc/nginx/enabled-sites
+<pre class="code bash"><a name="rest_code_6abe33fa794246cd9a53fb77ddab5336-1"></a>/etc/nginx/enabled-sites
 </pre>
 <p>También debemos desactivar la configuración predeterminada proporcionada por la instalación de Nginx, borrando el archivo default:</p>
-<pre class="code bash"><a name="rest_code_4dd548914b0b40318ac800815209ebbe-1"></a>rm /etc/nginx/sites-enabled/default
+<pre class="code bash"><a name="rest_code_0ace42ed1b0f461197d653e8426f5c3d-1"></a>rm /etc/nginx/sites-enabled/default
 </pre>
 <p>Ahora creamos el archivo para odoo:</p>
-<pre class="code bash"><a name="rest_code_d8fce4f24cc7480a8e8ba92c413910cf-1"></a>nano /etc/nginx/sites-available/odoo
+<pre class="code bash"><a name="rest_code_5a8e0ec772d140e3ab6a048ea8f58226-1"></a>nano /etc/nginx/sites-available/odoo
 </pre>
 <p>y le agregamos el siguiente contenido:</p>
-<pre class="code bash"><a name="rest_code_30f71ea95d084ba49949094c4fd1539a-1"></a>upstream backend-odoo<span class="o">{</span>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-2"></a>        server 127.0.0.1:8069<span class="p">;</span>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-3"></a><span class="o">}</span>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-4"></a>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-5"></a>server<span class="o">{</span>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-6"></a>        location / <span class="o">{</span>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-7"></a>                proxy_pass http://backend-odoo<span class="p">;</span>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-8"></a>        <span class="o">}</span>
-<a name="rest_code_30f71ea95d084ba49949094c4fd1539a-9"></a><span class="o">}</span>
+<pre class="code bash"><a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-1"></a>upstream backend-odoo<span class="o">{</span>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-2"></a>        server 127.0.0.1:8069<span class="p">;</span>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-3"></a><span class="o">}</span>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-4"></a>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-5"></a>server<span class="o">{</span>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-6"></a>        location / <span class="o">{</span>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-7"></a>                proxy_pass http://backend-odoo<span class="p">;</span>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-8"></a>        <span class="o">}</span>
+<a name="rest_code_22cebd8fa4c04f5e94d5881f823e6501-9"></a><span class="o">}</span>
 </pre>
 <p>Primero, agregamos los upstreams, y los servidores backend Nginx redirigirán el tráfico al servidor Odoo en que está escuchando en el puerto 8069</p>
 <p>Añadimos el enlace simbólico:</p>
-<pre class="code bash"><a name="rest_code_bb8def662ed346068a421943697fa1a0-1"></a>ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo
+<pre class="code bash"><a name="rest_code_469d05f099664ba2b39788f841010472-1"></a>ln -s /etc/nginx/sites-available/odoo /etc/nginx/sites-enabled/odoo
 </pre>
 <p>Para testear si la configuración es correcta hacemos lo siguiente:</p>
-<pre class="code bash"><a name="rest_code_1da46946fbbe499fa8eeb3c1b97624a6-1"></a>nginx -t
+<pre class="code bash"><a name="rest_code_5f54f9f13b684efb816a948e45618786-1"></a>nginx -t
 </pre>
 <p>Si hay errores revisar si hemos escrito correctamente la configuración en el archivo odoo.</p>
 <p>Recargamos nginx:</p>
-<pre class="code bash"><a name="rest_code_016d26c09f1e437e8026cc5f65d74fec-1"></a>/etc/init.d/nginx reload
+<pre class="code bash"><a name="rest_code_4c33912bd6cd49fa9e6fee3f47f6e52c-1"></a>/etc/init.d/nginx reload
 </pre>
 <p>Y visitamos nuestro servidor a través del navegador web:</p>
-<pre class="code bash"><a name="rest_code_57c6f932bb3f4038b979f62f72c26edd-1"></a>http://IP_SERVER
+<pre class="code bash"><a name="rest_code_68fa3a84570d4971bccb3851832c99ac-1"></a>http://IP_SERVER
 </pre>
 <p>Este nos redirigirá automáticamente a Odoo, eso es todo por hoy.</p>
 <p>Saludos.</p>
 </div>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/odoo/" rel="tag">odoo</a></li>
+        </ul>
+<ul class="pager hidden-print">
 <li class="previous">
                 <a href="../instalacion-odoo-10-en-produccion/" rel="prev" title="Instalación de Odoo 10 en Producción">Publicación anterior</a>
             </li>

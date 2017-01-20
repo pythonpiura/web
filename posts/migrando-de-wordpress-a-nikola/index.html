@@ -18,6 +18,7 @@
 <meta property="og:description" content="Despues de haber trabajado durante mucho tiempo en Wordpress decidimos usar algo mas pythonesco y encontramos el proyecto Nikola, que se adapta muy bien a lo que nosotros necesitamos como comunidad, a">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-07-02T05:01:23Z">
+<meta property="article:tag" content="nikola">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Ir al contenido principal</a>
@@ -96,119 +97,122 @@
     <div>
 <p>Despues de haber trabajado durante mucho tiempo en Wordpress decidimos usar algo mas pythonesco y encontramos el proyecto Nikola, que se adapta muy bien a lo que nosotros necesitamos como comunidad, asi que decidimos migrar, para ello seguimos la documentacion oficial del proyecto y algunos tutoriales adicionales, en este post vamos a relatar nuestra experiencia, esperando que sea util a nuestros lectores.</p>
 <p>Primero creamos nuestro entorno virtual, en esta oportunidad usamos python3 para obtener un mejor rendimiento con Nikola,</p>
-<pre class="code bash"><a name="rest_code_93b66911753740b7ab9f7093b5d5c5e9-1"></a>python3 -m venv nikola
+<pre class="code bash"><a name="rest_code_d24b0cc88f774457a8dd99bd1e398c18-1"></a>python3 -m venv nikola
 </pre>
 <p>Activamos el entorno virtual:</p>
-<pre class="code bash"><a name="rest_code_48a043e469dd4fc88de73ac9f8052683-1"></a><span class="nb">source</span> nikola/bin/activate
+<pre class="code bash"><a name="rest_code_537ce5700b0349f896bcda574672939e-1"></a><span class="nb">source</span> nikola/bin/activate
 </pre>
 <p>Antes de iniciar la instalacion de Nikola debimos instalar algunas dependencias para asegurarnos que todo funcione sin ningun problema:</p>
-<pre class="code bash"><a name="rest_code_2c7542e5e8794afa8cd4d743bf6efd78-1"></a>sudo apt-get install python3-dev
-<a name="rest_code_2c7542e5e8794afa8cd4d743bf6efd78-2"></a>sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
-<a name="rest_code_2c7542e5e8794afa8cd4d743bf6efd78-3"></a>sudo apt-get build-dep python3-lxml python3-pil
+<pre class="code bash"><a name="rest_code_e4eed4002c944c40997a08d792eca47b-1"></a>sudo apt-get install python3-dev
+<a name="rest_code_e4eed4002c944c40997a08d792eca47b-2"></a>sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
+<a name="rest_code_e4eed4002c944c40997a08d792eca47b-3"></a>sudo apt-get build-dep python3-lxml python3-pil
 </pre>
 <p>Luego de ello debimos hacer una actualizacion de pip por un problema raro que se nos estaba presentando en la instalacion:</p>
-<pre class="code bash"><a name="rest_code_bf1c67b7a9aa4ceeb3f332f562eb3e34-1"></a>pip install --upgrade pip
+<pre class="code bash"><a name="rest_code_fc8e4b57d1ec4cbabd2aa0c43f2f6af3-1"></a>pip install --upgrade pip
 </pre>
 <p>Luego procedimos a instalar Nikola y lo hicimos, de acuerdo a la sugerencia de su propia pagina, de la siguiente manera:</p>
-<pre class="code bash"><a name="rest_code_32c488c083214bb5a38babd2b34b4c0c-1"></a>pip install --upgrade <span class="s2">"Nikola[extras]"</span>
+<pre class="code bash"><a name="rest_code_6f7d3abc257249c9a78711ad0365bcf5-1"></a>pip install --upgrade <span class="s2">"Nikola[extras]"</span>
 </pre>
 <p>Nos demoramos un poquito, pero finalmente ya teniamos a Nikola instalado en nuestra maquina, como a nosotros no nos interesaba iniciar un sitio desde cero, sino migrar el que ya tenemos en wordpress, hicimos un backup del contenido del blog en wordpress, que es descargado en formato xml, el nuestro se llama pythonpiura.wordpress.2016-06-28.xml y las indicaciones para hacerlo son bastante sencillas y estan explicadas en la documentacion del propio wordpress.
 Para hacer la migracion de Wordpress a Nikola leimos rapidamente el manual y encontramos que teniamos 3 opciones, probamos las tres para ver cual nos resultaba mejor, pero antes debimos ingresar en la ruta donde tenemos nuestro archivo xml con el backup, debemos mencionar que las tres opciones nos crean una carpeta new_site.</p>
 <p>1-La opcion por defecto:</p>
-<pre class="code bash"><a name="rest_code_0462c094cd37425089eac40fec2d9f5e-1"></a>nikola import_wordpress pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_edda53a799364746b2b34ff36c1d7f17-1"></a>nikola import_wordpress pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Esta opcion descarga todo el contenido del blog de wordpress e intenta hacer una conversion de cada uno de los posts y paginas al formato .md, no nos funciono correctamente ya que muchos posts se migraron a medias.</p>
 <p>2-Convertir los posts a html:</p>
-<pre class="code bash"><a name="rest_code_55088a76a90e4966a471957940f276e7-1"></a>nikola import_wordpress --transform-to-html pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_e7059d68c1404833a4eaaceb27ed7dd3-1"></a>nikola import_wordpress --transform-to-html pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Para ello primero debemos instalar el plugin de conversion a wordpress</p>
-<pre class="code bash"><a name="rest_code_9817c432f2914636bcf58962bd8f9af6-1"></a>nikola plugin -i wordpress_compiler
+<pre class="code bash"><a name="rest_code_8b83d7c8823d4fb680240f0173aa4c4a-1"></a>nikola plugin -i wordpress_compiler
 </pre>
 <p>Esta opcion descarga el contenido y convierte los posts y paginas a html, esta fue la opcion que mejor nos funciono, salvo por el problema con los ejemplos de codigo que tenemos y que llevan la etiqueta:</p>
-<pre class="code html"><a name="rest_code_b0c6c65a00144294bb98288a667b2a9b-1"></a>[sourcecode language="language"]
+<pre class="code html"><a name="rest_code_f50e4b8b24b94dbdad1c7797c52fe140-1"></a>[sourcecode language="language"]
 </pre>
 <p>Hasta donde hemos visto no es posible llevar a cabo la conversion de esto a un formato adecuado asi que simplemente los deja con el texto normal sin darle ningun formato, por lo que este todavia es un tema pendiente de resolver.</p>
 <p>3-Dejar el contenido como formato de wordpress, los archivos de los posts y las paginas tienen las extension .wp</p>
-<pre class="code bash"><a name="rest_code_1465303065224a0293da85e01c15d35c-1"></a>nikola import_wordpress --use-wordpress-compiler pythonpiura.wordpress.2016-06-28.xml
+<pre class="code bash"><a name="rest_code_9b83ae63fab3490d9a749b2617a8b61c-1"></a>nikola import_wordpress --use-wordpress-compiler pythonpiura.wordpress.2016-06-28.xml
 </pre>
 <p>Probamos esta opcion pensando que nos solucionaria el problema de la etiqueta [sourcecode], pero funciono igual que la opcion anterior y encima debiamos activar el plugin de wordpress en el archivo de configuracion del sitio.</p>
 <p>Como comentamos antes usamos la segunda opcion que nos creo la carpeta new_site con el contenido listo, asi que ahora debiamos construir el sitio:</p>
-<pre class="code bash"><a name="rest_code_ff194f76246948e088308aed82414612-1"></a>nikola build
+<pre class="code bash"><a name="rest_code_6ddb80bdd9284eb6adafe278b4bd5d75-1"></a>nikola build
 </pre>
 <p>Y lanzar el servidor de pruebas:</p>
-<pre class="code bash"><a name="rest_code_0e124062d2b6490ebf0c85008298cbf5-1"></a>nikola serve -b
+<pre class="code bash"><a name="rest_code_d5d42569a7e44e41989af38406ad4259-1"></a>nikola serve -b
 </pre>
 <p>Cambiamos el tema por defecto por uno que nos parecio mas bonito llamado zen, pueden ver mas temas aqui:</p>
 <p><a class="reference external" href="https://themes.getnikola.com">https://themes.getnikola.com</a></p>
 <p>Lo instalamos asi:</p>
-<pre class="code bash"><a name="rest_code_179e92e56928405999d0f9c5b97b7942-1"></a>nikola install_theme zen
+<pre class="code bash"><a name="rest_code_244ebd4fcb574f1180958d66addaa6e3-1"></a>nikola install_theme zen
 </pre>
 <p>Y lo configuramos en nuestro sitio modificando el archivo conf.py y cambiando la linea:</p>
-<pre class="code python"><a name="rest_code_ceb6ee528b8e473abba6e6149d52e231-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap3"</span>
+<pre class="code python"><a name="rest_code_04afba205a6446db8a8f48b57776158d-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"bootstrap3"</span>
 </pre>
 <p>por:</p>
-<pre class="code python"><a name="rest_code_a7536fcb0e1a48d3b1598c2d104c84e3-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"zen"</span>
+<pre class="code python"><a name="rest_code_61d9ad1f75f7433fb8fc7f75db938726-1"></a><span class="n">THEME</span> <span class="o">=</span> <span class="s2">"zen"</span>
 </pre>
 <p>y la linea:</p>
-<pre class="code python"><a name="rest_code_8d16db53bc2c48a7a7647ffdb98cbb4b-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
-<a name="rest_code_8d16db53bc2c48a7a7647ffdb98cbb4b-2"></a>        <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
-<a name="rest_code_8d16db53bc2c48a7a7647ffdb98cbb4b-3"></a>            <span class="p">(</span><span class="s2">"/archive.html"</span><span class="p">,</span> <span class="s2">"Archives"</span><span class="p">),</span>
-<a name="rest_code_8d16db53bc2c48a7a7647ffdb98cbb4b-4"></a>            <span class="p">(</span><span class="s2">"/categories/index.html"</span><span class="p">,</span> <span class="s2">"Tags"</span><span class="p">),</span>
-<a name="rest_code_8d16db53bc2c48a7a7647ffdb98cbb4b-5"></a>            <span class="p">(</span><span class="s2">"/rss.xml"</span><span class="p">,</span> <span class="s2">"RSS feed"</span><span class="p">),</span>
-<a name="rest_code_8d16db53bc2c48a7a7647ffdb98cbb4b-6"></a>        <span class="p">),</span>
-<a name="rest_code_8d16db53bc2c48a7a7647ffdb98cbb4b-7"></a><span class="p">}</span>
+<pre class="code python"><a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-2"></a>        <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
+<a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-3"></a>            <span class="p">(</span><span class="s2">"/archive.html"</span><span class="p">,</span> <span class="s2">"Archives"</span><span class="p">),</span>
+<a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-4"></a>            <span class="p">(</span><span class="s2">"/categories/index.html"</span><span class="p">,</span> <span class="s2">"Tags"</span><span class="p">),</span>
+<a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-5"></a>            <span class="p">(</span><span class="s2">"/rss.xml"</span><span class="p">,</span> <span class="s2">"RSS feed"</span><span class="p">),</span>
+<a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-6"></a>        <span class="p">),</span>
+<a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-7"></a><span class="p">}</span>
 </pre>
 <p>Por:</p>
-<pre class="code python"><a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-3"></a>        <span class="p">(</span><span class="s1">'/index.html'</span><span class="p">,</span> <span class="s1">'Home'</span><span class="p">,</span> <span class="s1">'icon-home'</span><span class="p">),</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-4"></a>        <span class="p">(</span><span class="s1">'/archive.html'</span><span class="p">,</span> <span class="s1">'Archives'</span><span class="p">,</span> <span class="s1">'icon-folder-open-alt'</span><span class="p">),</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-5"></a>        <span class="p">(</span><span class="s1">'/categories/index.html'</span><span class="p">,</span> <span class="s1">'Tags'</span><span class="p">,</span> <span class="s1">'icon-tags'</span><span class="p">),</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-6"></a>        <span class="p">(</span><span class="s1">'/rss.xml'</span><span class="p">,</span> <span class="s1">'RSS'</span><span class="p">,</span> <span class="s1">'icon-rss'</span><span class="p">),</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-7"></a>        <span class="p">(</span><span class="s1">'https://getnikola.com'</span><span class="p">,</span> <span class="s1">'About me'</span><span class="p">,</span> <span class="s1">'icon-user'</span><span class="p">),</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-8"></a>        <span class="p">(</span><span class="s1">'https://twitter.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Twitter'</span><span class="p">,</span> <span class="s1">'icon-twitter'</span><span class="p">),</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-9"></a>        <span class="p">(</span><span class="s1">'https://github.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Github'</span><span class="p">,</span> <span class="s1">'icon-github'</span><span class="p">),</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-10"></a>    <span class="p">)</span>
-<a name="rest_code_de70febee5b348f98c7d0a7ac04d95c7-11"></a><span class="p">}</span>
+<pre class="code python"><a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-1"></a><span class="n">NAVIGATION_LINKS</span> <span class="o">=</span> <span class="p">{</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-2"></a>    <span class="n">DEFAULT_LANG</span><span class="p">:</span> <span class="p">(</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-3"></a>        <span class="p">(</span><span class="s1">'/index.html'</span><span class="p">,</span> <span class="s1">'Home'</span><span class="p">,</span> <span class="s1">'icon-home'</span><span class="p">),</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-4"></a>        <span class="p">(</span><span class="s1">'/archive.html'</span><span class="p">,</span> <span class="s1">'Archives'</span><span class="p">,</span> <span class="s1">'icon-folder-open-alt'</span><span class="p">),</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-5"></a>        <span class="p">(</span><span class="s1">'/categories/index.html'</span><span class="p">,</span> <span class="s1">'Tags'</span><span class="p">,</span> <span class="s1">'icon-tags'</span><span class="p">),</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-6"></a>        <span class="p">(</span><span class="s1">'/rss.xml'</span><span class="p">,</span> <span class="s1">'RSS'</span><span class="p">,</span> <span class="s1">'icon-rss'</span><span class="p">),</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-7"></a>        <span class="p">(</span><span class="s1">'https://getnikola.com'</span><span class="p">,</span> <span class="s1">'About me'</span><span class="p">,</span> <span class="s1">'icon-user'</span><span class="p">),</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-8"></a>        <span class="p">(</span><span class="s1">'https://twitter.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Twitter'</span><span class="p">,</span> <span class="s1">'icon-twitter'</span><span class="p">),</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-9"></a>        <span class="p">(</span><span class="s1">'https://github.com/getnikola'</span><span class="p">,</span> <span class="s1">'My Github'</span><span class="p">,</span> <span class="s1">'icon-github'</span><span class="p">),</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-10"></a>    <span class="p">)</span>
+<a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-11"></a><span class="p">}</span>
 </pre>
 <p>Lo anterior es por defecto para que funcione, pero ya luego lo modificamos a nuestro gusto.</p>
 <p>Volvimos a construir nuestro sitio:</p>
-<pre class="code bash"><a name="rest_code_e2a01744169f40b2981a363df583059e-1"></a>nikola build
+<pre class="code bash"><a name="rest_code_c8c6055dd79443f6aae81bdc9e1f9346-1"></a>nikola build
 </pre>
 <p>Y a lanzar nuestro servidor:</p>
-<pre class="code bash"><a name="rest_code_740f8029d487400eb6888467dea89425-1"></a>nikola serve -b
+<pre class="code bash"><a name="rest_code_83e40a28407a4577ac2a074a1c364b58-1"></a>nikola serve -b
 </pre>
 <p>Ahora si nos tocaba deployar nuestro sitio en github:</p>
 <p>Para ello creamos un repositorio con el mismo nombre de nuestro usuario "pythonpiura" pero de la siguiente manera:</p>
 <p>pythonpiura.github.io</p>
 <p>Clonamos este repositorio:</p>
-<pre class="code bash"><a name="rest_code_4072a0f91069454181b832cf013e007f-1"></a>git clone https://github.com/pythonpiura/pythonpiura.github.io.git
+<pre class="code bash"><a name="rest_code_0db2e2226fa0412db91205b2a5161ed5-1"></a>git clone https://github.com/pythonpiura/pythonpiura.github.io.git
 </pre>
 <p>Lo siguiente que hicimos, fue copiar el contenido de nuestra carpeta new_site en la carpeta del repositorio recien creado.</p>
 <p>Luego procedimos a modificar el archivo conf.py para que tenga los datos de nuetro nuevo sitio, modificando las siguientes lineas:</p>
-<pre class="code python"><a name="rest_code_b1ee4175cab14343a669e832ff753265-1"></a><span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">"https://pythonpiura.github.io/"</span>
-<a name="rest_code_b1ee4175cab14343a669e832ff753265-2"></a><span class="n">BLOG_EMAIL</span> <span class="o">=</span> <span class="s2">"pythonpiura@openmailbox.org"</span>
+<pre class="code python"><a name="rest_code_7c5db242b1b34c36b9bcd64add9ec130-1"></a><span class="n">SITE_URL</span> <span class="o">=</span> <span class="s2">"https://pythonpiura.github.io/"</span>
+<a name="rest_code_7c5db242b1b34c36b9bcd64add9ec130-2"></a><span class="n">BLOG_EMAIL</span> <span class="o">=</span> <span class="s2">"pythonpiura@openmailbox.org"</span>
 </pre>
 <p>y tambien las siguientes para que se deploye correctamente en github:</p>
-<pre class="code python"><a name="rest_code_f5aa14009a354812b0796e0606ed39da-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'sources'</span>
-<a name="rest_code_f5aa14009a354812b0796e0606ed39da-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
-<a name="rest_code_f5aa14009a354812b0796e0606ed39da-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
+<pre class="code python"><a name="rest_code_82c996828d81407da7fa7a397d89f5dc-1"></a><span class="n">GITHUB_SOURCE_BRANCH</span> <span class="o">=</span> <span class="s1">'sources'</span>
+<a name="rest_code_82c996828d81407da7fa7a397d89f5dc-2"></a><span class="n">GITHUB_DEPLOY_BRANCH</span> <span class="o">=</span> <span class="s1">'master'</span>
+<a name="rest_code_82c996828d81407da7fa7a397d89f5dc-3"></a><span class="n">GITHUB_REMOTE_NAME</span> <span class="o">=</span> <span class="s1">'origin'</span>
 </pre>
 <p>Agregamos lo siguiente a nuestro archivo .gitignore para que este contenido no sea subido al repositorio:</p>
-<pre class="code text"><a name="rest_code_655346faeb7b490581b0c802151f66ae-1"></a>cache
-<a name="rest_code_655346faeb7b490581b0c802151f66ae-2"></a>.doit.db
-<a name="rest_code_655346faeb7b490581b0c802151f66ae-3"></a>__pycache__
-<a name="rest_code_655346faeb7b490581b0c802151f66ae-4"></a>output
+<pre class="code text"><a name="rest_code_f77233b59fd44499b26c39615271096a-1"></a>cache
+<a name="rest_code_f77233b59fd44499b26c39615271096a-2"></a>.doit.db
+<a name="rest_code_f77233b59fd44499b26c39615271096a-3"></a>__pycache__
+<a name="rest_code_f77233b59fd44499b26c39615271096a-4"></a>output
 </pre>
 <p>Y corremos el comando:</p>
-<pre class="code bash"><a name="rest_code_00a1cc2ffc4f476c8e123db4e0b303b4-1"></a>nikola github_deploy
+<pre class="code bash"><a name="rest_code_4d501a527609452ab6178ffc4064e697-1"></a>nikola github_deploy
 </pre>
 <p>En este paso github nos solicito nuestro usuario y password, lo ingresamos y continuamos. Tardo varios minutos en subir el contenido pero ya con eso tenemos nuestro blog en la siguiente direccion.</p>
 <p><a class="reference external" href="http://pythonpiura.org/">http://pythonpiura.org/</a></p>
 <p>Saludos.</p>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/nikola/" rel="tag">nikola</a></li>
+        </ul>
+<ul class="pager hidden-print">
 <li class="previous">
                 <a href="../2016/06/18/ipython-y-jupyter/" rel="prev" title="IPython y Jupyter">Publicación anterior</a>
             </li>

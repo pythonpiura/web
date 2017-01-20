@@ -18,6 +18,7 @@
 <meta property="og:description" content="Ultimamente estamos trabajando con Odoo 10 y queremos compartir con ustedes la instalación de este genial software sobre un servidor Debian Jessie listo para ponerlo en producción, este es el primer a">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2017-01-16T23:56:00-05:00">
+<meta property="article:tag" content="odoo">
 </head>
 <body>
 <a href="#content" class="sr-only sr-only-focusable">Ir al contenido principal</a>
@@ -97,82 +98,82 @@
 <p>Ultimamente estamos trabajando con Odoo 10 y queremos compartir con ustedes la instalación de este genial software sobre un servidor Debian Jessie listo para ponerlo en producción, este es el primer artículo sobre el tema, el segundo estará siendo lanzado en los proximos días. Para escribir este artículo hemos tenido en cuenta los libros "Odoo Development Cookbook" y "Odoo 10      Development     Essentials"</p>
 <p>Lo primero que debemos hacer es instalar Debian, los pasos para esto no los vamos a tener en cuenta en este artículo, ya que hay muy buenos tutoriales en la red.</p>
 <p>Una vez instalado Debian es ingresar como root y actualizar el software:</p>
-<pre class="code bash"><a name="rest_code_5cfe2063f20f41cdacda082abdc4d8d2-1"></a>apt update <span class="o">&amp;&amp;</span> apt upgrade
+<pre class="code bash"><a name="rest_code_c3e8635593be47d08911cb455f696847-1"></a>apt update <span class="o">&amp;&amp;</span> apt upgrade
 </pre>
 <p>Ahora instalamos los paquetes necesarios que nos permitiran el correcto funcionamiento de Odoo</p>
-<pre class="code bash"><a name="rest_code_b7bfff8f8cc94adf8019a4a5281281c9-1"></a>apt-get install git python2.7 postgresql nano python-virtualenv <span class="se">\</span>
-<a name="rest_code_b7bfff8f8cc94adf8019a4a5281281c9-2"></a>gcc python2.7-dev libxml2-dev libxslt1-dev <span class="se">\</span>
-<a name="rest_code_b7bfff8f8cc94adf8019a4a5281281c9-3"></a>libevent-dev libsasl2-dev libldap2-dev libpq-dev <span class="se">\</span>
-<a name="rest_code_b7bfff8f8cc94adf8019a4a5281281c9-4"></a>libpng12-dev libjpeg-dev node-less node-clean-css <span class="se">\</span>
-<a name="rest_code_b7bfff8f8cc94adf8019a4a5281281c9-5"></a>xfonts-75dpi xfonts-base
+<pre class="code bash"><a name="rest_code_c4790216048249b2986b8739d9133c2a-1"></a>apt-get install git python2.7 postgresql nano python-virtualenv <span class="se">\</span>
+<a name="rest_code_c4790216048249b2986b8739d9133c2a-2"></a>gcc python2.7-dev libxml2-dev libxslt1-dev <span class="se">\</span>
+<a name="rest_code_c4790216048249b2986b8739d9133c2a-3"></a>libevent-dev libsasl2-dev libldap2-dev libpq-dev <span class="se">\</span>
+<a name="rest_code_c4790216048249b2986b8739d9133c2a-4"></a>libpng12-dev libjpeg-dev node-less node-clean-css <span class="se">\</span>
+<a name="rest_code_c4790216048249b2986b8739d9133c2a-5"></a>xfonts-75dpi xfonts-base
 </pre>
 <p>En odoo los reportes se generan usando la librería wkhtmltox, por lo que es necesario primero descargarla:</p>
-<pre class="code bash"><a name="rest_code_b6dbcaa4cef144438f35d0c83fe3eafe-1"></a>wget http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
+<pre class="code bash"><a name="rest_code_17b3116234a04855b06c3cd41f0b6031-1"></a>wget http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
 </pre>
 <p>Y luego instalarla:</p>
-<pre class="code bash"><a name="rest_code_fb4065c19d7c4a749097ee62b5cdcf92-1"></a>dpkg -i wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
+<pre class="code bash"><a name="rest_code_f172eee6ea6e425b9b2adc8be3c1f8c2-1"></a>dpkg -i wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
 </pre>
 <p>Creamos el usuario odoo:</p>
-<pre class="code bash"><a name="rest_code_f894377ab6154f3da879d533b56eb9b6-1"></a>adduser odoo
+<pre class="code bash"><a name="rest_code_6ce6d051cd39411cbdb143e5041844cf-1"></a>adduser odoo
 </pre>
 <p>Instalamos sudo para poder realizar algunas operaciones necesarias con permisos de superusuario:</p>
-<pre class="code bash"><a name="rest_code_0bb4a84656eb4ef7ace362344058f1c0-1"></a>apt install sudo
+<pre class="code bash"><a name="rest_code_c92aad3080474a5196cd72baa227c001-1"></a>apt install sudo
 </pre>
 <p>Creamos el usuario de base de datos odoo, esto lo hacemos con el usuario postgres:</p>
-<pre class="code bash"><a name="rest_code_8c7ed0e385344a87b388ab777c3d54ea-1"></a>sudo -u postgres createuser odoo
+<pre class="code bash"><a name="rest_code_f82b125484f349dbaf16681b738d2730-1"></a>sudo -u postgres createuser odoo
 </pre>
 <p>Si nos aparece el sguiente mensaje:</p>
-<pre class="code bash"><a name="rest_code_fecaa90a039d49d29bf40510afb78d2d-1"></a>could not change directory to <span class="s2">"/root"</span>: Permiso denegado
+<pre class="code bash"><a name="rest_code_d679440358d842da8f92742cef731742-1"></a>could not change directory to <span class="s2">"/root"</span>: Permiso denegado
 </pre>
 <p>No debemos preocuparnos y procedemos a crear la base de datos odoo-project y la asignamos al usuario odoo:</p>
-<pre class="code bash"><a name="rest_code_c26d9ec4f5a243b494e1a93ad717e909-1"></a>sudo -u postgres createdb -O odoo odoo-project
+<pre class="code bash"><a name="rest_code_d988dcba70ba483bb5f6e1c8d94caa66-1"></a>sudo -u postgres createdb -O odoo odoo-project
 </pre>
 <p>Ahora nos cambiamos al usuario odoo:</p>
-<pre class="code bash"><a name="rest_code_6aa8dd41c0ed4ab2a2f442fc2612f887-1"></a>su odoo
+<pre class="code bash"><a name="rest_code_c733f364ae73473d9c0a40233db5d252-1"></a>su odoo
 </pre>
 <p>Creamos la carpeta odoo-prod donde vamos a guardar todos los archivos y carpetas necesarias de odoo:</p>
-<pre class="code bash"><a name="rest_code_4d56251c424b43808d7f64efb26ae4ba-1"></a>mkdir ~/odoo-prod
+<pre class="code bash"><a name="rest_code_898f46e753fc4e9392e59bf28588aaa1-1"></a>mkdir ~/odoo-prod
 </pre>
 <p>Fijémonos que antes del nombre de la carpeta tenemos los caracteres     "~/", con esto indicamos que no importa la carpeta donde estemos situados actualmente, siempre la creará en el home del usuario en sesión.</p>
 <p>Ahora ingresamos a la carpeta creada:</p>
-<pre class="code bash"><a name="rest_code_6bff1fe2271a4aaa9006510e0db2eb4e-1"></a><span class="nb">cd</span> ~/odoo-prod
+<pre class="code bash"><a name="rest_code_a87bebd6b7b0407c976d216d318b00a4-1"></a><span class="nb">cd</span> ~/odoo-prod
 </pre>
 <p>Y dentro de esta creamos las carpetas project y src dentro de project:</p>
-<pre class="code bash"><a name="rest_code_85950273b0fd485d9d91ee620bfe6c89-1"></a>mkdir -p project/src
+<pre class="code bash"><a name="rest_code_8bdd488ffc3f49eebf7a4e9b688d07ad-1"></a>mkdir -p project/src
 </pre>
 <p>Ingresamos a la carpeta src donde guardaremos el código de odoo:</p>
-<pre class="code bash"><a name="rest_code_034a2107cb874e7aa56a60322b65c0c8-1"></a><span class="nb">cd</span> project/src
+<pre class="code bash"><a name="rest_code_e38dd8f242df43b1a77121b306812dd0-1"></a><span class="nb">cd</span> project/src
 </pre>
 <p>Ahora clonamos desde github el código fuente de odoo:</p>
-<pre class="code bash"><a name="rest_code_87f9c849fb4f4ab685fece0f2f87fa70-1"></a>git clone -b 10.0 --depth<span class="o">=</span><span class="m">1</span> https://github.com/odoo/odoo.git odoo
+<pre class="code bash"><a name="rest_code_6b8fe420c8824e58b4c69bf7941ad3cd-1"></a>git clone -b 10.0 --depth<span class="o">=</span><span class="m">1</span> https://github.com/odoo/odoo.git odoo
 </pre>
 <p>Observemos el parámetro --depth=1, este parámetro ignora la historia de los cambios y recupera sólo la última revisión de código, haciendo la descarga mucho más rápida.</p>
 <p>Creamos un entorno virtual para trabajar con Odoo:</p>
-<pre class="code bash"><a name="rest_code_2e0f26da1cc84830b02dbf14a6230c48-1"></a>virtualenv ~/env-odoo-10.0
+<pre class="code bash"><a name="rest_code_848904cbc4304405aa2af3dfa270bbbd-1"></a>virtualenv ~/env-odoo-10.0
 </pre>
 <p>Activamos el entorno virtual:</p>
-<pre class="code bash"><a name="rest_code_a2263f7011ae47538d622d715b7cf6ea-1"></a><span class="nb">source</span> ~/env-odoo-10.0/bin/activate
+<pre class="code bash"><a name="rest_code_f01c70166a2640bcb94420c83d64d257-1"></a><span class="nb">source</span> ~/env-odoo-10.0/bin/activate
 </pre>
 <p>Instalamos las dependencias necesarias para odoo 10:</p>
-<pre class="code bash"><a name="rest_code_65958a3ae8914ae0826e2f69e5d21250-1"></a>pip install -r odoo/requirements.txt
+<pre class="code bash"><a name="rest_code_2c46610228d14f54a7197ee4636ed6b2-1"></a>pip install -r odoo/requirements.txt
 </pre>
 <p>Hasta aquí ya podemos correr odoo sin ningún problema usando el script odoo-bin ubicado en el código fuente de odoo, pero continuaremos haciendo algunos pasos adicionales para obtener una mejor performance.</p>
 <p>Procedemos a crear la carpeta bin dentro de project:</p>
-<pre class="code bash"><a name="rest_code_a516b0967eda4bb5a311ccad0d366b68-1"></a>mkdir ~/odoo-prod/project/bin
+<pre class="code bash"><a name="rest_code_03f94c8b070248148d506ba090a5268e-1"></a>mkdir ~/odoo-prod/project/bin
 </pre>
 <p>Ahora vamos a generar nuestro archivo de configuración de odoo, llamado production.conf, utilizando la siguiente orden:</p>
-<pre class="code bash"><a name="rest_code_96c6abd84a234de0a6dd76b90a4b09c3-1"></a>~/odoo-prod/project/src/odoo/odoo-bin --save --config ~/odoo-prod/project/production.conf --stop-after-init
+<pre class="code bash"><a name="rest_code_ff5a5e6bab8347e793ec734725bd2b96-1"></a>~/odoo-prod/project/src/odoo/odoo-bin --save --config ~/odoo-prod/project/production.conf --stop-after-init
 </pre>
 <p>Los parámetros --save y --config nos permiten crear y guardar el archivo de configuración en la ruta indicada, con el parámetro --stop-after-init paramos la ejecución de odoo y volvemos a la terminal.</p>
 <p>Ahora vamos a crear el archivo que arrancará nuestro odoo, le vamos a denominar start-odoo y va a estar ubicado en la carpeta bin:</p>
-<pre class="code bash"><a name="rest_code_62f9cd93d9af410899939c3714b5eeb9-1"></a>nano ~/odoo-prod/project/bin/start-odoo
+<pre class="code bash"><a name="rest_code_a5538bffebad461685ffbba91db8dbbf-1"></a>nano ~/odoo-prod/project/bin/start-odoo
 </pre>
 <p>Este archivo es un script que contendrá lo siguiente:</p>
-<pre class="code bash"><a name="rest_code_8cd6637e5ca8498ca2411c30ccb9a7fe-1"></a><span class="ch">#! /bin/sh</span>
-<a name="rest_code_8cd6637e5ca8498ca2411c30ccb9a7fe-2"></a><span class="nv">PYTHON</span><span class="o">=</span>~odoo/env-odoo-10.0/bin/python
-<a name="rest_code_8cd6637e5ca8498ca2411c30ccb9a7fe-3"></a><span class="nv">ODOO</span><span class="o">=</span>~odoo/odoo-prod/project/src/odoo/odoo-bin
-<a name="rest_code_8cd6637e5ca8498ca2411c30ccb9a7fe-4"></a><span class="nv">CONF</span><span class="o">=</span>~odoo/odoo-prod/project/production.conf
-<a name="rest_code_8cd6637e5ca8498ca2411c30ccb9a7fe-5"></a><span class="si">${</span><span class="nv">PYTHON</span><span class="si">}</span> <span class="si">${</span><span class="nv">ODOO</span><span class="si">}</span> -c <span class="si">${</span><span class="nv">CONF</span><span class="si">}</span>
+<pre class="code bash"><a name="rest_code_d49fb3417edf458c9fc194a7f248881b-1"></a><span class="ch">#! /bin/sh</span>
+<a name="rest_code_d49fb3417edf458c9fc194a7f248881b-2"></a><span class="nv">PYTHON</span><span class="o">=</span>~odoo/env-odoo-10.0/bin/python
+<a name="rest_code_d49fb3417edf458c9fc194a7f248881b-3"></a><span class="nv">ODOO</span><span class="o">=</span>~odoo/odoo-prod/project/src/odoo/odoo-bin
+<a name="rest_code_d49fb3417edf458c9fc194a7f248881b-4"></a><span class="nv">CONF</span><span class="o">=</span>~odoo/odoo-prod/project/production.conf
+<a name="rest_code_d49fb3417edf458c9fc194a7f248881b-5"></a><span class="si">${</span><span class="nv">PYTHON</span><span class="si">}</span> <span class="si">${</span><span class="nv">ODOO</span><span class="si">}</span> -c <span class="si">${</span><span class="nv">CONF</span><span class="si">}</span>
 </pre>
 <p>El detalle de este archivo se explica de la siguiente manera:</p>
 <p>-Tenemos el intérprete del entorno virtual, con esto nos despreocupamos de estar activando el entorno virtual cada vez que querramos arrancar el odoo.</p>
@@ -180,10 +181,10 @@
 <p>-El archivo de configuración de odoo, llamado production.conf</p>
 <p>-Y finalmente el llamado a la orden que arranca odoo utilizando los parámetros contenidos en el archivo de configuración.</p>
 <p>Le damos permisos de ejecución al script start-odoo</p>
-<pre class="code bash"><a name="rest_code_467da7246bab4b179f17afc2c1ce2b02-1"></a>chmod +x ~/odoo-prod/project/bin/start-odoo
+<pre class="code bash"><a name="rest_code_940affa219b74bc49f022c4e51bd81cb-1"></a>chmod +x ~/odoo-prod/project/bin/start-odoo
 </pre>
 <p>Para probarlo arranquemos el script:</p>
-<pre class="code bash"><a name="rest_code_455d385eb1e043b19800dba7bd87e1de-1"></a>~/odoo-prod/project/bin/start-odoo
+<pre class="code bash"><a name="rest_code_0c03be2b9fc6493b9c6620ebbf252d80-1"></a>~/odoo-prod/project/bin/start-odoo
 </pre>
 <p>Y probemos que funciona correctamente poniendo la IP del servidor y el puerto 8069:</p>
 <p><a class="reference external" href="http://IP_SERVER_ODOO:8069">http://IP_SERVER_ODOO:8069</a></p>
@@ -191,108 +192,108 @@
 <h2>Tuneando PostgreSQL</h2>
 <p>La configuración predeterminada de PostgreSQL es generalmente muy conservadora y tiene la intención de evitar que el servidor de base de datos acapare todos los recursos del sistema. En servidores de producción, se pueden aumentar algunos parámetros en el archivo postgresql.conf para obtener un mejor rendimiento.</p>
 <p>Vamos a editar el archivo postgresql.conf:</p>
-<pre class="code bash"><a name="rest_code_784ca6af93ff4206b82df6e3035239f7-1"></a>nano /etc/postgresql/9.4/main/postgresql.conf
+<pre class="code bash"><a name="rest_code_b00f16c3ca9c4597a3212329eacb3e9f-1"></a>nano /etc/postgresql/9.4/main/postgresql.conf
 </pre>
 <p>Estas son algunas de las opciones que utilizaremos:</p>
-<pre class="code bash"><a name="rest_code_f6e22f749719402cbce9206c43436be2-1"></a><span class="nv">max_connections</span> <span class="o">=</span> 100
-<a name="rest_code_f6e22f749719402cbce9206c43436be2-2"></a><span class="nv">shared_buffers</span> <span class="o">=</span> 256MB
-<a name="rest_code_f6e22f749719402cbce9206c43436be2-3"></a><span class="nv">effective_cache_size</span> <span class="o">=</span> 768MB
-<a name="rest_code_f6e22f749719402cbce9206c43436be2-4"></a><span class="nv">work_mem</span> <span class="o">=</span> 10MB
-<a name="rest_code_f6e22f749719402cbce9206c43436be2-5"></a><span class="nv">maintenance_work_mem</span> <span class="o">=</span> 64MB
-<a name="rest_code_f6e22f749719402cbce9206c43436be2-6"></a><span class="nv">checkpoint_segments</span> <span class="o">=</span> 16
-<a name="rest_code_f6e22f749719402cbce9206c43436be2-7"></a><span class="nv">wal_buffers</span> <span class="o">=</span> 8MB
-<a name="rest_code_f6e22f749719402cbce9206c43436be2-8"></a><span class="nv">checkpoint_completion_target</span> <span class="o">=</span> 0.9
+<pre class="code bash"><a name="rest_code_d53245d47ac94cc499b21754a5edd17a-1"></a><span class="nv">max_connections</span> <span class="o">=</span> 100
+<a name="rest_code_d53245d47ac94cc499b21754a5edd17a-2"></a><span class="nv">shared_buffers</span> <span class="o">=</span> 256MB
+<a name="rest_code_d53245d47ac94cc499b21754a5edd17a-3"></a><span class="nv">effective_cache_size</span> <span class="o">=</span> 768MB
+<a name="rest_code_d53245d47ac94cc499b21754a5edd17a-4"></a><span class="nv">work_mem</span> <span class="o">=</span> 10MB
+<a name="rest_code_d53245d47ac94cc499b21754a5edd17a-5"></a><span class="nv">maintenance_work_mem</span> <span class="o">=</span> 64MB
+<a name="rest_code_d53245d47ac94cc499b21754a5edd17a-6"></a><span class="nv">checkpoint_segments</span> <span class="o">=</span> 16
+<a name="rest_code_d53245d47ac94cc499b21754a5edd17a-7"></a><span class="nv">wal_buffers</span> <span class="o">=</span> 8MB
+<a name="rest_code_d53245d47ac94cc499b21754a5edd17a-8"></a><span class="nv">checkpoint_completion_target</span> <span class="o">=</span> 0.9
 </pre>
 <p>Para modificar el archivo procedemos a buscar cada uno de los parámetros y lo editamos o lo descomentamos según sea el caso.</p>
 <p>Ahora reiniciamos el servicio de base de datos:</p>
-<pre class="code bash"><a name="rest_code_b7a4f4fd18d4420db82eaad59cca8c9d-1"></a>service postgresql restart
+<pre class="code bash"><a name="rest_code_411ebc0963024518bd4657b0c9b666bb-1"></a>service postgresql restart
 </pre>
 </div>
 <div class="section" id="editando-archivo-de-configuracion-de-odoo">
 <h2>Editando Archivo de Configuración de Odoo</h2>
 <p>Ahora vamos a editar el archivo production.conf para modificar los parámetros necesarios para obtener un mejor rendimiento:</p>
-<pre class="code bash"><a name="rest_code_7bd86c608c2549bea5b9b3c06c2d5513-1"></a>nano ~/odoo-prod/project/production.conf
+<pre class="code bash"><a name="rest_code_c5c2c113d56348e39378f55390fb9150-1"></a>nano ~/odoo-prod/project/production.conf
 </pre>
 <p>Los parámetros a modificar serán los siguientes:</p>
 <p>Cambio del directorio de datos:</p>
-<pre class="code bash"><a name="rest_code_d44292c98235434a9de7cc7e46e7d44c-1"></a><span class="nv">data_dir</span> <span class="o">=</span> /home/odoo/odoo-prod/project/data
+<pre class="code bash"><a name="rest_code_9b13eaca35ba494c95aa9a388a5d027a-1"></a><span class="nv">data_dir</span> <span class="o">=</span> /home/odoo/odoo-prod/project/data
 </pre>
 <p>Cambio del log del servidor:</p>
-<pre class="code bash"><a name="rest_code_e85cae2c691e44e0b0e2ca6bc03d1eaa-1"></a><span class="nv">logfile</span> <span class="o">=</span> /home/odoo/odoo-prod/project/logs/odoo.log
+<pre class="code bash"><a name="rest_code_d1d01501412f448eb4fa0b21903c4b84-1"></a><span class="nv">logfile</span> <span class="o">=</span> /home/odoo/odoo-prod/project/logs/odoo.log
 </pre>
 <p>Configuración de la rotación del log, esto permite la rotación de registros. Esto hará que Odoo configure el módulo de registro para archivar los registros del servidor diariamente y mantener los registros antiguos durante 30 días. Esto es útil en servidores de producción para evitar registros que eventualmente consumen todo el espacio disponible en el disco.:</p>
-<pre class="code bash"><a name="rest_code_9700a0d71be6436a99b3c8baf4fc300b-1"></a><span class="nv">logrotate</span> <span class="o">=</span> True
+<pre class="code bash"><a name="rest_code_d14b8d3e79d74432b56d6254629e3e48-1"></a><span class="nv">logrotate</span> <span class="o">=</span> True
 </pre>
 <p>Configuración de los manejadores de login, esto configura el nivel de registro. La configuración propuesta es muy conservadora y sólo registrará mensajes con al menos el nivel WARNING, excepto werkzeug (CRITICAL) y openerp.service.server (INFO):</p>
-<pre class="code bash"><a name="rest_code_0c357f83733e403680fd108076165f84-1"></a><span class="nv">log_level</span> <span class="o">=</span> warn
-<a name="rest_code_0c357f83733e403680fd108076165f84-2"></a><span class="nv">log_handler</span> <span class="o">=</span> :WARNING,werkzeug:CRITICAL,openerp.service.server:INFO
+<pre class="code bash"><a name="rest_code_24892e64413c4eebb0f37057f3bc92e9-1"></a><span class="nv">log_level</span> <span class="o">=</span> warn
+<a name="rest_code_24892e64413c4eebb0f37057f3bc92e9-2"></a><span class="nv">log_handler</span> <span class="o">=</span> :WARNING,werkzeug:CRITICAL,openerp.service.server:INFO
 </pre>
 <p>Adaptación de los parámetros de conexión, esto funcionará si está ejecutando el servidor de base de datos PostgreSQL localmente y lo ha configurado como se explicó en anteriormente. Si se está ejecutando PostgreSQL en un servidor diferente, se tendrá que reemplazar los valores False con la configuración de conexión adecuada para su instancia de base de datos:</p>
-<pre class="code bash"><a name="rest_code_011970baf217407bbf563783d09ac253-1"></a><span class="nv">db_host</span> <span class="o">=</span> False
-<a name="rest_code_011970baf217407bbf563783d09ac253-2"></a><span class="nv">db_maxconn</span> <span class="o">=</span> 64
-<a name="rest_code_011970baf217407bbf563783d09ac253-3"></a><span class="nv">db_name</span> <span class="o">=</span> odoo-project
-<a name="rest_code_011970baf217407bbf563783d09ac253-4"></a><span class="nv">db_password</span> <span class="o">=</span> False
-<a name="rest_code_011970baf217407bbf563783d09ac253-5"></a><span class="nv">db_port</span> <span class="o">=</span> False
-<a name="rest_code_011970baf217407bbf563783d09ac253-6"></a><span class="nv">db_template</span> <span class="o">=</span> template1
-<a name="rest_code_011970baf217407bbf563783d09ac253-7"></a><span class="nv">db_user</span> <span class="o">=</span> False
+<pre class="code bash"><a name="rest_code_2c3085096ae74e1db12f24d4cd235afd-1"></a><span class="nv">db_host</span> <span class="o">=</span> False
+<a name="rest_code_2c3085096ae74e1db12f24d4cd235afd-2"></a><span class="nv">db_maxconn</span> <span class="o">=</span> 64
+<a name="rest_code_2c3085096ae74e1db12f24d4cd235afd-3"></a><span class="nv">db_name</span> <span class="o">=</span> odoo-project
+<a name="rest_code_2c3085096ae74e1db12f24d4cd235afd-4"></a><span class="nv">db_password</span> <span class="o">=</span> False
+<a name="rest_code_2c3085096ae74e1db12f24d4cd235afd-5"></a><span class="nv">db_port</span> <span class="o">=</span> False
+<a name="rest_code_2c3085096ae74e1db12f24d4cd235afd-6"></a><span class="nv">db_template</span> <span class="o">=</span> template1
+<a name="rest_code_2c3085096ae74e1db12f24d4cd235afd-7"></a><span class="nv">db_user</span> <span class="o">=</span> False
 </pre>
 <p>Configuración del filtro de bases de datos y del listado de bases de datos, esto restringe las bases de datos disponibles para la instancia configurando un filtro de base de datos.
 Se desactiva el listado de las base de datos, esto no es estrictamente necesario dado que la expresión regular que establecemos en dbfilter sólo puede coincidir con una base de datos única. Sin embargo esto se hace para evitar mostrar la lista de bases de datos y que los usuarios se conecten a la base de datos incorrecta:</p>
-<pre class="code bash"><a name="rest_code_220a297b7ccb45b8855fc8835cd7cfaf-1"></a><span class="nv">dbfilter</span> <span class="o">=</span> odoo-project$
-<a name="rest_code_220a297b7ccb45b8855fc8835cd7cfaf-2"></a><span class="nv">list_db</span> <span class="o">=</span> False
+<pre class="code bash"><a name="rest_code_675563aecae24c5abfa4d8c329b40e0e-1"></a><span class="nv">dbfilter</span> <span class="o">=</span> odoo-project$
+<a name="rest_code_675563aecae24c5abfa4d8c329b40e0e-2"></a><span class="nv">list_db</span> <span class="o">=</span> False
 </pre>
 <p>Cambio del master password, la contraseña maestra se utiliza para la administración de la base de datos a través de la interfaz de usuario, y algunos addons de la comunidad también lo utilizan para añadir seguridad adicional antes de realizar acciones que pueden conducir a la pérdida de datos.:</p>
-<pre class="code bash"><a name="rest_code_3b08f6a7104540cf86917b056669d0f1-1"></a><span class="nv">admin_password</span> <span class="o">=</span> mypassword
+<pre class="code bash"><a name="rest_code_b0be5333e81b41dc8d6c4ebff1fe7bf4-1"></a><span class="nv">admin_password</span> <span class="o">=</span> mypassword
 </pre>
 <p>Configuración de los workers, Odoo creará una serie de procesos de trabajo (en este ejemplo, 4) para manejar las solicitudes HTTP. Esto tiene varias ventajas sobre la configuración por defecto en la cual el manejo de la petición se realiza en hilos separados:</p>
-<pre class="code bash"><a name="rest_code_4dcfd0da87d54d838b36fe34a86d2790-1"></a><span class="nv">workers</span> <span class="o">=</span> 4
-<a name="rest_code_4dcfd0da87d54d838b36fe34a86d2790-2"></a><span class="nv">limit_memory_hard</span> <span class="o">=</span> <span class="m">4294967296</span> <span class="c1"># 4 GB</span>
-<a name="rest_code_4dcfd0da87d54d838b36fe34a86d2790-3"></a><span class="nv">limit_memory_soft</span> <span class="o">=</span> <span class="m">671088640</span> <span class="c1"># 640MB</span>
-<a name="rest_code_4dcfd0da87d54d838b36fe34a86d2790-4"></a><span class="nv">limit_request</span> <span class="o">=</span> 8192
-<a name="rest_code_4dcfd0da87d54d838b36fe34a86d2790-5"></a><span class="nv">limit_time_cpu</span> <span class="o">=</span> 120
-<a name="rest_code_4dcfd0da87d54d838b36fe34a86d2790-6"></a><span class="nv">limit_time_real</span> <span class="o">=</span> 300
+<pre class="code bash"><a name="rest_code_ccdeefee11d745e090cc819650db078c-1"></a><span class="nv">workers</span> <span class="o">=</span> 4
+<a name="rest_code_ccdeefee11d745e090cc819650db078c-2"></a><span class="nv">limit_memory_hard</span> <span class="o">=</span> <span class="m">4294967296</span> <span class="c1"># 4 GB</span>
+<a name="rest_code_ccdeefee11d745e090cc819650db078c-3"></a><span class="nv">limit_memory_soft</span> <span class="o">=</span> <span class="m">671088640</span> <span class="c1"># 640MB</span>
+<a name="rest_code_ccdeefee11d745e090cc819650db078c-4"></a><span class="nv">limit_request</span> <span class="o">=</span> 8192
+<a name="rest_code_ccdeefee11d745e090cc819650db078c-5"></a><span class="nv">limit_time_cpu</span> <span class="o">=</span> 120
+<a name="rest_code_ccdeefee11d745e090cc819650db078c-6"></a><span class="nv">limit_time_real</span> <span class="o">=</span> 300
 </pre>
 <p>Si queremos que el sistema cargue datos de prueba debemos mantener el parámetro without_demo en False y si queremos lo contrario lo ponemos a True:</p>
-<pre class="code bash"><a name="rest_code_55e716436530448f978b3fa51e534857-1"></a><span class="nv">without_demo</span> <span class="o">=</span> False
+<pre class="code bash"><a name="rest_code_c94436cda8c44d4094866fc52291e6ea-1"></a><span class="nv">without_demo</span> <span class="o">=</span> False
 </pre>
 </div>
 <div class="section" id="arranque-automatico">
 <h2>Arranque Automático</h2>
 <p>Ahora vamos a configurar systemd para iniciar Odoo automáticamente.</p>
 <p>Si aún seguimos logueados con el usuario odoo, debemos salir y regresar a trabajar con el usuario root:</p>
-<pre class="code bash"><a name="rest_code_3611bbb4ba3d475b93688958f86921f0-1"></a><span class="nb">exit</span>
+<pre class="code bash"><a name="rest_code_35c9b4bb106c4355b2099cff6d4be66f-1"></a><span class="nb">exit</span>
 </pre>
 <p>Creamos el archivo llamado odoo.service en /lib/systemd/system/ de la siguiente manera:</p>
-<pre class="code bash"><a name="rest_code_03ceaf288e984132a12b0ed06dc88bd4-1"></a>nano /lib/systemd/system/odoo.service
+<pre class="code bash"><a name="rest_code_72fae6b3792e42cdac4a60053ade202d-1"></a>nano /lib/systemd/system/odoo.service
 </pre>
 <p>Este archivo tendrá el siguiente contenido:</p>
-<pre class="code bash"><a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-1"></a><span class="o">[</span>Unit<span class="o">]</span>
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-2"></a><span class="nv">Description</span><span class="o">=</span>Odoo 10.0
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-3"></a><span class="nv">After</span><span class="o">=</span>postgresql.service
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-4"></a>
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-5"></a><span class="o">[</span>Service<span class="o">]</span>
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-6"></a><span class="nv">Type</span><span class="o">=</span>simple
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-7"></a><span class="nv">User</span><span class="o">=</span>odoo
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-8"></a><span class="nv">Group</span><span class="o">=</span>odoo
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-9"></a><span class="nv">ExecStart</span><span class="o">=</span>/home/odoo/odoo-prod/project/bin/start-odoo
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-10"></a>
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-11"></a><span class="o">[</span>Install<span class="o">]</span>
-<a name="rest_code_03968eabdefb47fdbbd9b450c6827af9-12"></a><span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+<pre class="code bash"><a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-1"></a><span class="o">[</span>Unit<span class="o">]</span>
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-2"></a><span class="nv">Description</span><span class="o">=</span>Odoo 10.0
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-3"></a><span class="nv">After</span><span class="o">=</span>postgresql.service
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-4"></a>
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-5"></a><span class="o">[</span>Service<span class="o">]</span>
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-6"></a><span class="nv">Type</span><span class="o">=</span>simple
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-7"></a><span class="nv">User</span><span class="o">=</span>odoo
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-8"></a><span class="nv">Group</span><span class="o">=</span>odoo
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-9"></a><span class="nv">ExecStart</span><span class="o">=</span>/home/odoo/odoo-prod/project/bin/start-odoo
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-10"></a>
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-11"></a><span class="o">[</span>Install<span class="o">]</span>
+<a name="rest_code_db1d37ba05ca4a45a6246df52d189e48-12"></a><span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
 </pre>
 <p>Registramos el servicio:</p>
-<pre class="code bash"><a name="rest_code_f9cc0bea8aa14b8998e8126ab32e1725-1"></a>systemctl <span class="nb">enable</span> odoo.service
+<pre class="code bash"><a name="rest_code_eba7e2e7885f41b6912e75d013bc7484-1"></a>systemctl <span class="nb">enable</span> odoo.service
 </pre>
 <p>Iniciamos el servicio:</p>
-<pre class="code bash"><a name="rest_code_5b7fda5eb6344df78df796bf1bb86cf8-1"></a>service odoo start
+<pre class="code bash"><a name="rest_code_dc9158dc32c640a2a9442c35941acb60-1"></a>service odoo start
 </pre>
 <p>Revisamos que al menos esté corriendo:</p>
-<pre class="code bash"><a name="rest_code_198deacdd0484fbf935d1be1bc6933f2-1"></a>service odoo status
+<pre class="code bash"><a name="rest_code_cfc7000ee6524fadaf0c443d127a31b6-1"></a>service odoo status
 </pre>
 <p>Y lo paramos:</p>
-<pre class="code bash"><a name="rest_code_56818060fddf47bbab78d022b7f3cdb4-1"></a>service odoo stop
+<pre class="code bash"><a name="rest_code_a6d3ee0aafd3436495bb9fe00f30759d-1"></a>service odoo stop
 </pre>
 <p>Para probar el funcionamiento reiniciemos el servidor y veamos que odoo esté corriendo correctamente:</p>
-<pre class="code bash"><a name="rest_code_9e62475ff7d848109249d9af998f8ed0-1"></a>reboot
+<pre class="code bash"><a name="rest_code_f0bd56aee7c34de6890581e380c480f8-1"></a>reboot
 </pre>
 <p>Ahora probemos nuevamente:</p>
 <p><a class="reference external" href="http://IP_SERVER_ODOO:8069">http://IP_SERVER_ODOO:8069</a></p>
@@ -302,7 +303,10 @@ Se desactiva el listado de las base de datos, esto no es estrictamente necesario
 </div>
 </div>
     </div>
-    <aside class="postpromonav"><nav><ul class="pager hidden-print">
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/odoo/" rel="tag">odoo</a></li>
+        </ul>
+<ul class="pager hidden-print">
 <li class="previous">
                 <a href="../migrando-de-wordpress-a-nikola/" rel="prev" title="Migrando de Wordpress a Nikola">Publicación anterior</a>
             </li>

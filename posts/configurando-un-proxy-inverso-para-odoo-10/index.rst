@@ -1,7 +1,7 @@
 .. title: Configurando un Proxy Inverso para Odoo 10
 .. slug: configurando-un-proxy-inverso-para-odoo-10
 .. date: 2017-01-19 11:09:29 UTC-05:00
-.. tags: 
+.. tags: odoo
 .. category: 
 .. link: 
 .. description: 
