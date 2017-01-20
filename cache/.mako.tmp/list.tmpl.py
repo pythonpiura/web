@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1484885451.9571583
+_modified_time = 1484887557.576067
 _enable_loop = True
 _template_filename = '/home/inkarri/entornos/nikola/lib/python3.5/site-packages/nikola/data/themes/base/templates/list.tmpl'
 _template_uri = 'list.tmpl'
@@ -35,9 +35,9 @@ def render_body(context,**pageargs):
         title = _import_ns.get('title', context.get('title', UNDEFINED))
         items = _import_ns.get('items', context.get('items', UNDEFINED))
         messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
-        archive_nav = _mako_get_namespace(context, 'archive_nav')
         def content():
             return render_content(context._locals(__M_locals))
+        archive_nav = _mako_get_namespace(context, 'archive_nav')
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n\n')
@@ -59,9 +59,9 @@ def render_content(context,**pageargs):
         title = _import_ns.get('title', context.get('title', UNDEFINED))
         items = _import_ns.get('items', context.get('items', UNDEFINED))
         messages = _import_ns.get('messages', context.get('messages', UNDEFINED))
-        archive_nav = _mako_get_namespace(context, 'archive_nav')
         def content():
             return render_content(context)
+        archive_nav = _mako_get_namespace(context, 'archive_nav')
         __M_writer = context.writer()
         __M_writer('\n<article class="listpage">\n    <header>\n        <h1>')
         __M_writer(filters.html_escape(str(title)))
