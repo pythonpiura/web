@@ -18,11 +18,11 @@ Aquí encontrarás información de todos nuestros eventos.
 Pŕoximos Eventos
 ----------------
 
-* `Primer PyDay en Piura`_
-	.. _`Primer PyDay en Piura`: /primer-pyday-en-piura
-
 Eventos Pasados
 ---------------
+
+* `Primer PyDay en Piura`_
+	.. _`Primer PyDay en Piura`: /primer-pyday-en-piura
 
 * `Primer Taller Django Girls en Piura`_
 	.. _`Primer Taller Django Girls en Piura`: http://argentinaenpython.com.ar/galeria/django-girls-piura/
