@@ -1,7 +1,7 @@
 .. title: Instalación de Odoo 10 en Producción
 .. slug: instalacion-odoo-10-en-produccion
 .. date: 2017-01-16 23:56:00 UTC-05:00
-.. tags: 
+.. tags: odoo
 .. category: 
 .. link: 
 .. description: 
