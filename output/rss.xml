@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Python Piura</title><link>http://pythonpiura.org/</link><description>Comunidad Python Piura</description><atom:link href="http://pythonpiura.org/rss.xml" type="application/rss+xml" rel="self"></atom:link><language>es</language><lastBuildDate>Fri, 20 Jan 2017 05:17:09 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Configurando un Proxy Inverso para Odoo 10</title><link>http://pythonpiura.org/posts/configurando-un-proxy-inverso-para-odoo-10/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Teniendo en cuenta la configuración realizada en nuestro anterior artículo &lt;a class="reference external" href="http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/"&gt;Instalación de Odoo 10 en Producción&lt;/a&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Python Piura</title><link>http://pythonpiura.org/</link><description>Comunidad Python Piura</description><atom:link rel="self" href="http://pythonpiura.org/rss.xml" type="application/rss+xml"></atom:link><language>es</language><lastBuildDate>Sat, 21 Jan 2017 14:54:05 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Instalando Entorno de Desarrollo para Odoo 10 en Ubuntu 16.04</title><link>http://pythonpiura.org/posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Continuando nuestra serie de tutoriales sobre Odoo esta vez nos toca hacer la instalación de un entorno de desarrollo para Odoo sobre Ubuntu 16.04.&lt;/p&gt;
+&lt;p&gt;Primero instalamos las dependencias necesarias:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_5bc1ffb3233e4e3c8be40970b37ecff2-1"&gt;&lt;/a&gt;sudo apt-get install git python2.7 postgresql nano python-virtualenv
+&lt;/pre&gt;&lt;p&gt;Descargamos e instalamos wkhtmltox, esto es necesario para los reportes en pdf.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_aabc89c796ec46be971b263951ce98f5-1"&gt;&lt;/a&gt;wget http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
+&lt;a name="rest_code_aabc89c796ec46be971b263951ce98f5-2"&gt;&lt;/a&gt;dpkg -i wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
+&lt;/pre&gt;&lt;p&gt;Ahora instalamos las dependencias de desarrollo:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_bea09ca4b0ef477fbccbf2fe739963fe-1"&gt;&lt;/a&gt;sudo apt-get install gcc python2.7-dev libxml2-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_bea09ca4b0ef477fbccbf2fe739963fe-2"&gt;&lt;/a&gt;libxslt1-dev libevent-dev libsasl2-dev libldap2-dev libpq-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_bea09ca4b0ef477fbccbf2fe739963fe-3"&gt;&lt;/a&gt;libpng12-dev libjpeg-dev
+&lt;/pre&gt;&lt;p&gt;Instalamos NodeJS y su manejador de paquetes:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_89a2a12a574d4cb3bbf913821587408e-1"&gt;&lt;/a&gt;sudo apt-get install npm
+&lt;a name="rest_code_89a2a12a574d4cb3bbf913821587408e-2"&gt;&lt;/a&gt;ln -s /usr/bin/nodejs /usr/bin/node
+&lt;/pre&gt;&lt;p&gt;Instalamos el compilador less, a partir de la versión 9.0, el cliente web Odoo requiere el preprocesador less CSS para que las páginas web se representen correctamente, esto depende de Node.js y npm, que hemos instalado en el paso anterior.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_e3963ac815cf4f1c82743bb7b4a89317-1"&gt;&lt;/a&gt;npm install -g less less-plugin-clean-css
+&lt;/pre&gt;&lt;p&gt;Configuramos postgresql, primero creamos un usuario con posibilidad de crear bases de datos y que tenga nuestro mismo nombre de usuario de Ubuntu:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_c2e47e0d099f425fa6c53e13d3b4ff9a-1"&gt;&lt;/a&gt;sudo -u postgres createuser --createdb &lt;span class="k"&gt;$(&lt;/span&gt;whoami&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Creamos la base de datos odoo10&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_1787c7d8b86040bfa36b61286e501b6a-1"&gt;&lt;/a&gt;createdb odoo10
+&lt;/pre&gt;&lt;p&gt;Configuramos git para poder descargar el código fuente de odoo:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_304b71e5729640938e0d9c348195d9ff-1"&gt;&lt;/a&gt;git config --global user.name &lt;span class="s2"&gt;"Tu nombre"&lt;/span&gt;
+&lt;a name="rest_code_304b71e5729640938e0d9c348195d9ff-2"&gt;&lt;/a&gt;git config --global user.email &lt;span class="s2"&gt;"Tu email"&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Creamos la carpeta donde vamos a clonar odoo 10:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-1"&gt;&lt;/a&gt;mkdir ~/odoo-dev-10
+&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-2"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/odoo-dev-10
+&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-3"&gt;&lt;/a&gt;git clone -b 10.0 --depth&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; https://github.com/odoo/odoo.git odoo
+&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-4"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; odoo
+&lt;/pre&gt;&lt;p&gt;Creamos el entorno virtual para odoo 10 y lo activamos:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_35b4735581684f46aec9eef29fff9597-1"&gt;&lt;/a&gt;virtualenv ~/odoo-10
+&lt;a name="rest_code_35b4735581684f46aec9eef29fff9597-2"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/odoo-10/bin/activate
+&lt;/pre&gt;&lt;p&gt;Instalamos las python dependencias de Odoo en el entorno virtual:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_9c18b4cf8e8d496297ccf4919c14a03c-1"&gt;&lt;/a&gt;pip install -r requirements.txt
+&lt;/pre&gt;&lt;p&gt;Ahora levantamos odoo con el siguiente comando:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_1dce3be22e8745bdaebf01bccaca2b4b-1"&gt;&lt;/a&gt;python odoo-bin -d odoo10 --addons-path&lt;span class="o"&gt;=&lt;/span&gt;addons
+&lt;/pre&gt;&lt;ul class="simple"&gt;
+&lt;li&gt;El script para inicializar odoo se llama odoo-bin.&lt;/li&gt;
+&lt;li&gt;El parámetro -d es para indicarle que vamos a trabajar con la base de datos odoo10.&lt;/li&gt;
+&lt;li&gt;El parámetro --addons-path es para indicarle las rutas que contendrán los addons de Odoo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Probamos el correcto funcionamiento de odoo usando nuestro navegador web y poniendo la siguiente dirección en la barra de direcciones:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://localhost:8069"&gt;http://localhost:8069&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Nos logueamos con las siguientes credenciales:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Usuario: admin&lt;/li&gt;
+&lt;li&gt;Password: admin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;En los siguientes tutoriales empezaremos a crear addons para Odoo, hasta la próxima.&lt;/p&gt;
+&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>odoo</category><category>ubuntu</category><guid>http://pythonpiura.org/posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/</guid><pubDate>Fri, 20 Jan 2017 22:33:16 GMT</pubDate></item><item><title>Configurando un Proxy Inverso para Odoo 10</title><link>http://pythonpiura.org/posts/configurando-un-proxy-inverso-para-odoo-10/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Teniendo en cuenta la configuración realizada en nuestro anterior artículo &lt;a class="reference external" href="http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/"&gt;Instalación de Odoo 10 en Producción&lt;/a&gt;
 en esta oportunidad, vamos a configurar un proxy inverso para poder acceder a nuestro odoo mediante el puerto 80, en otro artículo haremos lo mismo para el protocolo https usando el puerto 443, debemos recalcar que en esta oportunidad hemos utilizado como guía el libro "Odoo 10 Development Essentials" de Daniel Reis, entonces manos a la obra.&lt;/p&gt;
 &lt;p&gt;Odoo puede servir páginas web por si mismo, pero se recomienda tener un proxy Inverso en frente. Un proxy inverso actúa como un intermediario que gestiona el tráfico entre los clientes que envían solicitudes y el servidor Odoo que les responde. El uso de un proxy inverso tiene varios beneficios.&lt;/p&gt;
 &lt;p&gt;A nivel de seguridad:&lt;/p&gt;
@@ -880,73 +927,4 @@ artículos que usamos:&lt;/p&gt;
 &lt;/pre&gt;&lt;p&gt;Así como también un vídeo de su funcionamiento.&lt;/p&gt;
 &lt;div class="youtube-video"&gt;
 &lt;iframe width="425" height="344" src="https://www.youtube.com/embed/mUaVFYTlibM?rel=0&amp;amp;hd=1&amp;amp;wmode=transparent"&gt;&lt;/iframe&gt;
-&lt;/div&gt;&lt;p&gt;Saludos y muchas gracias.&lt;/p&gt;&lt;/div&gt;</description><category>pillow</category><category>pytesseract</category><category>Python</category><category>Selenium</category><guid>http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/</guid><pubDate>Sun, 08 May 2016 01:58:06 GMT</pubDate></item><item><title>Personalizando Permisos</title><link>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Hasta ahora hemos trabajado con los permisos básicos que nos
-proporciona Django de manera automática, pero que pasa si nosotros
-quisieramos restringir cosas mas al detalle, por ejemplo que un
-usuario determinado no vea el detalle de la persona, o la tabla que
-lista a todas las personas, o que no pueda exportar a una hoja de
-cálculo.
-Empecemos por lo mas sencillo, creemos un permiso para restringir el
-acceso al detalle de la persona, para ello personalizaremos los
-permisos en el modelo, de la siguiente manera:&lt;/p&gt;
-&lt;p&gt;models.py&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-1"&gt;&lt;/a&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.db&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-2"&gt;&lt;/a&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-3"&gt;&lt;/a&gt;&lt;span class="c1"&gt;# Create your models here.&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-4"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Persona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-5"&gt;&lt;/a&gt;        &lt;span class="n"&gt;dni&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;primary_key&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-6"&gt;&lt;/a&gt;        &lt;span class="n"&gt;nombre&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-7"&gt;&lt;/a&gt;        &lt;span class="n"&gt;apellido_paterno&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-8"&gt;&lt;/a&gt;        &lt;span class="n"&gt;apellido_materno&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;100&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-9"&gt;&lt;/a&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-10"&gt;&lt;/a&gt;        &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Meta&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-&lt;a name="rest_code_95d1a3685025480a9dc770a9eb32c761-11"&gt;&lt;/a&gt;                &lt;span class="n"&gt;permissions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="s1"&gt;'ver_detalle_persona'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Puede ver detalle Persona'&lt;/span&gt;&lt;span class="p"&gt;),)&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;Veamos que hay de nuevo en nuestro modelo y lo primero que salta a la
-vista es el uso de una &lt;a class="reference external" href="https://datafull.co/p/que-es-una-metaclase-en-python"&gt;metaclase&lt;/a&gt; aquí definiremos el atributo
-permissions que es una tupla donde se definiran los múltiples permisos
-personalizados que podemos crear en este caso tenemos el par
-('ver_detalle_persona', 'Puede ver detalle Persona') donde
-'ver_detalle_persona' es el nombre del permiso y 'Puede ver detalle
-Persona' es una especie de descripción de lo que significa ese
-permiso, ahora ya lo tenemos listo, pero no podemos aplicarlo
-directamente sino que primero tenemos que hacer la migración
-correspondiente a la base de datos, ya que ha ocurrido una
-modificación del modelo:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_754375ccad024345b9295b8710461a6a-1"&gt;&lt;/a&gt;python manage.py makemigrations personas
-&lt;a name="rest_code_754375ccad024345b9295b8710461a6a-2"&gt;&lt;/a&gt;python manage.py migrate
-&lt;/pre&gt;&lt;p&gt;Ya con esto podemos usar el permiso, para ello modificaremos el
-archivo personas.html:&lt;/p&gt;
-&lt;pre class="code html"&gt;&lt;a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-1"&gt;&lt;/a&gt;{% if perms.personas.ver_detalle_persona %}
-&lt;a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-2"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"btn btn-small"&lt;/span&gt; &lt;span class="na"&gt;href&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"{% url 'personas:detalle_persona' persona.pk %}"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt; &lt;span class="na"&gt;class&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;"glyphicon glyphicon-folder-open"&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;span&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-4"&gt;&lt;/a&gt;        &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;a&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;a name="rest_code_a0cef2ef79be4b6e86acf13b393e1bd4-5"&gt;&lt;/a&gt;{% endif %}
-&lt;/pre&gt;&lt;p&gt;Ahora nos logueamos con cualquiera de los usuarios nuevos que creamos
-en la sesión pasada, en este caso lo haremos con usuario1:&lt;/p&gt;
-&lt;img alt="/images/blog/sin_permiso_ver_persona.jpg" src="http://pythonpiura.org/images/blog/sin_permiso_ver_persona.jpg"&gt;
-&lt;p&gt;Y vemos que no aparece el ícono del libro por lo tanto aparentemente
-no podemos acceder al detalle de la persona, pero igual que la vez
-pasada si es posible acceder a través de la url:&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://localhost:8000/personas/detalle_persona/44626821/"&gt;http://localhost:8000/personas/detalle_persona/44626821/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Nos falta hacer lo mismo de antes en nuestra vista DetallePersona:&lt;/p&gt;
-&lt;p&gt;views.py&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_23526db516674616b8f6c6d5d756d517-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DetallePersona&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DetailView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_23526db516674616b8f6c6d5d756d517-2"&gt;&lt;/a&gt;        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Persona&lt;/span&gt;
-&lt;a name="rest_code_23526db516674616b8f6c6d5d756d517-3"&gt;&lt;/a&gt;        &lt;span class="n"&gt;template_name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'detalle_persona.html'&lt;/span&gt;
-&lt;a name="rest_code_23526db516674616b8f6c6d5d756d517-4"&gt;&lt;/a&gt;
-&lt;a name="rest_code_23526db516674616b8f6c6d5d756d517-5"&gt;&lt;/a&gt;        &lt;span class="nd"&gt;@method_decorator&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;permission_required&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas.ver_detalle_persona'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;reverse_lazy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'personas:personas'&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
-&lt;a name="rest_code_23526db516674616b8f6c6d5d756d517-6"&gt;&lt;/a&gt;        &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
-&lt;a name="rest_code_23526db516674616b8f6c6d5d756d517-7"&gt;&lt;/a&gt;                &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nb"&gt;super&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;DetallePersona&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dispatch&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="n"&gt;kwargs&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;Listo ya con esto el usuario no puede ingresar al detalle de la
-persona y es inmediatamente redireccionado a la tabla de personas,
-ahora otorguemosle permisos al usuario1 a través de la interfaz de
-administración:&lt;/p&gt;
-&lt;img alt="/images/blog/permiso_ver_detalle_persona.jpg" src="http://pythonpiura.org/images/blog/permiso_ver_detalle_persona.jpg"&gt;
-&lt;p&gt;Damos click en la flecha y guardamos la modificación, ahora ingresemos
-a la aplicación personas con el usuario1 y nos debe salir una pantalla
-como la siguiente:&lt;/p&gt;
-&lt;img alt="/images/blog/con_permiso_ver_persona.jpg" src="http://pythonpiura.org/images/blog/con_permiso_ver_persona.jpg"&gt;
-&lt;p&gt;Eso es todo por hoy, en un proximo post terminaremos de personalizar
-el resto de permisos y hacerle algunas modificaciones estéticas a
-nuestro proyecto.
-Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>Círculo</category><guid>http://pythonpiura.org/posts/2016/05/02/personalizando-permisos/</guid><pubDate>Tue, 03 May 2016 02:13:53 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;&lt;p&gt;Saludos y muchas gracias.&lt;/p&gt;&lt;/div&gt;</description><category>pillow</category><category>pytesseract</category><category>Python</category><category>Selenium</category><guid>http://pythonpiura.org/posts/2016/05/07/web-scrapping-con-python-y-selenium/</guid><pubDate>Sun, 08 May 2016 01:58:06 GMT</pubDate></item></channel></rss>
