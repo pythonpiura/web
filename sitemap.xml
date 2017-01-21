@@ -27,11 +27,11 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2017-01-21T16:40:00Z</lastmod>
+  <lastmod>2017-01-21T18:28:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
-  <lastmod>2017-01-17T04:52:00Z</lastmod>
+  <lastmod>2017-01-21T18:28:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-1.html</loc>
@@ -39,7 +39,11 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-2.html</loc>
-  <lastmod>2017-01-21T16:40:00Z</lastmod>
+  <lastmod>2017-01-21T18:28:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/blog/index-3.html</loc>
+  <lastmod>2017-01-21T18:28:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
@@ -204,6 +208,10 @@
  <url>
   <loc>http://pythonpiura.org/posts/2016/06/18/ipython-y-jupyter/</loc>
   <lastmod>2017-01-17T04:53:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/configurando-la-ruta-de-los-addons-en-odoo/</loc>
+  <lastmod>2017-01-21T18:28:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/configurando-un-proxy-inverso-para-odoo-10/</loc>

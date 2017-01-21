@@ -10,7 +10,7 @@
 <meta name="generator" content="Nikola (getnikola.com)">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="../rss.xml">
 <link rel="canonical" href="http://pythonpiura.org/blog/">
-<link rel="next" href="index-2.html" type="text/html">
+<link rel="next" href="index-3.html" type="text/html">
 <!--[if lt IE 9]><script src="../assets/js/html5.js"></script><![endif]-->
 </head>
 <body>
@@ -64,7 +64,80 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/" class="u-url">Guardando la Configuración de una Instancia de Odoo en un Archivo</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/configurando-la-ruta-de-los-addons-en-odoo/" class="u-url">Configurando la Ruta de los Addons en Odoo</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Comunidad Python Piura
+            </span></p>
+            <p class="dateline"><a href="../posts/configurando-la-ruta-de-los-addons-en-odoo/" rel="bookmark"><time class="published dt-published" datetime="2017-01-21T11:49:24-05:00" title="2017-01-21 11:49">2017-01-21 11:49</time></a></p>
+                <p class="commentline">
+        
+    <a href="../posts/configurando-la-ruta-de-los-addons-en-odoo/#disqus_thread" data-disqus-identifier="cache/posts/configurando-la-ruta-de-los-addons-en-odoo.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>La ruta de los addons es un parámetro de configuración, que lista los directorios donde se buscarán los módulos agregados a Odoo cuando se inicializa una nueva base de datos.
+Los directorios listados en la ruta addons se espera que contengan subdirectorios, cada uno de los cuales es un módulo agregado.</p>
+<p>Primero ingresamos a la ruta donde tenemos nuestro entorno de Odoo 10 y creamos una carpeta llamada local-addons:</p>
+<pre class="code bash"><a name="rest_code_35617ea1e692428fab258a3f3a3f0133-1"></a><span class="nb">cd</span> ~/odoo-dev-10/
+<a name="rest_code_35617ea1e692428fab258a3f3a3f0133-2"></a>mkdir local-addons
+</pre>
+<p>La carpeta local-addons contendrá los módulos que vamos a desarrollar.</p>
+<p>Ahora editamos la configuración de la instancia:</p>
+<pre class="code bash"><a name="rest_code_22e3b2a9e08a491188bbfcc8e29dcf4d-1"></a>nano myodoo.cfg
+</pre>
+<p>Localizamos la linea  que empieza con addons_path =. Por defecto esta mostrará lo siguiente:</p>
+<pre class="code bash"><a name="rest_code_bda312bb781447fb965f3afeccaf4dac-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons
+</pre>
+<p>Modificamos la linea agregando una coma al final de la linea y añadiendo la ruta donde van a estar nuestros módulos adicionales, en este caso la carpeta local-addons en la ruta /home/usuario/odoo-dev-10:</p>
+<pre class="code bash"><a name="rest_code_8c618a069ddc4931b9c9fd73ce259b27-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons,/home/usuario/odoo-dev-10/local-addons
+</pre>
+<p>Ahora reiniciamos nuestra instancia de odoo:</p>
+<pre class="code bash"><a name="rest_code_231ce96e10164a56be6664f5c28a0f0a-1"></a>python odoo/odoo-bin -c myodoo.cfg
+</pre>
+<p>Si  nos detenemos a observar la terminal y los avisos que nos lanza Odoo, veremos que en la linea de addons_paths ya nos aparece la carpeta local-addons:</p>
+<pre class="code bash"><a name="rest_code_05b95d43c21c47e4aee8d91a10f38974-1"></a>2017-01-21 17:03:58,845 <span class="m">8081</span> INFO ? odoo: addons paths: <span class="o">[</span><span class="s1">'/home/usuario/.local/share/Odoo/addons/10.0'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/odoo/odoo/addons'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/odoo/addons'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/local-addons'</span><span class="o">]</span>
+</pre>
+<div class="section" id="instalacion-de-modulos-desde-github">
+<h2>Instalación de módulos desde GitHub</h2>
+<p>GitHub es una gran fuente de módulos de terceros. Muchos desarrolladores de Odoo utilizan GitHub para compartir sus módulos, y la Asociación Comunitaria Odoo(OCA) mantiene colectivamente varios cientos de addons en GitHub.</p>
+<p>Vamos a descargar un módulo de Asociación Comunitaria Odoo(OCA), para buscar los que necesitamos podemos ir a:</p>
+<p><a class="reference external" href="https://github.com/OCA/">https://github.com/OCA/</a></p>
+<p>En esta caso instalaremos algunos módulos que nos permiten tener funcionalidades para administrar centros de salud, para ello debemos situarnos en la carpeta de nuestro entorno de desarrollo y clonar el módulo allí:</p>
+<pre class="code bash"><a name="rest_code_91a4475828664b61a6af00e3fb377de2-1"></a><span class="nb">cd</span> ~/odoo-dev-10
+<a name="rest_code_91a4475828664b61a6af00e3fb377de2-2"></a>git clone https://github.com/OCA/vertical-medical
+</pre>
+<p>De acuerdo a la documentación sabemos que estos módulos dependen de otro llamado partner contacto, por lo que también debemos descargarlo para que esté disponible:</p>
+<pre class="code bash"><a name="rest_code_57b132747e5b43f3b010938f3e90da02-1"></a>git clone https://github.com/OCA/partner-contact.git
+</pre>
+<p>Ahora en nuestra carpeta tendremos dos carpetas adicionales tal como se muestra en la imagen:</p>
+<img alt="/images/blog/addons4.png" src="../images/blog/addons4.png"><p>Todos los repositorios de códigos de la Asociación Comunitaria Odoo(OCA) tienen sus complementos contenidos en subdirectorios separados, lo cual es coherente con lo que espera de Odoo con respecto a los directorios en la ruta addons, por lo que debemos agregar ambas a la ruta de addons:</p>
+<pre class="code bash"><a name="rest_code_d0bdc846b3014e4ba368c1505ec86a8a-1"></a>nano myodoo.cfg
+</pre>
+<p>Modificamos la linea addons_path:</p>
+<pre class="code bash"><a name="rest_code_981df41db9ae4864a9bfe5070f9e021a-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons,/home/usuario/odoo-dev-10/local-addons, /home/usuario/odoo-dev-10/partner-contact, /home/usuario/odoo-dev-10/vertical-medical
+</pre>
+<p>Regresamos a la carpeta anterior y lanzamos nuestra instancia:</p>
+<pre class="code bash"><a name="rest_code_d47e17aa82d542a696bd00115cf6376e-1"></a><span class="nb">cd</span> ..
+<a name="rest_code_d47e17aa82d542a696bd00115cf6376e-2"></a>python odoo/odoo-bin -c myodoo.cfg
+</pre>
+<p>Ahora nos vamos al navegador para instalar nuestros addons descargados:</p>
+<p><a class="reference external" href="https://localhost:8069">https://localhost:8069</a></p>
+<p>Recordemos que el usuario y la contraseña por defecto son admin y admin.</p>
+<p>Una vez que hayamos ingresado, buscamos el menú Settings(acá lo tenemos como Configuración, debido a que ya cargamos el soporte para idioma Español) y activamos el modo desarrollador:</p>
+<img alt="/images/blog/addons1.png" src="../images/blog/addons1.png"><p>Ahora nos vamos al menú Apps y le damos click a la opción "Actualizar lista de aplicaciones":</p>
+<img alt="/images/blog/addons2.png" src="../images/blog/addons2.png"><p>Nos desplegará una ventana como la siguiente, donde presionamos el botón actualizar:</p>
+<img alt="/images/blog/addons3.png" src="../images/blog/addons3.png"><p>Finalmente vamos a las aplicaciones y buscamos el módulo Odoo Medical:</p>
+<img alt="/images/blog/addons5.png" src="../images/blog/addons5.png"><p>Le damos click al botón instalar y automáticamente instalará también el addon partner-contact:</p>
+<p>Ya con esto podemos administrar un centro médico con Odoo.</p>
+<img alt="/images/blog/addons6.png" src="../images/blog/addons6.png"><p>Saludos.</p>
+</div>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/" class="u-url">Guardando la Configuración de una Instancia de Odoo en un Archivo</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Comunidad Python Piura
@@ -79,23 +152,23 @@
 </div>
     </header><div class="e-content entry-content">
     <div>
-<p>Seguimos configurando un entorno de desarrollo para Odoo 10 y tal como hemos visto en el <a class="reference external" href="../instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/">artículo anterior</a> podíamos levantar una instancia de Odoo con algunos parámetros agregados:</p>
-<pre class="code bash"><a name="rest_code_dff932f3bd9b42eeadda718a335d3a48-1"></a>python odoo-bin -d odoo10 --addons-path<span class="o">=</span>addons
+<p>Seguimos configurando un entorno de desarrollo para Odoo 10 y tal como hemos visto en el <a class="reference external" href="../posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/">artículo anterior</a> podíamos levantar una instancia de Odoo con algunos parámetros agregados:</p>
+<pre class="code bash"><a name="rest_code_e42f3c1509a34358b9fb40018db02091-1"></a>python odoo-bin -d odoo10 --addons-path<span class="o">=</span>addons
 </pre>
 <p>Odoo tiene múltiples parámetros de configuración, para ver que parámetros podemos utilizar ejecutamos el siguiente comando:</p>
-<pre class="code bash"><a name="rest_code_4890779835ac4710aafd5a27f21c48a1-1"></a>python odoo-bin --help <span class="p">|</span> less
+<pre class="code bash"><a name="rest_code_7bfb6f41a31d4ff492f0aa4baf52ad25-1"></a>python odoo-bin --help <span class="p">|</span> less
 </pre>
 <p>Estar cargando todos estos parámetros cada vez que levantamos nuestra instancia es un poco tedioso, por eso tenemos la opción de guardar un archivo de configuración donde tengamos todos nuestros parámetros establecidos.</p>
 <p>Suponiendo que estamos ubicados en la carpeta que contiene el código fuente de Odoo, para generar el archivo de configuración debemos correr el siguiente comando:</p>
-<pre class="code bash"><a name="rest_code_9dbc4d6c23144d10ab6c73ebd79adb38-1"></a>python odoo-bin --save --config myodoo.cfg --stop-after-init
+<pre class="code bash"><a name="rest_code_71b7e2073c644318be20e09b4878ed76-1"></a>python odoo-bin --save --config myodoo.cfg --stop-after-init
 </pre>
 <p>De esta manera generamos un archivo de configuración llamado myodoo.cfg(el nombre puede ser cualquiera) que se guardará en la misma carpeta donde está el script odoo-bin.</p>
 <p>Es posible guardar este archivo en cualquier ubicación, eso ya depende de nosotros y de como nos ubiquemos para utilizar el script odoo-bin, en nuestro caso siempre creamos el archivo de configuración en la carpeta superior a la que contiene el código fuente de odoo(si seguimos la secuencia del artículo anterior esta carpeta será odoo-dev-10), por lo que haremos lo siguiente:</p>
-<pre class="code bash"><a name="rest_code_4557aa48653b410a9c329fbe1eb6f308-1"></a><span class="nb">cd</span> ~/odoo-dev-10
-<a name="rest_code_4557aa48653b410a9c329fbe1eb6f308-2"></a>python odoo/odoo-bin --save --config myodoo.cfg –stop-after-init
+<pre class="code bash"><a name="rest_code_5baf9e07645b4ed19c70a6161553b68c-1"></a><span class="nb">cd</span> ~/odoo-dev-10
+<a name="rest_code_5baf9e07645b4ed19c70a6161553b68c-2"></a>python odoo/odoo-bin --save --config myodoo.cfg --stop-after-init
 </pre>
 <p>Si editamos el archivo myodoo.cfg y cambiamos algunos de los parámetros, es posible tomar estos cambios la siguiente vez que iniciemos nuestra instancia usando el parámetro -c, que es una opción abreviada de --config:</p>
-<pre class="code bash"><a name="rest_code_ea5b8531a92d4f929b78a3bad333f27c-1"></a>python odoo/odoo-bin -c myodoo.cfg
+<pre class="code bash"><a name="rest_code_2f5850d87bcd4d589bac1a7a51daab45-1"></a>python odoo/odoo-bin -c myodoo.cfg
 </pre>
 <p>Esto funciona de la siguiente manera, al arrancar, Odoo carga su configuración en tres pasos:</p>
 <ul class="simple">
@@ -1198,28 +1271,12 @@ pantalla:</p>
 Saludos.</p>
 </div>
     </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/" class="u-url">Fotos Charla Web Scrapping con Python y Selenium</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Comunidad Python Piura
-            </span></p>
-            <p class="dateline"><a href="../posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/" rel="bookmark"><time class="published dt-published" datetime="2016-05-09T15:52:18-05:00" title="2016-05-09 15:52">2016-05-09 15:52</time></a></p>
-                <p class="commentline">
-        
-    <a href="../posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium/#disqus_thread" data-disqus-identifier="cache/posts/2016/05/09/fotos-charla-web-scrapping-con-python-y-selenium.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <span><img alt="/images/blog/p5070212.jpg" src="../images/blog/p5070212.jpg"><img alt="/images/blog/p5070204.jpg" src="../images/blog/p5070204.jpg"><img alt="/images/blog/p5070208.jpg" src="../images/blog/p5070208.jpg"><img alt="/images/blog/p5070209.jpg" src="../images/blog/p5070209.jpg"><img alt="/images/blog/p5070210.jpg" src="../images/blog/p5070210.jpg"><img alt="/images/blog/p5070211.jpg" src="../images/blog/p5070211.jpg"></span>
-    </div>
     </article>
 </div>
 
         <nav class="postindexpager"><ul class="pager">
 <li class="next">
-                <a href="index-2.html" rel="next">Publicaciones anteriores</a>
+                <a href="index-3.html" rel="next">Publicaciones anteriores</a>
             </li>
         </ul></nav><script>var disqus_shortname="pythonpiura-org";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
 </div>
