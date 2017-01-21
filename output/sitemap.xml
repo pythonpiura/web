@@ -27,7 +27,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2017-01-21T14:40:00Z</lastmod>
+  <lastmod>2017-01-21T16:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -39,7 +39,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-2.html</loc>
-  <lastmod>2017-01-21T14:40:00Z</lastmod>
+  <lastmod>2017-01-21T16:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
@@ -208,6 +208,10 @@
  <url>
   <loc>http://pythonpiura.org/posts/configurando-un-proxy-inverso-para-odoo-10/</loc>
   <lastmod>2017-01-19T16:14:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/</loc>
+  <lastmod>2017-01-21T16:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/</loc>

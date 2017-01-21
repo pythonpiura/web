@@ -64,7 +64,50 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/" class="u-url">Instalando Entorno de Desarrollo para Odoo 10 en Ubuntu 16.04</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/" class="u-url">Guardando la Configuración de una Instancia de Odoo en un Archivo</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Comunidad Python Piura
+            </span></p>
+            <p class="dateline"><a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/" rel="bookmark"><time class="published dt-published" datetime="2017-01-21T11:35:33-05:00" title="2017-01-21 11:35">2017-01-21 11:35</time></a></p>
+                <p class="commentline">
+        
+    <a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/#disqus_thread" data-disqus-identifier="cache/posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>Seguimos configurando un entorno de desarrollo para Odoo 10 y tal como hemos visto en el <a class="reference external" href="../instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/">artículo anterior</a> podíamos levantar una instancia de Odoo con algunos parámetros agregados:</p>
+<pre class="code bash"><a name="rest_code_dff932f3bd9b42eeadda718a335d3a48-1"></a>python odoo-bin -d odoo10 --addons-path<span class="o">=</span>addons
+</pre>
+<p>Odoo tiene múltiples parámetros de configuración, para ver que parámetros podemos utilizar ejecutamos el siguiente comando:</p>
+<pre class="code bash"><a name="rest_code_4890779835ac4710aafd5a27f21c48a1-1"></a>python odoo-bin --help <span class="p">|</span> less
+</pre>
+<p>Estar cargando todos estos parámetros cada vez que levantamos nuestra instancia es un poco tedioso, por eso tenemos la opción de guardar un archivo de configuración donde tengamos todos nuestros parámetros establecidos.</p>
+<p>Suponiendo que estamos ubicados en la carpeta que contiene el código fuente de Odoo, para generar el archivo de configuración debemos correr el siguiente comando:</p>
+<pre class="code bash"><a name="rest_code_9dbc4d6c23144d10ab6c73ebd79adb38-1"></a>python odoo-bin --save --config myodoo.cfg --stop-after-init
+</pre>
+<p>De esta manera generamos un archivo de configuración llamado myodoo.cfg(el nombre puede ser cualquiera) que se guardará en la misma carpeta donde está el script odoo-bin.</p>
+<p>Es posible guardar este archivo en cualquier ubicación, eso ya depende de nosotros y de como nos ubiquemos para utilizar el script odoo-bin, en nuestro caso siempre creamos el archivo de configuración en la carpeta superior a la que contiene el código fuente de odoo(si seguimos la secuencia del artículo anterior esta carpeta será odoo-dev-10), por lo que haremos lo siguiente:</p>
+<pre class="code bash"><a name="rest_code_4557aa48653b410a9c329fbe1eb6f308-1"></a><span class="nb">cd</span> ~/odoo-dev-10
+<a name="rest_code_4557aa48653b410a9c329fbe1eb6f308-2"></a>python odoo/odoo-bin --save --config myodoo.cfg –stop-after-init
+</pre>
+<p>Si editamos el archivo myodoo.cfg y cambiamos algunos de los parámetros, es posible tomar estos cambios la siguiente vez que iniciemos nuestra instancia usando el parámetro -c, que es una opción abreviada de --config:</p>
+<pre class="code bash"><a name="rest_code_ea5b8531a92d4f929b78a3bad333f27c-1"></a>python odoo/odoo-bin -c myodoo.cfg
+</pre>
+<p>Esto funciona de la siguiente manera, al arrancar, Odoo carga su configuración en tres pasos:</p>
+<ul class="simple">
+<li>Primero se inicializa un conjunto de valores predeterminados para todas las opciones desde el código fuente.</li>
+<li>A continuación, se analiza la configuración y cualquier valor definido en el archivo reemplaza los valores predeterminados.</li>
+<li>Finalmente, se analizan las opciones de la línea de comandos y sus valores anulan la configuración obtenida del paso anterior.</li>
+</ul>
+<p>Los nombres de las variables de configuración se pueden transformar desde los nombres de las opciones de la línea de comandos, eliminando los guiones principales y convirtiendo los guiones medios en guiones bajos. Hay algunas excepciones en particular, pero para obtener mayor detalle de esto remitanse a la documentación de Odoo o a los libros que hemos recomendado en los artículos anteriores y que estamos usando como guía.</p>
+<p>Saludos.</p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/" class="u-url">Instalando Entorno de Desarrollo para Odoo 10 en Ubuntu 16.04</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Comunidad Python Piura
@@ -1170,97 +1213,6 @@ Saludos.</p>
 </div>
     </header><div class="e-content entry-content">
     <span><img alt="/images/blog/p5070212.jpg" src="../images/blog/p5070212.jpg"><img alt="/images/blog/p5070204.jpg" src="../images/blog/p5070204.jpg"><img alt="/images/blog/p5070208.jpg" src="../images/blog/p5070208.jpg"><img alt="/images/blog/p5070209.jpg" src="../images/blog/p5070209.jpg"><img alt="/images/blog/p5070210.jpg" src="../images/blog/p5070210.jpg"><img alt="/images/blog/p5070211.jpg" src="../images/blog/p5070211.jpg"></span>
-    </div>
-    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/2016/05/07/web-scrapping-con-python-y-selenium/" class="u-url">Web Scrapping con Python y Selenium</a></h1>
-        <div class="metadata">
-            <p class="byline author vcard"><span class="byline-name fn">
-                Comunidad Python Piura
-            </span></p>
-            <p class="dateline"><a href="../posts/2016/05/07/web-scrapping-con-python-y-selenium/" rel="bookmark"><time class="published dt-published" datetime="2016-05-07T20:58:06-05:00" title="2016-05-07 20:58">2016-05-07 20:58</time></a></p>
-                <p class="commentline">
-        
-    <a href="../posts/2016/05/07/web-scrapping-con-python-y-selenium/#disqus_thread" data-disqus-identifier="cache/posts/2016/05/07/web-scrapping-con-python-y-selenium.html">Comments</a>
-
-
-        </p>
-</div>
-    </header><div class="e-content entry-content">
-    <div>
-<p>El día de hoy tuvimos el agrado de ser invitados por el <a class="reference external" href="https://cideuel.wordpress.com/">Círculo UEL</a>
-a dar una charla en el marco del FLISOL 2016 en la Universidad Los
-Ángeles de Chimbote Sede Piura y el tema fue Web Scrapping con Python
-y Selenium, hicimos algunos ejemplos muy interesantes y nos encantó la
-acogida del público y el interés suscitado, vamos a compartir los
-artículos que usamos:</p>
-<p><a class="reference external" href="https://pythonpiura.wordpress.com/2014/09/18/selenium-con-python/">Selenium con Python</a></p>
-<p><a class="reference external" href="https://pythonpiura.wordpress.com/2016/01/26/romper-captchas-con-pytesseract-y-selenium/">Romper Captchas con Pytesseract y Selenium</a></p>
-<p>Las diapositivas:</p>
-<p><a class="reference external" href="../recursos/charlapythonflisol2016.pdf">Descargar</a></p>
-<p>El script que fue la estrella de la mañana:</p>
-<pre class="code python"><a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-2"></a><span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-3"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-4"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-5"></a><span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-6"></a><span class="kn">import</span> <span class="nn">os</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-7"></a>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-8"></a><span class="k">try</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-9"></a>        <span class="kn">import</span> <span class="nn">Image</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-10"></a><span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-11"></a>        <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-12"></a><span class="kn">import</span> <span class="nn">pytesseract</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-13"></a>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-14"></a><span class="k">def</span> <span class="nf">decodifica_campo</span><span class="p">(</span><span class="n">campo</span><span class="p">):</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-15"></a>        <span class="k">return</span> <span class="s2">u"</span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">campo</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-16"></a>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-17"></a><span class="k">def</span> <span class="nf">ir_sunat_web</span><span class="p">(</span><span class="n">ruta</span><span class="p">):</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-18"></a>        <span class="n">fp</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">FirefoxProfile</span><span class="p">()</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-19"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.download.manager.showWhenStarting"</span><span class="p">,</span><span class="bp">False</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-20"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.download.manager.closeWhenDone"</span><span class="p">,</span> <span class="bp">True</span><span class="p">);</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-21"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.download.manager.showAlertOnComplete"</span><span class="p">,</span> <span class="bp">False</span><span class="p">);</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-22"></a>        <span class="n">fp</span><span class="o">.</span><span class="n">set_preference</span><span class="p">(</span><span class="s2">"browser.helperApps.neverAsk.saveToDisk"</span><span class="p">,</span> <span class="s2">"application/zip"</span><span class="p">);</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-23"></a>        <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Firefox</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-24"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"http://www.sunat.gob.pe/cl-ti-itmrconsmulruc/jrmS00Alias"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-25"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-26"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s2">"imagen"</span><span class="p">)))</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-27"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-28"></a>                <span class="k">print</span> <span class="s2">"No carga imagen"</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-29"></a>        <span class="n">driver</span><span class="o">.</span><span class="n">save_screenshot</span><span class="p">(</span><span class="s2">"screenshot.png"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-30"></a>        <span class="n">img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">'screenshot.png'</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-31"></a>        <span class="n">img_recortada</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">crop</span><span class="p">((</span><span class="mi">700</span><span class="p">,</span><span class="mi">309</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">361</span><span class="p">))</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-32"></a>        <span class="n">img_recortada</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"recorte.png"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-33"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-34"></a>                <span class="n">captcha</span> <span class="o">=</span> <span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img_recortada</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-35"></a>                <span class="n">codigo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"codigoA"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-36"></a>                <span class="n">codigo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">captcha</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-37"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-38"></a>                <span class="k">pass</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-39"></a>        <span class="n">archivo</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"archivo"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-40"></a>        <span class="n">archivo</span><span class="o">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">ruta</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-41"></a>        <span class="n">form</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_name</span><span class="p">(</span><span class="s2">"frmConsMulRucArchivo"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-42"></a>        <span class="n">botones</span><span class="o">=</span><span class="n">form</span><span class="o">.</span><span class="n">find_elements_by_class_name</span><span class="p">(</span><span class="s2">"form-button"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-43"></a>        <span class="n">botones</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-44"></a>        <span class="k">try</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-45"></a>                <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span><span class="n">EC</span><span class="o">.</span><span class="n">presence_of_all_elements_located</span><span class="p">((</span><span class="n">By</span><span class="o">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s2">"form-table"</span><span class="p">)))</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-46"></a>                <span class="n">enlace</span><span class="o">=</span><span class="n">driver</span><span class="o">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="o">.</span><span class="n">TAG_NAME</span><span class="p">,</span><span class="s2">"a"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-47"></a>                <span class="n">enlace</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-48"></a>        <span class="k">except</span><span class="p">:</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-49"></a>                <span class="k">print</span> <span class="s2">"Element is not present"</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-50"></a>                <span class="n">driver</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-51"></a>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-52"></a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-53"></a>        <span class="n">ruta</span> <span class="o">=</span> <span class="s2">"/home/usuario/carpeta"</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-54"></a>        <span class="n">ruta_archivo</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span><span class="s2">"rucs.zip"</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-55"></a>        <span class="n">ir_sunat_web</span><span class="p">(</span><span class="n">ruta_archivo</span><span class="p">)</span>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-56"></a>
-<a name="rest_code_4dfd84248b5a487c8a54dc7e7b0a2a9d-57"></a><span class="n">main</span><span class="p">()</span>
-</pre>
-<p>Así como también un vídeo de su funcionamiento.</p>
-<div class="youtube-video">
-<iframe width="425" height="344" src="https://www.youtube.com/embed/mUaVFYTlibM?rel=0&amp;hd=1&amp;wmode=transparent"></iframe>
-</div>
-<p>Saludos y muchas gracias.</p>
-</div>
     </div>
     </article>
 </div>
