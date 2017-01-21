@@ -47,7 +47,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
-  <lastmod>2017-01-21T14:40:00Z</lastmod>
+  <lastmod>2017-01-21T18:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/centos/</loc>
@@ -68,6 +68,14 @@
  <url>
   <loc>http://pythonpiura.org/categories/nikola/</loc>
   <lastmod>2017-01-20T05:17:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/categories/odoo-medical/</loc>
+  <lastmod>2017-01-21T18:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/categories/odoo-partner/</loc>
+  <lastmod>2017-01-21T18:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/odoo/</loc>

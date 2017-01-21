@@ -1,7 +1,7 @@
 .. title: Configurando la Ruta de los Addons en Odoo
 .. slug: configurando-la-ruta-de-los-addons-en-odoo
 .. date: 2017-01-21 11:49:24 UTC-05:00
-.. tags: 
+.. tags: odoo, odoo-medical, odoo-partner
 .. category: 
 .. link: 
 .. description: 

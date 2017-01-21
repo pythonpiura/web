@@ -82,24 +82,24 @@
 <p>La ruta de los addons es un parámetro de configuración, que lista los directorios donde se buscarán los módulos agregados a Odoo cuando se inicializa una nueva base de datos.
 Los directorios listados en la ruta addons se espera que contengan subdirectorios, cada uno de los cuales es un módulo agregado.</p>
 <p>Primero ingresamos a la ruta donde tenemos nuestro entorno de Odoo 10 y creamos una carpeta llamada local-addons:</p>
-<pre class="code bash"><a name="rest_code_35617ea1e692428fab258a3f3a3f0133-1"></a><span class="nb">cd</span> ~/odoo-dev-10/
-<a name="rest_code_35617ea1e692428fab258a3f3a3f0133-2"></a>mkdir local-addons
+<pre class="code bash"><a name="rest_code_051055fec710417cafff69956b070a9f-1"></a><span class="nb">cd</span> ~/odoo-dev-10/
+<a name="rest_code_051055fec710417cafff69956b070a9f-2"></a>mkdir local-addons
 </pre>
 <p>La carpeta local-addons contendrá los módulos que vamos a desarrollar.</p>
 <p>Ahora editamos la configuración de la instancia:</p>
-<pre class="code bash"><a name="rest_code_22e3b2a9e08a491188bbfcc8e29dcf4d-1"></a>nano myodoo.cfg
+<pre class="code bash"><a name="rest_code_29c2a1b034384d48958c3f510aa652a8-1"></a>nano myodoo.cfg
 </pre>
 <p>Localizamos la linea  que empieza con addons_path =. Por defecto esta mostrará lo siguiente:</p>
-<pre class="code bash"><a name="rest_code_bda312bb781447fb965f3afeccaf4dac-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons
+<pre class="code bash"><a name="rest_code_303f0359ef1449bda6cc466a637a94f3-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons
 </pre>
 <p>Modificamos la linea agregando una coma al final de la linea y añadiendo la ruta donde van a estar nuestros módulos adicionales, en este caso la carpeta local-addons en la ruta /home/usuario/odoo-dev-10:</p>
-<pre class="code bash"><a name="rest_code_8c618a069ddc4931b9c9fd73ce259b27-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons,/home/usuario/odoo-dev-10/local-addons
+<pre class="code bash"><a name="rest_code_ab83b63e4e6f483c81110157ec55dcbf-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons,/home/usuario/odoo-dev-10/local-addons
 </pre>
 <p>Ahora reiniciamos nuestra instancia de odoo:</p>
-<pre class="code bash"><a name="rest_code_231ce96e10164a56be6664f5c28a0f0a-1"></a>python odoo/odoo-bin -c myodoo.cfg
+<pre class="code bash"><a name="rest_code_f54e10dced75467eaaef005f77600e83-1"></a>python odoo/odoo-bin -c myodoo.cfg
 </pre>
 <p>Si  nos detenemos a observar la terminal y los avisos que nos lanza Odoo, veremos que en la linea de addons_paths ya nos aparece la carpeta local-addons:</p>
-<pre class="code bash"><a name="rest_code_05b95d43c21c47e4aee8d91a10f38974-1"></a>2017-01-21 17:03:58,845 <span class="m">8081</span> INFO ? odoo: addons paths: <span class="o">[</span><span class="s1">'/home/usuario/.local/share/Odoo/addons/10.0'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/odoo/odoo/addons'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/odoo/addons'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/local-addons'</span><span class="o">]</span>
+<pre class="code bash"><a name="rest_code_021426ec2f47447da18356bb1a13435d-1"></a>2017-01-21 17:03:58,845 <span class="m">8081</span> INFO ? odoo: addons paths: <span class="o">[</span><span class="s1">'/home/usuario/.local/share/Odoo/addons/10.0'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/odoo/odoo/addons'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/odoo/addons'</span>, u<span class="s1">'/home/usuario/odoo-dev-10/local-addons'</span><span class="o">]</span>
 </pre>
 <div class="section" id="instalacion-de-modulos-desde-github">
 <h2>Instalación de módulos desde GitHub</h2>
@@ -107,22 +107,22 @@ Los directorios listados en la ruta addons se espera que contengan subdirectorio
 <p>Vamos a descargar un módulo de Asociación Comunitaria Odoo(OCA), para buscar los que necesitamos podemos ir a:</p>
 <p><a class="reference external" href="https://github.com/OCA/">https://github.com/OCA/</a></p>
 <p>En esta caso instalaremos algunos módulos que nos permiten tener funcionalidades para administrar centros de salud, para ello debemos situarnos en la carpeta de nuestro entorno de desarrollo y clonar el módulo allí:</p>
-<pre class="code bash"><a name="rest_code_91a4475828664b61a6af00e3fb377de2-1"></a><span class="nb">cd</span> ~/odoo-dev-10
-<a name="rest_code_91a4475828664b61a6af00e3fb377de2-2"></a>git clone https://github.com/OCA/vertical-medical
+<pre class="code bash"><a name="rest_code_7ead55d86456404dbe13260f7427b452-1"></a><span class="nb">cd</span> ~/odoo-dev-10
+<a name="rest_code_7ead55d86456404dbe13260f7427b452-2"></a>git clone https://github.com/OCA/vertical-medical
 </pre>
 <p>De acuerdo a la documentación sabemos que estos módulos dependen de otro llamado partner contacto, por lo que también debemos descargarlo para que esté disponible:</p>
-<pre class="code bash"><a name="rest_code_57b132747e5b43f3b010938f3e90da02-1"></a>git clone https://github.com/OCA/partner-contact.git
+<pre class="code bash"><a name="rest_code_04326b5ceb7147ce9232c1309e9097da-1"></a>git clone https://github.com/OCA/partner-contact.git
 </pre>
 <p>Ahora en nuestra carpeta tendremos dos carpetas adicionales tal como se muestra en la imagen:</p>
 <img alt="/images/blog/addons4.png" src="../images/blog/addons4.png"><p>Todos los repositorios de códigos de la Asociación Comunitaria Odoo(OCA) tienen sus complementos contenidos en subdirectorios separados, lo cual es coherente con lo que espera de Odoo con respecto a los directorios en la ruta addons, por lo que debemos agregar ambas a la ruta de addons:</p>
-<pre class="code bash"><a name="rest_code_d0bdc846b3014e4ba368c1505ec86a8a-1"></a>nano myodoo.cfg
+<pre class="code bash"><a name="rest_code_ce85e66de2914ca6927dce8662f57d15-1"></a>nano myodoo.cfg
 </pre>
 <p>Modificamos la linea addons_path:</p>
-<pre class="code bash"><a name="rest_code_981df41db9ae4864a9bfe5070f9e021a-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons,/home/usuario/odoo-dev-10/local-addons, /home/usuario/odoo-dev-10/partner-contact, /home/usuario/odoo-dev-10/vertical-medical
+<pre class="code bash"><a name="rest_code_98825c90f61e42419ec92855bfc5af4c-1"></a><span class="nv">addons_path</span> <span class="o">=</span> /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons,/home/usuario/odoo-dev-10/local-addons, /home/usuario/odoo-dev-10/partner-contact, /home/usuario/odoo-dev-10/vertical-medical
 </pre>
 <p>Regresamos a la carpeta anterior y lanzamos nuestra instancia:</p>
-<pre class="code bash"><a name="rest_code_d47e17aa82d542a696bd00115cf6376e-1"></a><span class="nb">cd</span> ..
-<a name="rest_code_d47e17aa82d542a696bd00115cf6376e-2"></a>python odoo/odoo-bin -c myodoo.cfg
+<pre class="code bash"><a name="rest_code_e70a654d98954cdaa828443548be9bae-1"></a><span class="nb">cd</span> ..
+<a name="rest_code_e70a654d98954cdaa828443548be9bae-2"></a>python odoo/odoo-bin -c myodoo.cfg
 </pre>
 <p>Ahora nos vamos al navegador para instalar nuestros addons descargados:</p>
 <p><a class="reference external" href="https://localhost:8069">https://localhost:8069</a></p>
