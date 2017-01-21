@@ -7,7 +7,7 @@
 .. description: 
 .. type: text
 
-Seguimos configurando un entorno de desarrollo para Odoo 10 y tal como hemos visto en el `artículo anterior </instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/>`_ podíamos levantar una instancia de Odoo con algunos parámetros agregados:
+Seguimos configurando un entorno de desarrollo para Odoo 10 y tal como hemos visto en el `artículo anterior </posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/>`_ podíamos levantar una instancia de Odoo con algunos parámetros agregados:
 
 .. code-block:: bash
 
@@ -34,7 +34,7 @@ Es posible guardar este archivo en cualquier ubicación, eso ya depende de nosot
 .. code-block:: bash
 	
 	cd ~/odoo-dev-10
-	python odoo/odoo-bin --save --config myodoo.cfg –stop-after-init
+	python odoo/odoo-bin --save --config myodoo.cfg --stop-after-init
 
 Si editamos el archivo myodoo.cfg y cambiamos algunos de los parámetros, es posible tomar estos cambios la siguiente vez que iniciemos nuestra instancia usando el parámetro -c, que es una opción abreviada de --config:
 
