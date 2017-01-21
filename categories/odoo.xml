@@ -1,5 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Python Piura (Publicaciones sobre odoo)</title><link>http://pythonpiura.org/</link><description></description><atom:link href="http://pythonpiura.org/categories/odoo.xml" type="application/rss+xml" rel="self"></atom:link><language>es</language><lastBuildDate>Fri, 20 Jan 2017 05:17:09 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Configurando un Proxy Inverso para Odoo 10</title><link>http://pythonpiura.org/posts/configurando-un-proxy-inverso-para-odoo-10/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Teniendo en cuenta la configuración realizada en nuestro anterior artículo &lt;a class="reference external" href="http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/"&gt;Instalación de Odoo 10 en Producción&lt;/a&gt;
+<?xml-stylesheet type="text/xsl" href="../assets/xml/rss.xsl" media="all"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Python Piura (Publicaciones sobre odoo)</title><link>http://pythonpiura.org/</link><description></description><atom:link rel="self" href="http://pythonpiura.org/categories/odoo.xml" type="application/rss+xml"></atom:link><language>es</language><lastBuildDate>Sat, 21 Jan 2017 14:54:05 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Instalando Entorno de Desarrollo para Odoo 10 en Ubuntu 16.04</title><link>http://pythonpiura.org/posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Continuando nuestra serie de tutoriales sobre Odoo esta vez nos toca hacer la instalación de un entorno de desarrollo para Odoo sobre Ubuntu 16.04.&lt;/p&gt;
+&lt;p&gt;Primero instalamos las dependencias necesarias:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_5bc1ffb3233e4e3c8be40970b37ecff2-1"&gt;&lt;/a&gt;sudo apt-get install git python2.7 postgresql nano python-virtualenv
+&lt;/pre&gt;&lt;p&gt;Descargamos e instalamos wkhtmltox, esto es necesario para los reportes en pdf.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_aabc89c796ec46be971b263951ce98f5-1"&gt;&lt;/a&gt;wget http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
+&lt;a name="rest_code_aabc89c796ec46be971b263951ce98f5-2"&gt;&lt;/a&gt;dpkg -i wkhtmltox-0.12.1.2_linux-jessie-amd64.deb
+&lt;/pre&gt;&lt;p&gt;Ahora instalamos las dependencias de desarrollo:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_bea09ca4b0ef477fbccbf2fe739963fe-1"&gt;&lt;/a&gt;sudo apt-get install gcc python2.7-dev libxml2-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_bea09ca4b0ef477fbccbf2fe739963fe-2"&gt;&lt;/a&gt;libxslt1-dev libevent-dev libsasl2-dev libldap2-dev libpq-dev &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;a name="rest_code_bea09ca4b0ef477fbccbf2fe739963fe-3"&gt;&lt;/a&gt;libpng12-dev libjpeg-dev
+&lt;/pre&gt;&lt;p&gt;Instalamos NodeJS y su manejador de paquetes:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_89a2a12a574d4cb3bbf913821587408e-1"&gt;&lt;/a&gt;sudo apt-get install npm
+&lt;a name="rest_code_89a2a12a574d4cb3bbf913821587408e-2"&gt;&lt;/a&gt;ln -s /usr/bin/nodejs /usr/bin/node
+&lt;/pre&gt;&lt;p&gt;Instalamos el compilador less, a partir de la versión 9.0, el cliente web Odoo requiere el preprocesador less CSS para que las páginas web se representen correctamente, esto depende de Node.js y npm, que hemos instalado en el paso anterior.&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_e3963ac815cf4f1c82743bb7b4a89317-1"&gt;&lt;/a&gt;npm install -g less less-plugin-clean-css
+&lt;/pre&gt;&lt;p&gt;Configuramos postgresql, primero creamos un usuario con posibilidad de crear bases de datos y que tenga nuestro mismo nombre de usuario de Ubuntu:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_c2e47e0d099f425fa6c53e13d3b4ff9a-1"&gt;&lt;/a&gt;sudo -u postgres createuser --createdb &lt;span class="k"&gt;$(&lt;/span&gt;whoami&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Creamos la base de datos odoo10&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_1787c7d8b86040bfa36b61286e501b6a-1"&gt;&lt;/a&gt;createdb odoo10
+&lt;/pre&gt;&lt;p&gt;Configuramos git para poder descargar el código fuente de odoo:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_304b71e5729640938e0d9c348195d9ff-1"&gt;&lt;/a&gt;git config --global user.name &lt;span class="s2"&gt;"Tu nombre"&lt;/span&gt;
+&lt;a name="rest_code_304b71e5729640938e0d9c348195d9ff-2"&gt;&lt;/a&gt;git config --global user.email &lt;span class="s2"&gt;"Tu email"&lt;/span&gt;
+&lt;/pre&gt;&lt;p&gt;Creamos la carpeta donde vamos a clonar odoo 10:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-1"&gt;&lt;/a&gt;mkdir ~/odoo-dev-10
+&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-2"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; ~/odoo-dev-10
+&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-3"&gt;&lt;/a&gt;git clone -b 10.0 --depth&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt; https://github.com/odoo/odoo.git odoo
+&lt;a name="rest_code_5c44d1a7c16c49e2997900c423a97281-4"&gt;&lt;/a&gt;&lt;span class="nb"&gt;cd&lt;/span&gt; odoo
+&lt;/pre&gt;&lt;p&gt;Creamos el entorno virtual para odoo 10 y lo activamos:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_35b4735581684f46aec9eef29fff9597-1"&gt;&lt;/a&gt;virtualenv ~/odoo-10
+&lt;a name="rest_code_35b4735581684f46aec9eef29fff9597-2"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; ~/odoo-10/bin/activate
+&lt;/pre&gt;&lt;p&gt;Instalamos las python dependencias de Odoo en el entorno virtual:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_9c18b4cf8e8d496297ccf4919c14a03c-1"&gt;&lt;/a&gt;pip install -r requirements.txt
+&lt;/pre&gt;&lt;p&gt;Ahora levantamos odoo con el siguiente comando:&lt;/p&gt;
+&lt;pre class="code bash"&gt;&lt;a name="rest_code_1dce3be22e8745bdaebf01bccaca2b4b-1"&gt;&lt;/a&gt;python odoo-bin -d odoo10 --addons-path&lt;span class="o"&gt;=&lt;/span&gt;addons
+&lt;/pre&gt;&lt;ul class="simple"&gt;
+&lt;li&gt;El script para inicializar odoo se llama odoo-bin.&lt;/li&gt;
+&lt;li&gt;El parámetro -d es para indicarle que vamos a trabajar con la base de datos odoo10.&lt;/li&gt;
+&lt;li&gt;El parámetro --addons-path es para indicarle las rutas que contendrán los addons de Odoo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Probamos el correcto funcionamiento de odoo usando nuestro navegador web y poniendo la siguiente dirección en la barra de direcciones:&lt;/p&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://localhost:8069"&gt;http://localhost:8069&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Nos logueamos con las siguientes credenciales:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Usuario: admin&lt;/li&gt;
+&lt;li&gt;Password: admin&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;En los siguientes tutoriales empezaremos a crear addons para Odoo, hasta la próxima.&lt;/p&gt;
+&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>odoo</category><category>ubuntu</category><guid>http://pythonpiura.org/posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/</guid><pubDate>Fri, 20 Jan 2017 22:33:16 GMT</pubDate></item><item><title>Configurando un Proxy Inverso para Odoo 10</title><link>http://pythonpiura.org/posts/configurando-un-proxy-inverso-para-odoo-10/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Teniendo en cuenta la configuración realizada en nuestro anterior artículo &lt;a class="reference external" href="http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/"&gt;Instalación de Odoo 10 en Producción&lt;/a&gt;
 en esta oportunidad, vamos a configurar un proxy inverso para poder acceder a nuestro odoo mediante el puerto 80, en otro artículo haremos lo mismo para el protocolo https usando el puerto 443, debemos recalcar que en esta oportunidad hemos utilizado como guía el libro "Odoo 10 Development Essentials" de Daniel Reis, entonces manos a la obra.&lt;/p&gt;
 &lt;p&gt;Odoo puede servir páginas web por si mismo, pero se recomienda tener un proxy Inverso en frente. Un proxy inverso actúa como un intermediario que gestiona el tráfico entre los clientes que envían solicitudes y el servidor Odoo que les responde. El uso de un proxy inverso tiene varios beneficios.&lt;/p&gt;
 &lt;p&gt;A nivel de seguridad:&lt;/p&gt;
