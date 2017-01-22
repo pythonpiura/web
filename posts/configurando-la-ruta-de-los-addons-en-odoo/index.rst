@@ -89,11 +89,10 @@ Modificamos la linea addons_path:
 
 	addons_path = /home/usuario/odoo-dev-10/odoo/odoo/addons,/home/usuario/odoo-dev-10/odoo/addons,/home/usuario/odoo-dev-10/local-addons, /home/usuario/odoo-dev-10/partner-contact, /home/usuario/odoo-dev-10/vertical-medical
 
-Regresamos a la carpeta anterior y lanzamos nuestra instancia:
+Ahora lanzamos nuestra instancia:
 
 .. code-block:: bash
 
-	cd ..
 	python odoo/odoo-bin -c myodoo.cfg
 
 Ahora nos vamos al navegador para instalar nuestros addons descargados:
