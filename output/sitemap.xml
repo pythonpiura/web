@@ -27,7 +27,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2017-01-21T18:28:00Z</lastmod>
+  <lastmod>2017-04-27T02:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -43,7 +43,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-3.html</loc>
-  <lastmod>2017-01-21T18:28:00Z</lastmod>
+  <lastmod>2017-04-27T02:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
@@ -216,6 +216,14 @@
  <url>
   <loc>http://pythonpiura.org/posts/2016/06/18/ipython-y-jupyter/</loc>
   <lastmod>2017-01-17T04:53:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/configuracion-de-entorno-de-desarrollo-django/</loc>
+  <lastmod>2017-04-27T02:35:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/configurando-django-con-postgresql/</loc>
+  <lastmod>2017-04-27T02:40:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/configurando-la-ruta-de-los-addons-en-odoo/</loc>
