@@ -139,6 +139,18 @@ productos.html
 			</a>
 		</div>
 	</div>
+
+Aquí primero heredamos de base.html y luego tenemos un botón para crear un nuevo producto, para desplegar el modal se llama a la url correspondiente como primer argumento del método de javascript "abrir_modal" y como segundo el título del modal.:
+
+.. code-block:: html
+	
+	onclick="return abrir_modal('{% url 'productos:crear_producto' %}','Productos / Nuevo')"
+
+
+Sigamos viendo nuestro archivo productos.html:
+
+.. code-block:: html
+
 	<hr/>
 	<div class="row">
 		<div class="col-lg-12">
@@ -179,15 +191,8 @@ productos.html
 	</div>
 	<div id="popup"></div>
 
-Aquí primero heredamos de base.html y luego tenemos un botón para crear un nuevo producto y una tabla donde se listan los productos ya creados, junto con dos enlaces en cada fila de producto para poder desplegar el detalle y la modificación del mismo en los modales correspondientes, esto se hace con esta linea:
 
-.. code-block:: html
-	
-	onclick="return abrir_modal('{% url 'productos:crear_producto' %}','Productos / Nuevo')"
-
-Se llama a la url correspondiente como primer argumento del método de javascript "abrir_modal" y como segundo el título del modal.
-
-Para mostrar el modal usaremos el div con el id "popup".
+Tenemos la tabla con el listado de los productos ya creados junto con dos enlaces en cada fila de producto para poder desplegar el detalle y la modificación del mismo en los modales correspondientes, tal como se explico arriba, en la parte final vemos que para mostrar el modal usaremos el div con el id "popup".
 
 Ahora vamos a ver la parte de javascript necesaria para poder mostrar el modal correspondiente:
 
