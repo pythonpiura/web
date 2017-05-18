@@ -10,7 +10,7 @@
 En este post vamos a usar ventanas modales para poder hacer operaciones de visualización, creación y modificación de entidades.
 Para este fin hemos creado un proyecto llamado "modales" y una aplicación "productos" donde vamos a tener el modelo Producto, para poder mostrar los modales haremos uso de la librería JQuery-UI y de bootstrap para ayudarnos con el diseño, jquery como librería javascript y Datatables para mostrar las tablas de la manera mas cómoda. Los pormenores de creación del proyecto y la correspondiente aplicación serán obviados por haber sido tratados en artículos anteriores.
 
-Primero creamos nuestro archivo base.html que va a contener la carga de las librerias necesarias a cargar:
+Primero creamos nuestro archivo base.html que va a contener la carga de las librerias necesarias:
 
 base.html
 
@@ -219,7 +219,7 @@ Ahora vamos a ver la parte de javascript necesaria para poder mostrar el modal c
 	        }
 	    } );
 	});
-	
+
 
 La función abrir_modal usa el método dialog() de JQuery-UI para mostrar un modal cuyo contenido en html va a ser cargado con el método load de acuerdo a la url que estemos tratando de visualizar. Este elemento se guarda en la variable modal.
 
