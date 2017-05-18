@@ -166,24 +166,24 @@ Sigamos viendo nuestro archivo productos.html:
 				</thead>
 				<tbody>
 				{% for producto in productos %}
-	                <tr>
-	                    <td>{{ producto.descripcion }}</td>
-	                    <td>{{ producto.marca }}</td>
-	                    <td>{{ producto.precio }}</td>
-	                    {% if producto.estado %}
-	                    <td>ACTIVO</td>
-	                    {% else %}
-	                    <td>INACTIVO</td>
-	                    {% endif %}
-	                    <td class="text-center">
-	                        <a onclick="return abrir_modal('{% url 'productos:detalle_producto' producto.pk %}','Productos / {{ producto.descripcion }}')" class="btn">
-	                            <span class="glyphicon glyphicon-eye-open"></span>
-	                        </a>
-	                        <a onclick="return abrir_modal('{% url 'productos:modificar_producto' producto.pk %}','Productos / {{ producto.descripcion }}')" class="btn">
-	                            <span class="glyphicon glyphicon-edit"></span>
-	                        </a>
-	                    </td>
-					</tr>
+                <tr>
+                    <td>{{ producto.descripcion }}</td>
+                    <td>{{ producto.marca }}</td>
+                    <td>{{ producto.precio }}</td>
+                    {% if producto.estado %}
+                    <td>ACTIVO</td>
+                    {% else %}
+                    <td>INACTIVO</td>
+                    {% endif %}
+                    <td class="text-center">
+                        <a onclick="return abrir_modal('{% url 'productos:detalle_producto' producto.pk %}','Productos / {{ producto.descripcion }}')" class="btn">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a onclick="return abrir_modal('{% url 'productos:modificar_producto' producto.pk %}','Productos / {{ producto.descripcion }}')" class="btn">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
+				</tr>
 				{% endfor %}
 				</tbody>
 			</table>

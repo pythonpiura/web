@@ -101,234 +101,234 @@ Para este fin hemos creado un proyecto llamado "modales" y una aplicació'>
 Para este fin hemos creado un proyecto llamado "modales" y una aplicación "productos" donde vamos a tener el modelo Producto, para poder mostrar los modales haremos uso de la librería JQuery-UI y de bootstrap para ayudarnos con el diseño, jquery como librería javascript y Datatables para mostrar las tablas de la manera mas cómoda. Los pormenores de creación del proyecto y la correspondiente aplicación serán obviados por haber sido tratados en artículos anteriores.</p>
 <p>Primero creamos nuestro archivo base.html que va a contener la carga de las librerias necesarias:</p>
 <p>base.html</p>
-<pre class="code html"><a name="rest_code_579b1a8f7bcb442eb6601691c0694944-1"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-2"></a>{% load staticfiles %}
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-3"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-4"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-5"></a>    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-6"></a>    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Modales<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-7"></a>    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-8"></a>    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-9"></a>    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/bootstrap.min.css' %}"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-10"></a>    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/jquery-ui.css' %}"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-11"></a>    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/jquery.dataTables.min.css'  %}"</span><span class="p">/&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-12"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.js' %}"</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-13"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/bootstrap.min.js' %}"</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-14"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery-ui.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-15"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.dataTables.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-16"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-17"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-18"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"page-wrapper"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-19"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container-fluid"</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-20"></a>    {% block cuerpo %}
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-21"></a>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-22"></a>    {% endblock cuerpo %}
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-23"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-24"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-25"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-<a name="rest_code_579b1a8f7bcb442eb6601691c0694944-26"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_b330e8761e394c08a1d0876f7392eae2-1"></a><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-2"></a>{% load staticfiles %}
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-3"></a><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">"en"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-4"></a><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-5"></a>    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-6"></a>    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Modales<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-7"></a>    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-8"></a>    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">"viewport"</span> <span class="na">content</span><span class="o">=</span><span class="s">"width=device-width, initial-scale=1"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-9"></a>    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/bootstrap.min.css' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-10"></a>    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/jquery-ui.css' %}"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-11"></a>    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">"stylesheet"</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/css"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% static 'css/jquery.dataTables.min.css'  %}"</span><span class="p">/&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-12"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.js' %}"</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-13"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/bootstrap.min.js' %}"</span> <span class="na">charset</span><span class="o">=</span><span class="s">"UTF-8"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-14"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery-ui.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-15"></a>    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">"text/javascript"</span> <span class="na">src</span><span class="o">=</span><span class="s">"{% static 'js/jquery.dataTables.min.js' %}"</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-16"></a><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-17"></a><span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-18"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"page-wrapper"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-19"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"container-fluid"</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-20"></a>    {% block cuerpo %}
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-21"></a>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-22"></a>    {% endblock cuerpo %}
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-23"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-24"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-25"></a><span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<a name="rest_code_b330e8761e394c08a1d0876f7392eae2-26"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
 </pre>
 <p>Vamos a proceder a crear nuestras vistas en el archivos views.py:</p>
 <p>views.py</p>
-<pre class="code python"><a name="rest_code_6559ae95021f476a86d0dac2467a06bf-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-2"></a><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-3"></a><span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">UpdateView</span><span class="p">,</span> <span class="n">CreateView</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-4"></a><span class="kn">from</span> <span class="nn">django.views.generic.list</span> <span class="kn">import</span> <span class="n">ListView</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-5"></a><span class="kn">from</span> <span class="nn">productos.forms</span> <span class="kn">import</span> <span class="n">ProductoForm</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-6"></a><span class="kn">from</span> <span class="nn">productos.models</span> <span class="kn">import</span> <span class="n">Producto</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-7"></a><span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse_lazy</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-8"></a><span class="kn">from</span> <span class="nn">django.views.generic.detail</span> <span class="kn">import</span> <span class="n">DetailView</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-9"></a>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-10"></a><span class="k">class</span> <span class="nc">ListadoProductos</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-11"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-12"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'productos.html'</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-13"></a>    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">'productos'</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-14"></a>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-15"></a><span class="k">class</span> <span class="nc">CrearProducto</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-16"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'producto.html'</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-17"></a>    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ProductoForm</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-18"></a>    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'productos:listado_productos'</span><span class="p">)</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-19"></a>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-20"></a><span class="k">class</span> <span class="nc">ModificarProducto</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-21"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-22"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'producto.html'</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-23"></a>    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ProductoForm</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-24"></a>    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'productos:listado_productos'</span><span class="p">)</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-25"></a>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-26"></a>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-27"></a><span class="k">class</span> <span class="nc">DetalleProducto</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-28"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
-<a name="rest_code_6559ae95021f476a86d0dac2467a06bf-29"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'detalle_producto.html'</span>
+<pre class="code python"><a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-1"></a><span class="c1"># -*- coding: utf-8 -*-</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-2"></a><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-3"></a><span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">UpdateView</span><span class="p">,</span> <span class="n">CreateView</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-4"></a><span class="kn">from</span> <span class="nn">django.views.generic.list</span> <span class="kn">import</span> <span class="n">ListView</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-5"></a><span class="kn">from</span> <span class="nn">productos.forms</span> <span class="kn">import</span> <span class="n">ProductoForm</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-6"></a><span class="kn">from</span> <span class="nn">productos.models</span> <span class="kn">import</span> <span class="n">Producto</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-7"></a><span class="kn">from</span> <span class="nn">django.core.urlresolvers</span> <span class="kn">import</span> <span class="n">reverse_lazy</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-8"></a><span class="kn">from</span> <span class="nn">django.views.generic.detail</span> <span class="kn">import</span> <span class="n">DetailView</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-9"></a>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-10"></a><span class="k">class</span> <span class="nc">ListadoProductos</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-11"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-12"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'productos.html'</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-13"></a>    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">'productos'</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-14"></a>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-15"></a><span class="k">class</span> <span class="nc">CrearProducto</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-16"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'producto.html'</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-17"></a>    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ProductoForm</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-18"></a>    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'productos:listado_productos'</span><span class="p">)</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-19"></a>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-20"></a><span class="k">class</span> <span class="nc">ModificarProducto</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-21"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-22"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'producto.html'</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-23"></a>    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ProductoForm</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-24"></a>    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'productos:listado_productos'</span><span class="p">)</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-25"></a>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-26"></a>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-27"></a><span class="k">class</span> <span class="nc">DetalleProducto</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-28"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
+<a name="rest_code_5a150e524b304fc4b9b4ef34716f4e38-29"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'detalle_producto.html'</span>
 </pre>
 <p>La vista ListadoProductos es la vista principal de nuestra aplicación desde aquí vamos a interactuar con las demás vistas, como se ve todas están basadas en clases.</p>
 <p>Debemos crear un formulario llamado ProductoForm para utilizarlo tanto en ModificarProducto como en CrearProducto:</p>
 <p>forms.py</p>
-<pre class="code python"><a name="rest_code_7d9e38275e6c4cc7a79502f660025666-1"></a><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-2"></a>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-3"></a><span class="kn">from</span> <span class="nn">productos.models</span> <span class="kn">import</span> <span class="n">Producto</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-4"></a>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-5"></a>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-6"></a><span class="k">class</span> <span class="nc">ProductoForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-7"></a>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-8"></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-9"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-10"></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'descripcion'</span><span class="p">,</span> <span class="s1">'marca'</span><span class="p">,</span> <span class="s1">'precio'</span><span class="p">,</span> <span class="s1">'estado'</span><span class="p">]</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-11"></a>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-12"></a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-13"></a>        <span class="nb">super</span><span class="p">(</span><span class="n">ProductoForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-14"></a>        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">):</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-15"></a>            <span class="k">if</span> <span class="n">field</span> <span class="o">&lt;&gt;</span> <span class="s1">'estado'</span><span class="p">:</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-16"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-17"></a>                    <span class="s1">'class'</span><span class="p">:</span> <span class="s1">'form-control'</span>
-<a name="rest_code_7d9e38275e6c4cc7a79502f660025666-18"></a>                <span class="p">})</span>
+<pre class="code python"><a name="rest_code_43620d4b17944fcc944907074e054160-1"></a><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-2"></a>
+<a name="rest_code_43620d4b17944fcc944907074e054160-3"></a><span class="kn">from</span> <span class="nn">productos.models</span> <span class="kn">import</span> <span class="n">Producto</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-4"></a>
+<a name="rest_code_43620d4b17944fcc944907074e054160-5"></a>
+<a name="rest_code_43620d4b17944fcc944907074e054160-6"></a><span class="k">class</span> <span class="nc">ProductoForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-7"></a>
+<a name="rest_code_43620d4b17944fcc944907074e054160-8"></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-9"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Producto</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-10"></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'descripcion'</span><span class="p">,</span> <span class="s1">'marca'</span><span class="p">,</span> <span class="s1">'precio'</span><span class="p">,</span> <span class="s1">'estado'</span><span class="p">]</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-11"></a>
+<a name="rest_code_43620d4b17944fcc944907074e054160-12"></a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-13"></a>        <span class="nb">super</span><span class="p">(</span><span class="n">ProductoForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-14"></a>        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">):</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-15"></a>            <span class="k">if</span> <span class="n">field</span> <span class="o">&lt;&gt;</span> <span class="s1">'estado'</span><span class="p">:</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-16"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-17"></a>                    <span class="s1">'class'</span><span class="p">:</span> <span class="s1">'form-control'</span>
+<a name="rest_code_43620d4b17944fcc944907074e054160-18"></a>                <span class="p">})</span>
 </pre>
 <p>Ĺo único nuevo en la parte de los formularios es que estamos implementando el método __init__ para poder agregar la clase 'form-control' de bootstrap.</p>
 <p>Ahora vamos a crear nuestro archivo urls.py:</p>
-<pre class="code python"><a name="rest_code_3fc173f3b20645e0afbd1377a2773411-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">url</span>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-2"></a><span class="kn">from</span> <span class="nn">productos.views</span> <span class="kn">import</span> <span class="n">ListadoProductos</span><span class="p">,</span> <span class="n">CrearProducto</span><span class="p">,</span> <span class="n">ModificarProducto</span><span class="p">,</span> <span class="n">DetalleProducto</span>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-3"></a>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-4"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-5"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span> <span class="n">ListadoProductos</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"listado_productos"</span><span class="p">),</span>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-6"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_producto/$'</span><span class="p">,</span> <span class="n">CrearProducto</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_producto"</span><span class="p">),</span>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-7"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^modificar_producto/(?P&lt;pk&gt;.+)/$'</span><span class="p">,</span><span class="n">ModificarProducto</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"modificar_producto"</span><span class="p">),</span>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-8"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^detalle_producto/(?P&lt;pk&gt;.+)/$'</span><span class="p">,</span><span class="n">DetalleProducto</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"detalle_producto"</span><span class="p">),</span>
-<a name="rest_code_3fc173f3b20645e0afbd1377a2773411-9"></a><span class="p">]</span>
+<pre class="code python"><a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">url</span>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-2"></a><span class="kn">from</span> <span class="nn">productos.views</span> <span class="kn">import</span> <span class="n">ListadoProductos</span><span class="p">,</span> <span class="n">CrearProducto</span><span class="p">,</span> <span class="n">ModificarProducto</span><span class="p">,</span> <span class="n">DetalleProducto</span>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-3"></a>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-4"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-5"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span> <span class="n">ListadoProductos</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"listado_productos"</span><span class="p">),</span>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-6"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_producto/$'</span><span class="p">,</span> <span class="n">CrearProducto</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_producto"</span><span class="p">),</span>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-7"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^modificar_producto/(?P&lt;pk&gt;.+)/$'</span><span class="p">,</span><span class="n">ModificarProducto</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"modificar_producto"</span><span class="p">),</span>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-8"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^detalle_producto/(?P&lt;pk&gt;.+)/$'</span><span class="p">,</span><span class="n">DetalleProducto</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"detalle_producto"</span><span class="p">),</span>
+<a name="rest_code_9738dcb6ac8c466a9227ce29218289b6-9"></a><span class="p">]</span>
 </pre>
 <p>Ahora si haremos nuestra plantilla principal, llamada productos.html, primero haremos la parte del html y luego la de javascript:</p>
 <p>productos.html</p>
-<pre class="code html"><a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-1"></a>{% extends "base.html" %}
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-2"></a>{% block cuerpo %}
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-3"></a><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Productos<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-4"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-5"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-10"</span><span class="p">&gt;</span>
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-6"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:crear_producto' %}','Productos / Nuevo')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span><span class="p">&gt;</span>
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-7"></a>                        Crear
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-8"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-9"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_bea8a6bdc0684bd7b3369affbeae2aee-10"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_1a491616cc0249f1b93284767f63669a-1"></a>{% extends "base.html" %}
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-2"></a>{% block cuerpo %}
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-3"></a><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Productos<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-4"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-5"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-10"</span><span class="p">&gt;</span>
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-6"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:crear_producto' %}','Productos / Nuevo')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span><span class="p">&gt;</span>
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-7"></a>                        Crear
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-8"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-9"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_1a491616cc0249f1b93284767f63669a-10"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre>
 <p>Aquí primero heredamos de base.html y luego tenemos un botón para crear un nuevo producto, para desplegar el modal se llama a la url correspondiente como primer argumento del método de javascript "abrir_modal" y como segundo el título del modal.:</p>
-<pre class="code html"><a name="rest_code_87dc4c1b4c0242d9946837389c71f1cf-1"></a>onclick="return abrir_modal('{% url 'productos:crear_producto' %}','Productos / Nuevo')"
+<pre class="code html"><a name="rest_code_352296a1401948418962be3559aee032-1"></a>onclick="return abrir_modal('{% url 'productos:crear_producto' %}','Productos / Nuevo')"
 </pre>
 <p>Sigamos viendo nuestro archivo productos.html:</p>
-<pre class="code html"><a name="rest_code_94b8103073ce45479214a4bdb05b198e-1"></a><span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-2"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-4"></a>                <span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">"tabla"</span> <span class="na">class</span><span class="o">=</span><span class="s">"display"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span> <span class="na">width</span><span class="o">=</span><span class="s">"100%"</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-5"></a>                        <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-6"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-7"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>DESCRIPCION<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-8"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>MARCA<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-9"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>PRECIO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-10"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ESTADO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-11"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ACCIONES<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-12"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-13"></a>                        <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-14"></a>                        <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-15"></a>                        {% for producto in productos %}
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-16"></a>                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-17"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ producto.descripcion }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-18"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ producto.marca }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-19"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ producto.precio }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-20"></a>                    {% if producto.estado %}
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-21"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>ACTIVO<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-22"></a>                    {% else %}
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-23"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>INACTIVO<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-24"></a>                    {% endif %}
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-25"></a>                    <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-26"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:detalle_producto' producto.pk %}','Productos / {{ producto.descripcion }}')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn"</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-27"></a>                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-eye-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-28"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-29"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:modificar_producto' producto.pk %}','Productos / {{ producto.descripcion }}')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn"</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-30"></a>                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-edit"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-31"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-32"></a>                    <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-33"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-34"></a>                        {% endfor %}
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-35"></a>                        <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-36"></a>                <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-37"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-38"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_94b8103073ce45479214a4bdb05b198e-39"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"popup"</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-1"></a><span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-2"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-3"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-4"></a>                <span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">"tabla"</span> <span class="na">class</span><span class="o">=</span><span class="s">"display"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span> <span class="na">width</span><span class="o">=</span><span class="s">"100%"</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-5"></a>                        <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-6"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-7"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>DESCRIPCION<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-8"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>MARCA<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-9"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>PRECIO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-10"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ESTADO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-11"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ACCIONES<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-12"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-13"></a>                        <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-14"></a>                        <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-15"></a>                        {% for producto in productos %}
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-16"></a>        <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-17"></a>            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ producto.descripcion }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-18"></a>            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ producto.marca }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-19"></a>            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ producto.precio }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-20"></a>            {% if producto.estado %}
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-21"></a>            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>ACTIVO<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-22"></a>            {% else %}
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-23"></a>            <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>INACTIVO<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-24"></a>            {% endif %}
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-25"></a>            <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-26"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:detalle_producto' producto.pk %}','Productos / {{ producto.descripcion }}')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn"</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-27"></a>                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-eye-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-28"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-29"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:modificar_producto' producto.pk %}','Productos / {{ producto.descripcion }}')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn"</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-30"></a>                    <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-edit"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-31"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-32"></a>            <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-33"></a>                        <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-34"></a>                        {% endfor %}
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-35"></a>                        <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-36"></a>                <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-37"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-38"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f7b796b8745b4efa984d15e89e17a88e-39"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"popup"</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre>
 <p>Tenemos la tabla con el listado de los productos ya creados junto con dos enlaces en cada fila de producto para poder desplegar el detalle y la modificación del mismo en los modales correspondientes, tal como se explico arriba, en la parte final vemos que para mostrar el modal usaremos el div con el id "popup".</p>
 <p>Ahora vamos a ver la parte de javascript necesaria para poder mostrar el modal correspondiente:</p>
-<pre class="code javascript"><a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-1"></a><span class="kd">var</span> <span class="nx">modal</span><span class="p">;</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-2"></a>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-3"></a><span class="kd">function</span> <span class="nx">abrir_modal</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">titulo</span><span class="p">)</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-4"></a><span class="p">{</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-5"></a>    <span class="nx">modal</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#popup'</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-6"></a>    <span class="p">{</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-7"></a>        <span class="nx">title</span><span class="o">:</span> <span class="nx">titulo</span><span class="p">,</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-8"></a>        <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-9"></a>        <span class="nx">width</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-10"></a>        <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-11"></a>    <span class="p">}).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">'open'</span><span class="p">).</span><span class="nx">load</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-12"></a><span class="p">}</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-13"></a>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-14"></a><span class="kd">function</span> <span class="nx">cerrar_modal</span><span class="p">()</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-15"></a><span class="p">{</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-16"></a>    <span class="nx">modal</span><span class="p">.</span><span class="nx">dialog</span><span class="p">(</span><span class="s2">"close"</span><span class="p">);</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-17"></a><span class="p">}</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-18"></a>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-19"></a><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-20"></a><span class="p">{</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-21"></a>    <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">dataTable</span><span class="p">(</span> <span class="p">{</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-22"></a>        <span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-23"></a>                <span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-24"></a>        <span class="p">}</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-25"></a>    <span class="p">}</span> <span class="p">);</span>
-<a name="rest_code_f438830e41bc4e1ebd808896ee93e15f-26"></a><span class="p">});</span>
+<pre class="code javascript"><a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-1"></a><span class="kd">var</span> <span class="nx">modal</span><span class="p">;</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-2"></a>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-3"></a><span class="kd">function</span> <span class="nx">abrir_modal</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">titulo</span><span class="p">)</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-4"></a><span class="p">{</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-5"></a>    <span class="nx">modal</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#popup'</span><span class="p">).</span><span class="nx">dialog</span><span class="p">(</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-6"></a>    <span class="p">{</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-7"></a>        <span class="nx">title</span><span class="o">:</span> <span class="nx">titulo</span><span class="p">,</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-8"></a>        <span class="nx">modal</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-9"></a>        <span class="nx">width</span><span class="o">:</span> <span class="mi">500</span><span class="p">,</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-10"></a>        <span class="nx">resizable</span><span class="o">:</span> <span class="kc">false</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-11"></a>    <span class="p">}).</span><span class="nx">dialog</span><span class="p">(</span><span class="s1">'open'</span><span class="p">).</span><span class="nx">load</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-12"></a><span class="p">}</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-13"></a>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-14"></a><span class="kd">function</span> <span class="nx">cerrar_modal</span><span class="p">()</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-15"></a><span class="p">{</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-16"></a>    <span class="nx">modal</span><span class="p">.</span><span class="nx">dialog</span><span class="p">(</span><span class="s2">"close"</span><span class="p">);</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-17"></a><span class="p">}</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-18"></a>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-19"></a><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-20"></a><span class="p">{</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-21"></a>    <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">dataTable</span><span class="p">(</span> <span class="p">{</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-22"></a>        <span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-23"></a>                <span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-24"></a>        <span class="p">}</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-25"></a>    <span class="p">}</span> <span class="p">);</span>
+<a name="rest_code_8ac1928e7d924f4b99f524522dda7ea6-26"></a><span class="p">});</span>
 </pre>
 <p>La función abrir_modal usa el método dialog() de JQuery-UI para mostrar un modal cuyo contenido en html va a ser cargado con el método load de acuerdo a la url que estemos tratando de visualizar. Este elemento se guarda en la variable modal.</p>
 <p>La función cerrar_modal() utiliza la variable modal, para cerrar el dialogo pasando el parámetro "close".</p>
 <p>Finalmente tenemos los templates correspondientes a detalle_producto.html y producto.html:</p>
 <p>detalle_producto.html</p>
-<pre class="code html"><a name="rest_code_def850b3846b456e9e3da2af43c42939-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-default"</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-2"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-3"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-4"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-7"</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-5"></a>                                <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>{{ object.descripcion }}<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-6"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-7"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-8"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-9"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-4"</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-10"></a>                                <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>MARCA:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-11"></a>                                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.marca }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-12"></a>                                <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>PRECIO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-13"></a>                                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.precio }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-14"></a>                                <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>ESTADO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-15"></a>                                {% if object.estado %}
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-16"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>ACTIVO<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-17"></a>                                {% else %}
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-18"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>INACTIVO<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-19"></a>                                {% endif %}
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-20"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-21"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-22"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_def850b3846b456e9e3da2af43c42939-23"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-default"</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-2"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-3"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-4"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-7"</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-5"></a>                                <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>{{ object.descripcion }}<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-6"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-7"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-8"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-9"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-4"</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-10"></a>                                <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>MARCA:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-11"></a>                                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.marca }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-12"></a>                                <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>PRECIO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-13"></a>                                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.precio }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-14"></a>                                <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>ESTADO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-15"></a>                                {% if object.estado %}
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-16"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>ACTIVO<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-17"></a>                                {% else %}
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-18"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>INACTIVO<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-19"></a>                                {% endif %}
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-20"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-21"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-22"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_bbed30e813dd44d7a482ec9728f2c36d-23"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </pre>
 <p>producto.html</p>
-<pre class="code html"><a name="rest_code_838a83c690ca497f838be8d5efaab034-1"></a>{% if object %}
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-2"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">"form"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{% url 'productos:modificar_producto' object.pk %}"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-3"></a>{% else %}
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-4"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">"form"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{% url 'productos:crear_producto' %}"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-5"></a>{% endif %}
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-6"></a>        {% csrf_token %}
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-7"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-default"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-8"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-9"></a>                        {{ form.as_p }}
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-10"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-11"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-12"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-13"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12 text-right"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-14"></a>                        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">name</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Guardar"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-15"></a>                        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-default"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return cerrar_modal()"</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-16"></a>                                Cancelar
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-17"></a>                        <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-18"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-19"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<a name="rest_code_838a83c690ca497f838be8d5efaab034-20"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<pre class="code html"><a name="rest_code_ab84069ea1d147a488f99008dc53df87-1"></a>{% if object %}
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-2"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">"form"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{% url 'productos:modificar_producto' object.pk %}"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-3"></a>{% else %}
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-4"></a><span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">"form"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{% url 'productos:crear_producto' %}"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-5"></a>{% endif %}
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-6"></a>        {% csrf_token %}
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-7"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-default"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-8"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-9"></a>                        {{ form.as_p }}
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-10"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-11"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-12"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-13"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12 text-right"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-14"></a>                        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">name</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Guardar"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-15"></a>                        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-default"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return cerrar_modal()"</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-16"></a>                                Cancelar
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-17"></a>                        <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-18"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-19"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_ab84069ea1d147a488f99008dc53df87-20"></a><span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
 </pre>
 <p>Este template tiene de especial que va a ser usado tanto para crear como para modificar el producto, por lo que se procede a preguntar si existe un objeto object, en caso de que sea así la acción a realizar será modificar el producto y sino crear un nuevo producto.</p>
 <p>Si todo ha salido bien podemos tener una pantalla como la siguiente:</p>
