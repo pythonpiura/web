@@ -7,7 +7,7 @@
 .. description: 
 .. type: text
 
-Vamos a hacer lo mismo que en el post anterior pero con la diferencia que ahora usaremos los modales de bootstrap, para ello vamos a hacer uso de nuestro proyecto "modales" y de la aplicación "productos", que ya tenemos listos, para hacer las pruebas hemos creado un nuevo modelo llamado "proveedores":
+Vamos a hacer lo mismo que en el post anterior pero con la diferencia que ahora usaremos los modales de bootstrap, para ello ya tenemos creados nuestro proyecto "modales" y la aplicación "productos", para hacer las pruebas debemos crear un nuevo modelo llamado "proveedores":
 
 .. code-block:: python
 
@@ -72,6 +72,7 @@ archivo: urls.py
 .. code-block:: python
 
 	urlpatterns = [
+		#.....
 	    url(r'^proveedores/$', ListadoProveedores.as_view(), name="listado_proveedores"),
 	    url(r'^crear_proveedor/$', CrearProveedor.as_view(), name="crear_proveedor"),
 	    url(r'^modificar_proveedor/(?P<pk>.+)/$',ModificarProveedor.as_view(), name="modificar_proveedor"),
