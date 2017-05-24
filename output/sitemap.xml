@@ -27,7 +27,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2017-05-18T03:16:00Z</lastmod>
+  <lastmod>2017-05-24T04:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -43,11 +43,15 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-3.html</loc>
-  <lastmod>2017-05-18T03:16:00Z</lastmod>
+  <lastmod>2017-05-24T04:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
-  <lastmod>2017-05-18T03:17:00Z</lastmod>
+  <lastmod>2017-05-24T04:24:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/categories/bootstrap/</loc>
+  <lastmod>2017-05-24T04:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/centos/</loc>
@@ -256,6 +260,10 @@
  <url>
   <loc>http://pythonpiura.org/posts/migrando-de-wordpress-a-nikola/</loc>
   <lastmod>2017-01-17T04:52:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap/</loc>
+  <lastmod>2017-05-24T04:24:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-jquery-ui/</loc>
