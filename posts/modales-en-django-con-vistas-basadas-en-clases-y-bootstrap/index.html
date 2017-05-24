@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article# " lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modales en Django con Vistas Basadas en Clases y Bootstrap | Python Piura</title>
+<link href="../../assets/css/all-nocdn.css" rel="stylesheet" type="text/css">
+<meta name="theme-color" content="#5670d4">
+<meta name="generator" content="Nikola (getnikola.com)">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="../../rss.xml">
+<link rel="canonical" href="http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap/">
+<!--[if lt IE 9]><script src="../../assets/js/html5.js"></script><![endif]--><meta name="author" content="Comunidad Python Piura">
+<link rel="prev" href="../modales-en-django-con-vistas-basadas-en-clases-y-jquery-ui/" title="Modales en Django con Vistas Basadas en Clases y JQuery-UI" type="text/html">
+<meta property="og:site_name" content="Python Piura">
+<meta property="og:title" content="Modales en Django con Vistas Basadas en Clases y Bootstrap">
+<meta property="og:url" content="http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap/">
+<meta property="og:description" content='Vamos a hacer lo mismo que en el post anterior pero con la diferencia que ahora usaremos los modales de bootstrap, para ello vamos a hacer uso de nuestro proyecto "modales" y de la aplicación "product'>
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2017-05-23T22:44:05-05:00">
+<meta property="article:tag" content="bootstrap">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="modales">
+</head>
+<body>
+<a href="#content" class="sr-only sr-only-focusable">Ir al contenido principal</a>
+
+<!-- Menubar -->
+
+<nav class="navbar navbar-inverse navbar-static-top"><div class="container">
+<!-- This keeps the margins nice -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar" aria-controls="bs-navbar" aria-expanded="false">
+            <span class="sr-only">Mostrar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="http://pythonpiura.org/">
+
+                <span id="blog-title">Python Piura</span>
+            </a>
+        </div>
+<!-- /.navbar-header -->
+        <div class="collapse navbar-collapse" id="bs-navbar" aria-expanded="false">
+            <ul class="nav navbar-nav">
+<li>
+<a href="../../blog">Blog</a>
+                </li>
+<li>
+<a href="../../eventos">Eventos</a>
+                </li>
+<li>
+<a href="../../recursos">Recursos</a>
+                </li>
+<li>
+<a href="../../contactenos">Contáctenos</a>
+
+                
+            </li>
+</ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+    <a href="index.rst" id="sourcelink">Código fuente</a>
+    </li>
+
+                
+            </ul>
+</div>
+<!-- /.navbar-collapse -->
+    </div>
+<!-- /.container -->
+</nav><!-- End of Menubar --><div class="container" id="content" role="main">
+    <div class="body-content">
+        <!--Body content-->
+        <div class="row">
+            
+            
+<article class="post-text h-entry hentry postpage" itemscope="itemscope" itemtype="http://schema.org/Article"><header><h1 class="p-name entry-title" itemprop="headline name"><a href="." class="u-url">Modales en Django con Vistas Basadas en Clases y Bootstrap</a></h1>
+
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                    Comunidad Python Piura
+            </span></p>
+            <p class="dateline"><a href="." rel="bookmark"><time class="published dt-published" datetime="2017-05-23T22:44:05-05:00" itemprop="datePublished" title="2017-05-23 22:44">2017-05-23 22:44</time></a></p>
+                <p class="commentline">
+        
+    <a href="#disqus_thread" data-disqus-identifier="cache/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap.html">Comments</a>
+
+
+            
+        </p>
+<p class="sourceline"><a href="index.rst" id="sourcelink">Código fuente</a></p>
+
+        </div>
+        
+
+    </header><div class="e-content entry-content" itemprop="articleBody text">
+    <div>
+<p>Vamos a hacer lo mismo que en el post anterior pero con la diferencia que ahora usaremos los modales de bootstrap, para ello vamos a hacer uso de nuestro proyecto "modales" y de la aplicación "productos", que ya tenemos listos, para hacer las pruebas hemos creado un nuevo modelo llamado "proveedores":</p>
+<pre class="code python"><a name="rest_code_a211142e27a74a40bf832a3f2c983b7c-1"></a><span class="k">class</span> <span class="nc">Proveedor</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<a name="rest_code_a211142e27a74a40bf832a3f2c983b7c-2"></a>    <span class="n">ruc</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">max_length</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<a name="rest_code_a211142e27a74a40bf832a3f2c983b7c-3"></a>    <span class="n">razon_social</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<a name="rest_code_a211142e27a74a40bf832a3f2c983b7c-4"></a>    <span class="n">direccion</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<a name="rest_code_a211142e27a74a40bf832a3f2c983b7c-5"></a>    <span class="n">telefono</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<a name="rest_code_a211142e27a74a40bf832a3f2c983b7c-6"></a>    <span class="n">correo</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<a name="rest_code_a211142e27a74a40bf832a3f2c983b7c-7"></a>    <span class="n">estado</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre>
+<p>Creamos las vistas correspondientes al listado, creación, modificación y detalle de los proveedores:</p>
+<p>archivo: views.py</p>
+<pre class="code python"><a name="rest_code_03cc5731b2484d199891e0de81f6f000-1"></a><span class="k">class</span> <span class="nc">ListadoProveedores</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-2"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Proveedor</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-3"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'proveedores.html'</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-4"></a>    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">'proveedores'</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-5"></a>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-6"></a><span class="k">class</span> <span class="nc">CrearProveedor</span><span class="p">(</span><span class="n">CreateView</span><span class="p">):</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-7"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'proveedor.html'</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-8"></a>    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ProveedorForm</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-9"></a>    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'productos:listado_proveedores'</span><span class="p">)</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-10"></a>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-11"></a><span class="k">class</span> <span class="nc">ModificarProveedor</span><span class="p">(</span><span class="n">UpdateView</span><span class="p">):</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-12"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Proveedor</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-13"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'proveedor.html'</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-14"></a>    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ProveedorForm</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-15"></a>    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">'productos:listado_proveedores'</span><span class="p">)</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-16"></a>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-17"></a><span class="k">class</span> <span class="nc">DetalleProveedor</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-18"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">Proveedor</span>
+<a name="rest_code_03cc5731b2484d199891e0de81f6f000-19"></a>    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">'detalle_proveedor.html'</span>
+</pre>
+<p>El formulario a utilizar tanto para modificación como para la creación del proveedor es uno solo:</p>
+<p>archivo: forms.py</p>
+<pre class="code python"><a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-1"></a><span class="k">class</span> <span class="nc">ProveedorForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">ModelForm</span><span class="p">):</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-2"></a>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-3"></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-4"></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Proveedor</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-5"></a>        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ruc'</span><span class="p">,</span> <span class="s1">'razon_social'</span><span class="p">,</span> <span class="s1">'direccion'</span><span class="p">,</span> <span class="s1">'telefono'</span><span class="p">,</span><span class="s1">'correo'</span><span class="p">,</span> <span class="s1">'estado'</span><span class="p">]</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-6"></a>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-7"></a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-8"></a>        <span class="nb">super</span><span class="p">(</span><span class="n">ProveedorForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-9"></a>        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">):</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-10"></a>            <span class="k">if</span> <span class="n">field</span> <span class="o">&lt;&gt;</span> <span class="s1">'estado'</span><span class="p">:</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-11"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="n">field</span><span class="p">]</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-12"></a>                    <span class="s1">'class'</span><span class="p">:</span> <span class="s1">'form-control'</span>
+<a name="rest_code_2de1bc4463b34ebdac83c98aab7773e0-13"></a>                <span class="p">})</span>
+</pre>
+<p>Ahora debemos modificar nuestro archivo urls.py para poder agregar las nuevas urls:</p>
+<p>archivo: urls.py</p>
+<pre class="code python"><a name="rest_code_7c6d37e99a964c7d8e631488eb40144b-1"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+<a name="rest_code_7c6d37e99a964c7d8e631488eb40144b-2"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^proveedores/$'</span><span class="p">,</span> <span class="n">ListadoProveedores</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"listado_proveedores"</span><span class="p">),</span>
+<a name="rest_code_7c6d37e99a964c7d8e631488eb40144b-3"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_proveedor/$'</span><span class="p">,</span> <span class="n">CrearProveedor</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_proveedor"</span><span class="p">),</span>
+<a name="rest_code_7c6d37e99a964c7d8e631488eb40144b-4"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^modificar_proveedor/(?P&lt;pk&gt;.+)/$'</span><span class="p">,</span><span class="n">ModificarProveedor</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"modificar_proveedor"</span><span class="p">),</span>
+<a name="rest_code_7c6d37e99a964c7d8e631488eb40144b-5"></a>    <span class="n">url</span><span class="p">(</span><span class="s1">r'^detalle_proveedor/(?P&lt;pk&gt;.+)/$'</span><span class="p">,</span><span class="n">DetalleProveedor</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"detalle_proveedor"</span><span class="p">),</span>
+<a name="rest_code_7c6d37e99a964c7d8e631488eb40144b-6"></a><span class="p">]</span>
+</pre>
+<p>Veamos primero el archivo proveedores.html que es el template desde donde se van a realizar las demás operaciones:</p>
+<p>archivo: proveedores.html</p>
+<pre class="code html"><a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-1"></a>{% extends "base.html" %}
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-2"></a>{% block cuerpo %}
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-3"></a><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Proveedores<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-4"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-5"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-10"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-6"></a>                <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:crear_proveedor' %}')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-7"></a>                        Crear
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-8"></a>                <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-9"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-10"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-11"></a><span class="p">&lt;</span><span class="nt">hr</span><span class="p">/&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-12"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-13"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-14"></a>                <span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">"tabla"</span> <span class="na">class</span><span class="o">=</span><span class="s">"display"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span> <span class="na">width</span><span class="o">=</span><span class="s">"100%"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-15"></a>                        <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-16"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-17"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>RUC<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-18"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>RAZON SOCIAL<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-19"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>DIRECCION<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-20"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ESTADO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-21"></a>                                        <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>ACCIONES<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-22"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-23"></a>                        <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-24"></a>                        <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-25"></a>                        {% for proveedor in proveedores %}
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-26"></a>                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-27"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ proveedor.ruc }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-28"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ proveedor.razon_social }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-29"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ proveedor.direccion }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-30"></a>                    {% if proveedor.estado %}
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-31"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>ACTIVO<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-32"></a>                    {% else %}
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-33"></a>                    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>INACTIVO<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-34"></a>                    {% endif %}
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-35"></a>                    <span class="p">&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-36"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:detalle_proveedor' proveedor.pk %}')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-37"></a>                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-eye-open"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-38"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-39"></a>                        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return abrir_modal('{% url 'productos:modificar_proveedor' proveedor.pk %}')"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-40"></a>                            <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-edit"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-41"></a>                        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-42"></a>                    <span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-43"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-44"></a>                        {% endfor %}
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-45"></a>                        <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-46"></a>                <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-47"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-48"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-49"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"popup"</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal fade"</span> <span class="na">role</span><span class="o">=</span><span class="s">"dialog"</span><span class="p">&gt;</span>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-50"></a>
+<a name="rest_code_42cbedb291ed4e3a9252e08d73f665b5-51"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+<p>Tenemos la tabla con el listado de los proveedores ya creados junto con dos enlaces en cada fila de proveedor para poder desplegar el detalle y la modificación del mismo en los modales correspondientes, en la parte final vemos que para mostrar el modal usaremos el div con el id "popup" y con las clases de bootstrap "modal" y "fade" para que la ventana a mostrar sea un modal con un ligero efecto al mostrarse.</p>
+<p>Ahora vamos a ver la parte de javascript necesaria para poder mostrar el modal correspondiente:</p>
+<pre class="code javascript"><a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-1"></a><span class="kd">function</span> <span class="nx">abrir_modal</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-2"></a><span class="p">{</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-3"></a>        <span class="nx">$</span><span class="p">(</span><span class="s1">'#popup'</span><span class="p">).</span><span class="nx">load</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-4"></a>        <span class="p">{</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-5"></a>                <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">modal</span><span class="p">(</span><span class="s1">'show'</span><span class="p">);</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-6"></a>        <span class="p">});</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-7"></a>        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-8"></a><span class="p">}</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-9"></a>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-10"></a><span class="kd">function</span> <span class="nx">cerrar_modal</span><span class="p">()</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-11"></a><span class="p">{</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-12"></a>        <span class="nx">$</span><span class="p">(</span><span class="s1">'#popup'</span><span class="p">).</span><span class="nx">modal</span><span class="p">(</span><span class="s1">'hide'</span><span class="p">);</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-13"></a>        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-14"></a><span class="p">}</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-15"></a>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-16"></a><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-17"></a><span class="p">{</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-18"></a>    <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">dataTable</span><span class="p">(</span> <span class="p">{</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-19"></a>        <span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-20"></a>                <span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-21"></a>        <span class="p">}</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-22"></a>    <span class="p">}</span> <span class="p">);</span>
+<a name="rest_code_4eaf20f4eb774f29b8eef2feaefde84f-23"></a><span class="p">});</span>
+</pre>
+<p>Notamos que aquí la forma de trabajo es mas sencilla que cuando la haciamos con JQuery-UI ya que solamente usamos el método load() y mostramos el contenido de la ruta que pasamos como argumento.</p>
+<p>Ahora veamos los templates correspondientes a la creación, modificación y detalle del proveedor, en el caso de los dos primeros es un solo template:</p>
+<p>archivo: proveedor.html</p>
+<pre class="code html"><a name="rest_code_56a481302ebf41c79247431a08c0ee5f-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-dialog modal-lg"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-2"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-content"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-3"></a>                {% if object %}
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-4"></a>                <span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">"form"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{% url 'productos:modificar_proveedor' object.pk %}"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-5"></a>                {% else %}
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-6"></a>                <span class="p">&lt;</span><span class="nt">form</span> <span class="na">role</span><span class="o">=</span><span class="s">"form"</span> <span class="na">action</span><span class="o">=</span><span class="s">"{% url 'productos:crear_proveedor' %}"</span> <span class="na">method</span><span class="o">=</span><span class="s">"post"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-7"></a>                {% endif %}
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-8"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-header"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-9"></a>                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"close"</span> <span class="na">data-dismiss</span><span class="o">=</span><span class="s">"modal"</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-10"></a>                <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Modificar Proveedor<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-11"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-12"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-body"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-13"></a>                                {% csrf_token %}
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-14"></a>                                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-default"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-15"></a>                                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-16"></a>                                                {{ form.as_p }}
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-17"></a>                                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-18"></a>                                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-19"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-20"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-footer"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-21"></a>                                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12 text-right"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-22"></a>                                        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">name</span><span class="o">=</span><span class="s">"submit"</span> <span class="na">value</span><span class="o">=</span><span class="s">"Guardar"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-23"></a>                                        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-default"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return cerrar_modal()"</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-24"></a>                                                Cancelar
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-25"></a>                                        <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-26"></a>                                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-27"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-28"></a>                <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-29"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_56a481302ebf41c79247431a08c0ee5f-30"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+<p>archivo: detalle_proveedor.html</p>
+<pre class="code html"><a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-dialog modal-lg"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-2"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-content"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-3"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-header"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-4"></a>                        <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"close"</span> <span class="na">data-dismiss</span><span class="o">=</span><span class="s">"modal"</span><span class="p">&gt;</span>x<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-5"></a>                        <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>Detalle Proveedor<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-6"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-7"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-body"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-8"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-9"></a>                                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-4"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-10"></a>                                        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>RUC:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-11"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.ruc }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-12"></a>                                        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>RAZÓN SOCIAL:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-13"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.razon_social }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-14"></a>                                        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>DIRECCIÓN:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-15"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.direccion }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-16"></a>                                        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>TELÉFONO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-17"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.telefono }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-18"></a>                                        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>CORREO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-19"></a>                                        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ object.correo }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-20"></a>                                        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>ESTADO:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-21"></a>                                        {% if object.estado %}
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-22"></a>                                                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>ACTIVO<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-23"></a>                                        {% else %}
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-24"></a>                                                <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>INACTIVO<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-25"></a>                                        {% endif %}
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-26"></a>                                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-27"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-28"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-29"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"modal-footer"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-30"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12 text-right"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-31"></a>                                <span class="p">&lt;</span><span class="nt">button</span> <span class="na">type</span><span class="o">=</span><span class="s">"button"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-primary"</span> <span class="na">onclick</span><span class="o">=</span><span class="s">"return cerrar_modal()"</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-32"></a>                                        Aceptar
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-33"></a>                                <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-34"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-35"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-36"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_f1a26cd879d74dc9a4ef60a13b8727fe-37"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+<p>Si todo ha salido bien podemos tener una pantalla como la siguiente:</p>
+<img alt="/images/blog/proveedores.png" src="../../images/blog/proveedores.png"><p>Y los modales:</p>
+<p>Creacion de Nuevo Proveedor:</p>
+<img alt="/images/blog/creacion_proveedor.png" src="../../images/blog/creacion_proveedor.png"><p>Detalle de Proveedor:</p>
+<img alt="/images/blog/detalle_proveedor.png" src="../../images/blog/detalle_proveedor.png"><p>Modificacion de Proveedor:</p>
+<img alt="/images/blog/modificacion_proveedor.png" src="../../images/blog/modificacion_proveedor.png"><p>Para ver los archivos de configuración del proyecto y todo lo demás que no ha sido explicado en este post, pueden acceder al repositorio:</p>
+<p><a class="reference external" href="https://github.com/pythonpiura/modales">Proyecto Modales</a></p>
+<p>Saludos.</p>
+</div>
+    </div>
+    <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
+<li><a class="tag p-category" href="../../categories/bootstrap/" rel="tag">bootstrap</a></li>
+            <li><a class="tag p-category" href="../../categories/django/" rel="tag">Django</a></li>
+            <li><a class="tag p-category" href="../../categories/modales/" rel="tag">modales</a></li>
+        </ul>
+<ul class="pager hidden-print">
+<li class="previous">
+                <a href="../modales-en-django-con-vistas-basadas-en-clases-y-jquery-ui/" rel="prev" title="Modales en Django con Vistas Basadas en Clases y JQuery-UI">Publicación anterior</a>
+            </li>
+        </ul></nav></aside><section class="comments hidden-print"><h2>Comentarios</h2>
+        
+        
+        <div id="disqus_thread"></div>
+        <script>
+        var disqus_shortname ="pythonpiura-org",
+            disqus_url="http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap/",
+        disqus_title="Modales en Django con Vistas Basadas en Clases y Bootstrap",
+        disqus_identifier="cache/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap.html",
+        disqus_config = function () {
+            this.language = "es_ES";
+        };
+        (function() {
+            var dsq = document.createElement('script'); dsq.async = true;
+            dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+</noscript>
+    <a href="https://disqus.com" class="dsq-brlink" rel="nofollow">Comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+        </section></article><script>var disqus_shortname="pythonpiura-org";(function(){var a=document.createElement("script");a.async=true;a.src="https://"+disqus_shortname+".disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script>
+</div>
+        <!--End of body content-->
+
+        <footer id="footer">
+            Contents © 2017         <a href="mailto:pythonpiura@openmailbox.org">Comunidad Python Piura</a> - Powered by         <a href="https://getnikola.com" rel="nofollow">Nikola</a>         
+<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+<img alt="Creative Commons License BY-NC-SA" style="border-width:0; margin-bottom:12px;" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"></a>
+            
+        </footer>
+</div>
+</div>
+
+
+            <script src="../../assets/js/all-nocdn.js"></script><script src="../../assets/js/colorbox-i18n/jquery.colorbox-es.js"></script><script>$('a.image-reference:not(.islink) img:not(.islink)').parent().colorbox({rel:"gal",maxWidth:"100%",maxHeight:"100%",scalePhotos:true});</script><!-- fancy dates --><script>
+    moment.locale("es");
+    fancydates(0, "YYYY-MM-DD HH:mm");
+    </script><!-- end fancy dates --><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8661664653028018",
+    enable_page_level_ads: true
+  });
+</script><script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-76551557-2', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
