@@ -18,6 +18,9 @@ Aquí encontrarás información de todos nuestros eventos.
 Pŕoximos Eventos
 ----------------
 
+* `Taller de Validación de Mercado`_
+	.. _`Taller de Validación de Mercado`: https://tallanix.com/
+
 Eventos Pasados
 ---------------
 
