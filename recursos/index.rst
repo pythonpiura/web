@@ -7,6 +7,27 @@
 .. description: 
 .. type: text
 
+Videotutoriales
+---------------
+
+* `Aprendiendo Django`_
+	.. _`Aprendiendo Django`: /aprendiendo-django
+
+* `Aprendiendo Odoo`_
+	.. _`Aprendiendo Odoo`: /aprendiendo-odoo
+
+Proyectos
+---------------
+
+* `VOLPOX`_
+	.. _`VOLPOX`: https://github.com/joseamaya/volpox
+
+* `TAMBOX`_
+	.. _`TAMBOX`: https://github.com/joseamaya/tambox
+
+* `ELIX`_
+	.. _`ELIX`: https://github.com/joseamaya/elix
+
 Charlas
 -------
 
