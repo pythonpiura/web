@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>http://pythonpiura.org/</loc>
-  <lastmod>2017-01-17T05:52:00Z</lastmod>
+  <lastmod>2017-08-24T14:45:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/2014/</loc>
@@ -26,8 +26,16 @@
   <lastmod>2017-01-17T04:53:00Z</lastmod>
  </url>
  <url>
+  <loc>http://pythonpiura.org/aprendiendo-django/</loc>
+  <lastmod>2017-08-24T14:45:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/aprendiendo-odoo/</loc>
+  <lastmod>2017-08-24T14:45:00Z</lastmod>
+ </url>
+ <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2017-05-24T04:24:00Z</lastmod>
+  <lastmod>2017-08-24T14:45:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -35,15 +43,15 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-1.html</loc>
-  <lastmod>2017-01-20T04:44:00Z</lastmod>
+  <lastmod>2017-08-24T14:45:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-2.html</loc>
-  <lastmod>2017-01-21T18:28:00Z</lastmod>
+  <lastmod>2017-08-24T14:45:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-3.html</loc>
-  <lastmod>2017-05-24T04:24:00Z</lastmod>
+  <lastmod>2017-08-24T14:45:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
