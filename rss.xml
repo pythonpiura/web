@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"><channel><title>Python Piura</title><link>http://pythonpiura.org/</link><description>Comunidad Python Piura</description><atom:link type="application/rss+xml" href="http://pythonpiura.org/rss.xml" rel="self"></atom:link><language>es</language><lastBuildDate>Wed, 24 May 2017 04:41:08 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Modales en Django con Vistas Basadas en Clases y Bootstrap</title><link>http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a hacer lo mismo que en el post anterior pero con la diferencia que ahora usaremos los modales de bootstrap, para ello ya tenemos creados nuestro proyecto "modales" y la aplicación "productos", para hacer las pruebas debemos crear un nuevo modelo llamado "proveedores":&lt;/p&gt;
+<?xml-stylesheet type="text/xsl" href="assets/xml/rss.xsl" media="all"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel><title>Python Piura</title><link>http://pythonpiura.org/</link><description>Comunidad Python Piura</description><atom:link rel="self" href="http://pythonpiura.org/rss.xml" type="application/rss+xml"></atom:link><language>es</language><lastBuildDate>Fri, 08 Sep 2017 18:24:25 GMT</lastBuildDate><generator>Nikola (getnikola.com)</generator><docs>http://blogs.law.harvard.edu/tech/rss</docs><item><title>Instalación de Django en Windows</title><link>http://pythonpiura.org/posts/instalacion-de-django-en-windows/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Compartimos este genial vídeo elaborado por uno de los integrantes mas jóvenes y prometedores de nuestra comunidad.&lt;/p&gt;
+&lt;div class="youtube-video align-center"&gt;
+&lt;iframe width="425" height="344" src="https://www.youtube.com/embed/3zOemjskGNU?rel=0&amp;amp;hd=1&amp;amp;wmode=transparent"&gt;&lt;/iframe&gt;
+&lt;/div&gt;&lt;/div&gt;</description><guid>http://pythonpiura.org/posts/instalacion-de-django-en-windows/</guid><pubDate>Fri, 08 Sep 2017 18:22:18 GMT</pubDate></item><item><title>Modales en Django con Vistas Basadas en Clases y Bootstrap</title><link>http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-bootstrap/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Vamos a hacer lo mismo que en el post anterior pero con la diferencia que ahora usaremos los modales de bootstrap, para ello ya tenemos creados nuestro proyecto "modales" y la aplicación "productos", para hacer las pruebas debemos crear un nuevo modelo llamado "proveedores":&lt;/p&gt;
 &lt;pre class="code python"&gt;&lt;a name="rest_code_c05f5f65e5384574b7f77e27ed2f4f49-1"&gt;&lt;/a&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Proveedor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Model&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
 &lt;a name="rest_code_c05f5f65e5384574b7f77e27ed2f4f49-2"&gt;&lt;/a&gt;    &lt;span class="n"&gt;ruc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;unique&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;11&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;a name="rest_code_c05f5f65e5384574b7f77e27ed2f4f49-3"&gt;&lt;/a&gt;    &lt;span class="n"&gt;razon_social&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;models&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CharField&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;max_length&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;150&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -786,91 +789,4 @@ Se desactiva el listado de las base de datos, esto no es estrictamente necesario
 &lt;p&gt;Y debemos ver la página de inicio del odoo.&lt;/p&gt;
 &lt;p&gt;El siguiente artículo nos permitirá configurar odoo con nginx y estará muy bueno, hasta la próxima.&lt;/p&gt;
 &lt;p&gt;Saludos.&lt;/p&gt;
-&lt;/div&gt;&lt;/div&gt;</description><category>odoo</category><guid>http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/</guid><pubDate>Tue, 17 Jan 2017 04:56:00 GMT</pubDate></item><item><title>Migrando de Wordpress a Nikola</title><link>http://pythonpiura.org/posts/migrando-de-wordpress-a-nikola/</link><dc:creator>Comunidad Python Piura</dc:creator><description>&lt;div&gt;&lt;p&gt;Despues de haber trabajado durante mucho tiempo en Wordpress decidimos usar algo mas pythonesco y encontramos el proyecto Nikola, que se adapta muy bien a lo que nosotros necesitamos como comunidad, asi que decidimos migrar, para ello seguimos la documentacion oficial del proyecto y algunos tutoriales adicionales, en este post vamos a relatar nuestra experiencia, esperando que sea util a nuestros lectores.&lt;/p&gt;
-&lt;p&gt;Primero creamos nuestro entorno virtual, en esta oportunidad usamos python3 para obtener un mejor rendimiento con Nikola,&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_d24b0cc88f774457a8dd99bd1e398c18-1"&gt;&lt;/a&gt;python3 -m venv nikola
-&lt;/pre&gt;&lt;p&gt;Activamos el entorno virtual:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_537ce5700b0349f896bcda574672939e-1"&gt;&lt;/a&gt;&lt;span class="nb"&gt;source&lt;/span&gt; nikola/bin/activate
-&lt;/pre&gt;&lt;p&gt;Antes de iniciar la instalacion de Nikola debimos instalar algunas dependencias para asegurarnos que todo funcione sin ningun problema:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_e4eed4002c944c40997a08d792eca47b-1"&gt;&lt;/a&gt;sudo apt-get install python3-dev
-&lt;a name="rest_code_e4eed4002c944c40997a08d792eca47b-2"&gt;&lt;/a&gt;sudo apt-get install libxml2-dev libxslt1-dev zlib1g-dev
-&lt;a name="rest_code_e4eed4002c944c40997a08d792eca47b-3"&gt;&lt;/a&gt;sudo apt-get build-dep python3-lxml python3-pil
-&lt;/pre&gt;&lt;p&gt;Luego de ello debimos hacer una actualizacion de pip por un problema raro que se nos estaba presentando en la instalacion:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_fc8e4b57d1ec4cbabd2aa0c43f2f6af3-1"&gt;&lt;/a&gt;pip install --upgrade pip
-&lt;/pre&gt;&lt;p&gt;Luego procedimos a instalar Nikola y lo hicimos, de acuerdo a la sugerencia de su propia pagina, de la siguiente manera:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_6f7d3abc257249c9a78711ad0365bcf5-1"&gt;&lt;/a&gt;pip install --upgrade &lt;span class="s2"&gt;"Nikola[extras]"&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;Nos demoramos un poquito, pero finalmente ya teniamos a Nikola instalado en nuestra maquina, como a nosotros no nos interesaba iniciar un sitio desde cero, sino migrar el que ya tenemos en wordpress, hicimos un backup del contenido del blog en wordpress, que es descargado en formato xml, el nuestro se llama pythonpiura.wordpress.2016-06-28.xml y las indicaciones para hacerlo son bastante sencillas y estan explicadas en la documentacion del propio wordpress.
-Para hacer la migracion de Wordpress a Nikola leimos rapidamente el manual y encontramos que teniamos 3 opciones, probamos las tres para ver cual nos resultaba mejor, pero antes debimos ingresar en la ruta donde tenemos nuestro archivo xml con el backup, debemos mencionar que las tres opciones nos crean una carpeta new_site.&lt;/p&gt;
-&lt;p&gt;1-La opcion por defecto:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_edda53a799364746b2b34ff36c1d7f17-1"&gt;&lt;/a&gt;nikola import_wordpress pythonpiura.wordpress.2016-06-28.xml
-&lt;/pre&gt;&lt;p&gt;Esta opcion descarga todo el contenido del blog de wordpress e intenta hacer una conversion de cada uno de los posts y paginas al formato .md, no nos funciono correctamente ya que muchos posts se migraron a medias.&lt;/p&gt;
-&lt;p&gt;2-Convertir los posts a html:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_e7059d68c1404833a4eaaceb27ed7dd3-1"&gt;&lt;/a&gt;nikola import_wordpress --transform-to-html pythonpiura.wordpress.2016-06-28.xml
-&lt;/pre&gt;&lt;p&gt;Para ello primero debemos instalar el plugin de conversion a wordpress&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_8b83d7c8823d4fb680240f0173aa4c4a-1"&gt;&lt;/a&gt;nikola plugin -i wordpress_compiler
-&lt;/pre&gt;&lt;p&gt;Esta opcion descarga el contenido y convierte los posts y paginas a html, esta fue la opcion que mejor nos funciono, salvo por el problema con los ejemplos de codigo que tenemos y que llevan la etiqueta:&lt;/p&gt;
-&lt;pre class="code html"&gt;&lt;a name="rest_code_f50e4b8b24b94dbdad1c7797c52fe140-1"&gt;&lt;/a&gt;[sourcecode language="language"]
-&lt;/pre&gt;&lt;p&gt;Hasta donde hemos visto no es posible llevar a cabo la conversion de esto a un formato adecuado asi que simplemente los deja con el texto normal sin darle ningun formato, por lo que este todavia es un tema pendiente de resolver.&lt;/p&gt;
-&lt;p&gt;3-Dejar el contenido como formato de wordpress, los archivos de los posts y las paginas tienen las extension .wp&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_9b83ae63fab3490d9a749b2617a8b61c-1"&gt;&lt;/a&gt;nikola import_wordpress --use-wordpress-compiler pythonpiura.wordpress.2016-06-28.xml
-&lt;/pre&gt;&lt;p&gt;Probamos esta opcion pensando que nos solucionaria el problema de la etiqueta [sourcecode], pero funciono igual que la opcion anterior y encima debiamos activar el plugin de wordpress en el archivo de configuracion del sitio.&lt;/p&gt;
-&lt;p&gt;Como comentamos antes usamos la segunda opcion que nos creo la carpeta new_site con el contenido listo, asi que ahora debiamos construir el sitio:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_6ddb80bdd9284eb6adafe278b4bd5d75-1"&gt;&lt;/a&gt;nikola build
-&lt;/pre&gt;&lt;p&gt;Y lanzar el servidor de pruebas:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_d5d42569a7e44e41989af38406ad4259-1"&gt;&lt;/a&gt;nikola serve -b
-&lt;/pre&gt;&lt;p&gt;Cambiamos el tema por defecto por uno que nos parecio mas bonito llamado zen, pueden ver mas temas aqui:&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="https://themes.getnikola.com"&gt;https://themes.getnikola.com&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Lo instalamos asi:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_244ebd4fcb574f1180958d66addaa6e3-1"&gt;&lt;/a&gt;nikola install_theme zen
-&lt;/pre&gt;&lt;p&gt;Y lo configuramos en nuestro sitio modificando el archivo conf.py y cambiando la linea:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_04afba205a6446db8a8f48b57776158d-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"bootstrap3"&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;por:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_61d9ad1f75f7433fb8fc7f75db938726-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;THEME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"zen"&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;y la linea:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;NAVIGATION_LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-2"&gt;&lt;/a&gt;        &lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-3"&gt;&lt;/a&gt;            &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/archive.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Archives"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-4"&gt;&lt;/a&gt;            &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/categories/index.html"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"Tags"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-5"&gt;&lt;/a&gt;            &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;"/rss.xml"&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;"RSS feed"&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-6"&gt;&lt;/a&gt;        &lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_e67fa88da5054b90b1b1f1428f29b904-7"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;Por:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;NAVIGATION_LINKS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-2"&gt;&lt;/a&gt;    &lt;span class="n"&gt;DEFAULT_LANG&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-3"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/index.html'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Home'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'icon-home'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-4"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/archive.html'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Archives'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'icon-folder-open-alt'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-5"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/categories/index.html'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'Tags'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'icon-tags'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-6"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'/rss.xml'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'RSS'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'icon-rss'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-7"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'https://getnikola.com'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'About me'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'icon-user'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-8"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'https://twitter.com/getnikola'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'My Twitter'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'icon-twitter'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-9"&gt;&lt;/a&gt;        &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'https://github.com/getnikola'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'My Github'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;'icon-github'&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-10"&gt;&lt;/a&gt;    &lt;span class="p"&gt;)&lt;/span&gt;
-&lt;a name="rest_code_a7f0f4f731fb4da3902558bcac385aa1-11"&gt;&lt;/a&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;Lo anterior es por defecto para que funcione, pero ya luego lo modificamos a nuestro gusto.&lt;/p&gt;
-&lt;p&gt;Volvimos a construir nuestro sitio:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_c8c6055dd79443f6aae81bdc9e1f9346-1"&gt;&lt;/a&gt;nikola build
-&lt;/pre&gt;&lt;p&gt;Y a lanzar nuestro servidor:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_83e40a28407a4577ac2a074a1c364b58-1"&gt;&lt;/a&gt;nikola serve -b
-&lt;/pre&gt;&lt;p&gt;Ahora si nos tocaba deployar nuestro sitio en github:&lt;/p&gt;
-&lt;p&gt;Para ello creamos un repositorio con el mismo nombre de nuestro usuario "pythonpiura" pero de la siguiente manera:&lt;/p&gt;
-&lt;p&gt;pythonpiura.github.io&lt;/p&gt;
-&lt;p&gt;Clonamos este repositorio:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_0db2e2226fa0412db91205b2a5161ed5-1"&gt;&lt;/a&gt;git clone https://github.com/pythonpiura/pythonpiura.github.io.git
-&lt;/pre&gt;&lt;p&gt;Lo siguiente que hicimos, fue copiar el contenido de nuestra carpeta new_site en la carpeta del repositorio recien creado.&lt;/p&gt;
-&lt;p&gt;Luego procedimos a modificar el archivo conf.py para que tenga los datos de nuetro nuevo sitio, modificando las siguientes lineas:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_7c5db242b1b34c36b9bcd64add9ec130-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;SITE_URL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"https://pythonpiura.github.io/"&lt;/span&gt;
-&lt;a name="rest_code_7c5db242b1b34c36b9bcd64add9ec130-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;BLOG_EMAIL&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;"pythonpiura@openmailbox.org"&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;y tambien las siguientes para que se deploye correctamente en github:&lt;/p&gt;
-&lt;pre class="code python"&gt;&lt;a name="rest_code_82c996828d81407da7fa7a397d89f5dc-1"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_SOURCE_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'sources'&lt;/span&gt;
-&lt;a name="rest_code_82c996828d81407da7fa7a397d89f5dc-2"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_DEPLOY_BRANCH&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'master'&lt;/span&gt;
-&lt;a name="rest_code_82c996828d81407da7fa7a397d89f5dc-3"&gt;&lt;/a&gt;&lt;span class="n"&gt;GITHUB_REMOTE_NAME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'origin'&lt;/span&gt;
-&lt;/pre&gt;&lt;p&gt;Agregamos lo siguiente a nuestro archivo .gitignore para que este contenido no sea subido al repositorio:&lt;/p&gt;
-&lt;pre class="code text"&gt;&lt;a name="rest_code_f77233b59fd44499b26c39615271096a-1"&gt;&lt;/a&gt;cache
-&lt;a name="rest_code_f77233b59fd44499b26c39615271096a-2"&gt;&lt;/a&gt;.doit.db
-&lt;a name="rest_code_f77233b59fd44499b26c39615271096a-3"&gt;&lt;/a&gt;__pycache__
-&lt;a name="rest_code_f77233b59fd44499b26c39615271096a-4"&gt;&lt;/a&gt;output
-&lt;/pre&gt;&lt;p&gt;Y corremos el comando:&lt;/p&gt;
-&lt;pre class="code bash"&gt;&lt;a name="rest_code_4d501a527609452ab6178ffc4064e697-1"&gt;&lt;/a&gt;nikola github_deploy
-&lt;/pre&gt;&lt;p&gt;En este paso github nos solicito nuestro usuario y password, lo ingresamos y continuamos. Tardo varios minutos en subir el contenido pero ya con eso tenemos nuestro blog en la siguiente direccion.&lt;/p&gt;
-&lt;p&gt;&lt;a class="reference external" href="http://pythonpiura.org/"&gt;http://pythonpiura.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Saludos.&lt;/p&gt;&lt;/div&gt;</description><category>nikola</category><guid>http://pythonpiura.org/posts/migrando-de-wordpress-a-nikola/</guid><pubDate>Sat, 02 Jul 2016 05:01:23 GMT</pubDate></item></channel></rss>
+&lt;/div&gt;&lt;/div&gt;</description><category>odoo</category><guid>http://pythonpiura.org/posts/instalacion-odoo-10-en-produccion/</guid><pubDate>Tue, 17 Jan 2017 04:56:00 GMT</pubDate></item></channel></rss>
