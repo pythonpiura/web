@@ -35,7 +35,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2017-09-08T18:24:00Z</lastmod>
+  <lastmod>2017-09-18T12:17:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -51,7 +51,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-3.html</loc>
-  <lastmod>2017-09-08T18:24:00Z</lastmod>
+  <lastmod>2017-09-18T12:17:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
@@ -254,8 +254,16 @@
   <lastmod>2017-01-19T16:14:00Z</lastmod>
  </url>
  <url>
+  <loc>http://pythonpiura.org/posts/creando-nuestro-primer-proyecto/</loc>
+  <lastmod>2017-09-18T12:17:00Z</lastmod>
+ </url>
+ <url>
   <loc>http://pythonpiura.org/posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/</loc>
   <lastmod>2017-01-21T16:40:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/instalacion-de-django-en-ubuntu/</loc>
+  <lastmod>2017-09-18T12:15:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/posts/instalacion-de-django-en-windows/</loc>
