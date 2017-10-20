@@ -398,6 +398,10 @@ Cuando le demos click al botón guardar automáticamente nos guarda los elemento
 .. image:: /images/blog/listado_compras_datos.png
 
 
-Por ahora no tenemos un detalle de lo guardado pero si lo está haciendo correctamente, en el siguiente post veremos como mostrar los datos guardados en el admin, hasta la pŕoxima.
+Por ahora no tenemos un detalle de lo guardado pero si lo está haciendo correctamente, en el siguiente post veremos como mostrar los datos guardados en el admin, recuerden que el código del proyecto lo pueden encontrar en la siguiente ubicación:
 
-Saludos.
+`Proyecto Modales`_
+
+Hasta la pŕoxima, saludos.
+
+.. _Proyecto Modales: https://github.com/pythonpiura/modales
