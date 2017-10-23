@@ -65,7 +65,50 @@
 
     
 <div class="postindex">
-    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/" class="u-url">Instalando Entorno de Desarrollo para Odoo 10 en Ubuntu 16.04</a></h1>
+    <article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/" class="u-url">Guardando la Configuración de una Instancia de Odoo en un Archivo</a></h1>
+        <div class="metadata">
+            <p class="byline author vcard"><span class="byline-name fn">
+                Comunidad Python Piura
+            </span></p>
+            <p class="dateline"><a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/" rel="bookmark"><time class="published dt-published" datetime="2017-01-21T11:35:33-05:00" title="2017-01-21 11:35">2017-01-21 11:35</time></a></p>
+                <p class="commentline">
+        
+    <a href="../posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo/#disqus_thread" data-disqus-identifier="cache/posts/guardando-la-configuracion-de-una-instancia-de-odoo-en-un-archivo.html">Comments</a>
+
+
+        </p>
+</div>
+    </header><div class="e-content entry-content">
+    <div>
+<p>Seguimos configurando un entorno de desarrollo para Odoo 10 y tal como hemos visto en el <a class="reference external" href="../posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/">artículo anterior</a> podíamos levantar una instancia de Odoo con algunos parámetros agregados:</p>
+<pre class="code bash"><a name="rest_code_e42f3c1509a34358b9fb40018db02091-1"></a>python odoo-bin -d odoo10 --addons-path<span class="o">=</span>addons
+</pre>
+<p>Odoo tiene múltiples parámetros de configuración, para ver que parámetros podemos utilizar ejecutamos el siguiente comando:</p>
+<pre class="code bash"><a name="rest_code_7bfb6f41a31d4ff492f0aa4baf52ad25-1"></a>python odoo-bin --help <span class="p">|</span> less
+</pre>
+<p>Estar cargando todos estos parámetros cada vez que levantamos nuestra instancia es un poco tedioso, por eso tenemos la opción de guardar un archivo de configuración donde tengamos todos nuestros parámetros establecidos.</p>
+<p>Suponiendo que estamos ubicados en la carpeta que contiene el código fuente de Odoo, para generar el archivo de configuración debemos correr el siguiente comando:</p>
+<pre class="code bash"><a name="rest_code_71b7e2073c644318be20e09b4878ed76-1"></a>python odoo-bin --save --config myodoo.cfg --stop-after-init
+</pre>
+<p>De esta manera generamos un archivo de configuración llamado myodoo.cfg(el nombre puede ser cualquiera) que se guardará en la misma carpeta donde está el script odoo-bin.</p>
+<p>Es posible guardar este archivo en cualquier ubicación, eso ya depende de nosotros y de como nos ubiquemos para utilizar el script odoo-bin, en nuestro caso siempre creamos el archivo de configuración en la carpeta superior a la que contiene el código fuente de odoo(si seguimos la secuencia del artículo anterior esta carpeta será odoo-dev-10), por lo que haremos lo siguiente:</p>
+<pre class="code bash"><a name="rest_code_5baf9e07645b4ed19c70a6161553b68c-1"></a><span class="nb">cd</span> ~/odoo-dev-10
+<a name="rest_code_5baf9e07645b4ed19c70a6161553b68c-2"></a>python odoo/odoo-bin --save --config myodoo.cfg --stop-after-init
+</pre>
+<p>Si editamos el archivo myodoo.cfg y cambiamos algunos de los parámetros, es posible tomar estos cambios la siguiente vez que iniciemos nuestra instancia usando el parámetro -c, que es una opción abreviada de --config:</p>
+<pre class="code bash"><a name="rest_code_2f5850d87bcd4d589bac1a7a51daab45-1"></a>python odoo/odoo-bin -c myodoo.cfg
+</pre>
+<p>Esto funciona de la siguiente manera, al arrancar, Odoo carga su configuración en tres pasos:</p>
+<ul class="simple">
+<li>Primero se inicializa un conjunto de valores predeterminados para todas las opciones desde el código fuente.</li>
+<li>A continuación, se analiza la configuración y cualquier valor definido en el archivo reemplaza los valores predeterminados.</li>
+<li>Finalmente, se analizan las opciones de la línea de comandos y sus valores anulan la configuración obtenida del paso anterior.</li>
+</ul>
+<p>Los nombres de las variables de configuración se pueden transformar desde los nombres de las opciones de la línea de comandos, eliminando los guiones principales y convirtiendo los guiones medios en guiones bajos. Hay algunas excepciones en particular, pero para obtener mayor detalle de esto remitanse a la documentación de Odoo o a los libros que hemos recomendado en los artículos anteriores y que estamos usando como guía.</p>
+<p>Saludos.</p>
+</div>
+    </div>
+    </article><article class="h-entry post-text"><header><h1 class="p-name entry-title"><a href="../posts/instalando-entorno-de-desarrollo-para-odoo-10-en-ubuntu-1604/" class="u-url">Instalando Entorno de Desarrollo para Odoo 10 en Ubuntu 16.04</a></h1>
         <div class="metadata">
             <p class="byline author vcard"><span class="byline-name fn">
                 Comunidad Python Piura

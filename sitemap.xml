@@ -35,7 +35,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/archive.html</loc>
-  <lastmod>2017-10-19T01:29:00Z</lastmod>
+  <lastmod>2017-10-23T01:18:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/</loc>
@@ -51,7 +51,7 @@
  </url>
  <url>
   <loc>http://pythonpiura.org/blog/index-3.html</loc>
-  <lastmod>2017-10-19T01:29:00Z</lastmod>
+  <lastmod>2017-10-23T01:18:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/categories/</loc>
@@ -292,6 +292,10 @@
  <url>
   <loc>http://pythonpiura.org/posts/modales-en-django-con-vistas-basadas-en-clases-y-jquery-ui/</loc>
   <lastmod>2017-05-18T03:16:00Z</lastmod>
+ </url>
+ <url>
+  <loc>http://pythonpiura.org/posts/modificacion-de-datos-con-django-formset/</loc>
+  <lastmod>2017-10-23T01:18:00Z</lastmod>
  </url>
  <url>
   <loc>http://pythonpiura.org/primer-pyday-en-piura/</loc>
