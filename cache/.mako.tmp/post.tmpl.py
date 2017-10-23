@@ -5,7 +5,7 @@ STOP_RENDERING = runtime.STOP_RENDERING
 __M_dict_builtin = dict
 __M_locals_builtin = locals
 _magic_number = 10
-_modified_time = 1508727108.0926468
+_modified_time = 1508727389.70721
 _enable_loop = True
 _template_filename = '/home/inkarri/entornos/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/post.tmpl'
 _template_uri = 'post.tmpl'
@@ -20,14 +20,14 @@ def _mako_get_namespace(context, name):
         _mako_generate_namespaces(context)
         return context.namespaces[(__name__, name)]
 def _mako_generate_namespaces(context):
+    ns = runtime.TemplateNamespace('comments', context._clean_inheritance_tokens(), templateuri='comments_helper.tmpl', callables=None,  calling_uri=_template_uri)
+    context.namespaces[(__name__, 'comments')] = ns
+
     ns = runtime.TemplateNamespace('helper', context._clean_inheritance_tokens(), templateuri='post_helper.tmpl', callables=None,  calling_uri=_template_uri)
     context.namespaces[(__name__, 'helper')] = ns
 
     ns = runtime.TemplateNamespace('pheader', context._clean_inheritance_tokens(), templateuri='post_header.tmpl', callables=None,  calling_uri=_template_uri)
     context.namespaces[(__name__, 'pheader')] = ns
-
-    ns = runtime.TemplateNamespace('comments', context._clean_inheritance_tokens(), templateuri='comments_helper.tmpl', callables=None,  calling_uri=_template_uri)
-    context.namespaces[(__name__, 'comments')] = ns
 
 def _mako_inherit(template, context):
     _mako_generate_namespaces(context)
@@ -36,20 +36,20 @@ def render_body(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
         __M_locals = __M_dict_builtin(pageargs=pageargs)
-        parent = context.get('parent', UNDEFINED)
-        def extra_head():
-            return render_extra_head(context._locals(__M_locals))
-        pheader = _mako_get_namespace(context, 'pheader')
-        def sourcelink():
-            return render_sourcelink(context._locals(__M_locals))
-        show_sourcelink = context.get('show_sourcelink', UNDEFINED)
-        messages = context.get('messages', UNDEFINED)
-        post = context.get('post', UNDEFINED)
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
         helper = _mako_get_namespace(context, 'helper')
+        pheader = _mako_get_namespace(context, 'pheader')
         def content():
             return render_content(context._locals(__M_locals))
+        show_sourcelink = context.get('show_sourcelink', UNDEFINED)
+        parent = context.get('parent', UNDEFINED)
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
+        post = context.get('post', UNDEFINED)
         comments = _mako_get_namespace(context, 'comments')
+        def extra_head():
+            return render_extra_head(context._locals(__M_locals))
+        messages = context.get('messages', UNDEFINED)
+        def sourcelink():
+            return render_sourcelink(context._locals(__M_locals))
         __M_writer = context.writer()
         __M_writer('\n')
         __M_writer('\n')
@@ -78,14 +78,14 @@ def render_body(context,**pageargs):
 def render_content(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        messages = context.get('messages', UNDEFINED)
-        def content():
-            return render_content(context)
-        post = context.get('post', UNDEFINED)
-        site_has_comments = context.get('site_has_comments', UNDEFINED)
         helper = _mako_get_namespace(context, 'helper')
         pheader = _mako_get_namespace(context, 'pheader')
+        post = context.get('post', UNDEFINED)
         comments = _mako_get_namespace(context, 'comments')
+        def content():
+            return render_content(context)
+        site_has_comments = context.get('site_has_comments', UNDEFINED)
+        messages = context.get('messages', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n<article class="post-')
         __M_writer(str(post.meta('type')))
@@ -117,10 +117,10 @@ def render_content(context,**pageargs):
 def render_extra_head(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        parent = context.get('parent', UNDEFINED)
         helper = _mako_get_namespace(context, 'helper')
         def extra_head():
             return render_extra_head(context)
+        parent = context.get('parent', UNDEFINED)
         post = context.get('post', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n    ')
@@ -166,11 +166,11 @@ def render_extra_head(context,**pageargs):
 def render_sourcelink(context,**pageargs):
     __M_caller = context.caller_stack._push_frame()
     try:
-        messages = context.get('messages', UNDEFINED)
         show_sourcelink = context.get('show_sourcelink', UNDEFINED)
+        messages = context.get('messages', UNDEFINED)
+        post = context.get('post', UNDEFINED)
         def sourcelink():
             return render_sourcelink(context)
-        post = context.get('post', UNDEFINED)
         __M_writer = context.writer()
         __M_writer('\n')
         if show_sourcelink:
@@ -186,6 +186,6 @@ def render_sourcelink(context,**pageargs):
 
 """
 __M_BEGIN_METADATA
-{"source_encoding": "utf-8", "filename": "/home/inkarri/entornos/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/post.tmpl", "line_map": {"128": 8, "129": 9, "130": 10, "131": 10, "132": 10, "133": 12, "134": 13, "135": 13, "136": 13, "137": 15, "138": 15, "139": 15, "140": 16, "141": 17, "142": 17, "143": 17, "144": 17, "145": 17, "146": 19, "147": 20, "148": 20, "149": 20, "150": 20, "23": 2, "152": 22, "153": 23, "26": 3, "155": 25, "156": 25, "29": 4, "158": 26, "159": 27, "160": 27, "35": 0, "166": 53, "154": 25, "157": 26, "176": 54, "177": 55, "178": 56, "179": 56, "180": 56, "181": 56, "54": 2, "55": 3, "56": 4, "57": 5, "187": 181, "151": 20, "62": 28, "175": 53, "67": 51, "72": 59, "78": 30, "90": 30, "91": 31, "92": 31, "93": 32, "94": 32, "95": 34, "96": 34, "97": 38, "98": 38, "99": 39, "100": 39, "101": 42, "102": 43, "103": 44, "104": 44, "105": 45, "106": 45, "107": 48, "108": 48, "109": 48, "110": 50, "111": 50, "117": 7, "126": 7, "127": 8}, "uri": "post.tmpl"}
+{"source_encoding": "utf-8", "line_map": {"128": 8, "129": 9, "130": 10, "131": 10, "132": 10, "133": 12, "134": 13, "135": 13, "136": 13, "137": 15, "138": 15, "139": 15, "140": 16, "141": 17, "142": 17, "143": 17, "144": 17, "145": 17, "146": 19, "147": 20, "148": 20, "149": 20, "150": 20, "23": 4, "152": 22, "153": 23, "26": 2, "155": 25, "156": 25, "29": 3, "158": 26, "159": 27, "160": 27, "35": 0, "166": 53, "154": 25, "157": 26, "176": 54, "177": 55, "178": 56, "179": 56, "180": 56, "181": 56, "54": 2, "55": 3, "56": 4, "57": 5, "187": 181, "151": 20, "62": 28, "175": 53, "67": 51, "72": 59, "78": 30, "90": 30, "91": 31, "92": 31, "93": 32, "94": 32, "95": 34, "96": 34, "97": 38, "98": 38, "99": 39, "100": 39, "101": 42, "102": 43, "103": 44, "104": 44, "105": 45, "106": 45, "107": 48, "108": 48, "109": 48, "110": 50, "111": 50, "117": 7, "126": 7, "127": 8}, "uri": "post.tmpl", "filename": "/home/inkarri/entornos/nikola/lib/python3.5/site-packages/nikola/data/themes/bootstrap3/templates/post.tmpl"}
 __M_END_METADATA
 """
