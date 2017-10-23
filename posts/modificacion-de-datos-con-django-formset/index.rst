@@ -145,6 +145,11 @@ Para comprobar que los cambios estén funcionando debemos guardarlos y volver a 
 
 Como podemos ver, por ahora no existe la posibilidad de hacer eliminación de los formularios que nos vienen por defecto, pero ya corregiremos eso en las pŕoximas publicaciones.
 
+Recuerden que el código del proyecto lo pueden encontrar en la siguiente ubicación:
+
+`Proyecto Modales`_
+
 Saludos.
 
 .. _ejemplo anterior: http://pythonpiura.org/posts/implementando-django-formsets/
+.. _Proyecto Modales: https://github.com/pythonpiura/modales
