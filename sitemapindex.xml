@@ -19,7 +19,7 @@
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/django.xml</loc>
-  <lastmod>2017-05-24T04:41:00Z</lastmod>
+  <lastmod>2017-11-18T16:47:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/categories/ipython.xml</loc>
@@ -75,10 +75,10 @@
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/rss.xml</loc>
-  <lastmod>2017-10-23T01:18:00Z</lastmod>
+  <lastmod>2017-11-18T16:47:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>http://pythonpiura.org/sitemap.xml</loc>
-  <lastmod>2017-10-23T01:18:00Z</lastmod>
+  <lastmod>2017-11-18T16:47:00Z</lastmod>
  </sitemap>
 </sitemapindex>

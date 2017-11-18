@@ -15,7 +15,9 @@
 <meta property="og:site_name" content="Python Piura">
 <meta property="og:title" content="Generar Reportes en Excel desde Django">
 <meta property="og:url" content="http://pythonpiura.org/posts/2016/04/19/generar-reportes-en-excel-desde-django/">
-<meta property="og:description" content="En ocasiones necesitamos tener nuestros reportes en alguna hoja de cálculo, o peor aún un cliente nos pide un reporte específico en excel ¿Cómo hacemos para generar reportes desde Django en excel?
+<meta property="og:description" content="En ocasiones necesitamos tener nuestros reportes en alguna hoja de
+cálculo, o peor aún un cliente nos pide un reporte específico en excel
+¿Cómo hacemos para generar reportes desde Django en excel?
 En ">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2016-04-19T21:24:58-05:00">
@@ -60,7 +62,7 @@ En ">
 </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-    <a href="index.src.html" id="sourcelink">Código fuente</a>
+    <a href="index.rst" id="sourcelink">Código fuente</a>
     </li>
 
                 
@@ -89,179 +91,194 @@ En ">
 
             
         </p>
-<p class="sourceline"><a href="index.src.html" id="sourcelink">Código fuente</a></p>
+<p class="sourceline"><a href="index.rst" id="sourcelink">Código fuente</a></p>
 
         </div>
         
 
     </header><div class="e-content entry-content" itemprop="articleBody text">
-    <p style="text-align:justify;">En ocasiones necesitamos tener nuestros reportes en alguna hoja de cálculo, o peor aún un cliente nos pide un reporte específico en excel ¿Cómo hacemos para generar reportes desde Django en excel?<br>
-En nuestra ayuda viene una librería muy interesante que se llama <a href="https://openpyxl.readthedocs.org/en/default/">openpyxl</a>, esta libreria nos permite generar contenido en los diferentes formatos de hojas de cálculo de Microsoft Office y soporta desde versiones antiguas hasta la versión Office 2010, para instalarla lo hacemos con nuestro viejo conocido pip:</p>
-<p>[sourcecode language="bash"]<br>
-pip install openpyxl<br>
-[/sourcecode]</p>
-<p style="text-align:justify;">Ahora vamos a trabajar usando el proyecto <a href="https://pythonpiura.wordpress.com/2016/04/18/datatables-jquery-bootstrap-y-django/">tutorial </a>que creamos en el post pasado, aquí agregamos un botón adicional que nos va a permitir exportar el contenido de nuestra tabla de personas a excel, por lo tanto editamos el archivo personas.html y agregamos un botón adicional al que ya teniamos:</p>
+    <div>
+<p>En ocasiones necesitamos tener nuestros reportes en alguna hoja de
+cálculo, o peor aún un cliente nos pide un reporte específico en excel
+¿Cómo hacemos para generar reportes desde Django en excel?
+En nuestra ayuda viene una librería muy interesante que se llama
+<a class="reference external" href="https://openpyxl.readthedocs.org/en/default/">openpyxl</a>, esta libreria nos permite generar contenido en los
+diferentes formatos de hojas de cálculo de Microsoft Office y soporta
+desde versiones antiguas hasta la versión Office 2010, para instalarla
+lo hacemos con nuestro viejo conocido pip:</p>
+<pre class="code bash"><a name="rest_code_0a88f1f9382545e8911b3c1597cd3b9d-1"></a>pip install openpyxl
+</pre>
+<p>Ahora vamos a trabajar usando el proyecto <a class="reference external" href="https://pythonpiura.wordpress.com/2016/04/18/datatables-jquery-bootstrap-y-django/">tutorial</a> que creamos en
+el post pasado, aquí agregamos un botón adicional que nos va a
+permitir exportar el contenido de nuestra tabla de personas a excel,
+por lo tanto editamos el archivo personas.html y agregamos un botón
+adicional al que ya teniamos:</p>
 <p>personas.html</p>
-<p>[sourcecode language="html"]</p>
-<p>&lt;div class="col-lg-1"&gt;<br>
-	&lt;a id="crear_detalle" href="#" class="btn btn-info btn-block"&gt;<br>
-		&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
-	&lt;/a&gt;<br>
-&lt;/div&gt;</p>
-<p>[/sourcecode]</p>
-<p style="text-align:justify;">Nótese que aún no ponemos el enlace en href para no tener ningún problema, mas adelante modificaremos esto, ahora nuestra aplicación debe verse así:</p>
-<p><a href="../../../../../2016/04/tablas2.jpg"><img class="alignnone wp-image-154" src="https://pythonpiura.files.wordpress.com/2016/04/tablas2.jpg?w=300" alt="tablas2" width="478" height="156"></a></p>
-<p style="text-align:justify;">En el archivo views.py de la aplicación personas, vamos a crear una clase que nos permita exportar todas las personas que tenemos guardadas, a un archivo en excel.</p>
+<pre class="code html"><a name="rest_code_790f8c869ecb4352a9d78cedd2a6f59d-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_790f8c869ecb4352a9d78cedd2a6f59d-2"></a>        <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"#"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_790f8c869ecb4352a9d78cedd2a6f59d-3"></a>                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_790f8c869ecb4352a9d78cedd2a6f59d-4"></a>        <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_790f8c869ecb4352a9d78cedd2a6f59d-5"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre>
+<p>Nótese que aún no ponemos el enlace en "#"" para no tener ningún
+problema, mas adelante modificaremos esto, ahora nuestra aplicación
+debe verse así:</p>
+<img alt="/images/blog/tablas2.jpg" src="../../../../../images/blog/tablas2.jpg"><p>En el archivo views.py de la aplicación personas, vamos a crear una
+clase que nos permita exportar todas las personas que tenemos
+guardadas, a un archivo en excel.</p>
 <p>views.py</p>
-<p>[sourcecode language="python"]<br>
-#Vista genérica para mostrar resultados<br>
-from django.views.generic.base import TemplateView<br>
-#Workbook nos permite crear libros en excel<br>
-from openpyxl import Workbook<br>
-#Nos devuelve un objeto resultado, en este caso un archivo de excel<br>
-from django.http.response import HttpResponse</p>
-<p>#Nuestra clase hereda de la vista genérica TemplateView<br>
-class ReportePersonasExcel(TemplateView):</p>
-<p>    #Usamos el método get para generar el archivo excel<br>
-    def get(self, request, *args, **kwargs):<br>
-        #Obtenemos todas las personas de nuestra base de datos<br>
-        personas = Persona.objects.all()<br>
-		#Creamos el libro de trabajo<br>
-        wb = Workbook()<br>
-		#Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro<br>
-        ws = wb.active<br>
-		#En la celda B1 ponemos el texto ‘REPORTE DE PERSONAS’<br>
-        ws['B1'] = ‘REPORTE DE PERSONAS’<br>
-		#Juntamos las celdas desde la B1 hasta la E1, formando una sola celda<br>
-        ws.merge_cells(‘B1:E1′)<br>
-		#Creamos los encabezados desde la celda B3 hasta la E3<br>
-        ws['B3'] = ‘DNI’<br>
-        ws['C3'] = ‘NOMBRE’<br>
-        ws['D3'] = ‘APELLIDO PATERNO’<br>
-        ws['E3'] = ‘APELLIDO MATERNO’<br>
-        cont=4<br>
-        #Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas<br>
-        for persona in personas:<br>
-            ws.cell(row=cont,column=2).value = persona.dni<br>
-            ws.cell(row=cont,column=3).value = persona.nombre<br>
-            ws.cell(row=cont,column=4).value = persona.apellido_paterno<br>
-            ws.cell(row=cont,column=5).value = persona.apellido_materno<br>
-            cont = cont + 1<br>
-		#Establecemos el nombre del archivo<br>
-        nombre_archivo ="ReportePersonasExcel.xlsx"<br>
-		#Definimos que el tipo de respuesta a devolver es un archivo de microsoft excel<br>
-        response = HttpResponse(content_type="application/ms-excel")<br>
-		contenido = "attachment; filename={0}".format(nombre_archivo)<br>
-        response["Content-Disposition"] = contenido<br>
-        wb.save(response)<br>
-        return response<br>
-[/sourcecode]</p>
+<pre class="code python"><a name="rest_code_800b4a5629054cc59a0df32455efa3ce-1"></a><span class="c1">#Vista genérica para mostrar resultados</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-2"></a><span class="kn">from</span> <span class="nn">django.views.generic.base</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-3"></a><span class="c1">#Workbook nos permite crear libros en excel</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-4"></a><span class="kn">from</span> <span class="nn">openpyxl</span> <span class="kn">import</span> <span class="n">Workbook</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-5"></a><span class="c1">#Nos devuelve un objeto resultado, en este caso un archivo de excel</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-6"></a><span class="kn">from</span> <span class="nn">django.http.response</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-7"></a>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-8"></a><span class="c1">#Nuestra clase hereda de la vista genérica TemplateView</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-9"></a><span class="k">class</span> <span class="nc">ReportePersonasExcel</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-10"></a>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-11"></a>        <span class="c1">#Usamos el método get para generar el archivo excel</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-12"></a>        <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-13"></a>                <span class="c1">#Obtenemos todas las personas de nuestra base de datos</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-14"></a>                <span class="n">personas</span> <span class="o">=</span> <span class="n">Persona</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-15"></a>                <span class="c1">#Creamos el libro de trabajo</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-16"></a>                <span class="n">wb</span> <span class="o">=</span> <span class="n">Workbook</span><span class="p">()</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-17"></a>                <span class="c1">#Definimos como nuestra hoja de trabajo, la hoja activa, por defecto la primera del libro</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-18"></a>                <span class="n">ws</span> <span class="o">=</span> <span class="n">wb</span><span class="o">.</span><span class="n">active</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-19"></a>                <span class="c1">#En la celda B1 ponemos el texto 'REPORTE DE PERSONAS'</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-20"></a>                <span class="n">ws</span><span class="p">[</span><span class="s1">'B1'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'REPORTE DE PERSONAS'</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-21"></a>                <span class="c1">#Juntamos las celdas desde la B1 hasta la E1, formando una sola celda</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-22"></a>                <span class="n">ws</span><span class="o">.</span><span class="n">merge_cells</span><span class="p">(</span><span class="s1">'B1:E1′)</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-23"></a>                <span class="c1">#Creamos los encabezados desde la celda B3 hasta la E3</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-24"></a>                <span class="n">ws</span><span class="p">[</span><span class="s1">'B3'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'DNI'</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-25"></a>                <span class="n">ws</span><span class="p">[</span><span class="s1">'C3'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'NOMBRE'</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-26"></a>                <span class="n">ws</span><span class="p">[</span><span class="s1">'D3'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'APELLIDO PATERNO'</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-27"></a>                <span class="n">ws</span><span class="p">[</span><span class="s1">'E3'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'APELLIDO MATERNO'</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-28"></a>                <span class="n">cont</span><span class="o">=</span><span class="mi">4</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-29"></a>                <span class="c1">#Recorremos el conjunto de personas y vamos escribiendo cada uno de los datos en las celdas</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-30"></a>                <span class="k">for</span> <span class="n">persona</span> <span class="ow">in</span> <span class="n">personas</span><span class="p">:</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-31"></a>                        <span class="n">ws</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">cont</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">persona</span><span class="o">.</span><span class="n">dni</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-32"></a>                        <span class="n">ws</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">cont</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">persona</span><span class="o">.</span><span class="n">nombre</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-33"></a>                        <span class="n">ws</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">cont</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_paterno</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-34"></a>                        <span class="n">ws</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">cont</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">persona</span><span class="o">.</span><span class="n">apellido_materno</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-35"></a>                        <span class="n">cont</span> <span class="o">=</span> <span class="n">cont</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-36"></a>                <span class="c1">#Establecemos el nombre del archivo</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-37"></a>                <span class="n">nombre_archivo</span> <span class="o">=</span><span class="s2">"ReportePersonasExcel.xlsx"</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-38"></a>                <span class="c1">#Definimos que el tipo de respuesta a devolver es un archivo de microsoft excel</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-39"></a>                <span class="n">response</span> <span class="o">=</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"application/ms-excel"</span><span class="p">)</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-40"></a>                <span class="n">contenido</span> <span class="o">=</span> <span class="s2">"attachment; filename={0}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nombre_archivo</span><span class="p">)</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-41"></a>                <span class="n">response</span><span class="p">[</span><span class="s2">"Content-Disposition"</span><span class="p">]</span> <span class="o">=</span> <span class="n">contenido</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-42"></a>                <span class="n">wb</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<a name="rest_code_800b4a5629054cc59a0df32455efa3ce-43"></a>                <span class="k">return</span> <span class="n">response</span>
+</pre>
 <p>Modificamos el archivo urls.py:</p>
 <p>urls.py</p>
-<p>[sourcecode language="python"]<br>
-from django.conf.urls import patterns, url<br>
-from personas.views import Personas, CrearPersona, ReportePersonasExcel</p>
-<p>urlpatterns = patterns(”,<br>
-    url(r’^$’,Personas.as_view(), name="personas"),<br>
-    url(r’^crear_persona/$’,CrearPersona.as_view(), name="crear_persona"),<br>
-    url(r’^reporte_personas_excel/$’,ReportePersonasExcel.as_view(), name="reporte_personas_excel"),</p>
-<p>)<br>
-[/sourcecode]</p>
-<p>Finalmente nuestro archivo personas.html va a quedar de la siguiente manera:</p>
-<p>[sourcecode language="html"]<br>
-{% extends "base.html" %}<br>
-{% block cuerpo %}<br>
-&lt;div class="row"&gt;<br>
-    &lt;div class="col-lg-12"&gt;<br>
-        &lt;h1 class="page-header"&gt;Tablas&lt;/h1&gt;<br>
-    &lt;/div&gt;<br>
-&lt;/div&gt;<br>
-&lt;div class="row"&gt;<br>
-	&lt;div class="col-lg-12"&gt;<br>
-		&lt;div class="panel panel-info"&gt;<br>
-			&lt;div class="panel-heading"&gt;<br>
-			    Personas<br>
-			&lt;/div&gt;<br>
-			&lt;div class="panel-body"&gt;<br>
-				&lt;div class=’form-group’&gt;<br>
-					&lt;div class="row"&gt;<br>
-						&lt;div class="col-lg-10"&gt;	</p>
-<p>						&lt;/div&gt;<br>
-						&lt;div class="col-lg-1"&gt;<br>
-							&lt;a id="crear_detalle" href="{% url ‘personas:reporte_personas_excel’ %}" class="btn btn-info btn-block"&gt;<br>
-								&lt;span class="glyphicon glyphicon-list-alt"&gt;&lt;/span&gt;<br>
-							&lt;/a&gt;<br>
-						&lt;/div&gt;<br>
-						&lt;div class="col-lg-1"&gt;<br>
-							&lt;a id="crear_detalle" href="{% url ‘personas:crear_persona’ %}" class="btn btn-info btn-block"&gt;<br>
-								&lt;span class="glyphicon glyphicon-plus"&gt;&lt;/span&gt;<br>
-							&lt;/a&gt;<br>
-						&lt;/div&gt;<br>
-					&lt;/div&gt;<br>
-				&lt;/div&gt;<br>
-				&lt;div class="row"&gt;<br>
-					&lt;div class="col-lg-12"&gt;<br>
-						&lt;table id="tabla" class="table table-striped table-bordered" cellspacing="0" width="100%"&gt;<br>
-							&lt;thead&gt;<br>
-								&lt;tr&gt;<br>
-									&lt;th class="text-center"&gt;DNI&lt;/th&gt;<br>
-									&lt;th class="text-center"&gt;NOMBRE&lt;/th&gt;<br>
-									&lt;th class="text-center"&gt;APELLIDO PATERNO&lt;/th&gt;<br>
-									&lt;th class="text-center"&gt;APELLIDO MATERNO&lt;/th&gt;<br>
-								&lt;/tr&gt;<br>
-							&lt;/thead&gt;<br>
-							&lt;tbody&gt;<br>
-							{% for persona in personas %}<br>
-								&lt;tr&gt;<br>
-									&lt;td&gt;{{ persona.dni }}&lt;/td&gt;<br>
-									&lt;td&gt;{{ persona.nombre }}&lt;/td&gt;<br>
-									&lt;td&gt;{{ persona.apellido_paterno }}&lt;/td&gt;<br>
-									&lt;td&gt;{{ persona.apellido_materno }}&lt;/td&gt;<br>
-								&lt;/tr&gt;<br>
-							{% endfor %}<br>
-							&lt;/tbody&gt;<br>
-						&lt;/table&gt;<br>
-					&lt;/div&gt;<br>
-				&lt;/div&gt;<br>
-			&lt;/div&gt;<br>
-		&lt;/div&gt;<br>
-	&lt;/div&gt;<br>
-&lt;/div&gt;<br>
-{% endblock cuerpo %}<br>
-{% block js %}<br>
-&lt;script&gt;<br>
-$(document).ready(function()<br>
-{<br>
-    var table = $(‘#tabla’).DataTable( {<br>
-        "language": {<br>
-        	url: "/static/localizacion/es_ES.json"<br>
-        }<br>
-    } );</p>
-<p>    $(‘#tabla tbody’).on( ‘click’, ‘tr’, function()<br>
-    {<br>
-    	if ($(this).hasClass(‘selected’) )<br>
-        {<br>
-        	$(this).removeClass(‘selected’);</p>
-<p>        }<br>
-        else<br>
-        {<br>
-	        table.$(‘tr.selected’).removeClass(‘selected’);<br>
-	        $(this).addClass(‘selected’);<br>
-        }<br>
-    });   </p>
-<p>});<br>
-&lt;/script&gt;<br>
-{% endblock js %}<br>
-[/sourcecode]</p>
-<p>Y nuestro resultado al dar click al botón de exportar en excel será el siguiente:</p>
-<p><a href="../../../../../2016/04/exportar.jpg"><img class="alignnone wp-image-155" src="https://pythonpiura.files.wordpress.com/2016/04/exportar.jpg?w=300" alt="exportar" width="394" height="155"></a></p>
-<p> </p>
-<p>Y el archivo se mostrará así:</p>
-<p><a href="../../../../../2016/04/reporte_excel.jpg"><img class="alignnone size-medium wp-image-156" src="https://pythonpiura.files.wordpress.com/2016/04/reporte_excel.jpg?w=300" alt="reporte_excel" width="300" height="84"></a></p>
-<p style="text-align:justify;">Hay muchísimas formas de sacarle el jugo a esta libreria, definir formatos, bordes, colores, etc. Esta ha sido una pequeña introducción, hasta la próxima.</p>
+<pre class="code python"><a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-1"></a><span class="kn">from</span> <span class="nn">django.conf.urls</span> <span class="kn">import</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">url</span>
+<a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-2"></a><span class="kn">from</span> <span class="nn">personas.views</span> <span class="kn">import</span> <span class="n">Personas</span><span class="p">,</span> <span class="n">CrearPersona</span><span class="p">,</span> <span class="n">ReportePersonasExcel</span>
+<a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-3"></a>
+<a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-4"></a><span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s2">",</span>
+<a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-5"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^$'</span><span class="p">,</span><span class="n">Personas</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"personas"</span><span class="p">),</span>
+<a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-6"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^crear_persona/$'</span><span class="p">,</span><span class="n">CrearPersona</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"crear_persona"</span><span class="p">),</span>
+<a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-7"></a>        <span class="n">url</span><span class="p">(</span><span class="s1">r'^reporte_personas_excel/$'</span><span class="p">,</span><span class="n">ReportePersonasExcel</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s2">"reporte_personas_excel"</span><span class="p">),</span>
+<a name="rest_code_af9f6e98d7c7458991db7ceff133b8a4-8"></a><span class="p">)</span>
+</pre>
+<p>Finalmente nuestro archivo personas.html va a quedar de la siguiente
+manera:</p>
+<pre class="code html"><a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-1"></a>{% extends "base.html" %}
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-2"></a>{% block cuerpo %}
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-3"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-4"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-5"></a>        <span class="p">&lt;</span><span class="nt">h1</span> <span class="na">class</span><span class="o">=</span><span class="s">"page-header"</span><span class="p">&gt;</span>Tablas<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-6"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-7"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-8"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-9"></a>    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-10"></a>        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel panel-info"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-11"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-heading"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-12"></a>                Personas
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-13"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-14"></a>            <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"panel-body"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-15"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">'form-group'</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-16"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-17"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-10"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-18"></a>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-19"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-20"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-21"></a>                            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:reporte_personas_excel' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-22"></a>                                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-list-alt"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-23"></a>                            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-24"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-25"></a>                        <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-1"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-26"></a>                            <span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">"crear_detalle"</span> <span class="na">href</span><span class="o">=</span><span class="s">"{% url 'personas:crear_persona' %}"</span> <span class="na">class</span><span class="o">=</span><span class="s">"btn btn-info btn-block"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-27"></a>                                <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">"glyphicon glyphicon-plus"</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-28"></a>                            <span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-29"></a>                        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-30"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-31"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-32"></a>                <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"row"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-33"></a>                    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">"col-lg-12"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-34"></a>                        <span class="p">&lt;</span><span class="nt">table</span> <span class="na">id</span><span class="o">=</span><span class="s">"tabla"</span> <span class="na">class</span><span class="o">=</span><span class="s">"table table-striped table-bordered"</span> <span class="na">cellspacing</span><span class="o">=</span><span class="s">"0"</span> <span class="na">width</span><span class="o">=</span><span class="s">"100%"</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-35"></a>                            <span class="p">&lt;</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-36"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-37"></a>                                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>DNI<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-38"></a>                                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>NOMBRE<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-39"></a>                                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO PATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-40"></a>                                <span class="p">&lt;</span><span class="nt">th</span> <span class="na">class</span><span class="o">=</span><span class="s">"text-center"</span><span class="p">&gt;</span>APELLIDO MATERNO<span class="p">&lt;/</span><span class="nt">th</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-41"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-42"></a>                            <span class="p">&lt;/</span><span class="nt">thead</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-43"></a>                            <span class="p">&lt;</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-44"></a>                                {% for persona in personas %}
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-45"></a>                                <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-46"></a>                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.dni }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-47"></a>                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.nombre }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-48"></a>                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_paterno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-49"></a>                                <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>{{ persona.apellido_materno }}<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-50"></a>                                <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-51"></a>                                {% endfor %}
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-52"></a>                            <span class="p">&lt;/</span><span class="nt">tbody</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-53"></a>                        <span class="p">&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-54"></a>                    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-55"></a>                <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-56"></a>            <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-57"></a>        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-58"></a>    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-59"></a><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-60"></a>{% endblock cuerpo %}
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-61"></a>{% block js %}
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-62"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-63"></a><span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-64"></a><span class="p">{</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-65"></a>        <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla'</span><span class="p">).</span><span class="nx">DataTable</span><span class="p">({</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-66"></a>                <span class="s2">"language"</span><span class="o">:</span> <span class="p">{</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-67"></a>                        <span class="nx">url</span><span class="o">:</span> <span class="s2">"/static/localizacion/es_ES.json"</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-68"></a>                <span class="p">}</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-69"></a>        <span class="p">});</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-70"></a>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-71"></a>        <span class="nx">$</span><span class="p">(</span><span class="s1">'#tabla tbody'</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span> <span class="s1">'click'</span><span class="p">,</span> <span class="s1">'tr'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-72"></a>        <span class="p">{</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-73"></a>                <span class="k">if</span> <span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">hasClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">)</span> <span class="p">)</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-74"></a>                <span class="p">{</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-75"></a>                        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-76"></a>                <span class="p">}</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-77"></a>                <span class="k">else</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-78"></a>                <span class="p">{</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-79"></a>                        <span class="nx">table</span><span class="p">.</span><span class="nx">$</span><span class="p">(</span><span class="s1">'tr.selected'</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-80"></a>                        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">'selected'</span><span class="p">);</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-81"></a>                <span class="p">}</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-82"></a>        <span class="p">});</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-83"></a>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-84"></a><span class="p">});</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-85"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<a name="rest_code_97ab9b37ab63440b8a5154bfd0dc77ae-86"></a>{% endblock js %}
+</pre>
+<p>Y nuestro resultado al dar click al botón de exportar en excel será el
+siguiente:</p>
+<img alt="/images/blog/exportar.jpg" src="../../../../../images/blog/exportar.jpg"><p>Y el archivo se mostrará así:</p>
+<img alt="/images/blog/reporte_excel.jpg" src="../../../../../images/blog/reporte_excel.jpg"><p>Hay muchísimas formas de sacarle el jugo a esta libreria, definir
+formatos, bordes, colores, etc. Esta ha sido una pequeña introducción,
+hasta la próxima.</p>
 <p>Saludos.</p>
-<p> </p>
-
+</div>
     </div>
     <aside class="postpromonav"><nav><ul itemprop="keywords" class="tags">
 <li><a class="tag p-category" href="../../../../../categories/django/" rel="tag">Django</a></li>
